@@ -1,5 +1,3 @@
-module.exports = db;
-
-function db() {
-  // TODO
+exports.userById = async () => {
+  return null
 }

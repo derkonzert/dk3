@@ -1,3 +1,3 @@
-"use strict";
+"use strict"
 
-exports.InvalidConfigurationError = class InvalidConfigurationError extends Error {};
+exports.InvalidConfigurationError = class InvalidConfigurationError extends Error {}

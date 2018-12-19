@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require("apollo-server")
 
 // Type definitions define the "shape" of your data and specify
 // which ways the data can be fetched from the GraphQL server.
@@ -15,6 +15,6 @@ const typeDefs = gql`
     # The viewing user
     me: User
   }
-`;
+`
 
-module.exports = typeDefs;
+module.exports = typeDefs

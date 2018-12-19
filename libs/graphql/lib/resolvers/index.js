@@ -1,10 +1,10 @@
-const { me } = require("./me");
-const { User } = require("./User");
+const { me } = require("./me")
+const { User } = require("./User")
 
 module.exports = {
   Query: {
-    me
+    me,
   },
   /* Type Resolvers */
-  User
-};
+  User,
+}
