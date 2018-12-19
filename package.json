@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "commit": "git-cz",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -11,11 +12,21 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "commitizen": "^3.0.5",
+    "cz-conventional-changelog": "2.1.0",
     "jest": "^23.6.0",
     "lerna": "^3.6.0"
   },
   "jest": {
     "coverageDirectory": "./coverage/",
     "collectCoverage": true
+  },
+  "dependencies": {
+    "global": "^4.3.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
