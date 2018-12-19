@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "commit": "git-cz",
     "test": "jest",
     "test:watch": "jest --watch"
   },
