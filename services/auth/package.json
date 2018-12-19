@@ -1,0 +1,23 @@
+{
+  "name": "@dk3/auth-service",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Julian Kempff <ju@formundcode.de>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/auth.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@dk3/auth-utils": "^0.0.0",
+    "@dk3/config": "^0.0.0"
+  }
+}
