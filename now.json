@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/auth/(.*)", "dest": "/services/auth/lib/auth.js?operation=$1" }
+  ]
+}
