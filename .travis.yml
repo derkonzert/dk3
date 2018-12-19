@@ -8,8 +8,8 @@ cache:
     - "node_modules"
 
 install:
-  - yarn global add lerna jest
+  - yarn global add lerna jest codecov
   - lerna bootstrap
 
 script:
-  - yarn test
+  - yarn test && codecov
