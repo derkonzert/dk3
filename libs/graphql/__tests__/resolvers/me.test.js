@@ -1,25 +1,23 @@
-const db = require("@dk3/db");
+const db = require("@dk3/db")
 
-jest.mock("@dk3/db");
+jest.mock("@dk3/db")
 
-const testUser = { email: "jus@email.com" };
+const testUser = { email: "jus@email.com" }
 
-db.dao = {
-  userById: _id => (_id === 123 ? testUser : null)
-};
+db.userById.mockImplementation(_id => (_id === 123 ? testUser : null))
 
-const { me } = require("../../lib/resolvers/me");
+const { me } = require("../../lib/resolvers/me")
 
 describe("me", () => {
   it("resolves to user when id is given", async () => {
-    const user = await me(undefined, undefined, { user: { _id: 123 } });
+    const user = await me(undefined, undefined, { user: { _id: 123 } })
 
-    expect(user).toEqual(testUser);
-  });
+    expect(user).toEqual(testUser)
+  })
 
   it("resolves to null when no id is given", async () => {
-    const user = await me(undefined, undefined, {});
+    const user = await me(undefined, undefined, {})
 
-    expect(user).toEqual(null);
-  });
-});
+    expect(user).toEqual(null)
+  })
+})

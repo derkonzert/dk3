@@ -1,120 +1,120 @@
-const authUtils = require("@dk3/auth-utils");
-const micro = require("micro");
+const authUtils = require("@dk3/auth-utils")
+const micro = require("micro")
 
-jest.mock("@dk3/auth-utils");
-authUtils.authenticatedRequest = handler => handler;
+jest.mock("@dk3/auth-utils")
+authUtils.authenticatedRequest = handler => handler
 
-jest.mock("micro");
+jest.mock("micro")
 
-const auth = require("..");
+const auth = require("..")
 
 describe("auth", () => {
-  let response;
+  let response
 
   beforeEach(() => {
-    const json = jest.fn();
-    const status = jest.fn();
+    const json = jest.fn()
+    const status = jest.fn()
 
     response = {
       json: json.mockReturnValue(response),
-      status: status.mockReturnValue(response)
-    };
-  });
+      status: status.mockReturnValue(response),
+    }
+  })
 
   it("handles non matched routes", async () => {
-    await auth({ url: "/?operation=non-existing" }, response);
+    await auth({ url: "/?operation=non-existing" }, response)
 
-    expect(response.status).toBeCalledWith(404);
+    expect(response.status).toBeCalledWith(404)
     expect(response.json).toBeCalledWith(
       expect.objectContaining({
-        message: "not found"
+        message: "not found",
       })
-    );
-  });
+    )
+  })
 
   it("has a register handler", async () => {
-    const dummyUser = { fullName: "Ju", email: "jus@email.com" };
-    authUtils.register.mockReturnValue(dummyUser);
+    const dummyUser = { fullName: "Ju", email: "jus@email.com" }
+    authUtils.register.mockReturnValue(dummyUser)
 
-    await auth({ url: "/?operation=register" }, response);
+    await auth({ url: "/?operation=register" }, response)
 
     /* Registering currently hardcoded */
-    expect(response.json).toBeCalledWith(expect.objectContaining(dummyUser));
-  });
+    expect(response.json).toBeCalledWith(expect.objectContaining(dummyUser))
+  })
 
-  describe('dummy "secured" case', () => {
+  describe("dummy 'secured' case", () => {
     it("returns user when set on request", async () => {
-      const user = {};
-      await auth({ url: "/?operation=secured", user }, response);
+      const user = {}
+      await auth({ url: "/?operation=secured", user }, response)
 
-      expect(response.json).toBeCalledWith(user);
-    });
+      expect(response.json).toBeCalledWith(user)
+    })
 
-    it('returns "anonymous" without user', async () => {
-      await auth({ url: "/?operation=secured" }, response);
+    it("returns 'anonymous' without user", async () => {
+      await auth({ url: "/?operation=secured" }, response)
 
       expect(response.json).toBeCalledWith(
         expect.objectContaining({
-          anonymous: true
+          anonymous: true,
         })
-      );
-    });
-  });
+      )
+    })
+  })
 
   describe("signIn", () => {
     it("sets 401 for invalid email", async () => {
       micro.json.mockReturnValue({
         email: "invalid@email.com",
-        password: "invalid password"
-      });
+        password: "invalid password",
+      })
 
-      authUtils.signIn.mockReturnValue(undefined);
+      authUtils.signIn.mockReturnValue(undefined)
 
-      await auth({ url: "/?operation=signIn" }, response);
+      await auth({ url: "/?operation=signIn" }, response)
 
-      expect(response.status).toBeCalledWith(401);
+      expect(response.status).toBeCalledWith(401)
       expect(response.json).toBeCalledWith(
         expect.objectContaining({
-          message: "Invalid Credentials"
+          message: "Invalid Credentials",
         })
-      );
-    });
+      )
+    })
 
     it("sets 401 for invalid password", async () => {
       micro.json.mockReturnValue({
         email: "jus@email.com",
-        password: "invalid password"
-      });
+        password: "invalid password",
+      })
 
-      authUtils.signIn.mockReturnValue(undefined);
+      authUtils.signIn.mockReturnValue(undefined)
 
-      await auth({ url: "/?operation=signIn" }, response);
+      await auth({ url: "/?operation=signIn" }, response)
 
-      expect(response.status).toBeCalledWith(401);
+      expect(response.status).toBeCalledWith(401)
       expect(response.json).toBeCalledWith(
         expect.objectContaining({
-          message: "Invalid Credentials"
+          message: "Invalid Credentials",
         })
-      );
-    });
+      )
+    })
 
     it("returns JWT token for valid credentials", async () => {
       micro.json.mockReturnValue({
         email: "jus@email.com",
-        password: "password"
-      });
+        password: "password",
+      })
 
-      const dummyJWT = "someFakeJwtToken";
+      const dummyJWT = "someFakeJwtToken"
 
-      authUtils.signIn.mockReturnValue(dummyJWT);
+      authUtils.signIn.mockReturnValue(dummyJWT)
 
-      await auth({ url: "/?operation=signIn" }, response);
+      await auth({ url: "/?operation=signIn" }, response)
 
       expect(response.json).toBeCalledWith(
         expect.objectContaining({
-          token: dummyJWT
+          token: dummyJWT,
         })
-      );
-    });
-  });
-});
+      )
+    })
+  })
+})
