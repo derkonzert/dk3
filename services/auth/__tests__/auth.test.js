@@ -25,15 +25,25 @@ describe("auth", () => {
     await auth({ url: "/?operation=non-existing" }, response)
 
     expect(response.status).toBeCalledWith(404)
+  })
+
+  it("handles server errors", async () => {
+    micro.json.mockImplementation(() => {
+      throw new Error("Uh oh")
+    })
+
+    await auth({ url: "/?operation=signIn" }, response)
+
+    expect(response.status).toBeCalledWith(500)
     expect(response.json).toBeCalledWith(
       expect.objectContaining({
-        message: "not found",
+        message: "Uh oh",
       })
     )
   })
 
   it("has a register handler", async () => {
-    const dummyUser = { fullName: "Ju", email: "jus@email.com" }
+    const dummyUser = { username: "Ju", email: "jus@email.com" }
     authUtils.register.mockReturnValue(dummyUser)
 
     await auth({ url: "/?operation=register" }, response)
@@ -43,19 +53,31 @@ describe("auth", () => {
   })
 
   describe("dummy 'secured' case", () => {
+    const user = { dummy: "user" }
+
+    beforeEach(() => {
+      authUtils.getUserFromRequest.mockImplementation(({ fail }) => {
+        if (fail) {
+          const err = new Error("ohuh")
+          err.status = 401
+
+          throw err
+        }
+        return user
+      })
+    })
     it("returns user when set on request", async () => {
-      const user = {}
       await auth({ url: "/?operation=secured", user }, response)
 
       expect(response.json).toBeCalledWith(user)
     })
 
-    it("returns 'anonymous' without user", async () => {
-      await auth({ url: "/?operation=secured" }, response)
+    it("returns error message without user", async () => {
+      await auth({ url: "/?operation=secured", fail: true }, response)
 
       expect(response.json).toBeCalledWith(
         expect.objectContaining({
-          anonymous: true,
+          message: "ohuh",
         })
       )
     })

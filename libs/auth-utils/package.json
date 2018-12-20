@@ -19,6 +19,7 @@
   "dependencies": {
     "@dk3/config": "^0.0.0",
     "@dk3/db": "^0.0.0",
+    "@dk3/error": "^0.0.0",
     "jsonwebtoken": "^8.4.0"
   }
 }

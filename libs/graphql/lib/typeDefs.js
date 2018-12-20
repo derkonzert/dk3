@@ -6,9 +6,9 @@ const typeDefs = gql`
   scalar Date
 
   type User {
-    id: String
+    _id: String
     email: String
-    fullName: String
+    username: String
   }
 
   type Query {

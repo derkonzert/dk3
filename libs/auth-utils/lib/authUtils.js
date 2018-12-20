@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken")
+const { TokenExpiredError } = jwt
 const config = require("@dk3/config")
+const { HTTPStatusError } = require("@dk3/error")
 const { User } = require("@dk3/db/lib/model/User")
 
 exports.register = async data => {
@@ -32,33 +34,48 @@ exports.signIn = async (email, password) => {
 
   const token = jwt.sign(
     {
+      _id: user._id,
       email: user.email,
-      fullName: user.fullName,
+      username: user.username,
     },
-    config.get("JWT_SECRET")
+    config.get("JWT_SECRET"),
+    {
+      expiresIn: config.get("API_TOKEN_LIFE"),
+    }
   )
 
   return token
 }
 
-exports.authenticatedRequest = handler => async (req, res) => {
+exports.getUserFromRequest = async req => {
   if (
     req.headers &&
     req.headers.authorization &&
     req.headers.authorization.split(" ")[0] === "JWT"
   ) {
-    jwt.verify(
-      req.headers.authorization.split(" ")[1],
-      config.get("JWT_SECRET"),
-      (err, decode) => {
-        if (!err) {
-          req.user = decode
-        }
-
-        handler(req, res)
+    try {
+      const payload = await new Promise((resolve, reject) =>
+        jwt.verify(
+          req.headers.authorization.split(" ")[1],
+          config.get("JWT_SECRET"),
+          (err, payload) => {
+            if (err) {
+              reject(err)
+            } else {
+              resolve(payload)
+            }
+          }
+        )
+      )
+      return payload
+    } catch (err) {
+      if (err instanceof TokenExpiredError) {
+        throw new HTTPStatusError("Access token has expired", 401)
+      } else {
+        throw new HTTPStatusError("Token mismatch", 401)
       }
-    )
-  } else {
-    handler(req, res)
+    }
   }
+
+  throw new HTTPStatusError("Not authenticated", 401)
 }
