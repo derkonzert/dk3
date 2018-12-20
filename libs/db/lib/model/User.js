@@ -1,13 +1,15 @@
 /* Dummy Model for now */
 const dummyUserData = {
-  fullName: "Ju",
+  _id: 1234,
+  username: "Ju",
   email: "jus@email.com",
   plainPassword: "password",
 }
 
 class User {
   constructor() {
-    this.fullName = dummyUserData.fullName
+    this._id = dummyUserData._id
+    this.username = dummyUserData.username
     this.email = dummyUserData.email
     this.hash_password = this.createPasswordHash(dummyUserData.plainPassword)
   }

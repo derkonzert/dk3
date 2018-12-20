@@ -24,6 +24,7 @@
     "url": "https://github.com/jkempff/dk3/issues"
   },
   "dependencies": {
+    "@dk3/auth-utils": "^0.0.0",
     "@dk3/graphql": "^0.0.0",
     "apollo-server-lambda": "^2.3.1",
     "apollo-server-micro": "^2.3.1",

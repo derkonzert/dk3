@@ -1,17 +1,41 @@
 "use strict"
 
-const { InvalidConfigurationError } = require("..")
+const { HTTPStatusError, InvalidConfigurationError } = require("..")
 
-describe("InvalidConfigurationError", () => {
-  it("implements instanceof correctly", () => {
-    const err = new InvalidConfigurationError()
+describe("error", () => {
+  function genericTestsFor(CustomError) {
+    const message = "Custom error message"
 
-    expect(err instanceof InvalidConfigurationError).toBeTruthy()
+    it("implements instanceof correctly", () => {
+      const err = new CustomError()
+
+      expect(err instanceof CustomError).toBeTruthy()
+    })
+
+    it("has a stacktrace", () => {
+      const err = new CustomError()
+
+      expect(err.stack).toBeTruthy()
+    })
+
+    it("supports basic message", () => {
+      const err = new CustomError(message)
+
+      expect(err.message).toEqual(message)
+    })
+  }
+
+  describe("InvalidConfigurationError", () => {
+    genericTestsFor(InvalidConfigurationError)
   })
 
-  it("has a stacktrace", () => {
-    const err = new InvalidConfigurationError()
+  describe("HTTPStatusError", () => {
+    genericTestsFor(HTTPStatusError)
 
-    expect(err.stack).toBeTruthy()
+    it("stores status and creates getter", () => {
+      const err = new HTTPStatusError("Uh oh", 401)
+
+      expect(err.getStatus()).toEqual(401)
+    })
   })
 })
