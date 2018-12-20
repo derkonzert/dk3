@@ -1,6 +1,18 @@
 {
   "version": 2,
+  "builds": [
+    { "src": "services/auth/lib/auth.js", "use": "@now/node" },
+    { "src": "services/api/lib/api.js", "use": "@now/node" }
+  ],
   "routes": [
-    { "src": "/auth/(.*)", "dest": "/services/auth/lib/auth.js?operation=$1" }
+    {
+      "src": "/auth/(.*)",
+      "methods": ["GET", "POST"],
+      "dest": "/services/auth/lib/auth.js?operation=$1"
+    },
+    {
+      "src": "/api",
+      "dest": "/services/api/lib/api.js"
+    }
   ]
 }
