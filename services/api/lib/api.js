@@ -5,7 +5,7 @@ const {
   resolvers,
   createExecutable,
 } = require("@dk3/graphql")
-const { getContextFromRequest } = require("./getContextFromRequest")
+const { createGraphQlContext } = require("./createGraphQlContext")
 
 const schema = createExecutable({ typeDefs, resolvers })
 
@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
   }
 
   const rootValue = {}
-  const contextValue = await getContextFromRequest({ req })
+  const contextValue = await createGraphQlContext({ req })
 
   try {
     const result = await graphql(

@@ -1,9 +1,9 @@
 const authUtils = require("@dk3/auth-utils")
 jest.mock("@dk3/auth-utils")
 
-const { getContextFromRequest } = require("../lib/getContextFromRequest")
+const { createGraphQlContext } = require("../lib/createGraphQlContext")
 
-describe("getContextFromRequest", () => {
+describe("createGraphQlContext", () => {
   const user = {}
   const req = {}
 
@@ -17,13 +17,13 @@ describe("getContextFromRequest", () => {
   })
 
   it("resets req.url to actual url", async () => {
-    const contextObject = await getContextFromRequest({ req })
+    const contextObject = await createGraphQlContext({ req })
 
     expect(contextObject.user).toBe(user)
   })
 
   it("resolves to empty object if user retrieval fails for whatever reason", async () => {
-    const contextObject = await getContextFromRequest({})
+    const contextObject = await createGraphQlContext({})
 
     expect(contextObject.user).toBe(undefined)
   })
