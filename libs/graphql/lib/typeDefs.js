@@ -11,9 +11,15 @@ const typeDefs = gql`
     username: String
   }
 
+  type AuthenticationInfo {
+    tokenExpiresAt: Date
+    softExpiresAt: Date
+  }
+
   type Query {
     # The viewing user
     me: User
+    authInfo: AuthenticationInfo
   }
 `
 

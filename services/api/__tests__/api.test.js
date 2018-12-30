@@ -1,36 +1,101 @@
-const { ApolloServer } = require("apollo-server-micro")
-jest.mock("apollo-server-micro")
+const micro = require("micro")
+jest.mock("micro")
 
-let api
+const dk3Graphql = require("@dk3/graphql")
+jest.mock("@dk3/graphql")
+
+const libContext = require("../lib/getContextFromRequest")
+jest.mock("../lib/getContextFromRequest")
+
+const fakeSchema = Symbol.for("fake.schema")
+
+dk3Graphql.createExecutable = jest.fn().mockReturnValue(fakeSchema)
+
+const api = require("..")
 
 describe("api", () => {
-  let apolloHandlerMock
-
-  beforeEach(() => {
-    apolloHandlerMock = jest.fn()
-
-    ApolloServer.mockImplementation(() => ({
-      createHandler: jest.fn().mockReturnValue(apolloHandlerMock),
-    }))
-
-    api = require("..")
+  it("creates a schema without being called", () => {
+    expect(dk3Graphql.createExecutable).toHaveBeenCalledWith(
+      expect.objectContaining({
+        resolvers: dk3Graphql.resolvers,
+        typeDefs: dk3Graphql.typeDefs,
+      })
+    )
   })
 
-  it("resets req.url to actual url", async () => {
-    const request = { url: "some/url" }
-    const response = {}
+  describe("lambda", () => {
+    let req, res, requestBody, contextValue
 
-    await api(request, response)
+    beforeEach(() => {
+      requestBody = undefined
+      contextValue = undefined
+      req = {}
+      res = {
+        status: jest.fn(),
+        json: jest.fn(),
+        end: jest.fn(),
+      }
+      micro.json.mockImplementation(() => requestBody)
+      libContext.getContextFromRequest.mockImplementation(() => contextValue)
+    })
 
-    expect(request.url).toBe("/api")
-    expect(apolloHandlerMock).toHaveBeenCalledWith(request, response)
+    it("fails when no query is set", async () => {
+      requestBody = {}
+
+      await api(req, res)
+
+      expect(res.status).toBeCalledWith(400)
+      expect(res.end).toBeCalledWith(api.queryMissingMessage)
+    })
+
+    it("fast exists when no query is set", async () => {
+      requestBody = {}
+
+      await api(req, res)
+      expect(dk3Graphql.graphql).not.toBeCalled()
+    })
+
+    it("calls graphql-js", async () => {
+      contextValue = Symbol.for("fake.context")
+      requestBody = {
+        query: "{ some { gqlQuery }}",
+        variables: [{ foo: "bar" }],
+        operation: "someName",
+      }
+
+      await api(req, res)
+
+      const expectedRootValue = expect.objectContaining({})
+
+      expect(dk3Graphql.graphql).toBeCalledWith(
+        fakeSchema,
+        requestBody.query,
+        expectedRootValue,
+        contextValue,
+        requestBody.variables,
+        requestBody.operation
+      )
+    })
+
+    it("catches graphql-js errors", async () => {
+      const expectedErrorMessage = "Ooops something went wrong"
+
+      requestBody = {
+        query: "{ some { gqlQuery }}",
+      }
+
+      dk3Graphql.graphql.mockImplementation(() => {
+        throw new Error(expectedErrorMessage)
+      })
+
+      await api(req, res)
+
+      expect(res.status).toBeCalledWith(500)
+      expect(res.json).toBeCalledWith(
+        expect.objectContaining({
+          error: expectedErrorMessage,
+        })
+      )
+    })
   })
-
-  // it("passes req and res through to apolloServer handler", async () => {
-  //   const req = {}
-  //   const response = {}
-
-  //   await api(req, response)
-
-  // })
 })
