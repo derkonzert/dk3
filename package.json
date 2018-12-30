@@ -30,6 +30,10 @@
   "jest": {
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
+    "collectCoverageFrom": [
+      "libs/**/*.js",
+      "services/**/*.js"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 90,
