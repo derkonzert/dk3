@@ -4,8 +4,8 @@ jest.mock("micro")
 const dk3Graphql = require("@dk3/graphql")
 jest.mock("@dk3/graphql")
 
-const libContext = require("../lib/getContextFromRequest")
-jest.mock("../lib/getContextFromRequest")
+const libContext = require("../lib/createGraphQlContext")
+jest.mock("../lib/createGraphQlContext")
 
 const fakeSchema = Symbol.for("fake.schema")
 
@@ -36,7 +36,7 @@ describe("api", () => {
         end: jest.fn(),
       }
       micro.json.mockImplementation(() => requestBody)
-      libContext.getContextFromRequest.mockImplementation(() => contextValue)
+      libContext.createGraphQlContext.mockImplementation(() => contextValue)
     })
 
     it("fails when no query is set", async () => {
