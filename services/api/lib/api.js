@@ -1,20 +1,43 @@
-const { ApolloServer } = require("apollo-server-micro")
-const { typeDefs, resolvers } = require("@dk3/graphql")
-const { context } = require("./context")
+const { json } = require("micro")
+const {
+  graphql,
+  typeDefs,
+  resolvers,
+  createExecutable,
+} = require("@dk3/graphql")
+const { getContextFromRequest } = require("./getContextFromRequest")
+
+const schema = createExecutable({ typeDefs, resolvers })
+
+const queryMissingMessage = "query is missing"
 
 module.exports = async (req, res) => {
-  /* this is probably not good, but it makes the handler work.  */
-  req.url = "/api"
+  const { query, variables, operation } = await json(req)
 
-  /** TODO:
-   * Creating a new server on each request might not be very performant.
-   * Currently needed for dynamic context creation. */
-  const apolloServer = new ApolloServer({
-    typeDefs,
-    resolvers,
-    context,
-  })
-  const apolloHandler = apolloServer.createHandler({ path: "/api" })
+  if (!query) {
+    res.status(400)
+    res.end(queryMissingMessage)
+    return
+  }
 
-  await apolloHandler(req, res)
+  const rootValue = {}
+  const contextValue = await getContextFromRequest({ req })
+
+  try {
+    const result = await graphql(
+      schema,
+      query,
+      rootValue,
+      contextValue,
+      variables,
+      operation
+    )
+
+    res.json(result)
+  } catch (err) {
+    res.status(500)
+    res.json({ error: err.message })
+  }
 }
+
+module.exports.queryMissingMessage = queryMissingMessage

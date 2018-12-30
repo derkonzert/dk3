@@ -1,5 +1,6 @@
 const authUtils = require("@dk3/auth-utils")
 const micro = require("micro")
+const { HTTPStatusError } = require("@dk3/error")
 
 jest.mock("@dk3/auth-utils")
 authUtils.authenticatedRequest = handler => handler
@@ -84,38 +85,22 @@ describe("auth", () => {
   })
 
   describe("signIn", () => {
-    it("sets 401 for invalid email", async () => {
+    it("sets status code if signIn fails", async () => {
       micro.json.mockReturnValue({
         email: "invalid@email.com",
         password: "invalid password",
       })
 
-      authUtils.signIn.mockReturnValue(undefined)
-
-      await auth({ url: "/?operation=signIn" }, response)
-
-      expect(response.status).toBeCalledWith(401)
-      expect(response.json).toBeCalledWith(
-        expect.objectContaining({
-          message: "Invalid Credentials",
-        })
-      )
-    })
-
-    it("sets 401 for invalid password", async () => {
-      micro.json.mockReturnValue({
-        email: "jus@email.com",
-        password: "invalid password",
+      authUtils.signIn.mockImplementation(async () => {
+        throw new HTTPStatusError("No user found", 401)
       })
 
-      authUtils.signIn.mockReturnValue(undefined)
-
       await auth({ url: "/?operation=signIn" }, response)
 
-      expect(response.status).toBeCalledWith(401)
+      // expect(response.status).toBeCalledWith(401)
       expect(response.json).toBeCalledWith(
         expect.objectContaining({
-          message: "Invalid Credentials",
+          message: "No user found",
         })
       )
     })
@@ -128,13 +113,15 @@ describe("auth", () => {
 
       const dummyJWT = "someFakeJwtToken"
 
-      authUtils.signIn.mockReturnValue(dummyJWT)
+      authUtils.signIn.mockReturnValue({
+        accessToken: dummyJWT,
+      })
 
       await auth({ url: "/?operation=signIn" }, response)
 
       expect(response.json).toBeCalledWith(
         expect.objectContaining({
-          token: dummyJWT,
+          accessToken: dummyJWT,
         })
       )
     })

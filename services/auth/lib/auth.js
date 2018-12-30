@@ -17,14 +17,10 @@ module.exports = async function auth(req, res) {
         const body = await json(req)
 
         try {
-          const token = await signIn(body.email, body.password)
-
-          if (!token) {
-            throw new HTTPStatusError("Invalid Credentials", 401)
-          }
+          const payload = await signIn(body.email, body.password)
 
           return res.json({
-            token,
+            accessToken: payload.accessToken,
           })
         } catch (err) {
           throw err
