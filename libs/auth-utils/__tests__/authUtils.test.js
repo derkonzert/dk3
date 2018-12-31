@@ -33,9 +33,7 @@ describe("auth-utils", () => {
         passwordHash: "somehash",
       })
 
-      const user = await authUtils.register(userData)
-
-      expect(user).toEqual(expect.objectContaining(userData))
+      expect(authUtils.register(userData)).resolves.toBe(true)
     })
 
     it("throws when user creation fails", () => {

@@ -12,14 +12,14 @@ describe("me", () => {
   it("resolves to user when id is given", async () => {
     const user = await me(undefined, undefined, {
       user: { _id: 123 },
-      db: { userById },
+      dao: { userById },
     })
 
     expect(user).toEqual(testUser)
   })
 
   it("resolves to null when no id is given", async () => {
-    const user = await me(undefined, undefined, { db: { userById } })
+    const user = await me(undefined, undefined, { dao: { userById } })
 
     expect(user).toEqual(null)
   })

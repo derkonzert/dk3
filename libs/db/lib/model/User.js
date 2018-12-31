@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt")
 const mongoose = require("mongoose")
 
-const { config } = require("@dk3/config")
+const config = require("@dk3/config")
 
 const UserSchema = new mongoose.Schema({
   username: {
