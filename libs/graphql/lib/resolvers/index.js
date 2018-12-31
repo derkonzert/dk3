@@ -1,15 +1,13 @@
-const { me } = require("./me")
-const { authInfo } = require("./authInfo")
+const { Query } = require("./Query")
 const { User } = require("./User")
+const { Event } = require("./Event")
 const { AuthenticationInfo } = require("./AuthenticationInfo")
 
 module.exports = {
-  Query: {
-    me,
-    authInfo,
-  },
   /* Type Resolvers */
+  Query,
   User,
   AuthenticationInfo,
+  Event,
   /* TODO: add proper Date type */
 }

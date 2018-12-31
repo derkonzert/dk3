@@ -16,10 +16,26 @@ const typeDefs = gql`
     softExpiresAt: Date
   }
 
+  type Event {
+    id: String
+    title: String
+    to: Date
+    from: Date
+    created: Date
+    artists: [String]
+    approved: Boolean
+    likedByMe: Boolean
+    likedBy: [User]
+    author: User
+  }
+
   type Query {
     # The viewing user
     me: User
+    # Expiration info on used access token
     authInfo: AuthenticationInfo
+    # Upcoming events
+    upcoming: [Event]
   }
 `
 

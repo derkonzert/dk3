@@ -3,7 +3,9 @@ const mongoose = require("mongoose")
 
 const config = require("@dk3/config")
 
-const UserSchema = new mongoose.Schema({
+const skills = require("./userSkills")
+
+const Schema = new mongoose.Schema({
   username: {
     type: String,
     trim: true,
@@ -23,20 +25,31 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
 
+  skills: {
+    type: [String],
+    default: [skills.LOGIN],
+  },
+
   created: {
     type: Date,
     default: Date.now,
   },
 })
 
-UserSchema.methods.comparePassword = function(password) {
+Schema.methods.comparePassword = function(password) {
   return bcrypt.compareSync(password, this.passwordHash)
 }
 
-UserSchema.statics.createPasswordHash = function(password) {
+Schema.methods.hasSkill = function(skill) {
+  return (
+    this.skills.indexOf(skill) >= 0 || this.skills.indexOf(skills.MAGIC) >= 0
+  )
+}
+
+Schema.statics.createPasswordHash = function(password) {
   return bcrypt.hashSync(password, config.get("PASSWORD_HASH_SALT_ROUNDS"))
 }
 
-exports.UserSchema = UserSchema
+exports.Schema = Schema
 
-exports.User = mongoose.model("User", UserSchema)
+exports.Model = mongoose.model("User", Schema)
