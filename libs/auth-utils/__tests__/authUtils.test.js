@@ -17,6 +17,7 @@ config.get.mockImplementation(key => {
 })
 
 const dummyUserData = {
+  _id: "14123412asf3",
   username: "ju",
   email: "jus@email.com",
 }
@@ -33,7 +34,9 @@ describe("auth-utils", () => {
         passwordHash: "somehash",
       })
 
-      expect(authUtils.register(userData)).resolves.toBe(true)
+      const result = await authUtils.register(userData)
+
+      expect(result).toBe(true)
     })
 
     it("throws when user creation fails", () => {
@@ -95,6 +98,7 @@ describe("auth-utils", () => {
 
   describe("generateTokens", () => {
     const jwtSigningError = new Error("jwt.sign just failed")
+
     beforeEach(() => {
       jwt.sign.mockImplementation((data, secret, options, callback) => {
         if (!data._id) {
@@ -118,11 +122,17 @@ describe("auth-utils", () => {
     })
 
     it("generates a jwt access token", async () => {
-      expect(authUtils.generateTokens(dummyUserData)).resolves.toEqual(
-        expect.objectContaining({
-          accessToken: "someaccesstoken",
-        })
-      )
+      try {
+        const result = await authUtils.generateTokens(dummyUserData)
+
+        expect(result).toEqual(
+          expect.objectContaining({
+            accessToken: "someaccesstoken",
+          })
+        )
+      } catch (err) {
+        throw err
+      }
     })
 
     it("sets softExpIn on payload", async () => {
