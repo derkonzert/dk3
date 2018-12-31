@@ -1,4 +1,4 @@
-// const mockingoose = require("mockingoose")
+const config = require("@dk3/config")
 const bcrypt = require("bcrypt")
 jest.mock("bcrypt")
 
@@ -27,7 +27,10 @@ describe("User", () => {
   describe(".hashPassword", () => {
     it("uses bcrypt to hash the given raw password", () => {
       expect(User.createPasswordHash("my funky password")).toEqual("fake hash")
-      expect(bcrypt.hashSync).toHaveBeenCalledWith("my funky password", 10)
+      expect(bcrypt.hashSync).toHaveBeenCalledWith(
+        "my funky password",
+        config.get("PASSWORD_HASH_SALT_ROUNDS")
+      )
     })
   })
 

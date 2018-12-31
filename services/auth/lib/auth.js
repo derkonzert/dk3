@@ -1,15 +1,16 @@
 const { json } = require("micro")
 const url = require("url")
-const { connect } = require("@dk3/db")
+
 const { register, signIn, getUserFromRequest } = require("@dk3/auth-utils")
 const { HTTPStatusError } = require("@dk3/error")
+const { connect } = require("@dk3/db")
 
 let dbConnection
 
 module.exports = async function auth(req, res) {
   try {
     if (!dbConnection) {
-      await connect()
+      dbConnection = connect()
     }
 
     let body
@@ -19,7 +20,11 @@ module.exports = async function auth(req, res) {
       case "register":
         body = await json(req)
 
-        await register(body)
+        try {
+          await register(body)
+        } catch (err) {
+          throw new HTTPStatusError(err.message, 400)
+        }
 
         return res.json({ message: "User created" })
 

@@ -4,6 +4,9 @@ jest.mock("micro")
 const dk3Graphql = require("@dk3/graphql")
 jest.mock("@dk3/graphql")
 
+const db = require("@dk3/db")
+jest.mock("@dk3/db")
+
 const libContext = require("../lib/createGraphQlContext")
 jest.mock("../lib/createGraphQlContext")
 
@@ -37,6 +40,16 @@ describe("api", () => {
       }
       micro.json.mockImplementation(() => requestBody)
       libContext.createGraphQlContext.mockImplementation(() => contextValue)
+    })
+
+    it("establishes db connection (once)", async () => {
+      requestBody = {}
+      db.connect.mockReturnValue(true)
+
+      await api(req, res)
+      await api(req, res)
+
+      expect(db.connect).toHaveBeenCalledTimes(1)
     })
 
     it("fails when no query is set", async () => {

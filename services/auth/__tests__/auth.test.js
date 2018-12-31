@@ -2,6 +2,8 @@ const authUtils = require("@dk3/auth-utils")
 const micro = require("micro")
 const { HTTPStatusError } = require("@dk3/error")
 
+const db = require("@dk3/db")
+jest.mock("@dk3/db")
 jest.mock("@dk3/auth-utils")
 authUtils.authenticatedRequest = handler => handler
 
@@ -20,6 +22,16 @@ describe("auth", () => {
       json: json.mockReturnValue(response),
       status: status.mockReturnValue(response),
     }
+  })
+
+  it("establishes db connection (once)", async () => {
+    db.connect.mockReturnValue(true)
+
+    await auth({ url: "/any" }, response)
+
+    await auth({ url: "/any" }, response)
+
+    expect(db.connect).toHaveBeenCalledTimes(1)
   })
 
   it("handles non matched routes", async () => {
@@ -43,14 +55,31 @@ describe("auth", () => {
     )
   })
 
-  it("has a register handler", async () => {
-    const dummyUser = { username: "Ju", email: "jus@email.com" }
-    authUtils.register.mockReturnValue(dummyUser)
+  describe("register handler", () => {
+    it("registers new users", async () => {
+      authUtils.register.mockResolvedValue(true)
+      micro.json.mockReturnValue({
+        email: "jus@email.com",
+        password: "password",
+        username: "ju",
+      })
 
-    await auth({ url: "/?operation=register" }, response)
+      await auth({ url: "/?operation=register" }, response)
 
-    /* Registering currently hardcoded */
-    expect(response.json).toBeCalledWith(expect.objectContaining(dummyUser))
+      expect(response.json).toBeCalledWith(
+        expect.objectContaining({ message: expect.any(String) })
+      )
+    })
+
+    it("handles user creation errors", async () => {
+      authUtils.register.mockImplementation(() => {
+        throw new Error("uh oh")
+      })
+
+      await auth({ url: "/?operation=register" }, response)
+
+      expect(response.status).toBeCalledWith(400)
+    })
   })
 
   describe("dummy 'secured' case", () => {
