@@ -1,9 +1,10 @@
 const jwt = require("jsonwebtoken")
-const { User, dummyUserData } = require("@dk3/db/lib/model/User")
 const config = require("@dk3/config")
+const db = require("@dk3/db")
 
 jest.mock("jsonwebtoken")
 jest.mock("@dk3/config")
+jest.mock("@dk3/db")
 
 config.get.mockImplementation(key => {
   if (key === "ACCESS_TOKEN_LIFE") {
@@ -15,39 +16,58 @@ config.get.mockImplementation(key => {
   }
 })
 
+const dummyUserData = {
+  username: "ju",
+  email: "jus@email.com",
+}
+
 const authUtils = require("..")
 
 describe("auth-utils", () => {
   describe("register", () => {
-    it("creates a user", async () => {
-      const user = await authUtils.register({})
+    const userData = { username: "ju", password: "ladida" }
 
-      expect(user).toBeInstanceOf(User)
+    it("creates a user", async () => {
+      db.dao.createUser.mockResolvedValue({
+        ...userData,
+        passwordHash: "somehash",
+      })
+
+      const user = await authUtils.register(userData)
+
+      expect(user).toEqual(expect.objectContaining(userData))
     })
 
-    describe("when saving would fail", () => {
-      let origSave
-
-      beforeEach(() => {
-        User.prototype.save = jest.fn().mockReturnValue(null)
+    it("throws when user creation fails", () => {
+      db.dao.createUser.mockImplementation(() => {
+        throw new Error("Something went wrong")
       })
 
-      afterEach(() => {
-        User.prototype.save = origSave
-      })
-
-      it("throws when creation fails", () => {
-        expect(authUtils.register()).rejects.toThrow("Could not create user")
-      })
+      expect(authUtils.register()).rejects.toThrow("Something went wrong")
     })
   })
 
   describe("signIn", () => {
-    it("creates a jwt token when credentials match", async () => {
+    beforeEach(() => {
       jwt.sign.mockImplementation((payload, secret, options, callback) => {
         callback(null, "fake token")
       })
+    })
+
+    afterEach(() => {
+      jwt.sign.mockReset()
+    })
+
+    it("creates a jwt token when credentials match", async () => {
+      db.dao.userByEmail.mockResolvedValue({
+        username: "ju",
+        email: "jus@email.com",
+        comparePassword: pw => pw === "password",
+      })
+
       const token = await authUtils.signIn("jus@email.com", "password")
+
+      expect(db.dao.userByEmail).toBeCalledWith("jus@email.com")
 
       expect(token).toEqual({
         accessToken: "fake token",
@@ -55,12 +75,20 @@ describe("auth-utils", () => {
     })
 
     it("throws when user cant be found", async () => {
+      db.dao.userByEmail.mockResolvedValue(null)
+
       expect(
         authUtils.signIn("not-jus@email.com", "password")
       ).rejects.toThrow()
     })
 
     it("throws when the users password does not match", async () => {
+      db.dao.userByEmail.mockResolvedValue({
+        username: "ju",
+        email: "jus@email.com",
+        comparePassword: pw => pw === "password",
+      })
+
       expect(
         authUtils.signIn("jus@email.com", "not his password")
       ).rejects.toThrow()

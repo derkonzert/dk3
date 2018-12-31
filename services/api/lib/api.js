@@ -5,14 +5,21 @@ const {
   resolvers,
   createExecutable,
 } = require("@dk3/graphql")
+const { connect } = require("@dk3/db")
 const { createGraphQlContext } = require("./createGraphQlContext")
 
 const schema = createExecutable({ typeDefs, resolvers })
 
 const queryMissingMessage = "query is missing"
 
+let dbConnection
+
 module.exports = async (req, res) => {
   const { query, variables, operation } = await json(req)
+
+  if (!dbConnection) {
+    dbConnection = await connect()
+  }
 
   if (!query) {
     res.status(400)
