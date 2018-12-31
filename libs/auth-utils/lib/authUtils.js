@@ -3,18 +3,15 @@ const ms = require("ms")
 const { TokenExpiredError } = jwt
 const config = require("@dk3/config")
 const { HTTPStatusError } = require("@dk3/error")
-const { User } = require("@dk3/db/lib/model/User")
+const { dao } = require("@dk3/db")
 
 exports.register = async data => {
-  const newUser = new User(data)
+  try {
+    await dao.createUser(data)
 
-  const user = await newUser.save()
-
-  if (!user) {
-    throw new Error("Could not create user")
-  } else {
-    user.hash_password = undefined
-    return user
+    return true
+  } catch (err) {
+    throw err
   }
 }
 
@@ -54,9 +51,7 @@ exports.generateTokens = async user => {
 
 exports.signIn = async (email, password) => {
   try {
-    const user = await User.findOne({
-      email,
-    })
+    const user = await dao.userByEmail(email)
 
     if (!user) {
       throw new Error("User not found")

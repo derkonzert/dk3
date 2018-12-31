@@ -1,20 +1,30 @@
 const { json } = require("micro")
 const url = require("url")
+const { connect } = require("@dk3/db")
 const { register, signIn, getUserFromRequest } = require("@dk3/auth-utils")
 const { HTTPStatusError } = require("@dk3/error")
 
+let dbConnection
+
 module.exports = async function auth(req, res) {
   try {
+    if (!dbConnection) {
+      await connect()
+    }
+
+    let body
     const { query } = url.parse(req.url, true)
 
     switch (query.operation) {
       case "register":
-        const newUser = await register()
+        body = await json(req)
 
-        return res.json(newUser)
+        await register(body)
+
+        return res.json({ message: "User created" })
 
       case "signIn":
-        const body = await json(req)
+        body = await json(req)
 
         try {
           const payload = await signIn(body.email, body.password)

@@ -1,0 +1,1 @@
+exports.mockingoose = require("mockingoose")

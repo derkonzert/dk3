@@ -1,16 +1,43 @@
+// const mockingoose = require("mockingoose")
+const bcrypt = require("bcrypt")
+jest.mock("bcrypt")
+
 const { User } = require("../../lib/model/User")
 
 describe("User", () => {
-  it("implements dummy model", () => {
-    const dummyUser = new User()
+  let user
 
-    expect(User.findOne({ email: dummyUser.email })).toEqual(
-      expect.objectContaining(dummyUser)
-    )
+  beforeEach(() => {
+    user = new User({
+      email: "jus@email.com",
+      username: "ju",
+      passwordHash: "jus password hash",
+    })
 
-    expect(User.findOne({ email: "Notmyaddress" })).toEqual(null)
+    bcrypt.compareSync.mockImplementation(password => {
+      if (`${password} hash` === user.passwordHash) {
+        return true
+      }
+      return false
+    })
 
-    expect(dummyUser.comparePassword("password")).toBeTruthy()
-    expect(dummyUser.comparePassword("not the password")).toBeFalsy()
+    bcrypt.hashSync.mockReturnValue("fake hash")
+  })
+
+  describe(".hashPassword", () => {
+    it("uses bcrypt to hash the given raw password", () => {
+      expect(User.createPasswordHash("my funky password")).toEqual("fake hash")
+      expect(bcrypt.hashSync).toHaveBeenCalledWith("my funky password", 10)
+    })
+  })
+
+  describe("model.comparePassword", () => {
+    it("returns false if password hashes dont match", async () => {
+      expect(user.comparePassword("not jus password")).toBe(false)
+    })
+
+    it("returns true if password hashes do match", async () => {
+      expect(user.comparePassword("jus password")).toBe(true)
+    })
   })
 })

@@ -1,8 +1,5 @@
-const { User } = require("./model/User")
+const dao = require("./dao")
+const { connect } = require("./connect")
 
-exports.userById = async _id => {
-  if (_id === 1234) {
-    return new User()
-  }
-  return null
-}
+exports.dao = dao
+exports.connect = connect

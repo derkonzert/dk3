@@ -1,9 +1,9 @@
-const { db } = require("@dk3/db")
+const { dao } = require("@dk3/db")
 const { getUserFromRequest } = require("@dk3/auth-utils")
 
 exports.createGraphQlContext = async ({ req }) => {
   const context = {
-    db,
+    dao,
   }
 
   try {
