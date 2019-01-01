@@ -35,7 +35,9 @@ const typeDefs = gql`
     # Expiration info on used access token
     authInfo: AuthenticationInfo
     # Upcoming events
-    upcoming: [Event]
+    upcomingEvents: [Event]
+    # Past events
+    pastEvents: [Event]
   }
 `
 
