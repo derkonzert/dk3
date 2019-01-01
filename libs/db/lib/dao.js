@@ -6,8 +6,9 @@ const Event = require("./model/Event")
 exports.createUser = async data => {
   try {
     const passwordHash = User.Model.createPasswordHash(data.password)
+    const user = await User.Model.create({ ...data, passwordHash })
 
-    return await User.Model.create({ ...data, passwordHash })
+    return user
   } catch (err) {
     throw err
   }
@@ -41,6 +42,8 @@ exports.likeEvent = async (eventId, like, userId) => {
     throw err
   }
 }
+
+exports.eventById = async _id => await Event.Model.findById(_id).exec()
 
 exports.allEvents = async ({ filter = {}, sort = {} } = {}) =>
   await Event.Model.find({

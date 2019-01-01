@@ -1,14 +1,12 @@
-const mockingoose = require("mockingoose").default
 const User = require("../lib/model/User")
 const Event = require("../lib/model/Event")
 
+jest.mock("../lib/model/User", () => ({
+  Model: {},
+}))
 jest.mock("../lib/model/Event", () => ({
   Model: {
     create: data => ({ mock: Symbol.for("create"), data }),
-    // findByIdAndUpdate: data => ({
-    //   mock: Symbol.for("findByIdAndUpdate"),
-    //   data,
-    // }),
   },
 }))
 
@@ -21,57 +19,140 @@ const userDoc = {
 }
 
 describe("dao", () => {
-  beforeEach(() => {
-    mockingoose.resetAll()
-  })
-
   describe("createUser", () => {
-    it("throws when password is missing", () => {
-      expect(dao.createUser(userDoc)).rejects.toThrow()
+    beforeEach(() => {
+      User.Model.create = jest.fn().mockReturnValue(userDoc)
+      User.Model.createPasswordHash = jest.fn().mockReturnValue("hash")
     })
 
-    it("throws when model validation fails", () => {
-      expect(dao.createUser({ password: "123" })).rejects.toThrow()
+    it("throws when password is missing", () => {
+      User.Model.createPasswordHash.mockImplementation(() => {
+        throw new Error("something went wrong")
+      })
+
+      expect.assertions(1)
+
+      return expect(dao.createUser(userDoc)).rejects.toThrow()
+    })
+
+    it("throws when model creation fails", () => {
+      User.Model.create.mockImplementation(() => {
+        throw new Error("Something went wrong")
+      })
+
+      expect.assertions(1)
+
+      return expect(
+        dao.createUser({ password: "123", email: "kfae" })
+      ).rejects.toThrow("Something went wrong")
     })
 
     it("returns freshly created User", async () => {
       const user = await dao.createUser({ ...userDoc, password: "password" })
 
-      expect(user).toBeInstanceOf(User.Model)
-
-      expect(user.email).toEqual(userDoc.email)
+      expect(user).toEqual(userDoc)
     })
   })
 
   describe("userById", () => {
-    it("throws when user not found", () => {
-      expect(dao.userById()).resolves.toBeUndefined()
+    beforeEach(() => {
+      User.Model.findById = jest.fn().mockReturnValue(User.Model)
+      User.Model.exec = jest.fn().mockResolvedValue(userDoc)
+    })
+
+    it("calls Model find function with given ID", async () => {
+      await dao.userById("my id")
+
+      expect(User.Model.findById).toHaveBeenCalledWith("my id")
+    })
+
+    it("throws when user not found", async () => {
+      User.Model.exec = jest.fn().mockResolvedValue(undefined)
+
+      expect.assertions(2)
+
+      const result = await dao.userById()
+
+      expect(User.Model.findById).toBeCalledWith(undefined)
+
+      return expect(result).toBeUndefined()
     })
 
     it("resolves user when found", async () => {
-      mockingoose.User.toReturn(userDoc, "findOne")
-
       const user = await dao.userById(userDoc._id)
 
-      expect(user).toBeInstanceOf(User.Model)
+      expect(user).toEqual(userDoc)
     })
   })
 
   describe("userByEmail", () => {
+    beforeEach(() => {
+      User.Model.findOne = jest.fn().mockReturnValue(User.Model)
+      User.Model.exec = jest.fn().mockResolvedValue(userDoc)
+    })
+
+    it("calls Model find function with given email", async () => {
+      await dao.userByEmail("my@email.com")
+
+      expect(User.Model.findOne).toHaveBeenCalledWith(
+        expect.objectContaining({ email: "my@email.com" })
+      )
+    })
+
     it("throws when user not found", () => {
-      expect(dao.userByEmail()).resolves.toBeUndefined()
+      expect.assertions(1)
+
+      User.Model.exec = jest.fn().mockImplementation(() => {
+        throw new Error("No user found")
+      })
+
+      return expect(dao.userByEmail()).rejects.toThrow()
     })
 
     it("resolves user when found", async () => {
-      mockingoose.User.toReturn(userDoc, "findOne")
-
       const user = await dao.userByEmail(userDoc.email)
 
-      expect(user).toBeInstanceOf(User.Model)
+      expect(user).toBe(userDoc)
     })
   })
 
   /* Event methods */
+
+  describe("eventById", () => {
+    const expectedResult = Symbol.for("event")
+
+    beforeEach(() => {
+      Event.Model.findById = jest.fn().mockReturnValue(Event.Model)
+      Event.Model.exec = jest.fn().mockReturnValue(expectedResult)
+    })
+
+    it("calls Model find function with given ID", async () => {
+      await dao.eventById("my id")
+
+      expect(Event.Model.findById).toHaveBeenCalledWith("my id")
+    })
+
+    it("throws when event not found", async () => {
+      expect.assertions(1)
+
+      Event.Model.exec = jest.fn().mockImplementation(() => {
+        throw new Error("event not found")
+      })
+
+      return expect(dao.eventById("failing id")).rejects.toThrow(
+        "event not found"
+      )
+    })
+
+    it("resolves to event when found", async () => {
+      const user = await dao.eventById("some_id")
+
+      expect(Event.Model.findById).toBeCalledWith("some_id")
+
+      expect(user).toBe(expectedResult)
+    })
+  })
+
   describe("createEvent", async () => {
     const eventData = {
       title: "One two",
@@ -80,7 +161,9 @@ describe("dao", () => {
     }
 
     it("throws on invalid data", () => {
-      expect(dao.createEvent()).rejects.toThrow()
+      expect.assertions(1)
+
+      return expect(dao.createEvent()).rejects.toThrow()
     })
 
     it("returns a new Event", async () => {
@@ -156,9 +239,11 @@ describe("dao", () => {
         throw new Error("Maybe the document wasnt found?")
       })
 
-      expect(dao.likeEvent("event-id", false, "user-id")).rejects.toThrow(
-        "Maybe the document wasnt found?"
-      )
+      expect.assertions(1)
+
+      return expect(
+        dao.likeEvent("event-id", false, "user-id")
+      ).rejects.toThrow("Maybe the document wasnt found?")
     })
   })
 

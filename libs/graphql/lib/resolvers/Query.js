@@ -13,5 +13,8 @@ exports.Query = {
     return null
   },
 
-  upcoming: async (_, args, context) => await context.dao.upcomingEvents(),
+  upcomingEvents: async (_, args, context) =>
+    await context.dao.upcomingEvents(),
+
+  pastEvents: async (_, args, context) => await context.dao.pastEvents(),
 }
