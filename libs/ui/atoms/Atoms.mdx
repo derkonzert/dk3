@@ -1,0 +1,61 @@
+---
+name: Atoms
+route: /atoms
+---
+
+import { Playground } from "docz"
+
+# Atoms
+
+## Typography
+
+import {
+  MegaTitle,
+  Title,
+  SubTitle,
+  ListTitle,
+  Description,
+} from "./Typography"
+
+<Playground>
+  <MegaTitle>derkonzert</MegaTitle>
+  <Title>Uncle Acid and the Deadbeats</Title>
+  <SubTitle>The Melvins</SubTitle>
+  <ListTitle>Tomorrow</ListTitle>
+  <Description>Unter Deck — 19:30</Description>
+</Playground>
+
+Inverted on fancy backgrounds:
+
+<Playground style={{ background: "#424242" }}>
+  <Title inverted>Uncle Acid and the Deadbeats</Title>
+  <SubTitle inverted>The Melvins</SubTitle>
+  <ListTitle inverted>Tomorrow</ListTitle>
+  <Description inverted>Unter Deck — 19:30</Description>
+</Playground>
+
+## Boxes
+
+import { Box, FancyBox, SuperFancyBox } from "./Boxes"
+
+<Playground>
+  <Box>Basic Box</Box>
+  <FancyBox>Fancy Box</FancyBox>
+  <SuperFancyBox>Super fancy box</SuperFancyBox>
+</Playground>
+
+## CalendarDay
+
+import { CalendarDay } from "./CalendarDay"
+
+<Playground>
+  <CalendarDay day={2} dayName="Fr" />
+</Playground>
+
+## Spinner
+
+import { Spinner } from "./Spinner"
+
+<Playground>
+  <Spinner /> Just a Spinner
+</Playground>

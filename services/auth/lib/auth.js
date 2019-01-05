@@ -23,7 +23,7 @@ module.exports = async function auth(req, res) {
         try {
           await register(body)
         } catch (err) {
-          throw new HTTPStatusError(err.message, 400)
+          throw new HTTPStatusError({ title: err.message, statusCode: 400 })
         }
 
         return res.json({ message: "User created" })
@@ -48,16 +48,16 @@ module.exports = async function auth(req, res) {
 
           return res.json(user)
         } catch (err) {
-          res.status(err.status)
+          res.status(err.statusCode)
           return res.json({
             message: err.message,
           })
         }
       default:
-        throw new HTTPStatusError("Not found", 404)
+        throw new HTTPStatusError({ title: "Not found", statusCode: 404 })
     }
   } catch (err) {
-    res.status(err.status || 500)
+    res.status(err.statusCode || 500)
 
     return res.json({
       message: err.message,

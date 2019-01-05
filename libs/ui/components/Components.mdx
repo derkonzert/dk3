@@ -1,0 +1,210 @@
+---
+name: Components
+route: /components
+---
+
+import { State } from "react-powerplug"
+import { Playground } from "docz"
+
+# Components
+
+## EventCard
+
+import { EventCard } from "./EventCard"
+
+A card comes with 3 fancyness levels:
+
+<Playground>
+  <State initial={{ b1: false, b2: true, b3: false }}>
+    {({ state, setState }) => (
+      <React.Fragment>
+        <EventCard
+          title="Uncle Acid and the Deadbeats"
+          description="Unter Deck — 19:30 Uhr"
+          day={2}
+          dayName="Fr"
+          bookmarked={state.b1}
+          onBookmarkClick={() => {
+            setState({ b1: !state.b1 })
+          }}
+        />
+        <EventCard
+          fancyLevel={1}
+          title="Uncle Acid and the Deadbeats"
+          description="Unter Deck — 19:30 Uhr"
+          day={30}
+          dayName="Mi"
+          bookmarked={state.b2}
+          onBookmarkClick={() => {
+            setState({ b2: !state.b2 })
+          }}
+        />
+        <EventCard
+          fancyLevel={2}
+          title="Uncle Acid and the Deadbeats"
+          description="Unter Deck — 19:30 Uhr"
+          day={19}
+          dayName="Do"
+          bookmarked={state.b3}
+          onBookmarkClick={() => {
+            setState({ b3: !state.b3 })
+          }}
+        />
+      </React.Fragment>
+    )}
+  </State>
+</Playground>
+
+### Large variant
+
+<Playground>
+  <State initial={{ b1: true, b2: false, b3: true }}>
+    {({ state, setState }) => (
+      <React.Fragment>
+        <EventCard
+          large
+          title="Nine Inch Nails"
+          description="Unter Deck — 19:30 Uhr"
+          bookmarked={state.b1}
+          onBookmarkClick={() => {
+            setState({ b1: !state.b1 })
+          }}
+        />
+        <EventCard
+          large
+          fancyLevel={1}
+          title="Nine Inch Nails"
+          description="Unter Deck — 19:30 Uhr"
+          bookmarked={state.b2}
+          onBookmarkClick={() => {
+            setState({ b2: !state.b2 })
+          }}
+        />
+        <EventCard
+          large
+          fancyLevel={2}
+          title="Nine Inch Nails"
+          description="Unter Deck — 19:30 Uhr"
+          bookmarked={state.b3}
+          onBookmarkClick={() => {
+            setState({ b3: !state.b3 })
+          }}
+        />
+      </React.Fragment>
+    )}
+  </State>
+</Playground>
+
+With different data:
+
+<Playground>
+  <State initial={{ b1: true, b2: false, b3: true, b4: true, b5: false, b6: false }}>
+    {({ state, setState }) => (
+      <React.Fragment>
+        <EventCard
+          day={12}
+          dayName="Mo"
+          title="Uncle Acid and the Deadbeats"
+          description="Unter Deck — 19:30 Uhr"
+          bookmarked={state.b1}
+          onBookmarkClick={() => {
+            setState({ b1: !state.b1 })
+          }}
+        />
+        <EventCard
+          day={2}
+          dayName="Fr"
+          fancyLevel={1}
+          title="Slime"
+          description="Very long location name that is unlikely to be realistic — 19:30 Uhr"
+          bookmarked={state.b2}
+          onBookmarkClick={() => {
+            setState({ b2: !state.b2 })
+          }}
+        />
+        <EventCard
+          day={31}
+          dayName="Di"
+          fancyLevel={2}
+          title="Hieb- und Stichfest 2017: Gorilla Angreb + Sniffing Glue + Piss Test + Youth Avoiders + Kitt Wolkenflitzer + Thee Pessimists + Pettersson + Theresa Chanson"
+          description="Kafe Kult — 19:30 Uhr"
+          bookmarked={state.b3}
+          onBookmarkClick={() => {
+            setState({ b3: !state.b3 })
+          }}
+        />
+
+        <EventCard
+          large
+          title="Uncle Acid and the Deadbeats"
+          description="Unter Deck — 19:30 Uhr"
+          bookmarked={state.b4}
+          onBookmarkClick={() => {
+            setState({ b4: !state.b4 })
+          }}
+        />
+        <EventCard
+          large
+          fancyLevel={1}
+          title="Slime"
+          description="Very long location name that is unlikely to be realistic — 19:30 Uhr"
+          bookmarked={state.b5}
+          onBookmarkClick={() => {
+            setState({ b5: !state.b5 })
+          }}
+        />
+        <EventCard
+          large
+          fancyLevel={2}
+          title="Hieb- und Stichfest 2017: Gorilla Angreb + Sniffing Glue + Piss Test + Youth Avoiders + Kitt Wolkenflitzer + Thee Pessimists + Pettersson + Theresa Chanson"
+          description="Kafe Kult — 19:30 Uhr"
+          bookmarked={state.b6}
+          onBookmarkClick={() => {
+            setState({ b6: !state.b6 })
+          }}
+        />
+      </React.Fragment>
+    )}
+    </State>
+
+</Playground>
+
+## SegmentedControl
+
+import { SegmentedControl, SegmentedControlOption } from "./SegmentedControl"
+
+<Playground>
+  <State initial={{ value: "all" }}>
+    {({ state, setState }) => (
+      <SegmentedControl
+        value={state.value}
+        name="filter"
+        onChange={e => setState({ value: e.target.value })}
+      >
+        <SegmentedControlOption value="all">All</SegmentedControlOption>
+        <SegmentedControlOption value="mine">Mine</SegmentedControlOption>
+      </SegmentedControl>
+    )}
+  </State>
+</Playground>
+
+<Playground>
+  <State initial={{ value: "always" }}>
+    {({ state, setState }) => (
+      <SegmentedControl
+        value={state.value}
+        name="filter"
+        label="Send notification on new events"
+        onChange={e => setState({ value: e.target.value })}
+      >
+        <SegmentedControlOption value="always">Always</SegmentedControlOption>
+        <SegmentedControlOption value="occasionally">
+          Occasionally
+        </SegmentedControlOption>
+        <SegmentedControlOption value="never" unfavored>
+          Never
+        </SegmentedControlOption>
+      </SegmentedControl>
+    )}
+  </State>
+</Playground>

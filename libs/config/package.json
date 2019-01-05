@@ -17,6 +17,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@dk3/error": "^0.0.0"
+    "@dk3/error": "^0.0.0",
+    "@emotion/styled": "^10.0.5"
   }
 }

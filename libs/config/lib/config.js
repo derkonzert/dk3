@@ -7,7 +7,9 @@ const config = { ...defaults, ...process.env }
 
 const validate = (name, throwOnError = true) => {
   if (throwOnError && !config.hasOwnProperty(name)) {
-    throw new InvalidConfigurationError(`Config "${name}" missing in env`)
+    throw new InvalidConfigurationError({
+      title: `Config "${name}" missing in env`,
+    })
   }
 }
 
