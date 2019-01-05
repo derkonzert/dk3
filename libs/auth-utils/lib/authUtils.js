@@ -115,12 +115,15 @@ exports.getUserFromRequest = async req => {
       return payload
     } catch (err) {
       if (err instanceof TokenExpiredError) {
-        throw new HTTPStatusError("Access token has expired", 401)
+        throw new HTTPStatusError({
+          title: "Access token has expired",
+          statusCode: 401,
+        })
       } else {
-        throw new HTTPStatusError(err.message, 401)
+        throw new HTTPStatusError({ title: err.message, statusCode: 401 })
       }
     }
   }
 
-  throw new HTTPStatusError("Not authenticated", 401)
+  throw new HTTPStatusError({ title: "Not authenticated", statusCode: 401 })
 }

@@ -27,6 +27,7 @@
     "@dk3/auth-utils": "^0.0.0",
     "@dk3/db": "^0.0.0",
     "@dk3/graphql": "^0.0.0",
+    "@emotion/styled": "^10.0.5",
     "micro": "^9.3.3"
   }
 }

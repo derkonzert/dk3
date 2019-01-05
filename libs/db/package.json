@@ -26,6 +26,7 @@
   "dependencies": {
     "@dk3/config": "^0.0.0",
     "@dk3/logger": "^0.0.0",
+    "@emotion/styled": "^10.0.5",
     "bcrypt": "^3.0.3",
     "luxon": "^1.9.0",
     "mockingoose": "^2.12.0",

@@ -1,0 +1,38 @@
+---
+name: Layouts
+route: /layouts
+---
+
+import { State } from "react-powerplug"
+import { Playground } from "docz"
+
+# Layouts
+
+import {
+  ListAndDetail,
+  ListAndDetailMain,
+  ListAndDetailSide,
+} from "./ListAndDetail"
+
+<Playground>
+  <State initial={{ showDetail: false }}>
+    {({ state, setState }) => (
+      <div
+        style={{
+          position: "relative",
+          height: 500,
+          width: 360,
+          overflow: "hidden",
+          margin: "0 auto",
+          boxShadow: "0 0 9px 1px #33333344",
+        }}
+        onClick={() => setState({ showDetail: !state.showDetail })}
+      >
+        <ListAndDetail showDetail={state.showDetail}>
+          <ListAndDetailMain>MAIN PAGE</ListAndDetailMain>
+          <ListAndDetailSide>DETAIL PAGE</ListAndDetailSide>
+        </ListAndDetail>
+      </div>
+    )}
+  </State>
+</Playground>

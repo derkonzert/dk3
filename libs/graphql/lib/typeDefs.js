@@ -27,6 +27,7 @@ const typeDefs = gql`
     likedByMe: Boolean
     likedBy: [User]
     author: User
+    fancyness: Int
   }
 
   type Query {

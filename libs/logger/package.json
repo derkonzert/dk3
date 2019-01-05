@@ -22,5 +22,8 @@
   },
   "bugs": {
     "url": "https://github.com/jkempff/dk3/issues"
+  },
+  "dependencies": {
+    "@emotion/styled": "^10.0.5"
   }
 }

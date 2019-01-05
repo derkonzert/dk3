@@ -6,8 +6,6 @@ jest.mock("../lib/defaults")
 defaults.FAKE_DEFAULT = "Ahoi Boi!"
 defaults.FAKE_DEFAULT_OVERWRITE = "Ahoi Boi 2!"
 
-const { InvalidConfigurationError } = require("@dk3/error")
-
 describe("config", () => {
   /* set vars before requiring env */
   process.env.MY_FIRST_TEST_VAR = "MY_FIRST_TEST_VALUE"
@@ -18,9 +16,7 @@ describe("config", () => {
   process.env.MY_SECOND_TEST_VAR = "MY_SECOND_TEST_VALUE"
 
   it("fails for not defined configuration", () => {
-    expect(() => config.get("NOT_DEFINED_VAR")).toThrowError(
-      InvalidConfigurationError
-    )
+    expect(() => config.get("NOT_DEFINED_VAR")).toThrow()
   })
 
   it("fails not when throwOnError is false", () => {
@@ -32,9 +28,7 @@ describe("config", () => {
   })
 
   it("does not recognize values set after require", () => {
-    expect(() => config.get("MY_SECOND_TEST_VAR")).toThrowError(
-      InvalidConfigurationError
-    )
+    expect(() => config.get("MY_SECOND_TEST_VAR")).toThrowError()
   })
 
   it("does not recognize values changed after first require", () => {

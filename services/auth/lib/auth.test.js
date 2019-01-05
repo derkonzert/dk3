@@ -121,7 +121,7 @@ describe("auth", () => {
       })
 
       authUtils.signIn.mockImplementation(async () => {
-        throw new HTTPStatusError("No user found", 401)
+        throw new HTTPStatusError({ title: "No user found", statusCode: 401 })
       })
 
       await auth({ url: "/?operation=signIn" }, response)
@@ -129,7 +129,7 @@ describe("auth", () => {
       // expect(response.status).toBeCalledWith(401)
       expect(response.json).toBeCalledWith(
         expect.objectContaining({
-          message: "No user found",
+          message: expect.stringContaining("No user found"),
         })
       )
     })
