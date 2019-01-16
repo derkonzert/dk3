@@ -17,6 +17,7 @@
   "scripts": {
     "dev": "docz dev",
     "build": "docz build",
+    "now-build": "yarn build",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {

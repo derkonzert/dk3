@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "name": "dk3-ui-docz",
+  "alias": "ui.dk3.tech",
+  "builds": [{ "src": "package.json", "use": "@now/static-build" }]
+}
