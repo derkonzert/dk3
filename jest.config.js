@@ -6,9 +6,11 @@ module.exports = {
   /*testEnvironment: "node",*/
   collectCoverageFrom: [
     "libs/**/*.js",
-    "services/**/*.js",
     "libs/**/*.jsx",
+    "services/**/*.js",
     "services/**/*.jsx",
+    "frontend/**/*.js",
+    "frontend/**/*.jsx",
   ],
   coverageThreshold: {
     global: {
