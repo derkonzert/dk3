@@ -8,6 +8,7 @@ export const global = css`
     outline: none;
   }
   html {
+    background-color: #f4f2f2;
     font-size: 62.5%; /* ~10px makes using rem simple */
   }
   body {

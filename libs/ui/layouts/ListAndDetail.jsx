@@ -36,12 +36,13 @@ const MainPage = styled.div`
 
 const MainPageInner = styled.div`
   transition: 450ms transform;
+  padding: 2rem 1rem;
 
   .show-detail & {
     overflow: hidden;
     height: 100%;
     margin: -10rem 0;
-    padding: 10rem 0;
+    padding: 10rem 1rem;
     transform: scale(0.95) translateY(20px);
   }
 `

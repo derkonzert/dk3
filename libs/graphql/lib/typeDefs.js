@@ -6,7 +6,7 @@ const typeDefs = gql`
   scalar Date
 
   type User {
-    _id: String
+    id: String
     email: String
     username: String
   }
@@ -23,6 +23,7 @@ const typeDefs = gql`
     from: Date
     created: Date
     artists: [String]
+    location: String
     approved: Boolean
     likedByMe: Boolean
     likedBy: [User]
