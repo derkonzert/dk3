@@ -1,0 +1,69 @@
+---
+name: Form
+route: /form
+---
+
+import { State } from "react-powerplug"
+import { Playground } from "docz"
+
+# Components
+
+## Button
+
+import { Button } from "./Button"
+
+<Playground>
+  <Button>Edit event</Button>
+</Playground>
+
+## TextInput
+
+import { TextInput } from "./TextInput"
+
+<Playground>
+  <State initial={{ value: "" }}>
+    {({ state, setState }) => (
+      <TextInput
+        id="test"
+        label="Band Name"
+        value={state.value}
+        onChange={e => setState({ value: e.target.value })}
+      />
+    )}
+  </State>
+</Playground>
+
+Invalid text
+
+<Playground>
+  <State initial={{ value: "" }}>
+    {({ state, setState }) => (
+      <TextInput
+        id="test"
+        label="Band Name"
+        error="Please enter the name of the band"
+        validate
+        valid={false}
+        value={state.value}
+        onChange={e => setState({ value: e.target.value })}
+      />
+    )}
+  </State>
+</Playground>
+
+Valid
+
+<Playground>
+  <State initial={{ value: "" }}>
+    {({ state, setState }) => (
+      <TextInput
+        id="test"
+        label="Band Name"
+        validate
+        valid={true}
+        value={state.value}
+        onChange={e => setState({ value: e.target.value })}
+      />
+    )}
+  </State>
+</Playground>
