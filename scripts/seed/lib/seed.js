@@ -39,6 +39,7 @@ const dropCollection = async (connection, collectionName) => {
 const dropDataBase = async connection => {
   try {
     await dropCollection(connection, "users")
+    await dropCollection(connection, "events")
   } catch (err) {
     throw err
   }
