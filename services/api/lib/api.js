@@ -15,6 +15,7 @@ const queryMissingMessage = "query is missing"
 let dbConnection
 
 module.exports = async (req, res) => {
+  // TODO: Support body being an array of queries (batch)
   const { query, variables, operation } = await json(req)
 
   if (!dbConnection) {

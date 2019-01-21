@@ -9,6 +9,7 @@ const typeDefs = gql`
     id: String
     email: String
     username: String
+    upcomingEvents: [Event]
   }
 
   type AuthenticationInfo {
@@ -25,8 +26,8 @@ const typeDefs = gql`
     artists: [String]
     location: String
     approved: Boolean
-    likedByMe: Boolean
-    likedBy: [User]
+    bookmarkedByMe: Boolean
+    bookmarkedBy: [User]
     author: User
     fancyness: Int
   }
@@ -37,9 +38,26 @@ const typeDefs = gql`
     # Expiration info on used access token
     authInfo: AuthenticationInfo
     # Upcoming events
-    upcomingEvents: [Event]
+    upcomingEvents(filter: String): [Event]
     # Past events
     pastEvents: [Event]
+  }
+
+  input CreateEventInput {
+    title: String!
+    location: String!
+    from: Date!
+    to: Date
+  }
+
+  input BookmarkEventInput {
+    id: ID!
+    bookmarked: Boolean!
+  }
+
+  type Mutation {
+    createEvent(input: CreateEventInput!): Event
+    bookmarkEvent(input: BookmarkEventInput!): Event
   }
 `
 

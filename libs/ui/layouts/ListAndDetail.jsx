@@ -35,8 +35,12 @@ const MainPage = styled.div`
 `
 
 const MainPageInner = styled.div`
-  transition: 450ms transform;
   padding: 2rem 1rem;
+  margin: 0 auto;
+  max-width: 72.8rem;
+  width: 100%;
+
+  transition: 450ms transform;
 
   .show-detail & {
     overflow: hidden;

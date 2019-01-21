@@ -13,8 +13,16 @@ exports.Query = {
     return null
   },
 
-  upcomingEvents: async (_, args, context) =>
-    await context.dao.upcomingEvents(),
+  upcomingEvents: async (_, args, { user, dao }) => {
+    if (args.filter === "mine") {
+      return dao.upcomingEvents({
+        filter: {
+          bookmarkedBy: user._id,
+        },
+      })
+    }
+    return await dao.upcomingEvents()
+  },
 
   pastEvents: async (_, args, context) => await context.dao.pastEvents(),
 }

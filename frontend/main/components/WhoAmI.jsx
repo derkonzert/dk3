@@ -1,6 +1,7 @@
 import React from "react"
 import { Query } from "react-apollo"
 import gql from "graphql-tag"
+import { Description } from "@dk3/ui/atoms/Typography"
 
 export const currentUserQuery = gql`
   query currentUser {
@@ -16,11 +17,9 @@ export const WhoAmI = () => {
     <Query query={currentUserQuery}>
       {({ loading, error, data: { me } }) => {
         if (error) return <span>Error loading posts.</span>
-        if (loading) return <div>Loading</div>
+        if (loading || !me) return null
 
-        const username = me ? me.username : "not logged in"
-
-        return <React.Fragment>User is {username}</React.Fragment>
+        return <Description>whoami: {me.username}</Description>
       }}
     </Query>
   )

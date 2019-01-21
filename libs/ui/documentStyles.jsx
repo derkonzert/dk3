@@ -19,7 +19,8 @@ export const global = css`
 
   @media screen and (min-width: 40em) {
     html {
-      font-size: 87.5%; /* ~14px scale everything up a little */
+      /* ~12px scale everything up a little */
+      font-size: 75%;
     }
   }
 `
