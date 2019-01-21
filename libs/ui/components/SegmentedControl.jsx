@@ -4,6 +4,7 @@ import styled from "@emotion/styled"
 import VisuallyHidden from "@reach/visually-hidden"
 
 import { gradientBackground } from "../common"
+import { withSpacing } from "../utils/withSpacing"
 
 export const Select = styled.div`
   position: relative;
@@ -69,26 +70,21 @@ export const unfavoredStyle = css`
   filter: saturate(0);
 `
 
-export const SegmentedControl = ({
-  children,
-  value,
-  name,
-  onChange,
-  label,
-  ...props
-}) => (
-  <React.Fragment>
-    {label && <Label>{label}</Label>}
-    <Select {...props}>
-      {React.Children.map(children, child =>
-        React.cloneElement(child, {
-          checked: child.props.value === value,
-          onSelect: onChange,
-          name: name,
-        })
-      )}
-    </Select>
-  </React.Fragment>
+export const SegmentedControl = withSpacing({ mv: 3 })(
+  ({ children, value, name, className, onChange, label, ...props }) => (
+    <div className={className}>
+      {label && <Label>{label}</Label>}
+      <Select {...props}>
+        {React.Children.map(children, child =>
+          React.cloneElement(child, {
+            checked: child.props.value === value,
+            onSelect: onChange,
+            name: name,
+          })
+        )}
+      </Select>
+    </div>
+  )
 )
 
 export const SegmentedControlOption = ({

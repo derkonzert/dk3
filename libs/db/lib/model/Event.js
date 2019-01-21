@@ -49,7 +49,7 @@ const schemaDefinition = {
   /* Who authored this? Can be null, due to possible anonymous submissions */
   author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   /* Who has the event in his list? */
-  likedBy: { type: [mongoose.Schema.Types.ObjectId], ref: "User" },
+  bookmarkedBy: { type: [mongoose.Schema.Types.ObjectId], ref: "User" },
 }
 
 exports.schemaDefinition = schemaDefinition

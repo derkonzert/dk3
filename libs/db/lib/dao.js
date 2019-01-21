@@ -21,19 +21,19 @@ exports.userByEmail = async email => await User.Model.findOne({ email }).exec()
 /* Event methods */
 exports.createEvent = async ({ eventData, autoLike }, user) => {
   if (user && autoLike) {
-    eventData.likedBy = [user._id]
+    eventData.bookmarkedBy = [user._id]
   }
 
   return await Event.Model.create({ author: user && user._id, ...eventData })
 }
 
-exports.likeEvent = async (eventId, like, userId) => {
+exports.bookmarkEvent = async ({ eventId, bookmarked, userId }) => {
   try {
-    const operation = like ? "$push" : "$pull"
+    const operation = bookmarked ? "$push" : "$pull"
 
     await Event.Model.findByIdAndUpdate(eventId, {
       [operation]: {
-        likedBy: userId,
+        bookmarkedBy: userId,
       },
     }).exec()
 
@@ -64,8 +64,8 @@ exports.pastEvents = async ({ filter = {}, sort = {} } = {}) =>
     .sort({ from: -1, ...sort })
     .exec()
 
-exports.upcomingEvents = async ({ filter = {}, sort = {} } = {}) =>
-  await Event.Model.find({
+exports.upcomingEvents = async ({ filter = {}, sort = {} } = {}) => {
+  return await Event.Model.find({
     to: {
       $gte: DateTime.local()
         .startOf("day")
@@ -75,3 +75,4 @@ exports.upcomingEvents = async ({ filter = {}, sort = {} } = {}) =>
   })
     .sort({ from: 1, ...sort })
     .exec()
+}

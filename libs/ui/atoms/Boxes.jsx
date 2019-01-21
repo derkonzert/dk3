@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core"
 import { gradientBackground } from "../common"
+import { withSpacing } from "../utils/withSpacing"
 
 const box = css`
-  margin: 1rem 0;
-  padding: 0.3rem;
-  border-radius: 0.4rem;
+  padding: 3px;
+  border-radius: 4px;
   background: #ffffff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
 `
@@ -35,20 +35,22 @@ const superFancyBox = css`
   color: white;
 `
 
-export const Box = ({ children, ...props }) => (
+export const Box = withSpacing({ mv: 3 })(({ children, ...props }) => (
   <div css={box} {...props}>
     <div css={boxInner}>{children}</div>
   </div>
-)
+))
 
-export const FancyBox = ({ children, ...props }) => (
+export const FancyBox = withSpacing({ mv: 3 })(({ children, ...props }) => (
   <div css={fancyBox} {...props}>
     <div css={fancyBoxInner}>{children}</div>
   </div>
-)
+))
 
-export const SuperFancyBox = ({ children, ...props }) => (
-  <div css={superFancyBox} {...props}>
-    <div css={boxInner}>{children}</div>
-  </div>
+export const SuperFancyBox = withSpacing({ mv: 3 })(
+  ({ children, ...props }) => (
+    <div css={superFancyBox} {...props}>
+      <div css={boxInner}>{children}</div>
+    </div>
+  )
 )

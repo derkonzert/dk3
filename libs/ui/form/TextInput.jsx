@@ -7,6 +7,7 @@ import {
   validInputStyle,
   invalidInputStyle,
 } from "./inputStyles"
+import { withSpacing } from "../utils/withSpacing"
 
 const Input = styled.input`
   ${inputStyles}
@@ -31,12 +32,14 @@ export const InputError = styled.div`
   color: #d23939;
 `
 
-export const TextInput = ({ label, valid, validate, error, id, ...props }) => (
-  <React.Fragment>
-    {!!label && <InputLabel htmlFor={id}>{label}</InputLabel>}
-    <InputBorder validate={validate} valid={valid}>
-      <Input {...props} id={id} />
-    </InputBorder>
-    {!!error && <InputError>{error}</InputError>}
-  </React.Fragment>
+export const TextInput = withSpacing({ mb: 3 })(
+  ({ label, valid, validate, error, id, className, ...props }) => (
+    <div className={className}>
+      {!!label && <InputLabel htmlFor={id}>{label}</InputLabel>}
+      <InputBorder validate={validate} valid={valid}>
+        <Input {...props} id={id} />
+      </InputBorder>
+      {!!error && <InputError>{error}</InputError>}
+    </div>
+  )
 )
