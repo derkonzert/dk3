@@ -46,30 +46,34 @@ describe("Query", () => {
   })
 
   describe("upcomingEvents", () => {
-    it("returns upcoming events from dao", async () => {
+    it("returns upcoming events from dao", () => {
+      expect.assertions(1)
+
       const expectedResult = [1, 2, 3]
       const context = {
         dao: {
           upcomingEvents: jest.fn().mockReturnValue(expectedResult),
         },
       }
-      expect(Query.upcomingEvents(undefined, undefined, context)).resolves.toBe(
-        expectedResult
-      )
+
+      return expect(
+        Query.upcomingEvents(undefined, undefined, context)
+      ).resolves.toBe(expectedResult)
     })
   })
 
   describe("pastEvents", () => {
-    it("returns past events from dao", async () => {
+    it("returns past events from dao", () => {
+      expect.assertions(1)
       const expectedResult = [1, 2, 3]
       const context = {
         dao: {
           pastEvents: jest.fn().mockReturnValue(expectedResult),
         },
       }
-      expect(Query.pastEvents(undefined, undefined, context)).resolves.toBe(
-        expectedResult
-      )
+      return expect(
+        Query.pastEvents(undefined, undefined, context)
+      ).resolves.toBe(expectedResult)
     })
   })
 })

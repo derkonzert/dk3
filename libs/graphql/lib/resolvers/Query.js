@@ -14,7 +14,7 @@ exports.Query = {
   },
 
   upcomingEvents: async (_, args, { user, dao }) => {
-    if (args.filter === "mine") {
+    if (args && args.filter === "mine") {
       return dao.upcomingEvents({
         filter: {
           bookmarkedBy: user._id,

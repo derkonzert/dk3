@@ -7,7 +7,7 @@
     "dev": "JWT_SECRET=la-di-da now-lambda",
     "format": "prettier --write '{libs,services}/**/*.js'",
     "test": "JWT_SECRET=la-di-da jest",
-    "test:watch": "JWT_SECRET=la-di-da jest --watch"
+    "test:watch": "JWT_SECRET=la-di-da jest --watch --collectCoverage false"
   },
   "keywords": [],
   "author": "",
