@@ -1,6 +1,7 @@
 import React from "react"
 import { Query } from "react-apollo"
 import gql from "graphql-tag"
+
 import { Description } from "@dk3/ui/atoms/Typography"
 
 export const currentUserQuery = gql`
@@ -17,9 +18,11 @@ export const WhoAmI = () => {
     <Query query={currentUserQuery}>
       {({ loading, error, data: { me } }) => {
         if (error) return <span>Error loading posts.</span>
-        if (loading || !me) return null
+        if (loading) return null
 
-        return <Description>whoami: {me.username}</Description>
+        const username = me ? me.username : "anonymous"
+
+        return <Description>whoami: {username}</Description>
       }}
     </Query>
   )

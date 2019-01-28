@@ -6,14 +6,15 @@ import { Mutation } from "react-apollo"
 import gql from "graphql-tag"
 import { State } from "react-powerplug"
 
-import { Button } from "@dk3/ui/form/Button"
+import { FancyButton } from "@dk3/ui/form/Button"
+import { Box } from "@dk3/ui/atoms/Boxes"
+import { TextInput } from "@dk3/ui/form/TextInput"
+import { DateInput } from "@dk3/ui/form/DateInput"
 
 import {
   UPCOMING_EVENTS,
   UPCOMING_EVENTS_EVENT_FRAGMENT,
 } from "../list/EventList"
-import { TextInput } from "@dk3/ui/form/TextInput"
-import { Box } from "@dk3/ui/atoms/Boxes"
 
 export const CREATE_EVENT = gql`
   mutation createNewEvent($input: CreateEventInput!) {
@@ -26,8 +27,8 @@ export const CREATE_EVENT = gql`
 
 export const CreateEventForm = () => {
   const now = Date.now()
-  const to = new Date(now + 500).toISOString()
-  const from = new Date(now).toISOString()
+  const to = new Date(now + 500)
+  const from = new Date(now)
 
   return (
     <Box pa={4} mh={4}>
@@ -66,7 +67,11 @@ export const CreateEventForm = () => {
 
                     createEvent({
                       variables: {
-                        input: state,
+                        input: {
+                          ...state,
+                          from: state.from.toISOString(),
+                          to: state.to.toISOString(),
+                        },
                       },
                     })
                   }}
@@ -84,19 +89,25 @@ export const CreateEventForm = () => {
                     onChange={e => setState({ location: e.target.value })}
                     label="Location"
                   />
-                  <TextInput
+                  <DateInput
                     value={state.from}
                     name="from"
-                    onChange={e => setState({ from: e.target.value })}
+                    onChange={from => {
+                      let to = state.to
+                      if (from > to) {
+                        to = new Date(from.getTime() + 500)
+                      }
+                      setState({ from, to })
+                    }}
                     label="From"
                   />
-                  <TextInput
+                  <DateInput
                     value={state.to}
                     name="to"
-                    onChange={e => setState({ to: e.target.value })}
+                    onChange={to => setState({ to })}
                     label="To"
                   />
-                  <Button type="submit">Save new event</Button>
+                  <FancyButton type="submit">Save new event</FancyButton>
                 </form>
               )
             }}

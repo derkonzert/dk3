@@ -7,13 +7,13 @@ export const inputStyles = css`
   margin: 0;
   padding: 0.6rem 0.8rem;
 
-  font-family: inherit;
+  font-family: IBMPlexMono-Medium;
   font-size: 1.6rem;
 
   background: white;
   border: 0 solid;
 
-  border-radius: 0.2rem;
+  border-radius: 2px;
   appearance: none;
 
   &:focus {
@@ -30,9 +30,9 @@ export const invalidInputStyle = css`
 `
 
 export const inputBorderStyles = css`
-  padding: 3px;
-  border-radius: 0.3rem;
-  background: rgba(0, 0, 0, 0.2);
+  padding: 1px;
+  border-radius: 3px;
+  background: hsl(0, 0%, 80%);
 
   &:focus-within {
     ${gradientBackground};

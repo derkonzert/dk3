@@ -22,7 +22,7 @@ export const EventQueryList = ({ query, filter }) => {
       variables={{ filter }}
       fetchPolicy={filter === "mine" ? "cache-and-network" : "cache-first"}
     >
-      {({ loading, error, data, refetch }) => {
+      {({ loading, error, data }) => {
         if (error) return <span>Error loading posts.</span>
         if (loading) return <div>Loading</div>
 
@@ -66,6 +66,12 @@ export const EventQueryList = ({ query, filter }) => {
                     </Description>
                     {month.events.map(event => {
                       const date = new Date(event.from)
+                      const to = new Date(event.to)
+                      const isRange = date.getDate() !== to.getDate()
+
+                      const dayName = isRange
+                        ? `${to.getDate() - date.getDate() + 1} days`
+                        : date.toString().substr(0, 3)
 
                       return (
                         <Mutation
@@ -85,7 +91,7 @@ export const EventQueryList = ({ query, filter }) => {
                               title={event.title}
                               day={date.getDate()}
                               description={event.location}
-                              dayName={date.toString().substr(0, 3)}
+                              dayName={dayName}
                               bookmarked={event.bookmarkedByMe}
                               fancyLevel={event.fancyness}
                               onBookmarkClick={() => {

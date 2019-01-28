@@ -36,6 +36,7 @@
     "@emotion/styled": "^10.0.5",
     "@reach/visually-hidden": "^0.1.1",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react-dom": "^16.7.0",
+    "react-select": "^2.3.0"
   }
 }

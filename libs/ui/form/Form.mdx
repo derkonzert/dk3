@@ -8,12 +8,43 @@ import { Playground } from "docz"
 
 # Components
 
-## Button
+## Buttons
 
-import { Button } from "./Button"
+import { Button, FancyButton, VeryFancyButton } from "./Button"
 
 <Playground>
+  <FancyButton mr={2}>Save changes</FancyButton>
   <Button>Edit event</Button>
+</Playground>
+
+### Full width block buttons
+
+<Playground>
+  <FancyButton mv={3} pa={3} block>
+    Register
+  </FancyButton>
+  <Button mv={3} block>
+    Login
+  </Button>
+</Playground>
+
+### Sizable via `withSpacing` props
+
+<Playground>
+  <FancyButton pa={4} mr={2}>
+    Save changes
+  </FancyButton>
+  <Button pv={2} ph={5}>
+    Edit event
+  </Button>
+</Playground>
+
+### VeryFancyButton (use with care)
+
+<Playground>
+  <VeryFancyButton mv={3} pa={3} block>
+    Create Account
+  </VeryFancyButton>
 </Playground>
 
 ## TextInput
@@ -64,6 +95,51 @@ Valid
         value={state.value}
         onChange={e => setState({ value: e.target.value })}
       />
+    )}
+  </State>
+</Playground>
+
+## DateInput
+
+import { DateInput } from "./DateInput"
+
+<Playground>
+  <State initial={{ value: new Date() }}>
+    {({ state, setState }) => (
+      <React.Fragment>
+        <DateInput
+          id="test"
+          label="Date (DD MM YYYY)"
+          value={state.value}
+          onChange={date => setState({ value: date })}
+        />
+        {state.value.toString()}
+      </React.Fragment>
+    )}
+  </State>
+</Playground>
+
+## Select
+
+import { Select } from "./Select"
+
+<Playground>
+  <State initial={{ value: { value: "one", label: "One" } }}>
+    {({ state, setState }) => (
+      <React.Fragment>
+        <Select
+          id="test"
+          label="Numbers"
+          value={state.value}
+          onChange={date => setState({ value: date })}
+          options={[
+            { value: "one", label: "One" },
+            { value: "two", label: "Two" },
+            { value: "three", label: "Three" },
+          ]}
+        />
+        {state.value.label.toString()}
+      </React.Fragment>
     )}
   </State>
 </Playground>

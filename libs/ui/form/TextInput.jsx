@@ -9,7 +9,7 @@ import {
 } from "./inputStyles"
 import { withSpacing } from "../utils/withSpacing"
 
-const Input = styled.input`
+export const Input = styled.input`
   ${inputStyles}
 `
 
