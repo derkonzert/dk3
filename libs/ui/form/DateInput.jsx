@@ -2,7 +2,6 @@ import React from "react"
 import styled from "@emotion/styled"
 
 import { Input, InputBorder, InputLabel, InputError } from "./TextInput"
-import { State } from "react-powerplug"
 import { withSpacing } from "../utils/withSpacing"
 
 const DateInputBorder = styled(InputBorder)`
