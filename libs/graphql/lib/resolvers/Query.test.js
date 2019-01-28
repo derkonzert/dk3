@@ -60,6 +60,37 @@ describe("Query", () => {
         Query.upcomingEvents(undefined, undefined, context)
       ).resolves.toBe(expectedResult)
     })
+
+    it("applies filter when it's set to 'mine'", async () => {
+      const context = {
+        dao: {
+          upcomingEvents: jest.fn(),
+        },
+        user: {
+          _id: "my-user-id",
+        },
+      }
+
+      await Query.upcomingEvents(undefined, { filter: "mine" }, context)
+
+      expect(context.dao.upcomingEvents).toHaveBeenCalledWith({
+        filter: {
+          bookmarkedBy: context.user._id,
+        },
+      })
+    })
+
+    it("doesnt apply filter when no user available", async () => {
+      const context = {
+        dao: {
+          upcomingEvents: jest.fn(),
+        },
+      }
+
+      await Query.upcomingEvents(undefined, { filter: "mine" }, context)
+
+      expect(context.dao.upcomingEvents).toHaveBeenCalledWith()
+    })
   })
 
   describe("pastEvents", () => {
