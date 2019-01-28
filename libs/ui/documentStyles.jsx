@@ -15,6 +15,8 @@ export const global = css`
     margin: 0;
     font-size: 1.6rem;
     font-family: IBMPlexSans-Text, sans-serif;
+
+    -webkit-font-smoothing: antialiased;
   }
 
   @media screen and (min-width: 40em) {

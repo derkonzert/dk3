@@ -1,20 +1,36 @@
 import styled from "@emotion/styled"
+import { css, keyframes } from "@emotion/core"
 import { withSpacing } from "../utils/withSpacing"
+import { gradientBackground } from "../common"
 
-export const Button = withSpacing()(styled.button`
+const buttonBaseStyle = css`
   appearance: none;
   border: 0 none;
+  border-radius: 2px;
   padding: 0.5rem 0.8rem;
 
-  border-radius: 0.2rem;
-  box-shadow: inset 0 0 0 0.1rem rgba(0, 0, 0, 0.15);
-
-  font-family: IBMPlexSans-SemiBold;
+  font-family: IBMPlexMono-Semibold;
   font-size: 1.2rem;
   font-weight: normal;
   line-height: 1.6rem;
+  letter-spacing: -0.4px;
+
+  flex: 1 1 auto;
 
   cursor: pointer;
+`
+
+const buttonBlockStyle = css`
+  display: block;
+  width: 100%;
+`
+
+export const Button = withSpacing()(styled.button`
+  ${buttonBaseStyle};
+  ${({ block }) => !!block && buttonBlockStyle};
+
+  color: black;
+  box-shadow: inset 0 0 0 0.1rem rgba(0, 0, 0, 0.15);
 
   &:hover {
     box-shadow: inset 0 0 0 0.1rem rgba(0, 0, 0, 0.35);
@@ -22,5 +38,91 @@ export const Button = withSpacing()(styled.button`
 
   &:active {
     background-color: rgba(0, 0, 0, 0.05);
+  }
+`)
+
+export const VeryFancyButton = withSpacing()(styled.button`
+  ${buttonBaseStyle};
+  ${gradientBackground};
+  ${({ block }) => !!block && buttonBlockStyle};
+
+  font-family: IBMPlexMono-Semibold;
+  color: white;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &:active {
+    opacity: 1;
+    box-shadow: inset 0 -20rem 0 0 rgba(0, 0, 0, 0.15);
+  }
+`)
+
+const fancyHoverKeyFrame = keyframes`
+  from {
+    background-position-x: 0%;
+  }
+  to {
+    background-position-x: 50%;
+  }
+`
+
+export const FancyButton = withSpacing()(styled.button`
+  ${buttonBaseStyle};
+  position: relative;
+  background: white;
+
+  ${({ block }) => !!block && buttonBlockStyle};
+
+  font-family: IBMPlexMono-Semibold;
+  color: black;
+  z-index: 1;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 2px;
+    background: linear-gradient(
+      90deg,
+      rgb(255, 87, 87),
+      rgb(106, 50, 204),
+      rgb(255, 87, 87),
+      rgb(106, 50, 204),
+      rgb(255, 87, 87),
+      rgb(106, 50, 204)
+    );
+    background-size: 500% 200%;
+    z-index: -1;
+
+    transition: 300ms background-position;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    z-index: -1;
+
+    border-radius: 1px;
+    margin: 2px;
+  }
+
+  &:hover:before {
+    background-position-x: 25%;
+    text-decoration: underline;
+    animation: 0.5s ${fancyHoverKeyFrame} ease-in-out infinite;
+  }
+
+  &:active:after {
+    box-shadow: inset 0 -20rem 0 0 rgba(0, 0, 0, 0.1);
   }
 `)
