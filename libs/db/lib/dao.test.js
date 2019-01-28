@@ -185,21 +185,21 @@ describe("dao", () => {
       expect(event.data).toMatchObject({ ...eventData, author: "1234" })
     })
 
-    it("adds author to likedBy when autoLike is set", async () => {
+    it("adds author to bookmarkedBy when autoBookmark is set", async () => {
       const event = await dao.createEvent(
-        { eventData, autoLike: true },
+        { eventData, autoBookmark: true },
         { _id: "1234" }
       )
 
       expect(event.data).toMatchObject({
         ...eventData,
-        likedBy: ["1234"],
+        bookmarkedBy: ["1234"],
         author: "1234",
       })
     })
   })
 
-  describe("likeEvent", async () => {
+  describe("bookmarkEvent", async () => {
     beforeEach(() => {
       Event.Model.findByIdAndUpdate = jest
         .fn()
@@ -208,27 +208,35 @@ describe("dao", () => {
       Event.Model.findById = jest.fn().mockReturnValue({ exec: () => {} })
     })
 
-    it("adds user to likedBy 'like' is truthy", async () => {
-      await dao.likeEvent("event-id", true, "user-id")
+    it("adds user to bookmarkedBy if 'bookmarked' is truthy", async () => {
+      await dao.bookmarkEvent({
+        eventId: "event-id",
+        bookmarked: true,
+        userId: "user-id",
+      })
 
       expect(Event.Model.findByIdAndUpdate).toHaveBeenCalledWith(
         "event-id",
         expect.objectContaining({
           $push: {
-            likedBy: "user-id",
+            bookmarkedBy: "user-id",
           },
         })
       )
     })
 
-    it("removes user from likedBy 'like' is truthy", async () => {
-      await dao.likeEvent("event-id", false, "user-id")
+    it("removes user from bookmarkedBy if 'bookmarked' is truthy", async () => {
+      await dao.bookmarkEvent({
+        eventId: "event-id",
+        bookmarked: false,
+        userId: "user-id",
+      })
 
       expect(Event.Model.findByIdAndUpdate).toHaveBeenCalledWith(
         "event-id",
         expect.objectContaining({
           $pull: {
-            likedBy: "user-id",
+            bookmarkedBy: "user-id",
           },
         })
       )
@@ -242,7 +250,11 @@ describe("dao", () => {
       expect.assertions(1)
 
       return expect(
-        dao.likeEvent("event-id", false, "user-id")
+        dao.bookmarkEvent({
+          eventId: "event-id",
+          bookmarked: false,
+          userId: "user-id",
+        })
       ).rejects.toThrow("Maybe the document wasnt found?")
     })
   })

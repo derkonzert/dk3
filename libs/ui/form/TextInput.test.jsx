@@ -42,7 +42,7 @@ describe("TextInput", () => {
     const stylesToArguments = styles =>
       styles.split(":").map(v => v.replace(/\s/g, "").replace(";", ""))
 
-    expect(noValidationBg).toHaveStyleRule("background", "rgba(0,0,0,0.2)")
+    expect(noValidationBg).toHaveStyleRule("background", "hsl(0,0%,80%)")
     expect(validBg).toHaveStyleRule(
       ...stylesToArguments(validInputStyle.styles)
     )

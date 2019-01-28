@@ -19,8 +19,8 @@ exports.userById = async _id => await User.Model.findById(_id).exec()
 exports.userByEmail = async email => await User.Model.findOne({ email }).exec()
 
 /* Event methods */
-exports.createEvent = async ({ eventData, autoLike }, user) => {
-  if (user && autoLike) {
+exports.createEvent = async ({ eventData, autoBookmark }, user) => {
+  if (user && autoBookmark) {
     eventData.bookmarkedBy = [user._id]
   }
 
