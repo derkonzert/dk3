@@ -3,7 +3,7 @@ import styled from "@emotion/styled"
 /* Spacing levels in rem */
 export const spacings = [0, 0.25, 0.5, 1, 2, 4, 8, 16]
 
-export const SpacingMachine = styled.div(props => {
+export const mapPropsToStyles = props => {
   let styles = {}
 
   if (props.pa !== undefined) {
@@ -13,12 +13,12 @@ export const SpacingMachine = styled.div(props => {
     styles.paddingBottom = `${spacings[props.pa]}rem`
   }
 
-  if (props.ph) {
+  if (props.ph !== undefined) {
     styles.paddingLeft = `${spacings[props.ph]}rem`
     styles.paddingRight = `${spacings[props.ph]}rem`
   }
 
-  if (props.pv) {
+  if (props.pv !== undefined) {
     styles.paddingTop = `${spacings[props.pv]}rem`
     styles.paddingBottom = `${spacings[props.pv]}rem`
   }
@@ -37,7 +37,10 @@ export const SpacingMachine = styled.div(props => {
   }
 
   if (props.ma !== undefined) {
-    styles.margin = `${spacings[props.ma]}rem`
+    styles.marginLeft = `${spacings[props.ma]}rem`
+    styles.marginRight = `${spacings[props.ma]}rem`
+    styles.marginTop = `${spacings[props.ma]}rem`
+    styles.marginBottom = `${spacings[props.ma]}rem`
   }
   if (props.mh !== undefined) {
     styles.marginLeft = `${spacings[props.mh]}rem`
@@ -61,11 +64,11 @@ export const SpacingMachine = styled.div(props => {
   }
 
   return styles
-})
+}
 
 export const withSpacing = defaultProps => Component => {
   /* TODO: remove spacing props, so they don't get rendered in Component */
-  const ComposedComponent = SpacingMachine.withComponent(Component)
+  const ComposedComponent = styled(Component)(mapPropsToStyles)
 
   ComposedComponent.defaultProps = defaultProps
 
