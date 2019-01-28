@@ -9,7 +9,7 @@ exports.Mutation = {
     const { id, bookmarked } = args.input
 
     if (!user) {
-      throw new Error("Unnauthorized request")
+      throw new Error("Unauthorized request")
     }
 
     return await dao.bookmarkEvent({
