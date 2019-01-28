@@ -9,8 +9,9 @@ module.exports = {
     "libs/**/*.jsx",
     "services/**/*.js",
     "services/**/*.jsx",
-    "frontend/**/*.js",
-    "frontend/**/*.jsx",
+    // TODO: create integration tests for frontends
+    // "frontend/**/*.js",
+    // "frontend/**/*.jsx",
   ],
   coverageThreshold: {
     global: {

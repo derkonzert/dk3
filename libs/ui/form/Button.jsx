@@ -20,14 +20,16 @@ const buttonBaseStyle = css`
   cursor: pointer;
 `
 
-const buttonBlockStyle = css`
+export const buttonBlockStyle = css`
   display: block;
   width: 100%;
 `
 
+export const buttonBlockModifier = ({ block }) => !!block && buttonBlockStyle
+
 export const Button = withSpacing()(styled.button`
   ${buttonBaseStyle};
-  ${({ block }) => !!block && buttonBlockStyle};
+  ${buttonBlockModifier};
 
   color: black;
   box-shadow: inset 0 0 0 0.1rem rgba(0, 0, 0, 0.15);
@@ -44,7 +46,7 @@ export const Button = withSpacing()(styled.button`
 export const VeryFancyButton = withSpacing()(styled.button`
   ${buttonBaseStyle};
   ${gradientBackground};
-  ${({ block }) => !!block && buttonBlockStyle};
+  ${buttonBlockModifier};
 
   font-family: IBMPlexMono-Semibold;
   color: white;
@@ -73,7 +75,7 @@ export const FancyButton = withSpacing()(styled.button`
   position: relative;
   background: white;
 
-  ${({ block }) => !!block && buttonBlockStyle};
+  ${buttonBlockModifier};
 
   font-family: IBMPlexMono-Semibold;
   color: black;
