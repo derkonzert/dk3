@@ -1,0 +1,19 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "libs/auth-utils/package.json",
+        "libs/config/package.json",
+        "libs/db/package.json",
+        "libs/error/package.json",
+        "libs/graphql/package.json",
+        "libs/logger/package.json",
+        "libs/ui/package.json",
+        "package.json",
+        "scripts/seed/package.json",
+        "services/api/package.json",
+        "services/auth/package.json"
+      ]
+    }
+  }
+}
