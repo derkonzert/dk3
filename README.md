@@ -23,4 +23,4 @@ _The current version of the derkonzert project runs on a completely different co
 
 #### UI Components
 
-All UI components are part of the `@dk3/ui` package, and are documented using [docz](https://www.docz.site/). A (for now not automatically) deployed version can be found here: [https://ui.dk3.tech](https://ui.dk3.tech).
+All UI components are part of the `@dk3/ui` package, and are documented using [docz](https://www.docz.site/). The current version is always deployed to [https://stage.dk3.tech/ui/](https://stage.dk3.tech/ui/).

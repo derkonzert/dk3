@@ -13,3 +13,6 @@ jestSetup.js
 _next
 node_modules
 cypress
+
+libs/ui/.docz
+frontend/main/_next

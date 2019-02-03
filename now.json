@@ -6,9 +6,15 @@
     "JWT_SECRET": "@dk3-jwt-secret",
     "MONGODB_URI": "@dk3-mongodb-uri"
   },
+  "build": {
+    "env": {
+      "DOCZ_BASE": "/ui/"
+    }
+  },
   "builds": [
     { "src": "services/auth/lib/auth.js", "use": "@now/node" },
     { "src": "services/api/lib/api.js", "use": "@now/node" },
+    { "src": "libs/ui/package.json", "use": "@now/static-build" },
     {
       "src": "frontend/main/next.config.js",
       "use": "@now/next@0.0.85-canary.9"
@@ -24,6 +30,10 @@
       "src": "/api",
       "methods": ["OPTIONS", "POST"],
       "dest": "/services/api/lib/api.js"
+    },
+    {
+      "src": "/ui/(.*)",
+      "dest": "/libs/ui/$1"
     },
     {
       "src": "/c/(.)*-(?<eventId>.*)$",
