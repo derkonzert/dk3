@@ -4,45 +4,44 @@ route: /layouts
 ---
 
 import { State } from "react-powerplug"
-import { Playground } from "docz"
+import { Playground, PropsTable } from "docz"
 
 # Layouts
 
 ## Header
 
+import { Description, MegaTitle } from "../atoms/Typography"
+
 import { Header } from "./Header"
 
 <Playground>
-  <Header>This is the Header</Header>
+  <Header>
+    <MegaTitle>This is the Header</MegaTitle>
+    <Description>With an additional description</Description>
+  </Header>
+</Playground>
+
+<Playground>
+  <Header loggedIn>
+    <MegaTitle>This is the smaller Header</MegaTitle>
+  </Header>
 </Playground>
 
 ## ListAndDetail
 
+This layout component is not well suited for a component based demonstration.
+
+```jsx
 import {
   ListAndDetail,
   ListAndDetailMain,
   ListAndDetailSide,
-} from "./ListAndDetail"
+} from "@dk3/ui/layouts/ListAndDetail"
 
-<Playground>
-  <State initial={{ showDetail: false }}>
-    {({ state, setState }) => (
-      <div
-        style={{
-          position: "relative",
-          height: 500,
-          width: 360,
-          overflow: "hidden",
-          margin: "0 auto",
-          boxShadow: "0 0 9px 1px #33333344",
-        }}
-        onClick={() => setState({ showDetail: !state.showDetail })}
-      >
-        <ListAndDetail showDetail={state.showDetail}>
-          <ListAndDetailMain>MAIN PAGE</ListAndDetailMain>
-          <ListAndDetailSide>DETAIL PAGE</ListAndDetailSide>
-        </ListAndDetail>
-      </div>
-    )}
-  </State>
-</Playground>
+render(
+  <ListAndDetail showDetail={state.showDetail}>
+    <ListAndDetailMain>Main page content</ListAndDetailMain>
+    <ListAndDetailSide>Detail page content</ListAndDetailSide>
+  </ListAndDetail>
+)
+```
