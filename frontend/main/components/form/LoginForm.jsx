@@ -4,7 +4,7 @@ import { State } from "react-powerplug"
 import { FancyButton, Button } from "@dk3/ui/form/Button"
 import { withApollo } from "react-apollo"
 
-export const LoginForm = withApollo(props => {
+export const LoginForm = withApollo(({ onLogin, client }) => {
   return (
     <State initial={{ email: "", password: "", message: "" }}>
       {({ state, setState, resetState }) => (
@@ -31,10 +31,12 @@ export const LoginForm = withApollo(props => {
                 if (data.accessToken) {
                   localStorage.setItem("accessToken", data.accessToken)
 
-                  props.client.resetStore()
+                  client.resetStore()
                 }
 
                 resetState()
+
+                onLogin && onLogin()
               })
               .catch(err => {
                 setState({ message: err.message })
@@ -56,9 +58,10 @@ export const LoginForm = withApollo(props => {
           <FancyButton type="submit">Login</FancyButton>
           {"localStorage" in global && !!localStorage.accessToken && (
             <Button
+              type="button"
               onClick={() => {
                 localStorage.removeItem("accessToken")
-                props.client.resetStore()
+                client.resetStore()
               }}
             >
               Logout

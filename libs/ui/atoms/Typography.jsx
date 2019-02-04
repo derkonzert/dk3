@@ -5,7 +5,8 @@ import { noMargin, gradientBackground } from "../common"
 
 const titleStyle = css`
   ${noMargin};
-  font-family: IBMPlexSerif-Bold;
+  font-family: "IBM Plex Serif", serif;
+  font-weight: bold;
   color: black;
   letter-spacing: 0;
 `
@@ -44,7 +45,8 @@ export const Title = styled.h2`
 
 export const SubTitle = styled.h3`
   ${noMargin};
-  font-family: IBMPlexSans-SemiBold;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
   font-size: 1.8rem;
   color: ${({ inverted }) => (inverted ? "white" : "black")};
   letter-spacing: 0;
@@ -53,7 +55,8 @@ export const SubTitle = styled.h3`
 
 export const ListTitle = styled.h4`
   margin: 2.5rem 0;
-  font-family: IBMPlexSerif-Text;
+  font-family: "IBM Plex Serif", serif;
+
   font-size: 2rem;
   font-weight: normal;
   color: ${({ inverted }) => (inverted ? "white" : "black")};
@@ -63,7 +66,8 @@ export const ListTitle = styled.h4`
 
 export const Description = styled.div`
   ${noMargin};
-  font-family: IBMPlexSans-Medium;
+  font-family: "IBM Plex Serif", serif;
+
   font-size: 1.2rem;
   color: ${({ inverted }) => (inverted ? "#f9f9f9" : "#636161")};
   letter-spacing: 0;

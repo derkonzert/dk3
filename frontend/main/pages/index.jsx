@@ -1,19 +1,36 @@
+import { withRouter } from "next/router"
+import Link from "next/link"
 import { ListAndDetail, ListAndDetailMain } from "@dk3/ui/layouts/ListAndDetail"
 
 import { EventList } from "../components/list/EventList"
 import { WhoAmI } from "../components/WhoAmI"
 import { CreateEventForm } from "../components/form/CreateEventForm"
-import { LoginForm } from "../components/form/LoginForm"
+import { EventDetail } from "../components/event-detail/EventDetail"
+import { Dialog } from "@dk3/ui/components/Dialog"
 
-export default function Index() {
+export default withRouter(function Index({ router }) {
   return (
     <ListAndDetail>
       <ListAndDetailMain>
         <WhoAmI />
-        <LoginForm />
         <CreateEventForm />
         <EventList />
+        {!!router.query.eventId && (
+          <Dialog>
+            <EventDetail id={router.query.eventId} />
+            <Link href="/">
+              <a
+                onClick={e => {
+                  e.preventDefault()
+                  router.back()
+                }}
+              >
+                Back
+              </a>
+            </Link>
+          </Dialog>
+        )}
       </ListAndDetailMain>
     </ListAndDetail>
   )
-}
+})

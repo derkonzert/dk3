@@ -107,4 +107,18 @@ describe("Query", () => {
       ).resolves.toBe(expectedResult)
     })
   })
+
+  describe("event", () => {
+    it("passes the id argument down to dao", async () => {
+      const context = {
+        dao: {
+          eventById: jest.fn(),
+        },
+      }
+
+      await Query.event(undefined, { id: "my-id-1234" }, context)
+
+      expect(context.dao.eventById).toHaveBeenCalledWith("my-id-1234")
+    })
+  })
 })

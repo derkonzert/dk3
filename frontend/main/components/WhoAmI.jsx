@@ -1,5 +1,5 @@
 import React from "react"
-import { Query } from "react-apollo"
+import { Query, withApollo } from "react-apollo"
 import gql from "graphql-tag"
 
 import { Description } from "@dk3/ui/atoms/Typography"
@@ -13,7 +13,7 @@ export const currentUserQuery = gql`
   }
 `
 
-export const WhoAmI = () => {
+export const WhoAmI = withApollo(({ client }) => {
   return (
     <Query query={currentUserQuery}>
       {({ loading, error, data: { me } }) => {
@@ -22,8 +22,22 @@ export const WhoAmI = () => {
 
         const username = me ? me.username : "anonymous"
 
-        return <Description>whoami: {username}</Description>
+        return (
+          <Description>
+            <span>whoami: {username}</span>
+            {!!me && (
+              <button
+                onClick={() => {
+                  localStorage.removeItem("accessToken")
+                  client.resetStore()
+                }}
+              >
+                logout
+              </button>
+            )}
+          </Description>
+        )
       }}
     </Query>
   )
-}
+})

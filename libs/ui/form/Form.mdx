@@ -143,3 +143,44 @@ import { Select } from "./Select"
     )}
   </State>
 </Playground>
+
+## SegmentedControl
+
+import { SegmentedControl, SegmentedControlOption } from "./SegmentedControl"
+
+<Playground>
+  <State initial={{ value: "all" }}>
+    {({ state, setState }) => (
+      <SegmentedControl
+        value={state.value}
+        name="filter"
+        onChange={e => setState({ value: e.target.value })}
+      >
+        <SegmentedControlOption value="all">All</SegmentedControlOption>
+        <SegmentedControlOption value="mine">Mine</SegmentedControlOption>
+      </SegmentedControl>
+    )}
+  </State>
+</Playground>
+
+<Playground>
+  <State initial={{ value: "always" }}>
+    {({ state, setState }) => (
+      <SegmentedControl
+        value={state.value}
+        name="filter"
+        label="Send notification on new events"
+        onChange={e => setState({ value: e.target.value })}
+      >
+        <SegmentedControlOption value="always">Always</SegmentedControlOption>
+        <SegmentedControlOption value="occasionally">
+          Occasionally
+        </SegmentedControlOption>
+        <SegmentedControlOption value="never" unfavored>
+          Never
+        </SegmentedControlOption>
+      </SegmentedControl>
+    )}
+  </State>
+</Playground>
+

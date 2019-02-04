@@ -5,7 +5,7 @@ import { State } from "react-powerplug"
 import {
   SegmentedControl,
   SegmentedControlOption,
-} from "@dk3/ui/components/SegmentedControl"
+} from "@dk3/ui/form/SegmentedControl"
 import { EventQueryList } from "./EventQueryList"
 
 export const UPCOMING_EVENTS_EVENT_FRAGMENT = gql`

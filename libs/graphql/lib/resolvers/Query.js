@@ -13,6 +13,7 @@ exports.Query = {
     return null
   },
 
+  /* Lists */
   upcomingEvents: async (_, args, { user, dao }) => {
     if (user && args && args.filter === "mine") {
       return dao.upcomingEvents({
@@ -25,4 +26,11 @@ exports.Query = {
   },
 
   pastEvents: async (_, args, context) => await context.dao.pastEvents(),
+
+  /* Single Nodes */
+  event: async (_, { id }, { dao } /*, info*/) => {
+    // TODO: only get fields from DB that are requested?
+    // for example with https://www.npmjs.com/package/graphql-fields
+    return await dao.eventById(id)
+  },
 }

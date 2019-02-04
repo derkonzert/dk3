@@ -7,7 +7,8 @@ export const inputStyles = css`
   margin: 0;
   padding: 0.6rem 0.8rem;
 
-  font-family: IBMPlexMono-Medium;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: normal;
   font-size: 1.6rem;
 
   background: white;
