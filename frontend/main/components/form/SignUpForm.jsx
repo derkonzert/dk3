@@ -4,34 +4,29 @@ import { State } from "react-powerplug"
 import { FancyButton, Button } from "@dk3/ui/form/Button"
 import { withApollo } from "react-apollo"
 
-export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
+export const SignUpForm = withApollo(({ onSignUp, onCancel, client }) => {
   return (
-    <State initial={{ email: "", password: "", message: "", loading: false }}>
+    <State initial={{ username: "", email: "", password: "", message: "" }}>
       {({ state, setState, resetState }) => (
         <form
           onSubmit={e => {
-            setState({ loading: true })
             e.preventDefault()
 
-            fetch("http://localhost:8004/auth/signIn", {
+            fetch("http://localhost:8004/auth/signUp", {
               method: "post",
               headers: { "content-type": "application/json" },
               body: JSON.stringify({
                 email: state.email,
+                username: state.username,
                 password: state.password,
               }),
             })
-              .then(resp => Promise.all([resp.status, resp.json()]))
-              .then(([status, data]) => {
+              .then(resp => resp.json())
+              .then(data => {
                 if (data.message) {
                   setState({
                     message: data.message,
-                    loading: false,
                   })
-                }
-
-                if (status > 200) {
-                  throw new Error(data.message || `Received status ${status}`)
                 }
 
                 if (data.accessToken) {
@@ -42,14 +37,20 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
 
                 resetState()
 
-                onLogin && onLogin()
+                onSignUp && onSignUp()
               })
               .catch(err => {
-                setState({ message: err.message, loading: false })
+                setState({ message: err.message })
               })
           }}
         >
           {!!state.message && <span>{state.message}</span>}
+          <TextInput
+            label="Username"
+            value={state.username}
+            onChange={e => setState({ username: e.target.value })}
+            name="username"
+          />
           <TextInput
             label="E-Mail Address"
             value={state.email}
@@ -69,12 +70,8 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
                 Cancel
               </Button>
             )}
-            <FancyButton
-              disabled={state.loading}
-              ml={onCancel ? 3 : 0}
-              type="submit"
-            >
-              Login
+            <FancyButton ml={onCancel ? 3 : 0} type="submit">
+              Sign Up
             </FancyButton>
           </div>
         </form>

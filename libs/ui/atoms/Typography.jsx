@@ -2,6 +2,7 @@ import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 
 import { noMargin, gradientBackground } from "../common"
+import { withSpacing } from "../utils/withSpacing"
 
 const titleStyle = css`
   ${noMargin};
@@ -66,10 +67,34 @@ export const ListTitle = styled.h4`
 
 export const Description = styled.div`
   ${noMargin};
-  font-family: "IBM Plex Serif", serif;
+  font-family: "IBM Plex Sans", serif;
 
   font-size: 1.2rem;
   color: ${({ inverted }) => (inverted ? "#f9f9f9" : "#636161")};
   letter-spacing: 0;
   line-height: 2rem;
 `
+
+export const Link = withSpacing()(styled.a`
+  display: inline-block;
+
+  font: inherit;
+  cursor: pointer;
+  appearance: none;
+  border: none;
+  background: none;
+
+  color: ${({ inverted }) => (inverted ? "#fff" : "#000")};
+  text-decoration: underline;
+
+  &:hover {
+    color: ${({ inverted }) => (inverted ? "#eee" : "#333")};
+
+    ${gradientBackground};
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    box-decoration-break: clone;
+  }
+`)
+
+export const ButtonLink = Link.withComponent("button")

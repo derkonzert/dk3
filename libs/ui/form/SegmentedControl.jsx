@@ -22,14 +22,13 @@ export const Option = styled.label`
   justify-content: center;
 
   flex: 1 1 0px;
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 600;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 700;
 
   padding: 0.5rem 0 0.4rem;
   margin: -0.2rem;
 
   font-size: 1.4rem;
-  font-weight: normal;
   letter-spacing: 0;
   line-height: 1.8rem;
 

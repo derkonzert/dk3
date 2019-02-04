@@ -1,7 +1,7 @@
 import React from "react"
 import { Query } from "react-apollo"
 
-import { LoginForm } from "../components/form/LoginForm"
+import { LoginOrSignUpForm } from "../components/form/LoginOrSignUpForm"
 import { SubTitle, Description } from "@dk3/ui/atoms/Typography"
 
 import { USER_AUTH_INFO } from "./MutationWithAuthentication"
@@ -22,7 +22,7 @@ export const QueryWithAuthentication = ({
           <React.Fragment>
             <SubTitle>Login required</SubTitle>
             <Description>{notLoggedInMessage}</Description>
-            <LoginForm />
+            <LoginOrSignUpForm />
           </React.Fragment>
         )
       }

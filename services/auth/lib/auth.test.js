@@ -55,16 +55,16 @@ describe("auth", () => {
     )
   })
 
-  describe("register handler", () => {
+  describe("signUp handler", () => {
     it("registers new users", async () => {
-      authUtils.register.mockResolvedValue(true)
+      authUtils.signUp.mockResolvedValue(true)
       micro.json.mockReturnValue({
         email: "jus@email.com",
         password: "password",
         username: "ju",
       })
 
-      await auth({ url: "/?operation=register" }, response)
+      await auth({ url: "/?operation=signUp" }, response)
 
       expect(response.json).toBeCalledWith(
         expect.objectContaining({ message: expect.any(String) })
@@ -72,11 +72,11 @@ describe("auth", () => {
     })
 
     it("handles user creation errors", async () => {
-      authUtils.register.mockImplementation(() => {
+      authUtils.signUp.mockImplementation(() => {
         throw new Error("uh oh")
       })
 
-      await auth({ url: "/?operation=register" }, response)
+      await auth({ url: "/?operation=signUp" }, response)
 
       expect(response.status).toBeCalledWith(400)
     })
