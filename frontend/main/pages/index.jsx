@@ -13,8 +13,8 @@ export default withRouter(function Index({ router }) {
     <ListAndDetail>
       <ListAndDetailMain>
         <WhoAmI />
-        <CreateEventForm />
         <EventList />
+        <CreateEventForm />
         {!!router.query.eventId && (
           <Dialog>
             <EventDetail id={router.query.eventId} />

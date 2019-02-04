@@ -5,7 +5,7 @@ const config = require("@dk3/config")
 const { HTTPStatusError } = require("@dk3/error")
 const { dao } = require("@dk3/db")
 
-exports.register = async data => {
+exports.signUp = async data => {
   try {
     await dao.createUser(data)
 

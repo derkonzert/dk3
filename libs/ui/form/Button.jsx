@@ -18,6 +18,11 @@ const buttonBaseStyle = css`
   flex: 1 1 auto;
 
   cursor: pointer;
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: wait;
+  }
 `
 
 export const buttonBlockStyle = css`

@@ -3,9 +3,9 @@ import { Mutation, Query } from "react-apollo"
 import gql from "graphql-tag"
 import { State } from "react-powerplug"
 
-import { LoginForm } from "../components/form/LoginForm"
 import { Dialog } from "@dk3/ui/components/Dialog"
 import { SubTitle, Description } from "@dk3/ui/atoms/Typography"
+import { LoginOrSignUpForm } from "../components/form/LoginOrSignUpForm"
 
 export const USER_AUTH_INFO = gql`
   query userId {
@@ -22,7 +22,7 @@ export const MutationWithAuthentication = ({
   notLoggedInMessage,
   ...props
 }) => (
-  <State initial={{ showDialog: false }}>
+  <State initial={{ showDialog: false, formType: "login" }}>
     {({ state, setState }) => (
       <Query query={USER_AUTH_INFO} fetchPolicy="cache-first">
         {({ loading, error, data }) => {
@@ -37,6 +37,19 @@ export const MutationWithAuthentication = ({
             }
           }
 
+          const onLoginOrSignUp = () =>
+            setState({ showDialog: false }, () => {
+              if (cachedMutation) {
+                cachedMutation()
+                cachedMutation = null
+              }
+            })
+
+          const onCancel = () => {
+            setState({ showDialog: false }, () => {
+              cachedMutation = null
+            })
+          }
           return (
             <React.Fragment>
               <Mutation {...props}>
@@ -46,15 +59,11 @@ export const MutationWithAuthentication = ({
                 <Dialog>
                   <SubTitle>Login Required</SubTitle>
                   <Description>{notLoggedInMessage}</Description>
-                  <LoginForm
-                    onLogin={() => {
-                      setState({ showDialog: false }, () => {
-                        if (cachedMutation) {
-                          cachedMutation()
-                          cachedMutation = null
-                        }
-                      })
-                    }}
+                  <LoginOrSignUpForm
+                    mv={3}
+                    onLogin={onLoginOrSignUp}
+                    onSignUp={onLoginOrSignUp}
+                    onCancel={onCancel}
                   />
                 </Dialog>
               )}

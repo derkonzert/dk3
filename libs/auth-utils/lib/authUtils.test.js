@@ -25,7 +25,7 @@ const dummyUserData = {
 const authUtils = require("..")
 
 describe("auth-utils", () => {
-  describe("register", () => {
+  describe("signUp", () => {
     const userData = { username: "ju", password: "ladida" }
 
     it("creates a user", async () => {
@@ -34,7 +34,7 @@ describe("auth-utils", () => {
         passwordHash: "somehash",
       })
 
-      const result = await authUtils.register(userData)
+      const result = await authUtils.signUp(userData)
 
       expect(result).toBe(true)
     })
@@ -44,7 +44,7 @@ describe("auth-utils", () => {
         throw new Error("Something went wrong")
       })
 
-      expect(authUtils.register()).rejects.toThrow("Something went wrong")
+      expect(authUtils.signUp()).rejects.toThrow("Something went wrong")
     })
   })
 

@@ -1,7 +1,7 @@
 const { json } = require("micro")
 const url = require("url")
 
-const { register, signIn, getUserFromRequest } = require("@dk3/auth-utils")
+const { signUp, signIn, getUserFromRequest } = require("@dk3/auth-utils")
 const { HTTPStatusError } = require("@dk3/error")
 const { connect } = require("@dk3/db")
 
@@ -17,11 +17,11 @@ module.exports = async function auth(req, res) {
     const { query } = url.parse(req.url, true)
 
     switch (query.operation) {
-      case "register":
+      case "signUp":
         body = await json(req)
 
         try {
-          await register(body)
+          await signUp(body)
         } catch (err) {
           throw new HTTPStatusError({ title: err.message, statusCode: 400 })
         }
