@@ -9,9 +9,9 @@ const buttonBaseStyle = css`
   border-radius: 2px;
   padding: 0.5rem 0.8rem;
 
-  font-family: IBMPlexMono-Semibold;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 1.2rem;
-  font-weight: normal;
+  font-weight: 600;
   line-height: 1.6rem;
   letter-spacing: -0.4px;
 
@@ -48,7 +48,6 @@ export const VeryFancyButton = withSpacing()(styled.button`
   ${gradientBackground};
   ${buttonBlockModifier};
 
-  font-family: IBMPlexMono-Semibold;
   color: white;
 
   &:hover {
@@ -77,7 +76,6 @@ export const FancyButton = withSpacing()(styled.button`
 
   ${buttonBlockModifier};
 
-  font-family: IBMPlexMono-Semibold;
   color: black;
   z-index: 1;
 

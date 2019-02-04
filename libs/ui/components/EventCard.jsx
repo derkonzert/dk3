@@ -86,6 +86,7 @@ export const EventCard = ({
   dayName,
   large,
   bookmarked = false,
+  linkProps = {},
   onBookmarkClick,
   ...props
 }) => {
@@ -110,7 +111,7 @@ export const EventCard = ({
             inverted={superFancy}
           />
         )}
-        <a css={linkStyle} href="#">
+        <a css={linkStyle} {...linkProps}>
           <SubTitle inverted={superFancy}>{title}</SubTitle>
           <Description inverted={superFancy}>{description}</Description>
         </a>

@@ -22,8 +22,8 @@ export const Option = styled.label`
   justify-content: center;
 
   flex: 1 1 0px;
-  font-family: IBMPlexSans-SemiBold;
-  font-weight: inherit;
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 600;
 
   padding: 0.5rem 0 0.4rem;
   margin: -0.2rem;
@@ -45,7 +45,8 @@ export const Option = styled.label`
 
 export const Label = styled.label`
   font-size: 1.2rem;
-  font-family: IBMPlexSerif-Bold;
+  font-family: "IBM Plex Serif", serif;
+  font-weight: bold;
   margin: 0 0.3rem;
 `
 

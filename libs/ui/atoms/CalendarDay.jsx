@@ -12,7 +12,8 @@ export const Wrapper = styled.div`
   text-align: center;
 `
 export const Day = styled.div`
-  font-family: IBMPlexSansCond-Bold;
+  font-family: "IBM Plex Sans Condensed", sans-serif;
+  font-weight: bold;
   font-size: 1.8rem;
   color: ${({ inverted }) => (inverted ? "white" : "black")};
   letter-spacing: 0;
@@ -20,7 +21,7 @@ export const Day = styled.div`
   text-align: center;
 `
 export const DayName = styled.div`
-  font-family: IBMPlexSans-Text;
+  font-family: "IBM Plex Sans", sans-serif;
   font-size: 1rem;
   color: ${({ inverted }) => (inverted ? "white" : "#3f3f3f")};
   letter-spacing: 0;

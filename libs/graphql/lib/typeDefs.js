@@ -41,6 +41,8 @@ const typeDefs = gql`
     upcomingEvents(filter: String): [Event]
     # Past events
     pastEvents: [Event]
+    # Event by ID
+    event(id: ID!): Event
   }
 
   input CreateEventInput {

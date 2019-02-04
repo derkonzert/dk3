@@ -1,6 +1,15 @@
 import { css } from "@emotion/core"
 
 export const global = css`
+  /* TODO: Reduce used font variants */
+  @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,600|IBM+Plex+Sans+Condensed:700|IBM+Plex+Sans:400,600|IBM+Plex+Serif:400,700");
+
+  /*
+  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: 'IBM Plex Serif', serif;
+  font-family: 'IBM Plex Sans Condensed', sans-serif;
+  */
   * {
     box-sizing: border-box;
   }
@@ -14,7 +23,7 @@ export const global = css`
   body {
     margin: 0;
     font-size: 1.6rem;
-    font-family: IBMPlexSans-Text, sans-serif;
+    font-family: "IBM Plex Sans", sans-serif;
 
     -webkit-font-smoothing: antialiased;
   }

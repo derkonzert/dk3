@@ -1,6 +1,10 @@
 import React from "react"
-import { Query, Mutation } from "react-apollo"
+import { withRouter } from "next/router"
+
 import gql from "graphql-tag"
+
+import { QueryWithAuthentication } from "../../lib/QueryWithAuthentication"
+import { MutationWithAuthentication } from "../../lib/MutationWithAuthentication"
 
 import { EventCard } from "@dk3/ui/components/EventCard"
 import { Description } from "@dk3/ui/atoms/Typography"
@@ -15,9 +19,19 @@ export const BOOKMARK_EVENT = gql`
   }
 `
 
-export const EventQueryList = ({ query, filter }) => {
+const sortEvents = (a, b) => {
+  const dateSort = new Date(a.from).getTime() - new Date(b.from).getTime()
+  if (dateSort !== 0) {
+    return dateSort
+  }
+
+  return a.title > b.title ? 1 : -1
+}
+
+export const EventQueryList = withRouter(({ query, filter, router }) => {
   return (
-    <Query
+    <QueryWithAuthentication
+      required={filter === "mine"}
       query={query}
       variables={{ filter }}
       fetchPolicy={filter === "mine" ? "cache-and-network" : "cache-first"}
@@ -31,9 +45,7 @@ export const EventQueryList = ({ query, filter }) => {
         return (
           <React.Fragment>
             {upcomingEvents
-              .sort((a, b) => {
-                return a.from > b.from ? 1 : -1
-              })
+              .sort(sortEvents)
               .reduce((months, event) => {
                 const currentMonth = months[months.length - 1]
 
@@ -74,7 +86,8 @@ export const EventQueryList = ({ query, filter }) => {
                         : date.toString().substr(0, 3)
 
                       return (
-                        <Mutation
+                        <MutationWithAuthentication
+                          notLoggedInMessage="Bookmarking an event is only possible when logged in"
                           mutation={BOOKMARK_EVENT}
                           key={event.id}
                           optimisticResponse={{
@@ -94,6 +107,20 @@ export const EventQueryList = ({ query, filter }) => {
                               dayName={dayName}
                               bookmarked={event.bookmarkedByMe}
                               fancyLevel={event.fancyness}
+                              linkProps={{
+                                href: `/c/${event.title}-${event.id}`,
+                                onClick: e => {
+                                  e.preventDefault()
+
+                                  router.push(
+                                    `/?eventId=${event.id}`,
+                                    `/c/${event.title}-${event.id}`,
+                                    {
+                                      shallow: true,
+                                    }
+                                  )
+                                },
+                              }}
                               onBookmarkClick={() => {
                                 bookmarkEvent({
                                   variables: {
@@ -106,7 +133,7 @@ export const EventQueryList = ({ query, filter }) => {
                               }}
                             />
                           )}
-                        </Mutation>
+                        </MutationWithAuthentication>
                       )
                     })}
                   </React.Fragment>
@@ -115,6 +142,6 @@ export const EventQueryList = ({ query, filter }) => {
           </React.Fragment>
         )
       }}
-    </Query>
+    </QueryWithAuthentication>
   )
-}
+})
