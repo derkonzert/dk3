@@ -35,16 +35,16 @@ module.exports = async (req, res) => {
     return sendJson(res, 400, { message: queryMissingMessage })
   }
 
-  const rootValue = {}
-  const contextValue = await createGraphQlContext({ req })
-
-  const results = await Promise.all(
-    gqlRequests.map(request => {
-      return handleGqlQuery(request, rootValue, contextValue)
-    })
-  )
-
   try {
+    const rootValue = {}
+    const contextValue = await createGraphQlContext({ req })
+
+    const results = await Promise.all(
+      gqlRequests.map(request => {
+        return handleGqlQuery(request, rootValue, contextValue)
+      })
+    )
+
     if (isBatch) {
       sendJson(res, 200, results)
     } else {
