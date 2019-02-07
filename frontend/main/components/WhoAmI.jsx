@@ -24,7 +24,7 @@ export const WhoAmI = withApollo(({ client }) => {
 
         return (
           <Description>
-            <span>whoami: {username}</span>
+            <span>WhoAmI: {username}</span>
             {!!me && (
               <button
                 onClick={() => {
