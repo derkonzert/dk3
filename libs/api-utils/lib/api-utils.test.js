@@ -4,9 +4,6 @@ const { sendJson } = require("./api-utils")
 
 describe("api-utils", () => {
   describe("sendJson", () => {
-    /* res.writeHead(statusCode, { "Content-Type": "application/json" })
-  res.end(JSON.stringify(data))*/
-
     it("writes the given status code and ends the response with json content", () => {
       const writeHead = jest.fn()
       const end = jest.fn()
