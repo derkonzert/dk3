@@ -6,6 +6,7 @@ const {
   createExecutable,
 } = require("@dk3/graphql")
 const { connect } = require("@dk3/db")
+const { sendJson } = require("@dk3/api-utils")
 const { createGraphQlContext } = require("./createGraphQlContext")
 
 const schema = createExecutable({ typeDefs, resolvers })
@@ -23,9 +24,7 @@ module.exports = async (req, res) => {
   }
 
   if (!query) {
-    res.status(400)
-    res.end(queryMissingMessage)
-    return
+    return sendJson(res, 400, { message: queryMissingMessage })
   }
 
   const rootValue = {}
@@ -41,10 +40,9 @@ module.exports = async (req, res) => {
       operation
     )
 
-    res.json(result)
+    sendJson(res, 200, result)
   } catch (err) {
-    res.status(500)
-    res.json({ error: err.message })
+    sendJson(res, 500, { error: err.message })
   }
 }
 

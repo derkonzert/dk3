@@ -13,7 +13,12 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
             setState({ loading: true })
             e.preventDefault()
 
-            fetch("http://localhost:8004/auth/signIn", {
+            const uri =
+              process.env.NODE_ENV === "production"
+                ? "/auth/signIn"
+                : "http://localhost:8004/auth/signIn"
+
+            fetch(uri, {
               method: "post",
               headers: { "content-type": "application/json" },
               body: JSON.stringify({

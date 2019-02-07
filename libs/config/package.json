@@ -1,5 +1,6 @@
 {
   "name": "@dk3/config",
+  "private": true,
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Julian Kempff <ju@formundcode.de>",

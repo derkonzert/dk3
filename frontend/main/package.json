@@ -1,5 +1,6 @@
 {
   "name": "@dk3/main-frontend",
+  "private": true,
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Julian Kempff <ju@formundcode.de>",
@@ -21,13 +22,14 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
+    "now-build": "next build && next export -o dist",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/jkempff/dk3/issues"
   },
   "dependencies": {
-    "@dk3/ui": "^0.0.0",
+    "@dk3/ui": "0.0.0",
     "@emotion/core": "^10.0.6",
     "apollo-boost": "^0.1.27",
     "apollo-client": "^2.4.12",
@@ -37,7 +39,7 @@
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
     "isomorphic-unfetch": "^3.0.0",
-    "next": "^7.0.2",
+    "next": "8.0.0-canary.18",
     "react": "^16.7.0",
     "react-apollo": "^2.4.0",
     "react-dom": "^16.7.0",

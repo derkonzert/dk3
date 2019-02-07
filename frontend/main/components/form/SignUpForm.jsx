@@ -12,7 +12,12 @@ export const SignUpForm = withApollo(({ onSignUp, onCancel, client }) => {
           onSubmit={e => {
             e.preventDefault()
 
-            fetch("http://localhost:8004/auth/signUp", {
+            const uri =
+              process.env.NODE_ENV === "production"
+                ? "/auth/signUp"
+                : "http://localhost:8004/auth/signUp"
+
+            fetch(uri, {
               method: "post",
               headers: { "content-type": "application/json" },
               body: JSON.stringify({

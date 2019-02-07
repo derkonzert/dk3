@@ -1,23 +1,43 @@
 {
   "version": 2,
+  "alias": "stage.dk3.tech",
+  "env": {
+    "JWT_SECRET": "@dk3-jwt-secret",
+    "MONGODB_URI": "@dk3-mongodb-uri"
+  },
   "builds": [
     { "src": "services/auth/lib/auth.js", "use": "@now/node" },
     { "src": "services/api/lib/api.js", "use": "@now/node" },
-    { "src": "services/metascraper/lib/metascraper.js", "use": "@now/node" }
+    { "src": "services/metascraper/lib/metascraper.js", "use": "@now/node" },
+    {
+      "src": "frontend/main/package.json",
+      "use": "@now/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
   ],
   "routes": [
     {
       "src": "/auth/(.*)",
-      "methods": ["GET", "POST"],
+      "methods": ["OPTIONS", "POST"],
       "dest": "/services/auth/lib/auth.js?operation=$1"
     },
     {
       "src": "/api",
+      "methods": ["OPTIONS", "POST"],
       "dest": "/services/api/lib/api.js"
     },
     {
       "src": "/metascraper/(.*)",
       "dest": "/services/metascraper/lib/metascraper.js?targetUrl=$1"
-    }
+    },
+    {
+      "src": "/c/(.)*-(?<eventId>.*)$",
+      "methods": ["GET"],
+      "dest": "frontend/main/c?eventId=$eventId"
+    },
+    { "src": "^/(.*[.].*)$", "dest": "frontend/main/$1" },
+    { "src": "^/(.*)", "dest": "frontend/main/index.html" }
   ]
 }
