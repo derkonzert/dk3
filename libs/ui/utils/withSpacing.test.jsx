@@ -59,7 +59,7 @@ describe("withSpacing", () => {
                     ...style,
                     [`${propertyShortcuts[shortcut]}${
                       directions[direction]
-                    }`]: `${spacings[index]}rem`,
+                    }`]: spacings[index],
                   }),
                   {}
                 )

@@ -7,6 +7,10 @@ jest.mock("@dk3/graphql")
 const db = require("@dk3/db")
 jest.mock("@dk3/db")
 
+const apiUtils = require("@dk3/api-utils")
+jest.mock("@dk3/api-utils")
+apiUtils.sendJson = jest.fn()
+
 const libContext = require("../lib/createGraphQlContext")
 jest.mock("../lib/createGraphQlContext")
 
@@ -34,10 +38,11 @@ describe("api", () => {
       contextValue = undefined
       req = {}
       res = {
-        status: jest.fn(),
-        json: jest.fn(),
+        writeHead: jest.fn(),
         end: jest.fn(),
       }
+      apiUtils.sendJson.mockReset()
+
       micro.json.mockImplementation(() => requestBody)
       libContext.createGraphQlContext.mockImplementation(() => contextValue)
     })
@@ -55,10 +60,15 @@ describe("api", () => {
     it("fails when no query is set", async () => {
       requestBody = {}
 
-      await api(req, res)
+      try {
+        await api(req, res)
+      } catch (err) {
+        throw err
+      }
 
-      expect(res.status).toBeCalledWith(400)
-      expect(res.end).toBeCalledWith(api.queryMissingMessage)
+      expect(apiUtils.sendJson).toHaveBeenCalledWith(res, 400, {
+        message: api.queryMissingMessage,
+      })
     })
 
     it("fast exists when no query is set", async () => {
@@ -103,12 +113,9 @@ describe("api", () => {
 
       await api(req, res)
 
-      expect(res.status).toBeCalledWith(500)
-      expect(res.json).toBeCalledWith(
-        expect.objectContaining({
-          error: expectedErrorMessage,
-        })
-      )
+      expect(apiUtils.sendJson).toBeCalledWith(res, 500, {
+        error: expectedErrorMessage,
+      })
     })
   })
 })

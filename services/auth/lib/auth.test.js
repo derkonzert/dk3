@@ -2,6 +2,10 @@ const authUtils = require("@dk3/auth-utils")
 const micro = require("micro")
 const { HTTPStatusError } = require("@dk3/error")
 
+const apiUtils = require("@dk3/api-utils")
+jest.mock("@dk3/api-utils")
+apiUtils.sendJson = jest.fn()
+
 const db = require("@dk3/db")
 jest.mock("@dk3/db")
 jest.mock("@dk3/auth-utils")
@@ -15,12 +19,9 @@ describe("auth", () => {
   let response
 
   beforeEach(() => {
-    const json = jest.fn()
-    const status = jest.fn()
-
+    apiUtils.sendJson.mockReset()
     response = {
-      json: json.mockReturnValue(response),
-      status: status.mockReturnValue(response),
+      foo: "bar",
     }
   })
 
@@ -37,7 +38,9 @@ describe("auth", () => {
   it("handles non matched routes", async () => {
     await auth({ url: "/?operation=non-existing" }, response)
 
-    expect(response.status).toBeCalledWith(404)
+    expect(apiUtils.sendJson).toBeCalledWith(response, 404, {
+      message: expect.anything(),
+    })
   })
 
   it("handles server errors", async () => {
@@ -47,8 +50,9 @@ describe("auth", () => {
 
     await auth({ url: "/?operation=signIn" }, response)
 
-    expect(response.status).toBeCalledWith(500)
-    expect(response.json).toBeCalledWith(
+    expect(apiUtils.sendJson).toBeCalledWith(
+      response,
+      500,
       expect.objectContaining({
         message: "Uh oh",
       })
@@ -66,7 +70,9 @@ describe("auth", () => {
 
       await auth({ url: "/?operation=signUp" }, response)
 
-      expect(response.json).toBeCalledWith(
+      expect(apiUtils.sendJson).toBeCalledWith(
+        response,
+        201,
         expect.objectContaining({ message: expect.any(String) })
       )
     })
@@ -78,38 +84,9 @@ describe("auth", () => {
 
       await auth({ url: "/?operation=signUp" }, response)
 
-      expect(response.status).toBeCalledWith(400)
-    })
-  })
-
-  describe("dummy 'secured' case", () => {
-    const user = { dummy: "user" }
-
-    beforeEach(() => {
-      authUtils.getUserFromRequest.mockImplementation(({ fail }) => {
-        if (fail) {
-          const err = new Error("ohuh")
-          err.status = 401
-
-          throw err
-        }
-        return user
+      expect(apiUtils.sendJson).toBeCalledWith(response, 400, {
+        message: expect.anything(),
       })
-    })
-    it("returns user when set on request", async () => {
-      await auth({ url: "/?operation=secured", user }, response)
-
-      expect(response.json).toBeCalledWith(user)
-    })
-
-    it("returns error message without user", async () => {
-      await auth({ url: "/?operation=secured", fail: true }, response)
-
-      expect(response.json).toBeCalledWith(
-        expect.objectContaining({
-          message: "ohuh",
-        })
-      )
     })
   })
 
@@ -127,7 +104,9 @@ describe("auth", () => {
       await auth({ url: "/?operation=signIn" }, response)
 
       // expect(response.status).toBeCalledWith(401)
-      expect(response.json).toBeCalledWith(
+      expect(apiUtils.sendJson).toBeCalledWith(
+        response,
+        401,
         expect.objectContaining({
           message: expect.stringContaining("No user found"),
         })
@@ -148,7 +127,9 @@ describe("auth", () => {
 
       await auth({ url: "/?operation=signIn" }, response)
 
-      expect(response.json).toBeCalledWith(
+      expect(apiUtils.sendJson).toBeCalledWith(
+        response,
+        200,
         expect.objectContaining({
           accessToken: dummyJWT,
         })
