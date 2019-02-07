@@ -1,5 +1,6 @@
 {
   "name": "@dk3/metascraper",
+  "private": true,
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Julian Kempff <me@ju.am>",

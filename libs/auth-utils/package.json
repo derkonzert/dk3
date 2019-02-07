@@ -1,5 +1,6 @@
 {
   "name": "@dk3/auth-utils",
+  "private": true,
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Julian Kempff <ju@formundcode.de>",
@@ -20,7 +21,6 @@
     "@dk3/config": "^0.0.0",
     "@dk3/db": "^0.0.0",
     "@dk3/error": "^0.0.0",
-    "@emotion/styled": "^10.0.5",
     "jsonwebtoken": "^8.4.0",
     "ms": "^2.1.1"
   }

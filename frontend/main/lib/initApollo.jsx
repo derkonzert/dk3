@@ -14,7 +14,10 @@ if (!process.browser) {
 
 function create(initialState, { getToken }) {
   const httpLink = createHttpLink({
-    uri: "http://localhost:8004/api",
+    uri:
+      process.env.NODE_ENV === "production"
+        ? "/api"
+        : "http://localhost:8004/api",
     credentials: "same-origin",
   })
 

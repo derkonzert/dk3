@@ -34,9 +34,11 @@ export const Overlay = styled.div`
   display: grid;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.35);
   z-index: 40;
+  backdrop-filter: blur(3px);
   animation: 200ms ${backgroundFadeIn};
+  will-change: opacity, transform;
 `
 
 export const Container = styled.div`

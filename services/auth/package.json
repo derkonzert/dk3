@@ -1,5 +1,6 @@
 {
   "name": "@dk3/auth-service",
+  "private": true,
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Julian Kempff <ju@formundcode.de>",
@@ -17,6 +18,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "@dk3/api-utils": "^0.0.0",
     "@dk3/auth-utils": "^0.0.0",
     "@dk3/config": "^0.0.0",
     "@dk3/db": "^0.0.0",

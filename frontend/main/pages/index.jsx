@@ -1,6 +1,11 @@
+import React from "react"
 import { withRouter } from "next/router"
 import Link from "next/link"
-import { ListAndDetail, ListAndDetailMain } from "@dk3/ui/layouts/ListAndDetail"
+import {
+  ListAndDetail,
+  ListAndDetailMain,
+  ListAndDetailSide,
+} from "@dk3/ui/layouts/ListAndDetail"
 
 import { EventList } from "../components/list/EventList"
 import { WhoAmI } from "../components/WhoAmI"
@@ -10,13 +15,15 @@ import { Dialog } from "@dk3/ui/components/Dialog"
 
 export default withRouter(function Index({ router }) {
   return (
-    <ListAndDetail>
+    <ListAndDetail showDetail={!!router.query.eventId}>
       <ListAndDetailMain>
         <WhoAmI />
         <EventList />
         <CreateEventForm />
+      </ListAndDetailMain>
+      <ListAndDetailSide>
         {!!router.query.eventId && (
-          <Dialog>
+          <React.Fragment>
             <EventDetail id={router.query.eventId} />
             <Link href="/">
               <a
@@ -28,9 +35,9 @@ export default withRouter(function Index({ router }) {
                 Back
               </a>
             </Link>
-          </Dialog>
+          </React.Fragment>
         )}
-      </ListAndDetailMain>
+      </ListAndDetailSide>
     </ListAndDetail>
   )
 })

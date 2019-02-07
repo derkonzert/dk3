@@ -45,7 +45,7 @@ const MainPageInner = styled.div`
   .show-detail & {
     overflow: hidden;
     height: 100%;
-    margin: -10rem 0;
+    margin: -10rem auto;
     padding: 10rem 1rem;
     transform: scale(0.95) translateY(20px);
   }
@@ -66,6 +66,8 @@ const Side = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+
+  min-height: 100vh;
 
   visibility: hidden;
   padding-top: 30rem;

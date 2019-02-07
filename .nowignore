@@ -1,0 +1,12 @@
+__mocks__
+scripts
+.vscode
+coverage
+.editorconfig
+.eslintignore
+.eslintrc.json
+.prettierrc
+.travis.yml
+greenkeeper.json
+jest.config.json
+jestSetup.js

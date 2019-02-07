@@ -1,5 +1,6 @@
 {
   "name": "@dk3/api",
+  "private": true,
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Julian Kempff <ju@formundcode.de>",
@@ -24,6 +25,7 @@
     "url": "https://github.com/jkempff/dk3/issues"
   },
   "dependencies": {
+    "@dk3/api-utils": "^0.0.0",
     "@dk3/auth-utils": "^0.0.0",
     "@dk3/db": "^0.0.0",
     "@dk3/graphql": "^0.0.0",
