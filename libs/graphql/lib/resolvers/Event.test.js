@@ -13,7 +13,7 @@ describe("Event", () => {
     it("returns 0 or 1, dependent on the events bookmarkedBy length and total user count", async () => {
       dao.allUsersCount.mockResolvedValue(10)
 
-      const expectedResults = [0, 0, 0, 1, 1, 2, 2]
+      const expectedResults = [0, 0, 0, 0, 1, 1, 1, 2, 2]
 
       const callFancyess = bookmarkedBy =>
         Event.fancyness({ bookmarkedBy }, undefined, {
@@ -27,7 +27,9 @@ describe("Event", () => {
         callFancyess([1, 2, 3]),
         callFancyess([1, 2, 3, 4]),
         callFancyess([1, 2, 3, 4, 5]),
+        callFancyess([1, 2, 3, 4, 5, 6]),
         callFancyess([1, 2, 3, 4, 5, 6, 7]),
+        callFancyess([1, 2, 3, 4, 5, 6, 7, 8]),
       ])
 
       expect(results).toEqual(expectedResults)
