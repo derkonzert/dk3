@@ -6,6 +6,12 @@ module.exports = [
     skills: ["MAGIC"],
   },
   {
+    username: "gwen",
+    email: "gwens@email.com",
+    password: "gwenspassword",
+    skills: ["LOGIN"],
+  },
+  {
     username: "pierre",
     email: "pierres@email.com",
     password: "pierrespassword",

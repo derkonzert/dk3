@@ -1,6 +1,6 @@
 exports.Event = {
   fancyness: async (event, args, { dao }) => {
-    const userCount = dao.cachedMethod(
+    const userCount = await dao.cachedMethod(
       "fancyness.usercount",
       dao.allUsersCount,
       { ttl: 1000 * 60 * 60 }
