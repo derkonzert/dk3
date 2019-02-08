@@ -2,16 +2,35 @@ const { Event } = require("./Event")
 
 describe("Event", () => {
   describe("fancyness", () => {
-    it("returns 0 or 1, dependent on the events bookmarkedBy length (currently)", async () => {
-      expect.assertions(3)
+    const allUsersCount = jest.fn()
+    const cachedMethod = jest.fn().mockReturnValue(allUsersCount)
+    const dao = { allUsersCount, cachedMethod }
 
-      const one = await Event.fancyness({ bookmarkedBy: [1] })
-      const alsoOne = await Event.fancyness({ bookmarkedBy: [1, 2, 3, 4, 5] })
-      const zero = await Event.fancyness({ bookmarkedBy: [] })
+    beforeEach(() => {
+      dao.allUsersCount.mockReset()
+    })
 
-      expect(one).toBe(1)
-      expect(alsoOne).toBe(1)
-      expect(zero).toBe(0)
+    it("returns 0 or 1, dependent on the events bookmarkedBy length and total user count", async () => {
+      dao.allUsersCount.mockReturnValue(10)
+
+      const expectedResults = [0, 0, 0, 1, 1, 2, 2]
+
+      const callFancyess = bookmarkedBy =>
+        Event.fancyness({ bookmarkedBy }, undefined, {
+          dao,
+        })
+
+      const results = await Promise.all([
+        callFancyess([]),
+        callFancyess([1]),
+        callFancyess([1, 2]),
+        callFancyess([1, 2, 3]),
+        callFancyess([1, 2, 3, 4]),
+        callFancyess([1, 2, 3, 4, 5]),
+        callFancyess([1, 2, 3, 4, 5, 6, 7]),
+      ])
+
+      expect(results).toEqual(expectedResults)
     })
   })
 
