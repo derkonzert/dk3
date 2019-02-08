@@ -8,10 +8,10 @@ exports.Event = {
 
     const likedByPercentage = event.bookmarkedBy.length / userCount
 
-    if (likedByPercentage > 0.4) {
+    if (likedByPercentage > 0.6) {
       return 2
     }
-    if (likedByPercentage > 0.2) {
+    if (likedByPercentage > 0.3) {
       return 1
     }
 
