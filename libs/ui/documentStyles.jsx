@@ -28,10 +28,19 @@ export const global = css`
     -webkit-font-smoothing: antialiased;
   }
 
-  @media screen and (min-width: 40em) {
+  /* ~720px*/
+  @media screen and (min-width: 45em) {
     html {
       /* ~12px scale everything up a little */
       font-size: 75%;
+    }
+  }
+
+  /* ~1280px*/
+  @media screen and (min-width: 80em) {
+    html {
+      /* ~14px scale everything up a little */
+      font-size: 90%;
     }
   }
 `

@@ -28,6 +28,10 @@ const sortEvents = (a, b) => {
   return a.title > b.title ? 1 : -1
 }
 
+const isToday = date => new Date().toDateString() === date.toDateString()
+const isTomorrow = date =>
+  new Date(Date.now() + 86400000).toDateString() === date.toDateString()
+
 export const EventQueryList = withRouter(({ query, filter, router }) => {
   return (
     <QueryWithAuthentication
@@ -41,42 +45,74 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
         if (loading) return <div>Loading</div>
 
         const { upcomingEvents } = data
+        let lastEventDate
 
         return (
           <React.Fragment>
             {upcomingEvents
               .sort(sortEvents)
-              .reduce((months, event) => {
-                const currentMonth = months[months.length - 1]
+              .reduce((groups, event) => {
+                const currentMonth = groups[groups.length - 1]
+                const eventFrom = new Date(event.from)
 
                 if (!currentMonth) {
-                  months.push({
-                    date: new Date(event.from),
+                  groups.push({
+                    date: eventFrom,
+                    isToday: isToday(eventFrom),
+                    isTomorrow: isTomorrow(eventFrom),
                     events: [event],
                   })
                 } else if (
-                  currentMonth.date.getMonth() !==
-                  new Date(event.from).getMonth()
+                  (isToday(currentMonth.date) && isToday(eventFrom)) ||
+                  (isTomorrow(currentMonth.date) && isTomorrow(eventFrom))
                 ) {
-                  months.push({
-                    date: new Date(event.from),
+                  groups[groups.length - 1].events.push(event)
+                } else if (
+                  (isToday(lastEventDate) && !isToday(eventFrom)) ||
+                  (isTomorrow(lastEventDate) && !isTomorrow(eventFrom))
+                ) {
+                  groups.push({
+                    date: eventFrom,
+                    isToday: isToday(eventFrom),
+                    isTomorrow: isTomorrow(eventFrom),
+                    events: [event],
+                  })
+                } else if (
+                  !isToday(eventFrom) &&
+                  !isTomorrow(eventFrom) &&
+                  currentMonth.date.getMonth() !== eventFrom.getMonth()
+                ) {
+                  groups.push({
+                    date: eventFrom,
+                    isToday: isToday(eventFrom),
+                    isTomorrow: isTomorrow(eventFrom),
                     events: [event],
                   })
                 } else {
-                  months[months.length - 1].events.push(event)
+                  groups[groups.length - 1].events.push(event)
                 }
 
-                return months
+                lastEventDate = eventFrom
+
+                return groups
               }, [])
-              .map(month => {
-                const monthName = month.date.toString().substr(4, 3)
+              .map(group => {
+                let groupName
+
+                if (group.isToday) {
+                  groupName = "Today"
+                } else if (group.isTomorrow) {
+                  groupName = "Tomorrow"
+                } else {
+                  groupName = `${group.date
+                    .toString()
+                    .substr(4, 3)} ${group.date.getFullYear()}`
+                }
 
                 return (
-                  <React.Fragment key={monthName}>
-                    <Description>
-                      {monthName} {month.date.getFullYear()}
-                    </Description>
-                    {month.events.map(event => {
+                  <React.Fragment key={groupName}>
+                    <Description>{groupName}</Description>
+                    {group.events.map(event => {
                       const date = new Date(event.from)
                       const to = new Date(event.to)
                       const isRange = date.getDate() !== to.getDate()
@@ -101,6 +137,7 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                         >
                           {bookmarkEvent => (
                             <EventCard
+                              large={group.isToday || group.isTomorrow}
                               title={event.title}
                               day={date.getDate()}
                               description={event.location}
