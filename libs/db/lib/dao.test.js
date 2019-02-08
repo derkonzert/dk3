@@ -19,6 +19,47 @@ const userDoc = {
 }
 
 describe("dao", () => {
+  describe("cachedMethod", () => {
+    beforeEach(() => {
+      dao._now = dao.now
+      dao.now = jest.fn()
+    })
+    afterEach(() => {
+      dao.now = dao._now
+    })
+
+    it("only calls the actual method once, until ttl has ended", async () => {
+      const fn = jest.fn().mockImplementation(val => val + 1)
+
+      dao.now.mockReturnValue(Date.now())
+
+      const cached = dao.cachedMethod("key", fn, { ttl: 30000 })
+
+      const results = [await cached(0), await cached(1), await cached(2)]
+      expect(results).toEqual([1, 1, 1])
+      expect(fn).toHaveBeenCalledTimes(1)
+
+      dao.now.mockReturnValue(Date.now() + 30000)
+
+      const result = await cached(2)
+
+      expect(result).toBe(3)
+      expect(fn).toHaveBeenCalledTimes(2)
+    })
+
+    it("caches the cached method per key", () => {
+      const fn = () => {}
+
+      expect(dao.cachedMethod("key", fn, { ttl: 500 })).toBe(
+        dao.cachedMethod("key", fn, { ttl: 500 })
+      )
+
+      expect(dao.cachedMethod("key", fn, { ttl: 500 })).not.toBe(
+        dao.cachedMethod("otherKey", fn, { ttl: 500 })
+      )
+    })
+  })
+
   describe("createUser", () => {
     beforeEach(() => {
       User.Model.create = jest.fn().mockReturnValue(userDoc)
@@ -51,6 +92,22 @@ describe("dao", () => {
       const user = await dao.createUser({ ...userDoc, password: "password" })
 
       expect(user).toEqual(userDoc)
+    })
+  })
+
+  describe("allUsersCount", () => {
+    const userCount = 40
+
+    beforeEach(() => {
+      User.Model.estimatedDocumentCount = jest.fn().mockReturnValue(User.Model)
+      User.Model.exec = jest.fn().mockResolvedValue(userCount)
+    })
+
+    it("calls estimatedDocumentCount", async () => {
+      const count = await dao.allUsersCount()
+
+      expect(User.Model.estimatedDocumentCount).toHaveBeenCalledTimes(1)
+      expect(count).toBe(userCount)
     })
   })
 
@@ -196,6 +253,24 @@ describe("dao", () => {
         bookmarkedBy: ["1234"],
         author: "1234",
       })
+    })
+  })
+
+  describe("allEventsCount", () => {
+    const eventCount = 40
+
+    beforeEach(() => {
+      Event.Model.estimatedDocumentCount = jest
+        .fn()
+        .mockReturnValue(Event.Model)
+      Event.Model.exec = jest.fn().mockResolvedValue(eventCount)
+    })
+
+    it("calls estimatedDocumentCount", async () => {
+      const count = await dao.allEventsCount()
+
+      expect(Event.Model.estimatedDocumentCount).toHaveBeenCalledTimes(1)
+      expect(count).toBe(eventCount)
     })
   })
 
