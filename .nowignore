@@ -10,3 +10,4 @@ coverage
 greenkeeper.json
 jest.config.json
 jestSetup.js
+_next
