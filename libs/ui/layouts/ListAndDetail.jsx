@@ -59,6 +59,7 @@ const MainPageInner = styled.div`
 `
 
 const documentElement = () => window.document.documentElement
+const scrollTo = (element, x, y) => element.scrollTo && element.scrollTo(x, y)
 
 export class ListAndDetailMain extends React.Component {
   constructor(props) {
@@ -88,14 +89,15 @@ export class ListAndDetailMain extends React.Component {
     if (snapshot !== null) {
       if (this.props.showDetail) {
         documentElement().classList.add("cacheFixedPosition")
-        this.innerRef.current.scrollTo(0, snapshot)
-        window.scrollTo(0, 0)
+
+        scrollTo(this.innerRef.current, 0, snapshot)
+        scrollTo(window, 0, 0)
       } else {
         this.scheduleUpdate = setTimeout(() => {
           documentElement().classList.remove("cacheFixedPosition")
 
-          this.innerRef.current.scrollTo(0, 0)
-          window.scrollTo(0, snapshot)
+          scrollTo(this.innerRef.current, 0, 0)
+          scrollTo(window, 0, snapshot)
         }, 500)
       }
     }
