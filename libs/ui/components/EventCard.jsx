@@ -85,6 +85,7 @@ export const EventCard = ({
   day,
   dayName,
   large,
+  approved = true,
   bookmarked = false,
   linkProps = {},
   onBookmarkClick,
@@ -101,7 +102,7 @@ export const EventCard = ({
   }
 
   return (
-    <ActualBox {...props}>
+    <ActualBox {...props} transparent={!approved}>
       <div css={cardContent}>
         {!large && (
           <CalendarDay

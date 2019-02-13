@@ -17,6 +17,7 @@ export const UPCOMING_EVENTS_EVENT_FRAGMENT = gql`
     to
     location
     fancyness
+    approved
     bookmarkedByMe
   }
 `

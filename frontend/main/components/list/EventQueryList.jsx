@@ -142,6 +142,7 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                               day={date.getDate()}
                               description={event.location}
                               dayName={dayName}
+                              approved={event.approved}
                               bookmarked={event.bookmarkedByMe}
                               fancyLevel={event.fancyness}
                               linkProps={{
