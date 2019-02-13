@@ -5,7 +5,7 @@ const { DateTime } = require("luxon")
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-const generateConcertData = () => {
+const generateEventData = () => {
   const events = require("./eventsData")
 
   const referenceNow = events[Math.round(events.length / 2)].from
@@ -63,19 +63,46 @@ const seedUsers = async () => {
   return savedData
 }
 
-const seedConcerts = async users => {
-  const concertData = generateConcertData()
+const seedEvents = async users => {
+  const savedData = []
+  const concertData = generateEventData()
 
   while (concertData.length) {
     const data = concertData.shift()
-    const author = users[concertData.length % 3]
+    const author = users[concertData.length % 4]
 
     if (author) {
       data.author = author._id
     }
 
+    data.approved = concertData.length % 10 !== 0
+
     try {
-      await dao.createEvent({ eventData: data }, {})
+      const event = await dao.createEvent({ eventData: data }, {})
+
+      savedData.push(event)
+    } catch (err) {
+      throw err
+    }
+  }
+
+  return savedData
+}
+
+const bookmarkEvents = async (events, users) => {
+  for (let user of users) {
+    for (let event of events) {
+      if (event.bookmarkedBy.indexOf(user._id) === -1) {
+        if (events.indexOf(event) % (1 + users.indexOf(user)) === 0) {
+          event.bookmarkedBy.push(user._id)
+        }
+      }
+    }
+  }
+
+  for (let event of events) {
+    try {
+      await event.save()
     } catch (err) {
       throw err
     }
@@ -93,7 +120,10 @@ const seed = async () => {
     const users = await seedUsers()
 
     logger("Creating events")
-    await seedConcerts(users)
+    const events = await seedEvents(users)
+
+    logger("Bookmarking events")
+    await bookmarkEvents(events, users)
 
     logger("Waiting 5 seconds for after math")
     // Safetybelt, before closing the connection
