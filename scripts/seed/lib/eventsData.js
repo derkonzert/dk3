@@ -318,22 +318,22 @@ module.exports = [
   {
     title: "Like Rats + Confusion Master",
     location: "Feierwerk Sunny Red",
-    from: "Wed Sep 12 2018 00:00:00 GMT+0200 (CEST)",
+    from: "Sat Sep 08 2018 00:00:00 GMT+0200 (CEST)",
   },
   {
     title: "Los Gatillos",
     location: "Polka Bar",
-    from: "Wed Sep 12 2018 00:00:00 GMT+0200 (CEST)",
+    from: "Sun Sep 09 2018 00:00:00 GMT+0200 (CEST)",
   },
   {
     title: "Julien Baker",
     location: "Ampere",
-    from: "Sun Sep 16 2018 00:00:00 GMT+0200 (CEST)",
+    from: "Sun Sep 09 2018 00:00:00 GMT+0200 (CEST)",
   },
   {
     title: "Stoned Jesus + Mothership + Elephant Tree",
     location: "Feierwerk Hansa 39",
-    from: "Mon Sep 17 2018 00:00:00 GMT+0200 (CEST)",
+    from: "Sun Sep 09 2018 00:00:00 GMT+0200 (CEST)",
   },
   {
     title: "King Dude + Kælan Mikla",
