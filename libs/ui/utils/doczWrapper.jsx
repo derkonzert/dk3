@@ -1,12 +1,13 @@
 import React from "react"
 import { Global } from "@emotion/core"
 import { global } from "../documentStyles"
+import { ThemeProvider } from "../theme"
 
 export default function Wrapper({ children }) {
   return (
-    <React.Fragment>
+    <ThemeProvider>
       <Global styles={global} />
       {children}
-    </React.Fragment>
+    </ThemeProvider>
   )
 }

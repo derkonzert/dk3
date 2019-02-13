@@ -30,12 +30,15 @@
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "eslint-plugin-react": "^7.12.1",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "react-powerplug": "^1.0.0"
   },
   "dependencies": {
     "@emotion/core": "^10.0.5",
     "@emotion/styled": "^10.0.5",
     "@reach/visually-hidden": "^0.1.1",
+    "emotion-theming": "^10.0.7",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-select": "^2.3.0"
