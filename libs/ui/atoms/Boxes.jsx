@@ -35,21 +35,32 @@ const superFancyBox = css`
   color: white;
 `
 
-export const Box = withSpacing({ mv: 3 })(({ children, ...props }) => (
-  <div css={box} {...props}>
-    <div css={boxInner}>{children}</div>
-  </div>
-))
+const dynamicOpacity = transparent => css`
+  opacity: ${transparent ? 0.4 : 1};
+  @supports (filter: saturate(1)) {
+    ${transparent ? "filter: saturate(0.65)" : ""};
+  }
+`
 
-export const FancyBox = withSpacing({ mv: 3 })(({ children, ...props }) => (
-  <div css={fancyBox} {...props}>
-    <div css={fancyBoxInner}>{children}</div>
-  </div>
-))
+export const Box = withSpacing({ mv: 3 })(
+  ({ children, transparent, ...props }) => (
+    <div css={[box, dynamicOpacity(transparent)]} {...props}>
+      <div css={boxInner}>{children}</div>
+    </div>
+  )
+)
+
+export const FancyBox = withSpacing({ mv: 3 })(
+  ({ children, transparent, ...props }) => (
+    <div css={[fancyBox, dynamicOpacity(transparent)]} {...props}>
+      <div css={fancyBoxInner}>{children}</div>
+    </div>
+  )
+)
 
 export const SuperFancyBox = withSpacing({ mv: 3 })(
-  ({ children, ...props }) => (
-    <div css={superFancyBox} {...props}>
+  ({ children, transparent, ...props }) => (
+    <div css={[superFancyBox, dynamicOpacity(transparent)]} {...props}>
       <div css={boxInner}>{children}</div>
     </div>
   )
