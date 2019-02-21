@@ -11,20 +11,33 @@ import { EventList } from "../components/list/EventList"
 import { WhoAmI } from "../components/WhoAmI"
 import { CreateEventForm } from "../components/form/CreateEventForm"
 import { EventDetail } from "../components/event-detail/EventDetail"
-import { Dialog } from "@dk3/ui/components/Dialog"
+import { VeryFancyButton } from "@dk3/ui/form/Button"
 
 export default withRouter(function Index({ router }) {
+  const {
+    query: { eventId, addEvent },
+  } = router
+  const showDetail = !!eventId || !!addEvent
+
   return (
-    <ListAndDetail showDetail={!!router.query.eventId}>
+    <ListAndDetail showDetail={showDetail}>
       <ListAndDetailMain>
         <WhoAmI />
         <EventList />
-        <CreateEventForm />
+        <VeryFancyButton
+          onClick={() => {
+            router.push(`/?addEvent=1`, `/add-new-event`, {
+              shallow: true,
+            })
+          }}
+        >
+          Add Event
+        </VeryFancyButton>
       </ListAndDetailMain>
       <ListAndDetailSide>
-        {!!router.query.eventId && (
+        {!!eventId && (
           <React.Fragment>
-            <EventDetail id={router.query.eventId} />
+            <EventDetail id={eventId} />
             <Link href="/">
               <a
                 onClick={e => {
@@ -37,6 +50,7 @@ export default withRouter(function Index({ router }) {
             </Link>
           </React.Fragment>
         )}
+        {!!addEvent && <CreateEventForm />}
       </ListAndDetailSide>
     </ListAndDetail>
   )
