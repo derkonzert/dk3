@@ -13,15 +13,11 @@ export const ListAndDetail = ({ showDetail, children }) => (
 )
 
 const mainPageShowDetail = css`
-  &:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(22, 22, 22, 0.15);
-  }
+  will-change: background-color;
+  z-index: 0;
+  pointer-events: initial;
+  background: rgba(22, 22, 22, 0.65);
+  transition-delay: 0s, 0s;
 `
 const MainPage = styled.div`
   top: 0;
@@ -29,7 +25,22 @@ const MainPage = styled.div`
   left: 0;
   bottom: 0;
 
-  ${props => (props.showDetail ? mainPageShowDetail : "")}
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: -1;
+    pointer-events: none;
+
+    background: rgba(22, 22, 22, 0);
+    transition: 350ms background-color, 0s z-index 350ms;
+
+    ${props => (props.showDetail ? mainPageShowDetail : "")}
+  }
 
   .cacheFixedPosition & {
     position: fixed;
@@ -38,7 +49,8 @@ const MainPage = styled.div`
 `
 
 const mainPageInnerShowDetail = css`
-  transform: scale(0.95) translateY(20px);
+  will-change: transform;
+  transform: translateY(4rem) scale(0.96);
 `
 const MainPageInner = styled.div`
   box-sizing: content-box;
@@ -46,7 +58,7 @@ const MainPageInner = styled.div`
   margin: 0 auto;
   max-width: 72.8rem;
 
-  transition: 450ms transform;
+  transition: 350ms transform ease-out;
 
   ${props => (props.showDetail ? mainPageInnerShowDetail : "")}
 
@@ -147,7 +159,7 @@ const Side = styled.div`
   padding-top: 30rem;
 
   transition: 0s visibility;
-  transition-delay: 450ms;
+  transition-delay: 350ms;
 
   ${props => (props.showDetail ? sideShowDetail : "")}
 `
@@ -158,13 +170,19 @@ const sideInnerShowDetail = css`
 const SideInner = styled.div`
   width: 100%;
   background: white;
-  padding: 0 1rem;
+  border-radius: 1.2rem 1.2rem 0 0;
 
-  transition: 450ms transform;
+  transition: 350ms transform;
   transform: translateY(100%);
   transform: translateY(calc(100.5vh - 30rem));
 
   ${props => (props.showDetail ? sideInnerShowDetail : "")}
+`
+
+const SideInnerContent = styled.div`
+  margin: 0 auto;
+  max-width: 72.8rem;
+  padding: 1rem 1.5rem;
 `
 
 class CacheContentFor extends React.Component {
@@ -208,7 +226,9 @@ class CacheContentFor extends React.Component {
 export const ListAndDetailSide = ({ children, showDetail, ...props }) => (
   <Side showDetail={showDetail} {...props}>
     <SideInner showDetail={showDetail}>
-      <CacheContentFor ms={500}>{children}</CacheContentFor>
+      <SideInnerContent>
+        <CacheContentFor ms={500}>{children}</CacheContentFor>
+      </SideInnerContent>
     </SideInner>
   </Side>
 )

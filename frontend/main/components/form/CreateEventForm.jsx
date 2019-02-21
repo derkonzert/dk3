@@ -25,7 +25,7 @@ export const CREATE_EVENT = gql`
   ${UPCOMING_EVENTS_EVENT_FRAGMENT}
 `
 
-export const CreateEventForm = () => {
+export const CreateEventForm = ({ onCreated }) => {
   const now = Date.now()
   const to = new Date(now + 500)
   const from = new Date(now)
@@ -57,6 +57,8 @@ export const CreateEventForm = () => {
               })
 
               resetState()
+
+              onCreated && onCreated(createEvent)
             }}
           >
             {createEvent => {
