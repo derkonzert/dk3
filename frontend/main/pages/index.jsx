@@ -50,7 +50,19 @@ export default withRouter(function Index({ router }) {
             </Link>
           </React.Fragment>
         )}
-        {!!addEvent && <CreateEventForm />}
+        {!!addEvent && (
+          <CreateEventForm
+            onCreated={event => {
+              router.replace(
+                `/?eventId=${event.id}`,
+                `/c/${event.title}-${event.id}`,
+                {
+                  shallow: true,
+                }
+              )
+            }}
+          />
+        )}
       </ListAndDetailSide>
     </ListAndDetail>
   )
