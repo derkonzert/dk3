@@ -38,6 +38,11 @@
       "methods": ["GET"],
       "dest": "frontend/main/c?eventId=$eventId"
     },
+    {
+      "src": "/add-new-event$",
+      "methods": ["GET"],
+      "dest": "frontend/main/?addEvent=1"
+    },
     { "src": "^/(.*[.].*)$", "dest": "frontend/main/$1" },
     { "src": "^/(.*)", "dest": "frontend/main/index.html" }
   ]
