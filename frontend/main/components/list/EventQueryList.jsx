@@ -1,13 +1,13 @@
 import React from "react"
 import { withRouter } from "next/router"
-
+import { DateTime } from "luxon"
 import gql from "graphql-tag"
 
 import { QueryWithAuthentication } from "../../lib/QueryWithAuthentication"
 import { MutationWithAuthentication } from "../../lib/MutationWithAuthentication"
 
 import { EventCard } from "@dk3/ui/components/EventCard"
-import { Description } from "@dk3/ui/atoms/Typography"
+import { ListTitle } from "@dk3/ui/atoms/Typography"
 
 export const BOOKMARK_EVENT = gql`
   mutation bookmarkEvent($input: BookmarkEventInput!) {
@@ -100,18 +100,25 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                 let groupName
 
                 if (group.isToday) {
-                  groupName = "Today"
+                  groupName = <ListTitle>Today</ListTitle>
                 } else if (group.isTomorrow) {
-                  groupName = "Tomorrow"
+                  groupName = <ListTitle>Tomorrow</ListTitle>
                 } else {
-                  groupName = `${group.date
-                    .toString()
-                    .substr(4, 3)} ${group.date.getFullYear()}`
+                  const dt = DateTime.fromJSDate(group.date)
+
+                  groupName = (
+                    <ListTitle>
+                      {dt.toLocaleString({ month: "long" })}{" "}
+                      <span style={{ color: "#757575" }}>
+                        {group.date.getFullYear()}
+                      </span>
+                    </ListTitle>
+                  )
                 }
 
                 return (
                   <React.Fragment key={groupName}>
-                    <Description>{groupName}</Description>
+                    {groupName}
                     {group.events.map(event => {
                       const date = new Date(event.from)
                       const to = new Date(event.to)

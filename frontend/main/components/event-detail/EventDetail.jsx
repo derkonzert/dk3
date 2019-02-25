@@ -1,17 +1,17 @@
 import React from "react"
-
 import { Query } from "react-apollo"
 import gql from "graphql-tag"
 
-import { Title } from "@dk3/ui/atoms/Typography"
+import { MegaTitle, Text, WrappingText } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
-import { Box, FancyBox } from "@dk3/ui/atoms/Boxes"
+import { Spacer } from "@dk3/ui/atoms/Spacer"
 
 export const EVENT_DETAIL_FRAGMENT = gql`
   fragment EventDetailEvent on Event {
     __typename
     id
     title
+    description
     from
     to
     location
@@ -37,12 +37,22 @@ export const EventDetail = ({ id }) => {
         if (loading) return <Spinner>Loading</Spinner>
 
         const { event } = data
-        const UseBox = event.fancyness > 0 ? FancyBox : Box
 
         return (
-          <UseBox>
-            <Title>{event.title}</Title>
-          </UseBox>
+          <Spacer pa={4}>
+            <MegaTitle mb={3}>{event.title}</MegaTitle>
+            <Text>
+              28. Februar 2019 — 20:00 Uhr
+              <br />
+              Backstage Werk
+            </Text>
+            <hr />
+            <Text>
+              <strong>Anonymously</strong> submitted
+            </Text>
+            <hr />
+            <WrappingText>{event.description}</WrappingText>
+          </Spacer>
         )
       }}
     </Query>

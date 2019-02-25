@@ -17,12 +17,8 @@ export const MegaTitle = styled.h1`
   position: relative;
   display: inline-block;
   font-size: 3.2rem;
-
-  @supports (-webkit-text-fill-color: transparent) {
-    ${gradientBackground}
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+  line-height: 1.4;
+  margin: 1rem 0;
 
   &:after {
     content: "";
@@ -30,7 +26,7 @@ export const MegaTitle = styled.h1`
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0.3rem;
+    bottom: -0.2rem;
     height: 0.4rem;
     border-radius: 0.2rem;
 
@@ -73,6 +69,21 @@ export const Description = styled.div`
   color: ${({ inverted }) => (inverted ? "#f9f9f9" : "#636161")};
   letter-spacing: 0;
   line-height: 2rem;
+`
+
+export const Text = styled.p`
+  ${noMargin};
+  font-family: "IBM Plex Sans", serif;
+
+  font-size: 1.2rem;
+  color: ${({ inverted }) => (inverted ? "#f9f9f9" : "#3F3F3F")};
+  letter-spacing: 0;
+  line-height: 1.8rem;
+  max-width: 38em;
+`
+
+export const WrappingText = styled(Text)`
+  white-space: pre-wrap;
 `
 
 export const Link = withSpacing()(styled.a`
