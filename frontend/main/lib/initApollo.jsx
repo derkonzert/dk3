@@ -12,12 +12,12 @@ if (!process.browser) {
   global.fetch = fetch
 }
 
+const uri =
+  process.env.NODE_ENV === "production" ? "/api" : "http://localhost:8004/api"
+
 function create(initialState, { getToken }) {
   const httpLink = createHttpLink({
-    uri:
-      process.env.NODE_ENV === "production"
-        ? "/api"
-        : "http://localhost:8004/api",
+    uri,
     credentials: "same-origin",
   })
 

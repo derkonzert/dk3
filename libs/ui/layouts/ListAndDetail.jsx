@@ -54,7 +54,7 @@ const mainPageInnerShowDetail = css`
 `
 const MainPageInner = styled.div`
   box-sizing: content-box;
-  padding: 2rem 1rem;
+  padding: 0;
   margin: 0 auto;
   max-width: 72.8rem;
 
@@ -66,7 +66,7 @@ const MainPageInner = styled.div`
     overflow: hidden;
     height: 100%;
     margin: -10rem auto;
-    padding: 12rem 1rem;
+    padding: 10rem 0;
   }
 `
 
@@ -156,7 +156,7 @@ const Side = styled.div`
   min-height: 100.5vh;
 
   visibility: hidden;
-  padding-top: 30rem;
+  padding-top: 38.2vh;
 
   transition: 0s visibility;
   transition-delay: 350ms;
@@ -170,11 +170,10 @@ const sideInnerShowDetail = css`
 const SideInner = styled.div`
   width: 100%;
   background: white;
-  border-radius: 1.2rem 1.2rem 0 0;
 
   transition: 350ms transform;
   transform: translateY(100%);
-  transform: translateY(calc(100.5vh - 30rem));
+  transform: translateY(calc(100.5vh - 38.2vh));
 
   ${props => (props.showDetail ? sideInnerShowDetail : "")}
 `
@@ -182,7 +181,6 @@ const SideInner = styled.div`
 const SideInnerContent = styled.div`
   margin: 0 auto;
   max-width: 72.8rem;
-  padding: 1rem 1.5rem;
 `
 
 class CacheContentFor extends React.Component {

@@ -6,7 +6,7 @@ const { DateTime } = require("luxon")
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const generateEventData = () => {
-  const events = require("./eventsData")
+  const { events, description } = require("./eventsData")
 
   const referenceNow = events[Math.round(events.length / 2)].from
 
@@ -16,6 +16,7 @@ const generateEventData = () => {
   return events.map(event => ({
     ...event,
     title: `Mock ${event.title}`,
+    description,
     from: DateTime.fromJSDate(new Date(event.from))
       .plus(dateOffset)
       .toISO(),

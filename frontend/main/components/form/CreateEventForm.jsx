@@ -15,6 +15,8 @@ import {
   UPCOMING_EVENTS,
   UPCOMING_EVENTS_EVENT_FRAGMENT,
 } from "../list/EventList"
+import { Title } from "@dk3/ui/atoms/Typography"
+import { Spacer } from "@dk3/ui/atoms/Spacer"
 
 export const CREATE_EVENT = gql`
   mutation createNewEvent($input: CreateEventInput!) {
@@ -31,38 +33,38 @@ export const CreateEventForm = ({ onCreated }) => {
   const from = new Date(now)
 
   return (
-    <Box pa={4} mh={4}>
-      <State initial={{ title: "", location: "", to, from }}>
-        {({ state, setState, resetState }) => (
-          <Mutation
-            mutation={CREATE_EVENT}
-            update={(cache, { data: { createEvent } }) => {
-              const { upcomingEvents } = cache.readQuery({
-                query: UPCOMING_EVENTS,
-                variables: {
-                  filter: "all",
-                },
-              })
+    <State initial={{ title: "", location: "", to, from }}>
+      {({ state, setState, resetState }) => (
+        <Mutation
+          mutation={CREATE_EVENT}
+          update={(cache, { data: { createEvent } }) => {
+            const { upcomingEvents } = cache.readQuery({
+              query: UPCOMING_EVENTS,
+              variables: {
+                filter: "all",
+              },
+            })
 
-              cache.writeQuery({
-                query: UPCOMING_EVENTS,
-                variables: { filter: "all" },
-                data: {
-                  upcomingEvents: [createEvent, ...upcomingEvents].sort(
-                    (a, b) => {
-                      return a.from > b.from ? 1 : -1
-                    }
-                  ),
-                },
-              })
+            cache.writeQuery({
+              query: UPCOMING_EVENTS,
+              variables: { filter: "all" },
+              data: {
+                upcomingEvents: [createEvent, ...upcomingEvents].sort(
+                  (a, b) => {
+                    return a.from > b.from ? 1 : -1
+                  }
+                ),
+              },
+            })
 
-              resetState()
+            resetState()
 
-              onCreated && onCreated(createEvent)
-            }}
-          >
-            {createEvent => {
-              return (
+            onCreated && onCreated(createEvent)
+          }}
+        >
+          {createEvent => {
+            return (
+              <Spacer pa={4}>
                 <form
                   onSubmit={e => {
                     e.preventDefault()
@@ -78,6 +80,7 @@ export const CreateEventForm = ({ onCreated }) => {
                     })
                   }}
                 >
+                  <Title>Add Event</Title>
                   <TextInput
                     value={state.title}
                     name="title"
@@ -111,11 +114,11 @@ export const CreateEventForm = ({ onCreated }) => {
                   />
                   <FancyButton type="submit">Save new event</FancyButton>
                 </form>
-              )
-            }}
-          </Mutation>
-        )}
-      </State>
-    </Box>
+              </Spacer>
+            )
+          }}
+        </Mutation>
+      )}
+    </State>
   )
 }

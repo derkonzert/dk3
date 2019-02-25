@@ -41,7 +41,7 @@
     {
       "src": "/add-new-event$",
       "methods": ["GET"],
-      "dest": "frontend/main/?addEvent=1"
+      "dest": "frontend/main/?addEvent=true"
     },
     { "src": "^/(.*[.].*)$", "dest": "frontend/main/$1" },
     { "src": "^/(.*)", "dest": "frontend/main/index.html" }

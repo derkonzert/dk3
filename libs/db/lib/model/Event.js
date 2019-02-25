@@ -16,6 +16,10 @@ const schemaDefinition = {
     type: String,
     required: true,
   },
+  /* An optional description of the event */
+  description: {
+    type: String,
+  },
   /* Has the event been approved by an admin? */
   approved: {
     type: Boolean,
