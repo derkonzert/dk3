@@ -59,6 +59,7 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
             label="E-Mail Address"
             value={state.email}
             onChange={e => setState({ email: e.target.value })}
+            type="email"
             name="email"
           />
           <TextInput

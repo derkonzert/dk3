@@ -61,6 +61,7 @@ export const SignUpForm = withApollo(({ onSignUp, onCancel, client }) => {
             value={state.email}
             onChange={e => setState({ email: e.target.value })}
             name="email"
+            type="email"
           />
           <TextInput
             label="Password"
