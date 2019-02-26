@@ -5,6 +5,9 @@ import {
   MegaTitle,
   Title,
   SubTitle,
+  Text,
+  WrappingText,
+  Link,
   ListTitle,
   Description,
 } from "./Typography"
@@ -43,6 +46,36 @@ describe("Typography", () => {
 
     it("has inverted", () => {
       expect(() => mount(<ListTitle inverted />)).not.toThrow()
+    })
+  })
+
+  describe("Text", () => {
+    it("mounts without Throwing", () => {
+      expect(() => mount(<Text />)).not.toThrow()
+    })
+
+    it("has inverted", () => {
+      expect(() => mount(<Text inverted />)).not.toThrow()
+    })
+  })
+
+  describe("WrappingText", () => {
+    it("mounts without Throwing", () => {
+      expect(() => mount(<WrappingText />)).not.toThrow()
+    })
+
+    it("has inverted", () => {
+      expect(() => mount(<WrappingText inverted />)).not.toThrow()
+    })
+  })
+
+  describe("Link", () => {
+    it("mounts without Throwing", () => {
+      expect(() => mount(<Link />)).not.toThrow()
+    })
+
+    it("has inverted", () => {
+      expect(() => mount(<Link inverted />)).not.toThrow()
     })
   })
 
