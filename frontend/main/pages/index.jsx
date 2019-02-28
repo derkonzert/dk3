@@ -22,6 +22,10 @@ export default withRouter(function Index({ router }) {
     query: { eventId, addEvent },
   } = router
   const showDetail = !!eventId || !!addEvent
+  const closeDetail = e => {
+    e.preventDefault()
+    router.back()
+  }
 
   return (
     <ListAndDetail showDetail={showDetail}>
@@ -48,19 +52,12 @@ export default withRouter(function Index({ router }) {
           </VeryFancyButton>
         </Spacer>
       </ListAndDetailMain>
-      <ListAndDetailSide>
+      <ListAndDetailSide requestClose={closeDetail}>
         {!!eventId && (
           <React.Fragment>
             <EventDetail id={eventId} />
             <Link href="/">
-              <a
-                onClick={e => {
-                  e.preventDefault()
-                  router.back()
-                }}
-              >
-                Back
-              </a>
+              <a onClick={closeDetail}>Back</a>
             </Link>
           </React.Fragment>
         )}

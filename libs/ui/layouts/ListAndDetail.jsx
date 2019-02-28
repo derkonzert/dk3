@@ -1,6 +1,7 @@
 import React from "react"
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
+import useClickOutside from "click-outside-hook"
 
 export const ListAndDetail = ({ showDetail, children }) => (
   <React.Fragment>
@@ -221,12 +222,23 @@ class CacheContentFor extends React.Component {
   }
 }
 
-export const ListAndDetailSide = ({ children, showDetail, ...props }) => (
-  <Side showDetail={showDetail} {...props}>
-    <SideInner showDetail={showDetail}>
-      <SideInnerContent>
-        <CacheContentFor ms={500}>{children}</CacheContentFor>
-      </SideInnerContent>
-    </SideInner>
-  </Side>
-)
+export const ListAndDetailSide = ({
+  children,
+  showDetail,
+  requestClose,
+  ...props
+}) => {
+  const ref = useClickOutside(
+    e => requestClose && showDetail && requestClose(e)
+  )
+
+  return (
+    <Side showDetail={showDetail} {...props}>
+      <SideInner ref={ref} showDetail={showDetail}>
+        <SideInnerContent>
+          <CacheContentFor ms={500}>{children}</CacheContentFor>
+        </SideInnerContent>
+      </SideInner>
+    </Side>
+  )
+}
