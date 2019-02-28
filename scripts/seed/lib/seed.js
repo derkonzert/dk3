@@ -91,10 +91,15 @@ const seedEvents = async users => {
 }
 
 const bookmarkEvents = async (events, users) => {
+  const firstUpcomingEventsIndex = Math.round(events.length / 2)
+
   for (let user of users) {
     for (let event of events) {
       if (event.bookmarkedBy.indexOf(user._id) === -1) {
-        if (events.indexOf(event) % (1 + users.indexOf(user)) === 0) {
+        if (
+          events.indexOf(event) === firstUpcomingEventsIndex ||
+          events.indexOf(event) % (2 + users.indexOf(user)) === 0
+        ) {
           event.bookmarkedBy.push(user._id)
         }
       }

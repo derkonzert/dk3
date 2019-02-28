@@ -11,3 +11,4 @@ greenkeeper.json
 jest.config.json
 jestSetup.js
 _next
+node_modules

@@ -9,13 +9,9 @@
   "builds": [
     { "src": "services/auth/lib/auth.js", "use": "@now/node" },
     { "src": "services/api/lib/api.js", "use": "@now/node" },
-    { "src": "services/metascraper/lib/metascraper.js", "use": "@now/node" },
     {
-      "src": "frontend/main/package.json",
-      "use": "@now/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+      "src": "frontend/main/next.config.js",
+      "use": "@now/next@0.0.85-canary.9"
     }
   ],
   "routes": [
@@ -30,10 +26,6 @@
       "dest": "/services/api/lib/api.js"
     },
     {
-      "src": "/metascraper/(.*)",
-      "dest": "/services/metascraper/lib/metascraper.js?targetUrl=$1"
-    },
-    {
       "src": "/c/(.)*-(?<eventId>.*)$",
       "methods": ["GET"],
       "dest": "frontend/main/c?eventId=$eventId"
@@ -41,9 +33,9 @@
     {
       "src": "/add-new-event$",
       "methods": ["GET"],
-      "dest": "frontend/main/?addEvent=true"
+      "dest": "frontend/main/index?addEvent=true"
     },
-    { "src": "^/(.*[.].*)$", "dest": "frontend/main/$1" },
-    { "src": "^/(.*)", "dest": "frontend/main/index.html" }
+    { "src": "/", "dest": "frontend/main/index" },
+    { "src": "^/(.*)$", "dest": "frontend/main/$1" }
   ]
 }

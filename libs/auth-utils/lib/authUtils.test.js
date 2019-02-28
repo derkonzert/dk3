@@ -64,6 +64,7 @@ describe("auth-utils", () => {
         username: "ju",
         email: "jus@email.com",
         comparePassword: pw => pw === "password",
+        hasSkill: () => true,
       })
 
       const token = await authUtils.signIn("jus@email.com", "password")
@@ -78,7 +79,7 @@ describe("auth-utils", () => {
     it("throws when user cant be found", async () => {
       db.dao.userByEmail.mockResolvedValue(null)
 
-      expect(
+      return expect(
         authUtils.signIn("not-jus@email.com", "password")
       ).rejects.toThrow()
     })
@@ -88,11 +89,33 @@ describe("auth-utils", () => {
         username: "ju",
         email: "jus@email.com",
         comparePassword: pw => pw === "password",
+        hasSkill: () => true,
       })
 
-      expect(
+      return expect(
         authUtils.signIn("jus@email.com", "not his password")
       ).rejects.toThrow()
+    })
+
+    it("throws when the user does not have the login skill", async () => {
+      const hasSkill = jest.fn().mockReturnValue(false)
+
+      db.dao.userByEmail.mockResolvedValue({
+        username: "ju",
+        email: "jus@email.com",
+        comparePassword: pw => pw === "password",
+        hasSkill,
+      })
+
+      expect.assertions(2)
+
+      try {
+        await authUtils.signIn("jus@email.com", "password")
+      } catch (err) {
+        expect(err).toBeTruthy()
+      }
+
+      expect(hasSkill).toHaveBeenCalledWith("LOGIN")
     })
   })
 
