@@ -42,6 +42,7 @@ export default withRouter(function Index({ router }) {
           <WhoAmI />
           <EventList />
           <VeryFancyButton
+            data-add-event
             onClick={() => {
               router.push(`/?addEvent=1`, `/add-new-event`, {
                 shallow: true,

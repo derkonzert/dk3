@@ -233,7 +233,7 @@ export const ListAndDetailSide = ({
   )
 
   return (
-    <Side showDetail={showDetail} {...props}>
+    <Side data-side={showDetail} showDetail={showDetail} {...props}>
       <SideInner ref={ref} showDetail={showDetail}>
         <SideInnerContent>
           <CacheContentFor ms={500}>{children}</CacheContentFor>

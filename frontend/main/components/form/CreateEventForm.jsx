@@ -66,6 +66,7 @@ export const CreateEventForm = ({ onCreated }) => {
             return (
               <Spacer pa={4}>
                 <form
+                  data-add-event-form
                   onSubmit={e => {
                     e.preventDefault()
 
