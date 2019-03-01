@@ -7,7 +7,6 @@ import gql from "graphql-tag"
 import { State } from "react-powerplug"
 
 import { FancyButton } from "@dk3/ui/form/Button"
-import { Box } from "@dk3/ui/atoms/Boxes"
 import { TextInput } from "@dk3/ui/form/TextInput"
 import { DateInput } from "@dk3/ui/form/DateInput"
 
