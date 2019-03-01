@@ -18,3 +18,7 @@ exports.get = (name, throwOnError) => {
 
   return config[name]
 }
+
+exports.override = (name, newValue) => {
+  config[name] = newValue
+}

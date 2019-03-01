@@ -37,6 +37,12 @@ describe("config", () => {
     expect(config.get("MY_FIRST_TEST_VAR")).toBe("MY_FIRST_TEST_VALUE")
   })
 
+  it("does recognize changes via override method", () => {
+    config.override("MY_FIRST_TEST_VAR", "some override")
+
+    expect(config.get("MY_FIRST_TEST_VAR")).toEqual("some override")
+  })
+
   it("includes defaults", () => {
     expect(config.get("FAKE_DEFAULT")).toBe(defaults.FAKE_DEFAULT)
   })
