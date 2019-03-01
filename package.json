@@ -9,7 +9,8 @@
     "format": "prettier --write '{libs,services}/**/*.js'",
     "test": "JWT_SECRET=la-di-da jest",
     "test:watch": "JWT_SECRET=la-di-da jest --watch --collectCoverage false",
-    "integration": "start-server-and-test integration:setup http://localhost:3000 integration:test",
+    "integration": "cypress open",
+    "integration:ci": "start-server-and-test integration:setup http://localhost:3000 integration:test",
     "integration:setup": "node scripts/start-ci",
     "integration:test": "cypress run"
   },
