@@ -8,12 +8,16 @@
     "dev": "JWT_SECRET=la-di-da now-lambda",
     "format": "prettier --write '{libs,services}/**/*.js'",
     "test": "JWT_SECRET=la-di-da jest",
-    "test:watch": "JWT_SECRET=la-di-da jest --watch --collectCoverage false"
+    "test:watch": "JWT_SECRET=la-di-da jest --watch --collectCoverage false",
+    "integration": "start-server-and-test integration:setup http://localhost:3000 integration:test",
+    "integration:setup": "node scripts/start-ci",
+    "integration:test": "cypress run"
   },
   "workspaces": [
     "libs/*",
     "services/*",
-    "frontend/*"
+    "frontend/*",
+    "scripts/*"
   ],
   "keywords": [],
   "author": "",
@@ -25,11 +29,13 @@
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "24.0.0",
     "commitizen": "^3.0.5",
+    "cypress": "^3.1.5",
     "cz-conventional-changelog": "2.1.0",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "eslint": "^5.10.0",
     "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-cypress": "^2.2.1",
     "eslint-plugin-jest": "^22.1.2",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
@@ -42,7 +48,9 @@
     "prettier": "^1.15.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "regenerator-runtime": "^0.13.1"
+    "regenerator-runtime": "^0.13.1",
+    "start-server-and-test": "^1.7.11",
+    "wait-on": "^3.2.0"
   },
   "config": {
     "commitizen": {

@@ -1,9 +1,9 @@
 {
-  "name": "@dk3/seed",
+  "name": "@dk3/start-ci",
   "version": "0.0.0",
   "private": true,
   "description": "> TODO: description",
-  "author": "Julian Kempff <ju@formundcode.de>",
+  "author": "jkempff <kempff@ju.am>",
   "homepage": "https://github.com/jkempff/dk3#readme",
   "license": "ISC",
   "main": "index.js",
@@ -26,9 +26,8 @@
   },
   "dependencies": {
     "@dk3/config": "^0.0.0",
-    "@dk3/db": "^0.0.0",
-    "@dk3/logger": "^0.0.0",
-    "@emotion/styled": "^10.0.5",
-    "luxon": "^1.9.0"
+    "@dk3/db": "0.0.0",
+    "@dk3/logger": "0.0.0",
+    "mongodb-memory-server": "^3.1.2"
   }
 }

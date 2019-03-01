@@ -143,6 +143,7 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                         >
                           {bookmarkEvent => (
                             <EventCard
+                              data-event
                               large={group.isToday || group.isTomorrow}
                               title={event.title}
                               day={date.getDate()}
