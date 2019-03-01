@@ -18,6 +18,6 @@ describe("Event List", function() {
       .eq(0)
       .contains("Neubauten")
 
-    cy.get("[data-event]").should("have.length", 60)
+    cy.get("[data-event]").should("have.length.greaterThan", 60)
   })
 })
