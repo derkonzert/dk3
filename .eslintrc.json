@@ -2,6 +2,7 @@
   "env": {
     "browser": true,
     "commonjs": true,
+    "cypress/globals": true,
     "es6": true,
     "node": true,
     "jest/globals": true
@@ -13,7 +14,7 @@
     },
     "ecmaVersion": 2018
   },
-  "plugins": ["react", "jest", "prettier"],
+  "plugins": ["react", "jest", "prettier", "cypress"],
   "rules": {
     "prettier/prettier": "error",
     "linebreak-style": ["error", "unix"],

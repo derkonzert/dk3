@@ -115,7 +115,7 @@ const bookmarkEvents = async (events, users) => {
   }
 }
 
-const seed = async () => {
+module.exports = async function seed() {
   const connection = await connect()
 
   try {
@@ -131,10 +131,10 @@ const seed = async () => {
     logger("Bookmarking events")
     await bookmarkEvents(events, users)
 
-    logger("Waiting 5 seconds for after math")
+    logger("Waiting 3 seconds for after math")
     // Safetybelt, before closing the connection
     // (notifications e.g. might still be in creation)
-    await wait(5000)
+    await wait(3000)
   } catch (err) {
     throw err
   }
@@ -144,5 +144,3 @@ const seed = async () => {
 
   logger("All good")
 }
-
-seed()
