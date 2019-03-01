@@ -7,7 +7,7 @@ import { QueryWithAuthentication } from "../../lib/QueryWithAuthentication"
 import { MutationWithAuthentication } from "../../lib/MutationWithAuthentication"
 
 import { EventCard } from "@dk3/ui/components/EventCard"
-import { ListTitle } from "@dk3/ui/atoms/Typography"
+import { StickyListTitle } from "@dk3/ui/atoms/Typography"
 
 export const BOOKMARK_EVENT = gql`
   mutation bookmarkEvent($input: BookmarkEventInput!) {
@@ -98,26 +98,25 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
               }, [])
               .map(group => {
                 let groupName
+                const dt = DateTime.fromJSDate(group.date)
 
                 if (group.isToday) {
-                  groupName = <ListTitle>Today</ListTitle>
+                  groupName = <StickyListTitle>Today</StickyListTitle>
                 } else if (group.isTomorrow) {
-                  groupName = <ListTitle>Tomorrow</ListTitle>
+                  groupName = <StickyListTitle>Tomorrow</StickyListTitle>
                 } else {
-                  const dt = DateTime.fromJSDate(group.date)
-
                   groupName = (
-                    <ListTitle>
+                    <StickyListTitle>
                       {dt.toLocaleString({ month: "long" })}{" "}
                       <span style={{ color: "#757575" }}>
                         {group.date.getFullYear()}
                       </span>
-                    </ListTitle>
+                    </StickyListTitle>
                   )
                 }
 
                 return (
-                  <React.Fragment key={groupName}>
+                  <div key={dt.toString()}>
                     {groupName}
                     {group.events.map(event => {
                       const date = new Date(event.from)
@@ -181,7 +180,7 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                         </MutationWithAuthentication>
                       )
                     })}
-                  </React.Fragment>
+                  </div>
                 )
               })}
           </React.Fragment>

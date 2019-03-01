@@ -4,6 +4,7 @@ const { TokenExpiredError } = jwt
 const config = require("@dk3/config")
 const { HTTPStatusError } = require("@dk3/error")
 const { dao } = require("@dk3/db")
+const skills = require("@dk3/db/lib/model/userSkills")
 
 exports.signUp = async data => {
   try {
@@ -61,6 +62,10 @@ exports.signIn = async (email, password) => {
 
     if (!passwordsMatch) {
       throw new Error("Wrong credentials")
+    }
+
+    if (!user.hasSkill(skills.LOGIN)) {
+      throw new Error("User is not authorized")
     }
 
     const tokens = await exports.generateTokens(user)

@@ -23,4 +23,11 @@ module.exports = [
     password: "marthaspassword",
     skills: ["LOGIN"],
   },
+  {
+    /* A user who's not allowed to log in */
+    username: "belzebub",
+    email: "belzebubs@email.com",
+    password: "belzebubspassword",
+    skills: [],
+  },
 ]
