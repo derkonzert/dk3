@@ -18,4 +18,4 @@ jobs:
       name: "Unit Tests"
       script: yarn test && codecov
     - name: "Integration Tests"
-      script: yarn integration
+      script: yarn integration:ci
