@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 describe("Event List", function() {
   before(() => {
     cy.visit("http://localhost:3000/")

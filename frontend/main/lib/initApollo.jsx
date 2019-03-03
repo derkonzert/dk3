@@ -53,5 +53,11 @@ export default function initApollo(initialState, options) {
     apolloClient = create(initialState, options)
   }
 
+  if (window.Cypress) {
+    console.log("set apolloClient")
+    window.__apolloClient__ = apolloClient
+    console.log(window.__apolloClient__)
+  }
+
   return apolloClient
 }

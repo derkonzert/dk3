@@ -10,7 +10,28 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
+Cypress.Commands.add(
+  "login",
+  { prevSubject: ["window"] },
+  (subject, email, password) => {
+    cy.request({
+      method: "post",
+      url: "http://localhost:8004/auth/signIn",
+      body: {
+        email,
+        password,
+      },
+    }).then(resp => {
+      subject.localStorage.setItem("accessToken", resp.body.accessToken)
+
+      subject.__apolloClient__.resetStore()
+    })
+  }
+)
+
+Cypress.Commands.add("logout", { prevSubject: ["window"] }, subject => {
+  subject.localStorage.removeItem("accessToken")
+})
 //
 //
 // -- This is a child command --
