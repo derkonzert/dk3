@@ -18,4 +18,19 @@ exports.Mutation = {
       userId: user._id,
     })
   },
+
+  approveEvent: async (parent, args, { dao, user }) => {
+    const { id, approved } = args.input
+
+    const userModel = await dao.userById(user._id)
+
+    if (!userModel) {
+      throw new Error("Unauthorized request")
+    }
+
+    return await dao.approveEvent({
+      eventId: id,
+      approved,
+    })
+  },
 }

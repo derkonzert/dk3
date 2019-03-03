@@ -73,6 +73,18 @@ exports.bookmarkEvent = async ({ eventId, bookmarked, userId }) => {
   }
 }
 
+exports.approveEvent = async ({ eventId, approved }) => {
+  try {
+    await Event.Model.findByIdAndUpdate(eventId, {
+      approved,
+    }).exec()
+
+    return await Event.Model.findById(eventId).exec()
+  } catch (err) {
+    throw err
+  }
+}
+
 exports.eventById = async _id => await Event.Model.findById(_id).exec()
 
 exports.allEvents = async ({ filter = {}, sort = {} } = {}) =>
