@@ -19,6 +19,7 @@ const generateEventData = () => {
     description,
     from: DateTime.fromJSDate(new Date(event.from))
       .plus(dateOffset)
+      .set({ minute: 0, hour: 20, second: 0, millisecond: 0 })
       .toISO(),
   }))
 }

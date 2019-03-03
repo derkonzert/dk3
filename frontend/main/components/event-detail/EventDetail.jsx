@@ -2,6 +2,8 @@ import React from "react"
 import { Query } from "react-apollo"
 import gql from "graphql-tag"
 
+import { DateTime } from "luxon"
+
 import { MegaTitle, Text, WrappingText } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
@@ -34,17 +36,21 @@ export const EventDetail = ({ id }) => {
     <Query query={EVENT_DETAIL} variables={{ id }}>
       {({ loading, error, data }) => {
         if (error) return <span>Error loading posts.</span>
-        if (loading) return <Spinner>Loading</Spinner>
+        if (loading) return <Spinner pv={6}>Loading</Spinner>
 
         const { event } = data
+        const fromDt = DateTime.fromISO(event.from)
+        const toDt = DateTime.fromISO(event.to)
 
         return (
           <Spacer pa={4}>
             <MegaTitle mb={3}>{event.title}</MegaTitle>
             <Text>
-              28. Februar 2019 — 20:00 Uhr
+              {fromDt.toFormat("dd. MMMM yyyy")}
+              {", "}
+              {fromDt.toFormat("HH:mm")} &ndash; {toDt.toFormat("HH:mm")} Uhr
               <br />
-              Backstage Werk
+              {event.location}
             </Text>
             <hr />
             <Text>

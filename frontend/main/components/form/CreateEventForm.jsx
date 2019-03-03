@@ -5,6 +5,7 @@ import React from "react"
 import { Mutation } from "react-apollo"
 import gql from "graphql-tag"
 import { State } from "react-powerplug"
+import { DateTime } from "luxon"
 
 import { FancyButton } from "@dk3/ui/form/Button"
 import { TextInput } from "@dk3/ui/form/TextInput"
@@ -69,12 +70,23 @@ export const CreateEventForm = ({ onCreated }) => {
                   onSubmit={e => {
                     e.preventDefault()
 
+                    const fromDt = DateTime.fromJSDate(state.from)
+                      .startOf("day")
+                      .set({
+                        hour: 20,
+                      })
+                    const toDt = DateTime.fromJSDate(state.to)
+                      .startOf("day")
+                      .set({
+                        hour: 22,
+                      })
+
                     createEvent({
                       variables: {
                         input: {
                           ...state,
-                          from: state.from.toISOString(),
-                          to: state.to.toISOString(),
+                          from: fromDt.toISO(),
+                          to: toDt.toISO(),
                         },
                       },
                     })
