@@ -13,13 +13,13 @@
 Cypress.Commands.add(
   "login",
   { prevSubject: ["window"] },
-  (subject, email, password) => {
+  (subject, username) => {
     cy.request({
       method: "post",
       url: "http://localhost:8004/auth/signIn",
       body: {
-        email,
-        password,
+        email: `${username}s@email.com`,
+        password: `${username}spassword`,
       },
     }).then(resp => {
       subject.localStorage.setItem("accessToken", resp.body.accessToken)
