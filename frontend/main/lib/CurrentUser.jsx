@@ -7,6 +7,7 @@ export const currentUserQuery = gql`
     me {
       id
       username
+      skills
     }
   }
 `

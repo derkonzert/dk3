@@ -10,6 +10,7 @@ const typeDefs = gql`
     email: String
     username: String
     upcomingEvents: [Event]
+    skills: [String]
   }
 
   type AuthenticationInfo {
@@ -53,6 +54,11 @@ const typeDefs = gql`
     to: Date
   }
 
+  input ApproveEventInput {
+    id: ID!
+    approved: Boolean!
+  }
+
   input BookmarkEventInput {
     id: ID!
     bookmarked: Boolean!
@@ -60,6 +66,7 @@ const typeDefs = gql`
 
   type Mutation {
     createEvent(input: CreateEventInput!): Event
+    approveEvent(input: ApproveEventInput!): Event
     bookmarkEvent(input: BookmarkEventInput!): Event
   }
 `

@@ -7,12 +7,14 @@ import { DateTime } from "luxon"
 import { MegaTitle, Text, WrappingText } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
+import { ApproveEventButton } from "../form/ApproveEventButton"
 
 export const EVENT_DETAIL_FRAGMENT = gql`
   fragment EventDetailEvent on Event {
     __typename
     id
     title
+    approved
     description
     from
     to
@@ -45,6 +47,11 @@ export const EventDetail = ({ id }) => {
         return (
           <Spacer pa={4}>
             <MegaTitle mb={3}>{event.title}</MegaTitle>
+            {!event.approved && (
+              <Spacer mb={2} style={{ color: "red" }}>
+                Event has not yet been checked for validity
+              </Spacer>
+            )}
             <Text>
               {fromDt.toFormat("dd. MMMM yyyy")}
               {", "}
@@ -55,6 +62,13 @@ export const EventDetail = ({ id }) => {
             <hr />
             <Text>
               <strong>Anonymously</strong> submitted
+              <ApproveEventButton
+                ml={2}
+                eventId={event.id}
+                approved={event.approved}
+              >
+                Approve
+              </ApproveEventButton>
             </Text>
             <hr />
             <WrappingText>{event.description}</WrappingText>
