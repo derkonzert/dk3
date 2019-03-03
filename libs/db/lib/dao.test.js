@@ -334,6 +334,45 @@ describe("dao", () => {
     })
   })
 
+  describe("approveEvent", () => {
+    beforeEach(() => {
+      Event.Model.findByIdAndUpdate = jest
+        .fn()
+        .mockReturnValue({ exec: () => {} })
+
+      Event.Model.findById = jest.fn().mockReturnValue({ exec: () => {} })
+    })
+
+    it("throws when updating the event fails", async () => {
+      expect.assertions(1)
+
+      Event.Model.findByIdAndUpdate.mockImplementation(() => {
+        throw new Error("Uh Oh")
+      })
+
+      return expect(
+        dao.approveEvent({
+          eventId: "event-id",
+          approved: Symbol.for("approved"),
+        })
+      ).rejects.toThrow("Uh Oh")
+    })
+
+    it("updates event with given approved value", async () => {
+      await dao.approveEvent({
+        eventId: "event-id",
+        approved: Symbol.for("approved"),
+      })
+
+      expect(Event.Model.findByIdAndUpdate).toHaveBeenCalledWith(
+        "event-id",
+        expect.objectContaining({
+          approved: Symbol.for("approved"),
+        })
+      )
+    })
+  })
+
   describe("allEvents", async () => {
     beforeEach(() => {
       Event.Model.find = jest.fn().mockReturnValue(Event.Model)
