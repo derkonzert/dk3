@@ -22,9 +22,13 @@ exports.Mutation = {
   approveEvent: async (parent, args, { dao, user }) => {
     const { id, approved } = args.input
 
+    if (!user) {
+      throw new Error("Unauthorized request")
+    }
+
     const userModel = await dao.userById(user._id)
 
-    if (!userModel) {
+    if (!userModel || !userModel.hasSkill("APPROVE_EVENT")) {
       throw new Error("Unauthorized request")
     }
 
