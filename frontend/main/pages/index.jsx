@@ -37,9 +37,9 @@ export default withRouter(function Index({ router }) {
               "derkonzert is a simple list of concerts in Munich. It's supposed to be a haystack of needles, without any boundaries to any specific music style."
             }
           </Text>
+          <WhoAmI />
         </Header>
         <Spacer pa={4}>
-          <WhoAmI />
           <EventList />
           <VeryFancyButton
             data-add-event
