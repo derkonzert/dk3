@@ -10,7 +10,7 @@ describe("Header", function() {
   })
 
   it("when logged in shows username", () => {
-    cy.window().login("jus@email.com", "juspassword")
+    cy.window().login("ju")
 
     cy.get("header").contains("WhoAmI: ju")
   })
