@@ -1,6 +1,7 @@
 import React from "react"
 import { keyframes } from "@emotion/core"
 import styled from "@emotion/styled"
+import { withSpacing } from "../utils/withSpacing"
 
 const rotate = keyframes`
   from {
@@ -10,6 +11,11 @@ const rotate = keyframes`
   100% {
     transform: rotate(359deg);
   }
+`
+
+const Spacer = styled.div`
+  width: 100%;
+  text-align: center;
 `
 
 const Outer = styled.div`
@@ -46,8 +52,10 @@ const Inner = styled.div`
   background: #f9f9f9;
 `
 
-export const Spinner = () => (
-  <Outer>
-    <Inner />
-  </Outer>
-)
+export const Spinner = withSpacing({ pa: 4 })(props => (
+  <Spacer {...props}>
+    <Outer>
+      <Inner />
+    </Outer>
+  </Spacer>
+))

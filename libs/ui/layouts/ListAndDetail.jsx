@@ -94,6 +94,12 @@ export class ListAndDetailMain extends React.Component {
     return null
   }
 
+  componentDidMount() {
+    if (this.props.showDetail) {
+      documentElement().classList.add("cacheFixedPosition")
+    }
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.scheduleUpdate) {
       clearTimeout(this.scheduleUpdate)

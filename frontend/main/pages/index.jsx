@@ -16,6 +16,7 @@ import { VeryFancyButton } from "@dk3/ui/form/Button"
 import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
 import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
+import { CurrentUser } from "../lib/CurrentUser"
 
 export default withRouter(function Index({ router }) {
   const {
@@ -30,15 +31,21 @@ export default withRouter(function Index({ router }) {
   return (
     <ListAndDetail showDetail={showDetail}>
       <ListAndDetailMain>
-        <Header>
-          <MegaTitle>derkonzert</MegaTitle>
-          <Text>
-            {
-              "derkonzert is a simple list of concerts in Munich. It's supposed to be a haystack of needles, without any boundaries to any specific music style."
-            }
-          </Text>
-          <WhoAmI />
-        </Header>
+        <CurrentUser>
+          {({ isLoggedIn }) => (
+            <Header loggedIn={isLoggedIn}>
+              <MegaTitle>derkonzert</MegaTitle>
+              {!isLoggedIn && (
+                <Text>
+                  {
+                    "derkonzert is a simple list of concerts in Munich. It's supposed to be a haystack of needles, without any boundaries to any specific music style."
+                  }
+                </Text>
+              )}
+              <WhoAmI />
+            </Header>
+          )}
+        </CurrentUser>
         <Spacer pa={4}>
           <EventList />
           <VeryFancyButton
