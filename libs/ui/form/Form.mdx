@@ -52,11 +52,12 @@ import { Button, FancyButton, VeryFancyButton } from "./Button"
 import { TextInput } from "./TextInput"
 
 <Playground>
-  <State initial={{ value: "" }}>
+  <State initial={{ value: "The Monsters" }}>
     {({ state, setState }) => (
       <TextInput
         id="test"
-        label="Band Name"
+        label="Title"
+        description="Band name, Festival name, etc."
         value={state.value}
         onChange={e => setState({ value: e.target.value })}
       />
@@ -70,8 +71,9 @@ Invalid text
   <State initial={{ value: "" }}>
     {({ state, setState }) => (
       <TextInput
-        id="test"
-        label="Band Name"
+        id="test-error"
+        label="Title"
+        description="Band name, Festival name, etc."
         error="Please enter the name of the band"
         validate
         valid={false}
@@ -88,8 +90,9 @@ Valid
   <State initial={{ value: "" }}>
     {({ state, setState }) => (
       <TextInput
-        id="test"
-        label="Band Name"
+        id="test-valid"
+        label="Title"
+        description="Band name, Festival name, etc."
         validate
         valid={true}
         value={state.value}
@@ -183,4 +186,3 @@ import { SegmentedControl, SegmentedControlOption } from "./SegmentedControl"
     )}
   </State>
 </Playground>
-

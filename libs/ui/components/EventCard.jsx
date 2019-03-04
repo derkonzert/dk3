@@ -21,6 +21,15 @@ const cardContent = css`
   user-select: none;
 `
 
+const linkStyle = css`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+`
+
 const cardLink = css`
   flex-grow: 1;
   padding: 0.7rem 0 0.5rem;
@@ -74,6 +83,16 @@ const bookmark = css`
   }
 `
 
+export const boxHoverStyle = css`
+  & {
+    transition: 150ms box-shadow;
+  }
+
+  &:hover {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  }
+`
+
 export const bookmarkActive = css`
   opacity: 1;
 `
@@ -93,28 +112,30 @@ export const EventCard = ({
 }) => {
   const ActualBox = boxes[fancyLevel] || Box
   const superFancy = fancyLevel === 2
-  const linkStyle = [cardLink]
+  const textContentStyle = [cardLink]
 
   if (large && superFancy) {
-    linkStyle.push(cardLinkLargeFancy)
+    textContentStyle.push(cardLinkLargeFancy)
   } else if (large) {
-    linkStyle.push(cardLinkLarge)
+    textContentStyle.push(cardLinkLarge)
   }
 
   return (
-    <ActualBox {...props} transparent={!approved}>
+    <ActualBox css={boxHoverStyle} {...props} transparent={!approved}>
       <div css={cardContent}>
-        {!large && (
-          <CalendarDay
-            css={calendar}
-            day={day}
-            dayName={dayName}
-            inverted={superFancy}
-          />
-        )}
         <a css={linkStyle} {...linkProps}>
-          <SubTitle inverted={superFancy}>{title}</SubTitle>
-          <Description inverted={superFancy}>{description}</Description>
+          {!large && (
+            <CalendarDay
+              css={calendar}
+              day={day}
+              dayName={dayName}
+              inverted={superFancy}
+            />
+          )}
+          <div css={textContentStyle}>
+            <SubTitle inverted={superFancy}>{title}</SubTitle>
+            <Description inverted={superFancy}>{description}</Description>
+          </div>
         </a>
         <button
           css={[bookmark, bookmarked && bookmarkActive]}

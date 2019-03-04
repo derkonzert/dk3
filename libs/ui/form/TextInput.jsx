@@ -20,9 +20,18 @@ export const InputBorder = styled.div`
 `
 
 export const InputLabel = styled.label`
-  display: block;
+  display: flex;
+  justify-content: space-between;
   font-weight: normal;
   font-size: 1.2rem;
+  line-height: 1.35;
+`
+
+export const InputDescription = styled.span`
+  margin-left: 0.3rem;
+  font-size: 1.2rem;
+  color: #636161;
+  font-style: italic;
 `
 
 export const InputError = styled.div`
@@ -33,9 +42,16 @@ export const InputError = styled.div`
 `
 
 export const TextInput = withSpacing({ mb: 3 })(
-  ({ label, valid, validate, error, id, className, ...props }) => (
+  ({ label, valid, validate, error, description, id, className, ...props }) => (
     <div className={className}>
-      {!!label && <InputLabel htmlFor={id}>{label}</InputLabel>}
+      {!!label && (
+        <InputLabel htmlFor={id}>
+          {label}
+          {!!description && (
+            <InputDescription>({description})</InputDescription>
+          )}
+        </InputLabel>
+      )}
       <InputBorder validate={validate} valid={valid}>
         <Input {...props} id={id} />
       </InputBorder>

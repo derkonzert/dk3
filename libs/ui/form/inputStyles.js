@@ -5,11 +5,11 @@ export const inputStyles = css`
   display: block;
   width: 100%;
   margin: 0;
-  padding: 0.6rem 0.8rem;
+  padding: 0.7rem 0.9rem;
 
   font-family: "IBM Plex Mono", monospace;
   font-weight: normal;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 
   background: white;
   border: 0 solid;
@@ -19,6 +19,7 @@ export const inputStyles = css`
 
   &:focus {
     outline: none;
+    box-shadow: 0 0.1rem 0.6rem rgba(0, 0, 0, 0.36);
   }
 `
 
@@ -31,7 +32,7 @@ export const invalidInputStyle = css`
 `
 
 export const inputBorderStyles = css`
-  padding: 1px;
+  padding: 2px;
   border-radius: 3px;
   background: hsl(0, 0%, 80%);
 
