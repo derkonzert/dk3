@@ -8,6 +8,7 @@ import { MutationWithAuthentication } from "../../lib/MutationWithAuthentication
 
 import { EventCard } from "@dk3/ui/components/EventCard"
 import { StickyListTitle } from "@dk3/ui/atoms/Typography"
+import { Spinner } from "@dk3/ui/atoms/Spinner"
 
 export const BOOKMARK_EVENT = gql`
   mutation bookmarkEvent($input: BookmarkEventInput!) {
@@ -42,7 +43,7 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
     >
       {({ loading, error, data }) => {
         if (error) return <span>Error loading posts.</span>
-        if (loading) return <div>Loading</div>
+        if (loading) return <Spinner />
 
         const { upcomingEvents } = data
         let lastEventDate

@@ -15,7 +15,7 @@ export const QueryWithAuthentication = ({
   <Query query={USER_AUTH_INFO} fetchPolicy="cache-first">
     {({ loading, error, data }) => {
       if (error) return <span>Error loading posts.</span>
-      if (loading) return <Spinner />
+      if (required && loading) return <Spinner />
 
       if (required && !data.me) {
         return (

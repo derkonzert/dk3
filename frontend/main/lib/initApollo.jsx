@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from "apollo-boost"
-import { createHttpLink } from "apollo-link-http"
+// import { createHttpLink } from "apollo-link-http"
 // TODO: Add server side support for batch link
-// import { BatchHttpLink } from "apollo-link-batch-http"
+import { BatchHttpLink } from "apollo-link-batch-http"
 import { setContext } from "apollo-link-context"
 import fetch from "isomorphic-unfetch"
 
@@ -16,7 +16,7 @@ const uri =
   process.env.NODE_ENV === "production" ? "/api" : "http://localhost:8004/api"
 
 function create(initialState, { getToken }) {
-  const httpLink = createHttpLink({
+  const httpLink = new BatchHttpLink({
     uri,
     credentials: "same-origin",
   })

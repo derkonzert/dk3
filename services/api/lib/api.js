@@ -15,32 +15,41 @@ const queryMissingMessage = "query is missing"
 
 let dbConnection
 
+const handleGqlQuery = (
+  { query, variables, operation },
+  rootValue,
+  contextValue
+) => graphql(schema, query, rootValue, contextValue, variables, operation)
+
 module.exports = async (req, res) => {
-  // TODO: Support body being an array of queries (batch)
-  const { query, variables, operation } = await json(req)
+  const body = await json(req)
+  const isBatch = Array.isArray(body)
+
+  let gqlRequests = isBatch ? body : [body]
 
   if (!dbConnection) {
     dbConnection = await connect()
   }
 
-  if (!query) {
+  if (gqlRequests.find(({ query }) => !query)) {
     return sendJson(res, 400, { message: queryMissingMessage })
   }
 
   const rootValue = {}
   const contextValue = await createGraphQlContext({ req })
 
-  try {
-    const result = await graphql(
-      schema,
-      query,
-      rootValue,
-      contextValue,
-      variables,
-      operation
-    )
+  const results = await Promise.all(
+    gqlRequests.map(request => {
+      return handleGqlQuery(request, rootValue, contextValue)
+    })
+  )
 
-    sendJson(res, 200, result)
+  try {
+    if (isBatch) {
+      sendJson(res, 200, results)
+    } else {
+      sendJson(res, 200, results[0])
+    }
   } catch (err) {
     sendJson(res, 500, { error: err.message })
   }
