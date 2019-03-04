@@ -28,20 +28,20 @@ const linkStyle = css`
   flex-wrap: nowrap;
   align-items: stretch;
   justify-content: flex-start;
-`
-
-const cardLink = css`
-  flex-grow: 1;
-  padding: 0.7rem 0 0.5rem;
   text-decoration: none;
 `
 
-const cardLinkLarge = css`
+const textContentStyle = css`
+  flex-grow: 1;
+  padding: 0.7rem 0 0.5rem;
+`
+
+const textContentStyleLarge = css`
   flex-grow: 1;
   padding: 1.7rem 1.6rem 1.5rem;
 `
 
-const cardLinkLargeFancy = css`
+const textContentStyleLargeFancy = css`
   flex-grow: 1;
   padding: 4.5rem 1.6rem 4.5rem;
 `
@@ -112,12 +112,12 @@ export const EventCard = ({
 }) => {
   const ActualBox = boxes[fancyLevel] || Box
   const superFancy = fancyLevel === 2
-  const textContentStyle = [cardLink]
+  const textContentCss = [textContentStyle]
 
   if (large && superFancy) {
-    textContentStyle.push(cardLinkLargeFancy)
+    textContentCss.push(textContentStyleLargeFancy)
   } else if (large) {
-    textContentStyle.push(cardLinkLarge)
+    textContentCss.push(textContentStyleLarge)
   }
 
   return (
@@ -132,7 +132,7 @@ export const EventCard = ({
               inverted={superFancy}
             />
           )}
-          <div css={textContentStyle}>
+          <div css={textContentCss}>
             <SubTitle inverted={superFancy}>{title}</SubTitle>
             <Description inverted={superFancy}>{description}</Description>
           </div>
