@@ -14,17 +14,44 @@ export const ListAndDetail = ({ showDetail, children }) => (
 )
 
 const mainPageShowDetail = css`
+  @media (min-width: 48em) {
+    width: 50%;
+  }
+`
+
+const mainPageShowDetailAfter = css`
   will-change: background-color;
   z-index: 0;
   pointer-events: initial;
   background: rgba(22, 22, 22, 0.65);
   transition-delay: 0s, 0s;
+
+  @media (min-width: 48em) {
+    content: none;
+  }
 `
 const MainPage = styled.div`
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
+
+  @media (min-width: 48em) {
+    width: 100%;
+    will-change: width;
+    transition: 350ms width;
+  }
+
+  ${props => (props.showDetail ? mainPageShowDetail : "")}
+
+  .cacheFixedPosition & {
+    position: fixed;
+    overflow: hidden;
+
+    @media (min-width: 48em) {
+      overflow-y: ${props => (props.showDetail ? "auto" : "hidden")};
+    }
+  }
 
   &:after {
     content: "";
@@ -40,18 +67,17 @@ const MainPage = styled.div`
     background: rgba(22, 22, 22, 0);
     transition: 350ms background-color, 0s z-index 350ms;
 
-    ${props => (props.showDetail ? mainPageShowDetail : "")}
-  }
-
-  .cacheFixedPosition & {
-    position: fixed;
-    overflow: hidden;
+    ${props => (props.showDetail ? mainPageShowDetailAfter : "")}
   }
 `
 
 const mainPageInnerShowDetail = css`
   will-change: transform;
   transform: translateY(4rem) scale(0.96);
+
+  @media (min-width: 48em) {
+    transform: none;
+  }
 `
 const MainPageInner = styled.div`
   box-sizing: content-box;
@@ -68,6 +94,12 @@ const MainPageInner = styled.div`
     height: 100%;
     margin: -10rem auto;
     padding: 10rem 0;
+
+    @media (min-width: 48em) {
+      height: auto;
+      margin: 0 auto;
+      padding: 0;
+    }
   }
 `
 
@@ -79,6 +111,14 @@ export class ListAndDetailMain extends React.Component {
     super(props)
 
     this.innerRef = React.createRef()
+    this.outerRef = React.createRef()
+  }
+
+  whichRef() {
+    /* Returns inner or outer ref, depending on screen width */
+    return matchMedia("(min-width: 48em)").matches
+      ? this.outerRef
+      : this.innerRef
   }
 
   getSnapshotBeforeUpdate(prevProps /*, prevState*/) {
@@ -88,7 +128,7 @@ export class ListAndDetailMain extends React.Component {
       return window.pageYOffset
     } else if (prevProps.showDetail && !this.props.showDetail) {
       // Return the wrappers scroll-position
-      return this.innerRef.current.scrollTop
+      return this.whichRef().current.scrollTop
     }
 
     return null
@@ -109,13 +149,13 @@ export class ListAndDetailMain extends React.Component {
       if (this.props.showDetail) {
         documentElement().classList.add("cacheFixedPosition")
 
-        scrollTo(this.innerRef.current, 0, snapshot)
+        scrollTo(this.whichRef().current, 0, snapshot)
         scrollTo(window, 0, 0)
       } else {
         this.scheduleUpdate = setTimeout(() => {
           documentElement().classList.remove("cacheFixedPosition")
 
-          scrollTo(this.innerRef.current, 0, 0)
+          scrollTo(this.whichRef().current, 0, 0)
           scrollTo(window, 0, snapshot)
         }, 500)
       }
@@ -134,7 +174,7 @@ export class ListAndDetailMain extends React.Component {
     const { children, showDetail, ...props } = this.props
 
     return (
-      <MainPage showDetail={showDetail} {...props}>
+      <MainPage showDetail={showDetail} ref={this.outerRef} {...props}>
         <MainPageInner showDetail={showDetail} ref={this.innerRef}>
           {children}
         </MainPageInner>
@@ -147,7 +187,24 @@ const sideShowDetail = css`
   position: relative;
   visibility: visible;
 
+  overflow-y: auto;
+
   transition-delay: 0s;
+
+  &:after {
+    content: "";
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    height: 50vh;
+    z-index: -1;
+
+    @media (min-width: 48em) {
+      content: none;
+    }
+  }
 `
 
 const Side = styled.div`
@@ -160,6 +217,8 @@ const Side = styled.div`
   left: 0;
   right: 0;
 
+  overflow: hidden;
+
   min-height: 100.5vh;
 
   visibility: hidden;
@@ -169,10 +228,20 @@ const Side = styled.div`
   transition-delay: 350ms;
 
   ${props => (props.showDetail ? sideShowDetail : "")}
+
+  @media (min-width: 48em) {
+    left: 50%;
+    padding-top: 0;
+    width: 50%;
+  }
 `
 
 const sideInnerShowDetail = css`
   transform: translateY(0);
+
+  @media (min-width: 48em) {
+    transform: translateX(0);
+  }
 `
 const SideInner = styled.div`
   width: 100%;
@@ -181,6 +250,11 @@ const SideInner = styled.div`
   transition: 350ms transform;
   transform: translateY(100%);
   transform: translateY(calc(100.5vh - 38.2vh));
+
+  @media (min-width: 48em) {
+    transform: translateX(100%);
+    transform: translateX(calc(100.5vw - 38.2vw));
+  }
 
   ${props => (props.showDetail ? sideInnerShowDetail : "")}
 `
@@ -235,7 +309,11 @@ export const ListAndDetailSide = ({
   ...props
 }) => {
   const ref = useClickOutside(
-    e => requestClose && showDetail && requestClose(e)
+    e =>
+      requestClose &&
+      !matchMedia("(min-width: 48em)").matches &&
+      showDetail &&
+      requestClose(e)
   )
 
   return (

@@ -25,7 +25,7 @@ export default withRouter(function Index({ router }) {
   const showDetail = !!eventId || !!addEvent
   const closeDetail = e => {
     e.preventDefault()
-    router.back()
+    router.push("/")
   }
 
   return (
