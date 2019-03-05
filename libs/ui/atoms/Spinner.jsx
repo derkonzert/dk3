@@ -21,6 +21,7 @@ const Spacer = styled.div`
 const Outer = styled.div`
   position: relative;
   display: inline-block;
+
   margin: 0 0.5rem;
   vertical-align: middle;
 
@@ -29,6 +30,7 @@ const Outer = styled.div`
   height: 2em;
 
   box-sizing: border-box;
+  background-image: linear-gradient(40deg, rgb(255, 87, 87), #6a32cc);
   background-image: conic-gradient(
     from 40deg,
     rgb(255, 87, 87),
@@ -46,10 +48,10 @@ const Inner = styled.div`
   transform: translate(-50%, -50%);
 
   border-radius: 50%;
-  height: 1.6em;
-  width: 1.6em;
+  height: 1.4em;
+  width: 1.4em;
 
-  background: #f9f9f9;
+  background: #f4f2f2;
 `
 
 export const Spinner = withSpacing({ pa: 4 })(props => (
