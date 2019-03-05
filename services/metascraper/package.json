@@ -25,6 +25,7 @@
     "url": "https://github.com/jkempff/dk3/issues"
   },
   "dependencies": {
+    "@dk3/api-utils": "^0.0.0",
     "got": "^9.2.2",
     "metascraper": "^4.3.5",
     "metascraper-author": "^4.3.5",

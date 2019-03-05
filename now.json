@@ -14,6 +14,7 @@
   "builds": [
     { "src": "services/auth/lib/auth.js", "use": "@now/node" },
     { "src": "services/api/lib/api.js", "use": "@now/node" },
+    { "src": "services/metascraper/lib/metascraper.js", "use": "@now/node" },
     { "src": "libs/ui/package.json", "use": "@now/static-build" },
     {
       "src": "frontend/main/next.config.js",
@@ -30,6 +31,10 @@
       "src": "/api",
       "methods": ["OPTIONS", "POST"],
       "dest": "/services/api/lib/api.js"
+    },
+    {
+      "src": "/metascraper/(.*)$",
+      "dest": "/services/metascraper/lib/metascraper.js?targetUrl=$1"
     },
     {
       "src": "/ui/(.*)",

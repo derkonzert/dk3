@@ -42,6 +42,7 @@ describe("api", () => {
         end: jest.fn(),
       }
       apiUtils.sendJson.mockReset()
+      dk3Graphql.graphql.mockReset()
 
       micro.json.mockImplementation(() => requestBody)
       libContext.createGraphQlContext.mockImplementation(() => contextValue)
@@ -98,6 +99,26 @@ describe("api", () => {
         requestBody.variables,
         requestBody.operation
       )
+    })
+
+    it("handles batched graphql requests", async () => {
+      contextValue = Symbol.for("fake.context")
+      const query = {
+        query: "{ some { gqlQuery }}",
+        variables: [{ foo: "bar" }],
+        operation: "someName",
+      }
+      requestBody = [query, query, query]
+
+      dk3Graphql.graphql.mockResolvedValueOnce(1)
+      dk3Graphql.graphql.mockResolvedValueOnce(2)
+      dk3Graphql.graphql.mockResolvedValueOnce(3)
+
+      await api(req, res)
+
+      expect(dk3Graphql.graphql).toHaveBeenCalledTimes(3)
+
+      expect(apiUtils.sendJson).toHaveBeenCalledWith(res, 200, [1, 2, 3])
     })
 
     it("catches graphql-js errors", async () => {

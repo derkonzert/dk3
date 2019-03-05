@@ -1,42 +1,22 @@
-// TODO: Refactor
-// const metascraper = require("metascraper")([
-//   require("metascraper-author")(),
-//   require("metascraper-date")(),
-//   require("metascraper-description")(),
-//   require("metascraper-title")(),
-//   require("metascraper-url")(),
-// ])
+const query = require("micro-query")
+const { sendJson } = require("@dk3/api-utils")
 
-// const got = require("got")
-// const query = require("micro-query")
-// const microCors = require("micro-cors")
-
-// const cors = microCors({ allowMethods: ["GET"] })
+const { getMetadata } = require("./getMetadata")
 
 const handler = async (req, res) => {
-  res.end("ignore for now")
-  // const { targetUrl } = query(req)
+  const { targetUrl } = query(req)
 
-  // if (!targetUrl || !targetUrl.trim()) {
-  //   return {
-  //     error: "No targetUrl given",
-  //   }
-  // }
+  try {
+    const metadata = getMetadata(targetUrl)
 
-  // try {
-  //   const { body: html, url } = await got(targetUrl)
-
-  //   const metadata = await metascraper({ html, url })
-
-  //   return res.json(metadata)
-  // } catch (err) {
-  //   if (err) {
-  //     return {
-  //       error: err.message,
-  //     }
-  //   }
-  // }
+    return sendJson(res, 200, metadata)
+  } catch (err) {
+    if (err) {
+      return sendJson(res, 400, {
+        error: err.message,
+      })
+    }
+  }
 }
 
 module.exports = handler
-// module.exports = cors(handler)
