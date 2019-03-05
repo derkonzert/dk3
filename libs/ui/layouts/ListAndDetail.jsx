@@ -2,6 +2,7 @@ import React from "react"
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 import useClickOutside from "click-outside-hook"
+import { isTablet } from "../utils/isBreakpoint"
 
 export const ListAndDetail = ({ showDetail, children }) => (
   <React.Fragment>
@@ -116,9 +117,7 @@ export class ListAndDetailMain extends React.Component {
 
   whichRef() {
     /* Returns inner or outer ref, depending on screen width */
-    return matchMedia("(min-width: 48em)").matches
-      ? this.outerRef
-      : this.innerRef
+    return isTablet() ? this.outerRef : this.innerRef
   }
 
   getSnapshotBeforeUpdate(prevProps /*, prevState*/) {
@@ -309,11 +308,7 @@ export const ListAndDetailSide = ({
   ...props
 }) => {
   const ref = useClickOutside(
-    e =>
-      requestClose &&
-      !matchMedia("(min-width: 48em)").matches &&
-      showDetail &&
-      requestClose(e)
+    e => requestClose && !isTablet() && showDetail && requestClose(e)
   )
 
   return (
