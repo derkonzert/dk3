@@ -55,17 +55,20 @@ exports.signIn = async (email, password) => {
     const user = await dao.userByEmail(email)
 
     if (!user) {
-      throw new Error("User not found")
+      throw new HTTPStatusError({ title: "User not found", statusCode: 401 })
     }
 
     const passwordsMatch = user.comparePassword(password)
 
     if (!passwordsMatch) {
-      throw new Error("Wrong credentials")
+      throw new HTTPStatusError({ title: "Wrong credentials", statusCode: 401 })
     }
 
     if (!user.hasSkill(skills.LOGIN)) {
-      throw new Error("User is not authorized")
+      throw new HTTPStatusError({
+        title: "User is not authorized",
+        statusCode: 401,
+      })
     }
 
     const tokens = await exports.generateTokens(user)

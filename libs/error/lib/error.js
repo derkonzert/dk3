@@ -8,7 +8,7 @@ exports.InvalidConfigurationError = TypedError({
 
 exports.HTTPStatusError = TypedError({
   type: "server",
-  message: "{title} server error, status={statusCode}",
+  message: "{title}, status={statusCode}",
   title: null,
   statusCode: null,
 })
