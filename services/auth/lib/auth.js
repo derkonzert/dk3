@@ -39,7 +39,7 @@ module.exports = async function auth(req, res) {
             accessToken: payload.accessToken,
           })
         } catch (err) {
-          throw new HTTPStatusError({ title: err.message, statusCode: 400 })
+          throw err
         }
 
       default:
