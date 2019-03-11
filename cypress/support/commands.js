@@ -21,10 +21,11 @@ Cypress.Commands.add(
         email: `${username}s@email.com`,
         password: `${username}spassword`,
       },
+      failOnStatusCode: false,
     }).then(resp => {
       subject.localStorage.setItem("accessToken", resp.body.accessToken)
 
-      subject.__apolloClient__.resetStore()
+      return subject.__apolloClient__.resetStore()
     })
   }
 )
