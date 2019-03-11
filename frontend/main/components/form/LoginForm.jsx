@@ -42,9 +42,10 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
                 if (data.accessToken) {
                   localStorage.setItem("accessToken", data.accessToken)
 
-                  client.resetStore()
+                  return client.resetStore()
                 }
-
+              })
+              .then(() => {
                 resetState()
 
                 onLogin && onLogin()

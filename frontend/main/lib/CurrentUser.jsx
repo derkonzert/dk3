@@ -15,7 +15,11 @@ export const currentUserQuery = gql`
 export const CurrentUser = withApollo(({ client, children }) => {
   return (
     <Query query={currentUserQuery}>
-      {({ data }) => {
+      {({ data, error }) => {
+        if (error) {
+          return <div>{error.message}</div>
+        }
+
         const isLoggedIn = !!data.me
         const user = data.me
 
