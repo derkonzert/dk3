@@ -2,9 +2,14 @@ import React from "react"
 import { matchers } from "jest-emotion"
 import { mount } from "enzyme"
 
-import { TextInput, InputError, InputBorder, InputLabel } from "./TextInput"
+import {
+  TextInput,
+  InputError,
+  InputBorder,
+  InputLabel,
+  InputDescription,
+} from "./TextInput"
 import { validInputStyle, invalidInputStyle } from "./inputStyles"
-import { Description } from "../atoms/Typography"
 
 expect.extend(matchers)
 
@@ -36,11 +41,11 @@ describe("TextInput", () => {
   it("renders a description", () => {
     const element = mount(<TextInput description="My Description" />)
 
-    expect(element.find(Description).text()).toBe("My Description")
+    expect(element.find(InputDescription).text()).toBe("My InputDescription")
 
     element.setProps({ description: undefined })
 
-    expect(element.find(Description).exists()).toBe(false)
+    expect(element.find(InputDescription).exists()).toBe(false)
   })
 
   it("renders different backgrounds for valid, invalid or no validation", () => {
