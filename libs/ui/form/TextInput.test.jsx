@@ -41,7 +41,7 @@ describe("TextInput", () => {
   it("renders a description", () => {
     const element = mount(<TextInput description="My Description" />)
 
-    expect(element.find(InputDescription).text()).toBe("My InputDescription")
+    expect(element.find(InputDescription).text()).toBe("My Description")
 
     element.setProps({ description: undefined })
 
