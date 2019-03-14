@@ -1,12 +1,12 @@
 import React from "react"
 
 import PropTypes from "prop-types"
-import { getDataFromTree } from "react-apollo"
+// import { getDataFromTree } from "react-apollo"
 import Head from "next/head"
 
 import initApollo from "./initApollo"
 
-function getAccessToken(req, options = {}) {
+function getAccessToken(/* req, options = {} */) {
   if (!process.browser) {
     // Token currently stored in localStorage,
     // so there is no token on the server side.
@@ -41,8 +41,8 @@ export default App => {
 
   WithData.getInitialProps = async ctx => {
     const {
-      Component,
-      router,
+      /* Component,
+      router, */
       ctx: { req, res },
     } = ctx
     const apollo = initApollo(
@@ -83,6 +83,7 @@ export default App => {
         // Prevent Apollo Client GraphQL errors from crashing SSR.
         // Handle them in components via the data.error prop:
         // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
+        // eslint-disable-next-line no-console
         console.error("Error while running `getDataFromTree`", error)
       }
 

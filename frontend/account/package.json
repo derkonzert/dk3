@@ -1,5 +1,5 @@
 {
-  "name": "@dk3/main-frontend",
+  "name": "@dk3/account-frontend",
   "private": true,
   "version": "0.0.0",
   "description": "> TODO: description",
@@ -19,7 +19,7 @@
     "url": "git+https://github.com/jkempff/dk3.git"
   },
   "scripts": {
-    "dev": "next",
+    "dev": "next -p 3100",
     "build": "next build",
     "start": "next start",
     "now-build": "next build",
@@ -32,6 +32,7 @@
     "@dk3/shared-frontend": "^0.0.0",
     "@dk3/ui": "0.0.0",
     "@emotion/core": "^10.0.6",
+    "@emotion/styled": "^10.0.9",
     "apollo-boost": "^0.1.27",
     "apollo-client": "^2.4.12",
     "apollo-link-batch-http": "^1.2.6",

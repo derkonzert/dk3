@@ -4,7 +4,7 @@ import gql from "graphql-tag"
 
 import { Description } from "@dk3/ui/atoms/Typography"
 
-import { CurrentUser } from "../lib/CurrentUser"
+import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 
 export const currentUserQuery = gql`
   query currentUser {

@@ -3,8 +3,8 @@ import { withRouter } from "next/router"
 import { DateTime } from "luxon"
 import gql from "graphql-tag"
 
-import { QueryWithAuthentication } from "../../lib/QueryWithAuthentication"
-import { MutationWithAuthentication } from "../../lib/MutationWithAuthentication"
+import { QueryWithAuthentication } from "@dk3/shared-frontend/lib/QueryWithAuthentication"
+import { MutationWithAuthentication } from "@dk3/shared-frontend/lib/MutationWithAuthentication"
 
 import { EventCard } from "@dk3/ui/components/EventCard"
 import { StickyListTitle } from "@dk3/ui/atoms/Typography"
