@@ -44,7 +44,7 @@ export const InputError = styled.div`
 export const TextInput = withSpacing({ mb: 3 })(
   ({ label, valid, validate, error, description, id, className, ...props }) => (
     <div className={className}>
-      {!!label && (
+      {(!!label || !!description) && (
         <InputLabel htmlFor={id}>
           {label}
           {!!description && <InputDescription>{description}</InputDescription>}

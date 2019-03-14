@@ -4,6 +4,7 @@ import { mount } from "enzyme"
 
 import { TextInput, InputError, InputBorder, InputLabel } from "./TextInput"
 import { validInputStyle, invalidInputStyle } from "./inputStyles"
+import { Description } from "../atoms/Typography"
 
 expect.extend(matchers)
 
@@ -30,6 +31,16 @@ describe("TextInput", () => {
     element.setProps({ label: undefined })
 
     expect(element.find(InputLabel).exists()).toBe(false)
+  })
+
+  it("renders a description", () => {
+    const element = mount(<TextInput description="My Description" />)
+
+    expect(element.find(Description).text()).toBe("My Description")
+
+    element.setProps({ description: undefined })
+
+    expect(element.find(Description).exists()).toBe(false)
   })
 
   it("renders different backgrounds for valid, invalid or no validation", () => {
