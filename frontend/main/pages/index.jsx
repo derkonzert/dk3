@@ -16,7 +16,7 @@ import { VeryFancyButton } from "@dk3/ui/form/Button"
 import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
 import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
-import { CurrentUser } from "../lib/CurrentUser"
+import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 
 export default withRouter(function Index({ router }) {
   const {

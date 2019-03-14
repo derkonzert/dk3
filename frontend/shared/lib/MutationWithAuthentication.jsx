@@ -5,7 +5,7 @@ import { State } from "react-powerplug"
 
 import { Dialog } from "@dk3/ui/components/Dialog"
 import { SubTitle, Description } from "@dk3/ui/atoms/Typography"
-import { LoginOrSignUpForm } from "../components/form/LoginOrSignUpForm"
+import { LoginOrSignUpForm } from "../form/LoginOrSignUpForm"
 
 export const USER_AUTH_INFO = gql`
   query userId {
