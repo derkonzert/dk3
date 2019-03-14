@@ -92,16 +92,22 @@ describe("auth", () => {
 
   describe("signIn", () => {
     it("sets status code if signIn fails", async () => {
-      micro.json.mockReturnValue({
+      const credentials = {
         email: "invalid@email.com",
         password: "invalid password",
-      })
+      }
+      micro.json.mockReturnValue(credentials)
 
       authUtils.signIn.mockImplementation(async () => {
         throw new HTTPStatusError({ title: "No user found", statusCode: 401 })
       })
 
       await auth({ url: "/?operation=signIn" }, response)
+
+      expect(authUtils.signIn).toHaveBeenCalledWith(
+        credentials.email,
+        credentials.password
+      )
 
       // expect(response.status).toBeCalledWith(401)
       expect(apiUtils.sendJson).toBeCalledWith(
@@ -114,10 +120,11 @@ describe("auth", () => {
     })
 
     it("returns JWT token for valid credentials", async () => {
-      micro.json.mockReturnValue({
+      const credentials = {
         email: "jus@email.com",
         password: "password",
-      })
+      }
+      micro.json.mockReturnValue(credentials)
 
       const dummyJWT = "someFakeJwtToken"
 
@@ -126,6 +133,11 @@ describe("auth", () => {
       })
 
       await auth({ url: "/?operation=signIn" }, response)
+
+      expect(authUtils.signIn).toHaveBeenCalledWith(
+        credentials.email,
+        credentials.password
+      )
 
       expect(apiUtils.sendJson).toBeCalledWith(
         response,

@@ -16,6 +16,10 @@
     { "src": "services/api/lib/api.js", "use": "@now/node" },
     { "src": "libs/ui/package.json", "use": "@now/static-build" },
     {
+      "src": "frontend/account/next.config.js",
+      "use": "@now/next@0.0.85-canary.9"
+    },
+    {
       "src": "frontend/main/next.config.js",
       "use": "@now/next@0.0.85-canary.9"
     }
@@ -34,6 +38,10 @@
     {
       "src": "/ui/(.*)",
       "dest": "/libs/ui/$1"
+    },
+    {
+      "src": "/account/(.*)",
+      "dest": "/frontend/account/$1"
     },
     {
       "src": "/c/(.)*-(?<eventId>.*)$",
