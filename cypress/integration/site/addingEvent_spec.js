@@ -34,9 +34,6 @@ describe("Add event", function() {
   })
 
   it("adds the new event to the event list", () => {
-    cy.get("[data-event]")
-      .eq(2)
-      .find("h3")
-      .contains("This Awesome Band")
+    cy.get("[data-event]").contains("This Awesome Band")
   })
 })

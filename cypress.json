@@ -1,3 +1,4 @@
 {
-  "projectId": "tbe8j5"
+  "projectId": "tbe8j5",
+  "defaultCommandTimeout": 10000
 }
