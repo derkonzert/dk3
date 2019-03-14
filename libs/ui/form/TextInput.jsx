@@ -47,9 +47,7 @@ export const TextInput = withSpacing({ mb: 3 })(
       {!!label && (
         <InputLabel htmlFor={id}>
           {label}
-          {!!description && (
-            <InputDescription>({description})</InputDescription>
-          )}
+          {!!description && <InputDescription>{description}</InputDescription>}
         </InputLabel>
       )}
       <InputBorder validate={validate} valid={valid}>
