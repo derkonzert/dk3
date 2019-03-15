@@ -17,6 +17,7 @@ import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
 import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
+import { EventLegend } from "../components/list/EventLegend"
 
 export default withRouter(function Index({ router }) {
   const {
@@ -48,6 +49,7 @@ export default withRouter(function Index({ router }) {
         </CurrentUser>
         <Spacer pa={4}>
           <EventList />
+          <EventLegend />
           <VeryFancyButton
             data-add-event
             onClick={() => {

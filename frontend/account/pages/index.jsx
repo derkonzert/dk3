@@ -3,6 +3,7 @@ import { withRouter } from "next/router"
 import Link from "next/link"
 
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
+import { Spinner } from "@dk3/ui"
 import {
   MegaTitle,
   Description,
@@ -17,9 +18,13 @@ export default withRouter(function Index({ router }) {
       <MegaTitle>Login</MegaTitle>
       <Description>Enter your credentials to sign in</Description>
       <CurrentUser>
-        {({ isLoggedIn }) => {
+        {({ isLoggedIn, loading }) => {
           if (isLoggedIn) {
             return <div>You are already logged in</div>
+          }
+
+          if (loading) {
+            return <Spinner />
           }
 
           return (
