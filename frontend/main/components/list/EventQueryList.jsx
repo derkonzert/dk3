@@ -43,7 +43,7 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
     >
       {({ loading, error, data }) => {
         if (error) return <span>Error loading posts.</span>
-        if (loading) return <Spinner />
+        if (loading) return <Spinner mt={5} mb={7} />
 
         const { upcomingEvents } = data
         let lastEventDate
