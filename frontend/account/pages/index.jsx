@@ -3,11 +3,12 @@ import { withRouter } from "next/router"
 import Link from "next/link"
 
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
-import { Spinner } from "@dk3/ui"
+import { Spinner } from "@dk3/ui/atoms/Spinner"
+
 import {
-  MegaTitle,
   Description,
   Link as UILink,
+  ListTitle,
 } from "@dk3/ui/atoms/Typography"
 
 import { LoginForm } from "@dk3/shared-frontend/form/LoginForm"
@@ -15,8 +16,7 @@ import { LoginForm } from "@dk3/shared-frontend/form/LoginForm"
 export default withRouter(function Index({ router }) {
   return (
     <React.Fragment>
-      <MegaTitle>Login</MegaTitle>
-      <Description>Enter your credentials to sign in</Description>
+      <ListTitle>Login</ListTitle>
       <CurrentUser>
         {({ isLoggedIn, loading }) => {
           if (isLoggedIn) {
@@ -29,6 +29,7 @@ export default withRouter(function Index({ router }) {
 
           return (
             <React.Fragment>
+              <Description>Enter your credentials to sign in</Description>
               <LoginForm
                 onLogin={() => {
                   router.go("/")
