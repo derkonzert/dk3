@@ -18,6 +18,15 @@ import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 import { EventLegend } from "../components/list/EventLegend"
+import styled from "@emotion/styled"
+
+const NOT_FINAL_AddEventButton = styled(VeryFancyButton)`
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+`
 
 export default withRouter(function Index({ router }) {
   const {
@@ -50,8 +59,9 @@ export default withRouter(function Index({ router }) {
         <Spacer pa={4}>
           <EventList />
           <EventLegend />
-          <VeryFancyButton
+          <NOT_FINAL_AddEventButton
             data-add-event
+            pa={4}
             onClick={() => {
               router.push(`/?addEvent=1`, `/add-new-event`, {
                 shallow: true,
@@ -59,7 +69,7 @@ export default withRouter(function Index({ router }) {
             }}
           >
             Add Event
-          </VeryFancyButton>
+          </NOT_FINAL_AddEventButton>
         </Spacer>
       </ListAndDetailMain>
       <ListAndDetailSide requestClose={closeDetail}>
