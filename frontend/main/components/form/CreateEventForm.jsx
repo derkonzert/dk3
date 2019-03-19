@@ -1,6 +1,3 @@
-// title: String!
-// from: Date!
-// to: Date
 import React from "react"
 import { Mutation } from "react-apollo"
 import gql from "graphql-tag"
@@ -33,7 +30,7 @@ export const CreateEventForm = ({ onCreated }) => {
   const from = new Date(now)
 
   return (
-    <State initial={{ title: "", location: "", to, from }}>
+    <State initial={{ title: "", url: "", location: "", to, from }}>
       {({ state, setState, resetState }) => (
         <Mutation
           mutation={CREATE_EVENT}
@@ -98,6 +95,12 @@ export const CreateEventForm = ({ onCreated }) => {
                     name="title"
                     onChange={e => setState({ title: e.target.value })}
                     label="Title"
+                  />
+                  <TextInput
+                    value={state.url}
+                    name="url"
+                    onChange={e => setState({ url: e.target.value })}
+                    label="Tickets URL"
                   />
                   <TextInput
                     mb={4}

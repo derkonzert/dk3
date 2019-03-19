@@ -22,6 +22,7 @@ const typeDefs = gql`
     id: String
     title: String
     description: String
+    url: String
     to: Date
     from: Date
     created: Date
@@ -50,6 +51,7 @@ const typeDefs = gql`
   input CreateEventInput {
     title: String!
     location: String!
+    url: String
     from: Date!
     to: Date
   }

@@ -20,6 +20,10 @@ const schemaDefinition = {
   description: {
     type: String,
   },
+  /* An optional url, used for tickets or approval */
+  url: {
+    type: String,
+  },
   /* Has the event been approved by an admin? */
   approved: {
     type: Boolean,

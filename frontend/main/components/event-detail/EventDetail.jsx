@@ -4,7 +4,7 @@ import gql from "graphql-tag"
 
 import { DateTime } from "luxon"
 
-import { MegaTitle, Text, WrappingText } from "@dk3/ui/atoms/Typography"
+import { MegaTitle, Text, WrappingText, Link } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { ApproveEventButton } from "../form/ApproveEventButton"
@@ -16,6 +16,7 @@ export const EVENT_DETAIL_FRAGMENT = gql`
     title
     approved
     description
+    url
     from
     to
     location
@@ -72,6 +73,7 @@ export const EventDetail = ({ id }) => {
             </Text>
             <hr />
             <WrappingText>{event.description}</WrappingText>
+            {!!event.url && <Link href={event.url}>Tickets</Link>}
           </Spacer>
         )
       }}
