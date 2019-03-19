@@ -20,9 +20,12 @@ describe("Add event", function() {
     cy.get("[name='title']").type("This Awesome Band")
     cy.get("[name='location']").type("A nice venue")
 
+    cy.get("[name='url']").type("https://some.nice/url")
+
     cy.get("[data-add-event-form]").submit()
 
     cy.get("[data-side='true'] h1").contains("This Awesome Band")
+    cy.get("[href='https://some.nice/url']").should("exist")
   })
 
   it("Navigating back, brings the user back to the list and hides the detail", () => {
