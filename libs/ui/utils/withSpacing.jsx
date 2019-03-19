@@ -1,3 +1,4 @@
+import React from "react"
 import styled from "@emotion/styled"
 
 /* Spacing levels in rem */
@@ -7,6 +8,31 @@ export const spacings = [0, 0.25, 0.5, 1, 2, 4, 8, 16, "auto"].map(val => {
   }
   return val
 })
+
+export const cleanProps = props => {
+  /* TODO: there might be a smarter way to do this? */
+  /* eslint-disable no-unused-vars */
+  const {
+    ma,
+    ml,
+    mr,
+    mt,
+    mb,
+    mh,
+    mv,
+    pa,
+    pl,
+    pr,
+    pt,
+    pb,
+    ph,
+    pv,
+    ...rest
+  } = props
+  /* eslint-enable: no-unused-vars */
+
+  return rest
+}
 
 export const mapPropsToStyles = props => {
   let styles = {}
@@ -73,7 +99,9 @@ export const mapPropsToStyles = props => {
 
 export const withSpacing = defaultProps => Component => {
   /* TODO: remove spacing props, so they don't get rendered in Component */
-  const ComposedComponent = styled(Component)(mapPropsToStyles)
+  const ComposedComponent = styled(props => (
+    <Component {...cleanProps(props)} />
+  ))(mapPropsToStyles)
 
   ComposedComponent.defaultProps = defaultProps
 
