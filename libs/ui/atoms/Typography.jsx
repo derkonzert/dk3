@@ -67,12 +67,9 @@ export const StickyListTitle = styled(ListTitle)`
   z-index: 1;
   margin: 1.5rem -1rem;
   padding: 1rem;
-  background: #f4f2f2;
 
-  @supports (backdrop-filter: blur(12px)) {
-    background: rgba(244, 242, 242, 0.8);
-    backdrop-filter: blur(12px);
-  }
+  background: rgba(244, 242, 242, 0.8);
+  backdrop-filter: blur(4px);
 `
 
 export const Description = styled.div`
