@@ -9,6 +9,7 @@ import { MutationWithAuthentication } from "@dk3/shared-frontend/lib/MutationWit
 import { EventCard } from "@dk3/ui/components/EventCard"
 import { StickyListTitle } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
+import { RedBadge } from "@dk3/ui/atoms/Badge"
 
 export const BOOKMARK_EVENT = gql`
   mutation bookmarkEvent($input: BookmarkEventInput!) {
@@ -154,6 +155,17 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                               approved={event.approved}
                               bookmarked={event.bookmarkedByMe}
                               fancyLevel={event.fancyness}
+                              renderBadge={({ inverted }) => {
+                                if (!event.approved) {
+                                  return (
+                                    <RedBadge inverted={inverted}>
+                                      Not yet verified!
+                                    </RedBadge>
+                                  )
+                                }
+
+                                return null
+                              }}
                               linkProps={{
                                 href: `/c/${event.title}-${event.id}`,
                                 onClick: e => {

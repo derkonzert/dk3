@@ -104,14 +104,15 @@ export const EventCard = ({
   day,
   dayName,
   large,
+  renderBadge,
   approved = true,
   bookmarked = false,
   linkProps = {},
   onBookmarkClick,
   ...props
 }) => {
-  const ActualBox = boxes[fancyLevel] || Box
-  const superFancy = fancyLevel === 2
+  const ActualBox = approved ? boxes[fancyLevel] || Box : Box
+  const superFancy = approved ? fancyLevel === 2 : false
   const textContentCss = [textContentStyle]
 
   if (large && superFancy) {
@@ -121,7 +122,7 @@ export const EventCard = ({
   }
 
   return (
-    <ActualBox css={boxHoverStyle} {...props} transparent={!approved}>
+    <ActualBox css={boxHoverStyle} {...props}>
       <div css={cardContent}>
         <a css={linkStyle} {...linkProps}>
           {!large && (
@@ -134,7 +135,10 @@ export const EventCard = ({
           )}
           <div css={textContentCss}>
             <SubTitle inverted={superFancy}>{title}</SubTitle>
-            <Description inverted={superFancy}>{description}</Description>
+            <Description inverted={superFancy}>
+              {!!renderBadge && renderBadge({ inverted: superFancy })}
+              {description}
+            </Description>
           </div>
         </a>
         <button
