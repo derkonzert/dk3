@@ -41,6 +41,7 @@ describe("api", () => {
         writeHead: jest.fn(),
         end: jest.fn(),
       }
+      dk3Graphql.graphql.mockReset()
       apiUtils.sendJson.mockReset()
 
       micro.json.mockImplementation(() => requestBody)
@@ -115,6 +116,39 @@ describe("api", () => {
 
       expect(apiUtils.sendJson).toBeCalledWith(res, 500, {
         error: expectedErrorMessage,
+      })
+    })
+
+    it("supports multiple queries per request", async () => {
+      contextValue = Symbol.for("fake.context")
+      requestBody = [
+        {
+          query: "{ some { gqlQuery }}",
+          variables: [{ foo: "bar" }],
+          operation: "someName",
+        },
+        {
+          query: "{ some { gqlQuery }}",
+          variables: [{ foo: "bar" }],
+          operation: "someName",
+        },
+      ]
+
+      await api(req, res)
+
+      const expectedRootValue = expect.objectContaining({})
+
+      expect(dk3Graphql.graphql).toHaveBeenCalledTimes(requestBody.length)
+
+      requestBody.forEach(requestBodyPart => {
+        expect(dk3Graphql.graphql).toBeCalledWith(
+          fakeSchema,
+          requestBodyPart.query,
+          expectedRootValue,
+          contextValue,
+          requestBodyPart.variables,
+          requestBodyPart.operation
+        )
       })
     })
   })
