@@ -13,7 +13,7 @@ import { WhoAmI } from "../components/WhoAmI"
 import { CreateEventForm } from "../components/form/CreateEventForm"
 import { EventDetail } from "../components/event-detail/EventDetail"
 import { VeryFancyButton } from "@dk3/ui/form/Button"
-import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
+import { MegaTitle, Text, Link as UiLink } from "@dk3/ui/atoms/Typography"
 import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
@@ -76,9 +76,11 @@ export default withRouter(function Index({ router }) {
         {!!eventId && (
           <React.Fragment>
             <EventDetail id={eventId} />
-            <Link href="/">
-              <a onClick={closeDetail}>Back</a>
-            </Link>
+            <Spacer mh={4} mb={5}>
+              <Link href="/">
+                <UiLink onClick={closeDetail}>Close</UiLink>
+              </Link>
+            </Spacer>
           </React.Fragment>
         )}
         {!!addEvent && (

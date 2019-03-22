@@ -30,9 +30,13 @@ const sortEvents = (a, b) => {
   return a.title > b.title ? 1 : -1
 }
 
-const isToday = date => new Date().toDateString() === date.toDateString()
+const isToday = date => {
+  const now = new Date()
+  return now.toDateString() === date.toDateString() || date < now
+}
 const isTomorrow = date =>
   new Date(Date.now() + 86400000).toDateString() === date.toDateString()
+const twelveOurs = 1000 * 60 * 60 * 12
 
 export const EventQueryList = withRouter(({ query, filter, router }) => {
   return (
@@ -123,7 +127,7 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                     {group.events.map(event => {
                       const date = new Date(event.from)
                       const to = new Date(event.to)
-                      const isRange = date.getDate() !== to.getDate()
+                      const isRange = to - date > twelveOurs
 
                       const dayName = isRange
                         ? `${to.getDate() - date.getDate() + 1} days`
