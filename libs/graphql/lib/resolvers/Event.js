@@ -25,4 +25,10 @@ exports.Event = {
 
     return event.bookmarkedBy.indexOf(user._id) >= 0
   },
+
+  recentlyAdded: event => {
+    const towDaysInMilliseconds = 1000 * 60 * 60 * 24 * 2
+
+    return Date.now() - towDaysInMilliseconds < event.created
+  },
 }

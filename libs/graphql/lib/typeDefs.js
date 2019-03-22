@@ -33,6 +33,7 @@ const typeDefs = gql`
     bookmarkedBy: [User]
     author: User
     fancyness: Int
+    recentlyAdded: Int
   }
 
   type Query {

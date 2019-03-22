@@ -9,7 +9,7 @@ import { MutationWithAuthentication } from "@dk3/shared-frontend/lib/MutationWit
 import { EventCard } from "@dk3/ui/components/EventCard"
 import { StickyListTitle } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
-import { RedBadge } from "@dk3/ui/atoms/Badge"
+import { RedBadge, GreenBadge } from "@dk3/ui/atoms/Badge"
 
 export const BOOKMARK_EVENT = gql`
   mutation bookmarkEvent($input: BookmarkEventInput!) {
@@ -161,6 +161,14 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                                     <RedBadge inverted={inverted}>
                                       Not yet verified!
                                     </RedBadge>
+                                  )
+                                }
+
+                                if (event.recentlyAdded) {
+                                  return (
+                                    <GreenBadge inverted={inverted}>
+                                      New!
+                                    </GreenBadge>
                                   )
                                 }
 

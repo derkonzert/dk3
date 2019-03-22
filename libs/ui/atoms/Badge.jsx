@@ -3,10 +3,6 @@ import styled from "@emotion/styled"
 export const Badge = styled.span`
   margin-right: 0.4rem;
   font-weight: 600;
-
-  &:before {
-    content: "• ";
-  }
 `
 
 export const RedBadge = styled(Badge)`

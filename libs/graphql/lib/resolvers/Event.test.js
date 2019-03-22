@@ -1,4 +1,5 @@
 const { Event } = require("./Event")
+const { DateTime } = require("luxon")
 
 describe("Event", () => {
   describe("fancyness", () => {
@@ -63,6 +64,27 @@ describe("Event", () => {
           user: { _id: "1234" },
         })
       ).resolves.toBe(true)
+    })
+  })
+
+  describe("recentlyAdded", () => {
+    it("returns true when event.created is less than two days ago", () => {
+      const twoDaysAgo = DateTime.local()
+        .minus({ days: 2 })
+        .plus({ seconds: 10 }) // for buffer
+        .toJSDate()
+      const inFuture = DateTime.local().plus({ days: 2 })
+
+      expect(Event.recentlyAdded({ created: twoDaysAgo })).toBe(true)
+      expect(Event.recentlyAdded({ created: inFuture })).toBe(true)
+    })
+
+    it("returns false when event.created is more than two days ago", () => {
+      const twoDaysAgo = DateTime.local()
+        .minus({ days: 3 })
+        .toJSDate()
+
+      expect(Event.recentlyAdded({ created: twoDaysAgo })).toBe(false)
     })
   })
 })

@@ -13,10 +13,14 @@ const generateEventData = () => {
   const now = DateTime.local()
   const dateOffset = now.diff(DateTime.fromJSDate(new Date(referenceNow)))
 
-  return events.map(event => ({
+  const yesterday = now.minus({ days: 1 })
+  const lastWeek = now.minus({ days: 7 })
+
+  return events.map((event, index) => ({
     ...event,
     title: `Mock ${event.title}`,
     description,
+    created: index % 10 === 0 ? yesterday.toISO() : lastWeek.toISO(),
     from: DateTime.fromJSDate(new Date(event.from))
       .plus(dateOffset)
       .set({ minute: 0, hour: 20, second: 0, millisecond: 0 })

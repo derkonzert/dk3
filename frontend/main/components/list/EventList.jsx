@@ -19,6 +19,7 @@ export const UPCOMING_EVENTS_EVENT_FRAGMENT = gql`
     fancyness
     approved
     bookmarkedByMe
+    recentlyAdded
   }
 `
 
