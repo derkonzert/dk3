@@ -30,7 +30,17 @@ export const CreateEventForm = ({ onCreated }) => {
   const from = new Date(now)
 
   return (
-    <State initial={{ title: "", url: "", location: "", to, from }}>
+    <State
+      initial={{
+        title: "",
+        url: "",
+        location: "",
+        to,
+        from,
+        to_time: "22:00",
+        from_time: "20:00",
+      }}
+    >
       {({ state, setState, resetState }) => (
         <Mutation
           mutation={CREATE_EVENT}
@@ -66,22 +76,27 @@ export const CreateEventForm = ({ onCreated }) => {
                   data-add-event-form
                   onSubmit={e => {
                     e.preventDefault()
+                    const { from, to, from_time, to_time, ...restState } = state
+                    const fromTime = from_time.split(":")
+                    const toTime = to_time.split(":")
 
-                    const fromDt = DateTime.fromJSDate(state.from)
+                    const fromDt = DateTime.fromJSDate(from)
                       .startOf("day")
                       .set({
-                        hour: 20,
+                        hour: fromTime[0],
+                        minutes: fromTime[1],
                       })
-                    const toDt = DateTime.fromJSDate(state.to)
+                    const toDt = DateTime.fromJSDate(to)
                       .startOf("day")
                       .set({
-                        hour: 22,
+                        hour: toTime[0],
+                        minutes: toTime[1],
                       })
 
                     createEvent({
                       variables: {
                         input: {
-                          ...state,
+                          ...restState,
                           from: fromDt.toISO(),
                           to: toDt.toISO(),
                         },
@@ -119,14 +134,30 @@ export const CreateEventForm = ({ onCreated }) => {
                       }
                       setState({ from, to })
                     }}
-                    label="From"
+                    label="From Date"
                   />
+                  <TextInput
+                    mb={4}
+                    value={state.from_time}
+                    name="from_time"
+                    onChange={e => setState({ from_time: e.target.value })}
+                    label="From Time"
+                  />
+
                   <DateInput
                     value={state.to}
                     name="to"
                     onChange={to => setState({ to })}
                     label="To"
                   />
+                  <TextInput
+                    mb={4}
+                    value={state.to_time}
+                    name="to_time"
+                    onChange={e => setState({ to_time: e.target.value })}
+                    label="To Time"
+                  />
+
                   <FancyButton type="submit">Save new event</FancyButton>
                 </form>
               </Spacer>
