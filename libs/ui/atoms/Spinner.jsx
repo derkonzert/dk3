@@ -29,6 +29,8 @@ const Outer = styled.div`
   height: 2em;
 
   box-sizing: border-box;
+  /* Fallback for browsers not supporting conic-gradient */
+  background-image: linear-gradient(40deg, rgb(255, 87, 87), #6a32cc);
   background-image: conic-gradient(
     from 40deg,
     rgb(255, 87, 87),
