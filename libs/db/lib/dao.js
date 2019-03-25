@@ -48,6 +48,33 @@ exports.userByEmail = async email => await User.Model.findOne({ email }).exec()
 exports.allUsersCount = async () =>
   await User.Model.estimatedDocumentCount().exec()
 
+function filterWhiteList(dataObject, arrayOfAllowedPropertyNames) {
+  const filteredObject = {}
+
+  for (let propertyName of arrayOfAllowedPropertyNames) {
+    if (dataObject.hasOwnProperty(propertyName)) {
+      filteredObject[propertyName] = dataObject[propertyName]
+    }
+  }
+
+  return filteredObject
+}
+
+exports.updateUser = async ({ id, ...userData }) => {
+  const whiteListedUserData = filterWhiteList(userData, ["username"])
+
+  try {
+    await User.Model.findOneAndUpdate(
+      { _id: id },
+      { ...whiteListedUserData }
+    ).exec()
+
+    return await exports.userById(id)
+  } catch (err) {
+    throw err
+  }
+}
+
 /* Event methods */
 exports.createEvent = async ({ eventData, autoBookmark }, user) => {
   if (user && autoBookmark) {

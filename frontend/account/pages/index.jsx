@@ -12,15 +12,21 @@ import {
 } from "@dk3/ui/atoms/Typography"
 
 import { LoginForm } from "@dk3/shared-frontend/form/LoginForm"
+import { UpdateSelfForm } from "../components/UpdateSelfForm"
 
 export default withRouter(function Index({ router }) {
   return (
     <React.Fragment>
       <ListTitle>Login</ListTitle>
       <CurrentUser>
-        {({ isLoggedIn, loading }) => {
+        {({ isLoggedIn, loading, user }) => {
           if (isLoggedIn) {
-            return <div>You are already logged in</div>
+            return (
+              <React.Fragment>
+                {user.username}
+                <UpdateSelfForm />
+              </React.Fragment>
+            )
           }
 
           if (loading) {

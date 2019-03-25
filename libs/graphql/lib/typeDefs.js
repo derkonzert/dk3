@@ -67,10 +67,17 @@ const typeDefs = gql`
     bookmarked: Boolean!
   }
 
+  input UpdateSelfInput {
+    id: ID!
+    username: String!
+  }
+
   type Mutation {
     createEvent(input: CreateEventInput!): Event
     approveEvent(input: ApproveEventInput!): Event
     bookmarkEvent(input: BookmarkEventInput!): Event
+
+    updateSelf(input: UpdateSelfInput!): User
   }
 `
 

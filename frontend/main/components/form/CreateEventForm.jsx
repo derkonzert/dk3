@@ -7,13 +7,13 @@ import { DateTime } from "luxon"
 import { FancyButton } from "@dk3/ui/form/Button"
 import { TextInput } from "@dk3/ui/form/TextInput"
 import { DateInput } from "@dk3/ui/form/DateInput"
+import { Title } from "@dk3/ui/atoms/Typography"
+import { Spacer } from "@dk3/ui/atoms/Spacer"
 
 import {
   UPCOMING_EVENTS,
   UPCOMING_EVENTS_EVENT_FRAGMENT,
 } from "../list/EventList"
-import { Title } from "@dk3/ui/atoms/Typography"
-import { Spacer } from "@dk3/ui/atoms/Spacer"
 
 export const CREATE_EVENT = gql`
   mutation createNewEvent($input: CreateEventInput!) {

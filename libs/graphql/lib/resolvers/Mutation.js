@@ -37,4 +37,19 @@ exports.Mutation = {
       approved,
     })
   },
+
+  updateSelf: async (parent, args, { dao, user }) => {
+    const { id, ...updateValues } = args.input
+
+    if (user._id !== id) {
+      throw new Error("Unauthorized request")
+    }
+
+    const result = await dao.updateUser({
+      id,
+      ...updateValues,
+    })
+
+    return result
+  },
 }
