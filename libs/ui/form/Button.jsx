@@ -21,7 +21,7 @@ const buttonBaseStyle = css`
 
   &:disabled {
     opacity: 0.65;
-    cursor: wait;
+    cursor: not-allowed;
   }
 `
 

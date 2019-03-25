@@ -3,6 +3,7 @@ import { TextInput } from "@dk3/ui/form/TextInput"
 import { State } from "react-powerplug"
 import { FancyButton, Button } from "@dk3/ui/form/Button"
 import { withApollo } from "react-apollo"
+import { login } from "../lib/withApollo"
 
 export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
   return (
@@ -40,7 +41,7 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
                 }
 
                 if (data.accessToken) {
-                  localStorage.setItem("accessToken", data.accessToken)
+                  login({ token: data.accessToken })
 
                   return client.resetStore()
                 }
