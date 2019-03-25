@@ -5,6 +5,7 @@ import gql from "graphql-tag"
 import { Description } from "@dk3/ui/atoms/Typography"
 
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
+import { logout } from "@dk3/shared-frontend/lib/withApollo"
 
 export const currentUserQuery = gql`
   query currentUser {
@@ -26,7 +27,7 @@ export const WhoAmI = () => (
           {isLoggedIn && (
             <button
               onClick={() => {
-                localStorage.removeItem("accessToken")
+                logout()
                 client.resetStore()
               }}
             >
