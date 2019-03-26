@@ -8,6 +8,7 @@ describe("Mutation", () => {
       createEvent: jest.fn(),
       bookmarkEvent: jest.fn(),
       userById: jest.fn(),
+      updateUser: jest.fn(),
       approveEvent: jest.fn(),
     }
   })
@@ -110,6 +111,62 @@ describe("Mutation", () => {
         eventId: args.input.id,
         approved: args.input.approved,
       })
+    })
+  })
+
+  describe("updateSelf", () => {
+    /* updateSelf: async (parent, args, { dao, user }) => {
+    const { id, ...updateValues } = args.input
+
+    if (user._id !== id) {
+      throw new Error("Unauthorized request")
+    }
+
+    const result = await dao.updateUser({
+      id,
+      ...updateValues,
+    })
+
+    return result
+  },*/
+    it("throws when input id and current user id doesnt match", () => {
+      expect.assertions(1)
+
+      return expect(
+        Mutation.updateSelf(
+          undefined,
+          { input: { id: 1 } },
+          { user: { _id: 2 } }
+        )
+      ).rejects.toThrow()
+    })
+
+    it("calls daos updateUser with the current users id and rest args from input", async () => {
+      const rest = { some: "value", to: "update" }
+
+      await Mutation.updateSelf(
+        undefined,
+        { input: { id: 1, ...rest } },
+        { dao, user: { _id: 1 } }
+      )
+
+      expect(dao.updateUser).toHaveBeenCalledWith({
+        id: 1,
+        ...rest,
+      })
+    })
+
+    it("returns result from dao.updateUser", async () => {
+      const expectedResult = { foo: "BAR" }
+      dao.updateUser.mockResolvedValue(expectedResult)
+
+      const result = await Mutation.updateSelf(
+        undefined,
+        { input: { id: 1 } },
+        { dao, user: { _id: 1 } }
+      )
+
+      expect(result).toBe(expectedResult)
     })
   })
 })
