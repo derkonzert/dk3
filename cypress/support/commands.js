@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -13,25 +14,31 @@
 Cypress.Commands.add(
   "login",
   { prevSubject: ["window"] },
-  (subject, username) => {
-    cy.request({
-      method: "post",
-      url: "http://localhost:8004/auth/signIn",
-      body: {
-        email: `${username}s@email.com`,
-        password: `${username}spassword`,
-      },
-      failOnStatusCode: false,
-    }).then(resp => {
-      subject.localStorage.setItem("accessToken", resp.body.accessToken)
-
-      return subject.__apolloClient__.resetStore()
-    })
-  }
+  (subject, username) =>
+    cy
+      .request({
+        method: "post",
+        url: "http://localhost:8004/auth/signIn",
+        body: {
+          email: `${username}s@email.com`,
+          password: `${username}spassword`,
+        },
+        failOnStatusCode: false,
+      })
+      .then(resp => {
+        if (resp.body.accessToken) {
+          return cy.setCookie("token", resp.body.accessToken)
+        }
+      })
+      .then(() => {
+        subject.__apolloClient__.resetStore()
+      })
 )
 
 Cypress.Commands.add("logout", { prevSubject: ["window"] }, subject => {
-  subject.localStorage.removeItem("accessToken")
+  cy.clearCookie("token")
+
+  return subject.__apolloClient__.resetStore()
 })
 //
 //
