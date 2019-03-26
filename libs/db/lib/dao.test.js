@@ -173,6 +173,35 @@ describe("dao", () => {
     })
   })
 
+  describe("updateUser", () => {
+    const updateuUserData = { id: 1, username: "newname", other: "123" }
+    let findByIdExec
+
+    beforeEach(() => {
+      findByIdExec = jest.fn().mockReturnValue(userDoc)
+      User.Model.findOneAndUpdate = jest.fn().mockReturnValue(User.Model)
+      User.Model.findById = jest.fn().mockReturnValue({ exec: findByIdExec })
+    })
+
+    it("calls findOneAndUpdate on User model", async () => {
+      await dao.updateUser(updateuUserData)
+
+      expect(User.Model.findOneAndUpdate).toHaveBeenCalledWith(
+        {
+          _id: updateuUserData.id,
+        },
+        { username: updateuUserData.username }
+      )
+    })
+
+    it("returns result from User findOne", async () => {
+      const result = await dao.updateUser(updateuUserData)
+
+      expect(result).toBe(userDoc)
+      expect(User.Model.findById).toHaveBeenCalledWith(updateuUserData.id)
+    })
+  })
+
   /* Event methods */
 
   describe("eventById", () => {
