@@ -61,17 +61,6 @@ export const ListTitle = styled.h4`
   line-height: 2rem;
 `
 
-export const StickyListTitle = styled(ListTitle)`
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  margin: 1.5rem -1rem;
-  padding: 1rem;
-
-  background: rgba(244, 242, 242, 0.8);
-  backdrop-filter: blur(4px);
-`
-
 export const Description = styled.div`
   ${noMargin};
   font-family: "IBM Plex Sans", serif;

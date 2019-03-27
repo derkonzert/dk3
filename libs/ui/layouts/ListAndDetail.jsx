@@ -57,7 +57,7 @@ const MainPageInner = styled.div`
   box-sizing: content-box;
   padding: 0;
   margin: 0 auto;
-  max-width: 72.8rem;
+  max-width: 68.8rem;
 
   transition: 350ms transform ease-out;
 
@@ -187,7 +187,7 @@ const SideInner = styled.div`
 
 const SideInnerContent = styled.div`
   margin: 0 auto;
-  max-width: 72.8rem;
+  max-width: 68.8rem;
 `
 
 class CacheContentFor extends React.Component {

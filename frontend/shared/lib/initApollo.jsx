@@ -16,6 +16,7 @@ function create(initialState, { getToken, uri }) {
   const httpLink = new BatchHttpLink({
     uri,
     credentials: "same-origin",
+    batchInterval: process.browser ? 50 : 0,
   })
 
   const authLink = setContext((_, { headers }) => {
