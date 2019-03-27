@@ -63,6 +63,8 @@ const MainPageInner = styled.div`
 
   ${props => (props.showDetail ? mainPageInnerShowDetail : "")}
 
+  will-change: transform;
+
   .cacheFixedPosition & {
     overflow: hidden;
     height: 100%;
@@ -181,6 +183,8 @@ const SideInner = styled.div`
   transition: 350ms transform;
   transform: translateY(100%);
   transform: translateY(calc(100.5vh - 38.2vh));
+
+  will-change: transform;
 
   ${props => (props.showDetail ? sideInnerShowDetail : "")}
 `
