@@ -1,53 +1,25 @@
 import React from "react"
-import { withRouter } from "next/router"
+
 import Link from "next/link"
 
-import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
-import { Spinner } from "@dk3/ui/atoms/Spinner"
+import { Link as UILink, ListTitle } from "@dk3/ui/atoms/Typography"
 
-import {
-  Description,
-  Link as UILink,
-  ListTitle,
-} from "@dk3/ui/atoms/Typography"
-
-import { LoginForm } from "@dk3/shared-frontend/form/LoginForm"
 import { UpdateSelfForm } from "../components/UpdateSelfForm"
 
-export default withRouter(function Index({ router }) {
+export default function Index({ isLoggedIn }) {
   return (
     <React.Fragment>
-      <ListTitle>Login</ListTitle>
-      <CurrentUser>
-        {({ isLoggedIn, loading, user }) => {
-          if (isLoggedIn) {
-            return (
-              <React.Fragment>
-                {user.username}
-                <UpdateSelfForm />
-              </React.Fragment>
-            )
-          }
+      <ListTitle>Settings</ListTitle>
 
-          if (loading) {
-            return <Spinner />
-          }
-
-          return (
-            <React.Fragment>
-              <Description>Enter your credentials to sign in</Description>
-              <LoginForm
-                onLogin={() => {
-                  router.go("/")
-                }}
-              />
-              <Link href="signup">
-                <UILink>Create an account</UILink>
-              </Link>
-            </React.Fragment>
-          )
-        }}
-      </CurrentUser>
+      {isLoggedIn ? (
+        <React.Fragment>
+          <UpdateSelfForm />
+        </React.Fragment>
+      ) : (
+        <Link href="login">
+          <UILink>Please login</UILink>
+        </Link>
+      )}
     </React.Fragment>
   )
-})
+}
