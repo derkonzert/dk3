@@ -18,19 +18,6 @@ const EventSection = styled.div`
 `
 
 const EventSectionHeader = styled.div`
-  @media screen and (min-width: 92em) {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 100%;
-    white-space: nowrap;
-    margin-right: 1.5rem;
-
-    text-align: right;
-  }
-`
-
-const EventSectionTitle = styled(ListTitle)`
   position: sticky;
   top: 0;
   z-index: 1;
@@ -41,7 +28,22 @@ const EventSectionTitle = styled(ListTitle)`
   backdrop-filter: blur(4px);
 
   @media screen and (min-width: 92em) {
-    margin: 0;
+    @supports (position: sticky) {
+      background: transparent;
+      backdrop-filter: none;
+    }
+  }
+`
+
+const EventSectionTitle = styled(ListTitle)`
+  margin: 0;
+
+  @media screen and (min-width: 92em) {
+    @supports (position: sticky) {
+      padding: 0 1.5rem;
+      transform: translateX(-100%);
+      text-align: right;
+    }
   }
 `
 
