@@ -48,20 +48,16 @@ exports.userByEmail = async email => await User.Model.findOne({ email }).exec()
 exports.allUsersCount = async () =>
   await User.Model.estimatedDocumentCount().exec()
 
-function filterWhiteList(dataObject, arrayOfAllowedPropertyNames) {
-  const filteredObject = {}
-
-  for (let propertyName of arrayOfAllowedPropertyNames) {
-    if (dataObject.hasOwnProperty(propertyName)) {
-      filteredObject[propertyName] = dataObject[propertyName]
-    }
-  }
-
-  return filteredObject
-}
-
 exports.updateUser = async ({ id, ...userData }) => {
-  const whiteListedUserData = filterWhiteList(userData, ["username"])
+  const whiteListedUserData = ["username"].reduce(
+    (filteredUserData, allowedKey) => {
+      if (userData[allowedKey]) {
+        filteredUserData[allowedKey] = userData[allowedKey]
+      }
+      return filteredUserData
+    },
+    {}
+  )
 
   try {
     await User.Model.findOneAndUpdate(
