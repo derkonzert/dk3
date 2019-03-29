@@ -18,6 +18,8 @@ export default class MyDocument extends Document {
             name="viewport"
             content="width=device-width, initial-scale=1.0, user-scalable=no"
           />
+          <link rel="manifest" href="/static/manifest.json" />
+          <script src="/pwabuilder-sw-register.js" async />
         </Head>
         <body>
           <Main />
