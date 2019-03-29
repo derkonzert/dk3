@@ -18,6 +18,7 @@
     { "src": "services/api/lib/api.js", "use": "@now/node" },
     { "src": "services/cron/lib/cron.js", "use": "@now/node" },
     { "src": "libs/ui/package.json", "use": "@now/static-build" },
+    { "src": "frontend/static/*", "use": "@now/static" },
     {
       "src": "frontend/account/next.config.js",
       "use": "@now/next@0.0.85-canary.9"
@@ -36,7 +37,13 @@
     {
       "src": "/auth/(.*)",
       "methods": ["OPTIONS", "POST"],
-      "dest": "/services/auth/lib/auth.js?operation=$1"
+      "dest": "/services/auth/lib/auth.js?operation=$1",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
     },
     {
       "src": "/cron",
@@ -46,27 +53,105 @@
     {
       "src": "/api",
       "methods": ["OPTIONS", "POST"],
-      "dest": "/services/api/lib/api.js"
+      "dest": "/services/api/lib/api.js",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
     },
     {
       "src": "/ui/(.*)",
-      "dest": "/libs/ui/$1"
+      "dest": "/libs/ui/$1",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
     },
     {
       "src": "/account/(.*)",
-      "dest": "/frontend/account/$1"
+      "dest": "/frontend/account/$1",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
     },
     {
       "src": "/c/(.)*-(?<eventId>.*)$",
       "methods": ["GET"],
-      "dest": "frontend/main/c?eventId=$eventId"
+      "dest": "frontend/main/c?eventId=$eventId",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
     },
     {
       "src": "/add-new-event$",
       "methods": ["GET"],
-      "dest": "frontend/main/index?addEvent=true"
+      "dest": "frontend/main/index?addEvent=true",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
     },
-    { "src": "/", "dest": "frontend/main/index" },
-    { "src": "^/(.*)$", "dest": "frontend/main/$1" }
+    {
+      "src": "/static/(.*)",
+      "dest": "frontend/static/$1",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
+    },
+    {
+      "src": "/pwabuilder-sw.js",
+      "dest": "frontend/static/pwabuilder-sw.js",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
+    },
+    {
+      "src": "/pwabuilder-sw-register.js",
+      "dest": "frontend/static/pwabuilder-sw-register.js",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
+    },
+    {
+      "src": "/",
+      "dest": "frontend/main/index",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
+    },
+    {
+      "src": "^/(.*)$",
+      "dest": "frontend/main/$1",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
+    }
   ]
 }
