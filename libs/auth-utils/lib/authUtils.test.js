@@ -29,14 +29,23 @@ describe("auth-utils", () => {
     const userData = { username: "ju", password: "ladida" }
 
     it("creates a user", async () => {
+      jwt.sign.mockImplementation((payload, secret, options, callback) => {
+        callback(null, "my-token")
+      })
+
       db.dao.createUser.mockResolvedValue({
         ...userData,
+        save: jest.fn(),
         passwordHash: "somehash",
       })
 
-      const result = await authUtils.signUp(userData)
+      try {
+        const result = await authUtils.signUp(userData)
 
-      expect(result).toBe(true)
+        expect(result).toBe(true)
+      } catch (err) {
+        throw err
+      }
     })
 
     it("throws when user creation fails", () => {

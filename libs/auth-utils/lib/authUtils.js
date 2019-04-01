@@ -8,7 +8,9 @@ const skills = require("@dk3/db/lib/model/userSkills")
 
 exports.signUp = async data => {
   try {
-    await dao.createUser(data)
+    const user = await dao.createUser(data)
+
+    await exports.createDoubleOptInToken(user)
 
     return true
   } catch (err) {
@@ -16,10 +18,48 @@ exports.signUp = async data => {
   }
 }
 
+exports.verifyEmail = async emailVerificationToken => {
+  try {
+    /* Parse the token, this will throw if the token has expired */
+    await exports.parseJwtToken(emailVerificationToken)
+
+    const user = await dao.userByVerificationToken(emailVerificationToken)
+
+    if (!user) {
+      throw new Error("No user associated with given token")
+    }
+
+    user.set("emailVerificationToken", null)
+    user.emailVerified = true
+
+    await user.save()
+
+    return user
+  } catch (err) {
+    throw err
+  }
+}
+
+exports.createDoubleOptInToken = async user => {
+  try {
+    const { accessToken: token } = await exports.generateTokens(user, {
+      expiresIn: "15m",
+    })
+
+    user.emailVerificationToken = token
+
+    await user.save()
+  } catch (err) {
+    throw err
+  }
+
+  // Create notification
+}
+
 const absoluteTimestampInSeconds = milliseconds =>
   Math.floor((Date.now() + milliseconds) / 1000)
 
-exports.generateTokens = async user => {
+exports.generateTokens = async (user, options = {}) => {
   const softExpIn = absoluteTimestampInSeconds(
     ms(config.get("ACCESS_TOKEN_SOFT_EXPIRE"))
   )
@@ -35,7 +75,7 @@ exports.generateTokens = async user => {
       config.get("JWT_SECRET"),
       {
         algorithm: "HS512",
-        expiresIn: config.get("ACCESS_TOKEN_LIFE"),
+        expiresIn: options.expiresIn || config.get("ACCESS_TOKEN_LIFE"),
       },
       (err, token) => {
         if (err) {

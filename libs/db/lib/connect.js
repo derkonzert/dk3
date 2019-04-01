@@ -3,10 +3,10 @@ const { logger } = require("@dk3/logger")
 const mongoose = require("mongoose")
 
 exports.connect = async () => {
-  const { connection: db } = await mongoose.connect(
-    config.get("MONGODB_URI"),
-    { useNewUrlParser: true, useFindAndModify: false }
-  )
+  const { connection: db } = await mongoose.connect(config.get("MONGODB_URI"), {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+  })
 
   /* eslint-disable no-console */
   db.on("error", err => logger("db connection error:", err.message))

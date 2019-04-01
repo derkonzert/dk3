@@ -14,6 +14,7 @@
   "builds": [
     { "src": "services/auth/lib/auth.js", "use": "@now/node" },
     { "src": "services/api/lib/api.js", "use": "@now/node" },
+    { "src": "services/cron/lib/cron.js", "use": "@now/node" },
     { "src": "libs/ui/package.json", "use": "@now/static-build" },
     {
       "src": "frontend/account/next.config.js",
@@ -26,9 +27,19 @@
   ],
   "routes": [
     {
+      "src": "/auth/verify-email/(.*)",
+      "methods": ["GET"],
+      "dest": "/services/auth/lib/auth.js?operation=verify-email&token=$1"
+    },
+    {
       "src": "/auth/(.*)",
       "methods": ["OPTIONS", "POST"],
       "dest": "/services/auth/lib/auth.js?operation=$1"
+    },
+    {
+      "src": "/cron",
+      "methods": ["GET"],
+      "dest": "/services/cron/lib/cron.js"
     },
     {
       "src": "/api",

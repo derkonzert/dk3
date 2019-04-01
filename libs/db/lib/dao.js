@@ -45,6 +45,11 @@ exports.userById = async _id => await User.Model.findById(_id).exec()
 
 exports.userByEmail = async email => await User.Model.findOne({ email }).exec()
 
+exports.userByVerificationToken = async emailVerificationToken =>
+  await User.Model.findOne({
+    emailVerificationToken,
+  }).exec()
+
 exports.allUsersCount = async () =>
   await User.Model.estimatedDocumentCount().exec()
 

@@ -20,6 +20,15 @@ const Schema = new mongoose.Schema({
     required: true,
   },
 
+  emailVerified: {
+    type: Boolean,
+    default: false,
+  },
+
+  emailVerificationToken: {
+    type: "String",
+  },
+
   passwordHash: {
     type: String,
     required: true,

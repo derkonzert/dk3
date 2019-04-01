@@ -1,7 +1,7 @@
 const { json } = require("micro")
 const url = require("url")
 
-const { signUp, signIn } = require("@dk3/auth-utils")
+const { signUp, signIn, verifyEmail } = require("@dk3/auth-utils")
 const { sendJson } = require("@dk3/api-utils")
 const { HTTPStatusError } = require("@dk3/error")
 const { connect } = require("@dk3/db")
@@ -18,6 +18,25 @@ module.exports = async function auth(req, res) {
     const { query } = url.parse(req.url, true)
 
     switch (query.operation) {
+      case "verify-email":
+        const { token } = query
+        if (!token) {
+          throw new HTTPStatusError({
+            title: "No token to verify",
+            statusCode: 400,
+          })
+        }
+
+        try {
+          await verifyEmail(token)
+        } catch (err) {
+          throw new HTTPStatusError({
+            title: err.message,
+            statusCode: 400,
+          })
+        }
+
+        return sendJson(res, 201, { message: "E-Mail verified" })
       case "signUp":
         body = await json(req)
 
