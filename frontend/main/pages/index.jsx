@@ -41,21 +41,22 @@ export default withRouter(function Index({ router }) {
   return (
     <ListAndDetail showDetail={showDetail}>
       <ListAndDetailMain>
-        <CurrentUser>
-          {({ isLoggedIn }) => (
-            <Header loggedIn={isLoggedIn}>
-              <MegaTitle>derkonzert</MegaTitle>
-              {!isLoggedIn && (
+        <Header>
+          <MegaTitle>derkonzert</MegaTitle>
+          <CurrentUser ssr={false}>
+            {({ isLoggedIn }) =>
+              isLoggedIn ? null : (
                 <Text>
                   {
                     "derkonzert is a simple list of concerts in Munich. It's supposed to be a haystack of needles, without any boundaries to any specific music style."
                   }
                 </Text>
-              )}
-              <WhoAmI />
-            </Header>
-          )}
-        </CurrentUser>
+              )
+            }
+          </CurrentUser>
+          <WhoAmI />
+        </Header>
+
         <Spacer pa={4}>
           <EventList />
           <EventLegend />

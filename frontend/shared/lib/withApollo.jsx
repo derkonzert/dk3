@@ -22,7 +22,7 @@ export const logout = () => {
 export const getApiUri = ctx => {
   if (process.env.NODE_ENV === "production") {
     return process.browser
-      ? `https://${window.location.host}/api`
+      ? `${location.protocol}//${window.location.host}/api`
       : `https://${ctx.req.headers.host}/api`
   } else {
     return "http://localhost:8004/api"

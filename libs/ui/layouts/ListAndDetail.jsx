@@ -63,8 +63,6 @@ const MainPageInner = styled.div`
 
   ${props => (props.showDetail ? mainPageInnerShowDetail : "")}
 
-  will-change: transform;
-
   .cacheFixedPosition & {
     overflow: hidden;
     height: 100%;

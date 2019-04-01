@@ -28,9 +28,14 @@ class MyApp extends App {
               return (
                 <React.Fragment>
                   <HorizontalMenu>
+                    <Link href="/">
+                      <HorizontalMenuItem href="/">
+                        ↩︎ Back to derkonzert
+                      </HorizontalMenuItem>
+                    </Link>
                     {isLoggedIn ? (
                       <React.Fragment>
-                        <Link href="/">
+                        <Link href="/account/">
                           <HorizontalMenuItem href="/account/">
                             Settings
                           </HorizontalMenuItem>

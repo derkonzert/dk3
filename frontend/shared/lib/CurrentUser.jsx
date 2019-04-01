@@ -12,19 +12,25 @@ export const currentUserQuery = gql`
   }
 `
 
-export const CurrentUser = withApollo(({ client, children }) => {
-  return (
-    <Query query={currentUserQuery}>
-      {({ data, error, loading }) => {
-        if (error) {
-          return <div>{error.message}</div>
-        }
+export const CurrentUser = withApollo(
+  ({ client, children, requireUser = false, ...props }) => {
+    return (
+      <Query query={currentUserQuery} {...props}>
+        {({ data, error, loading }) => {
+          if (error) {
+            return <div>{error.message}</div>
+          }
 
-        const isLoggedIn = !!data.me
-        const user = data.me
+          const isLoggedIn = !!data.me
+          const user = data.me
 
-        return children({ isLoggedIn, user, loading, client })
-      }}
-    </Query>
-  )
-})
+          if (!isLoggedIn && requireUser) {
+            return null
+          }
+
+          return children({ isLoggedIn, user, loading, client })
+        }}
+      </Query>
+    )
+  }
+)
