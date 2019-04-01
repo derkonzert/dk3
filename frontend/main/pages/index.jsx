@@ -19,6 +19,7 @@ import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 import { EventLegend } from "../components/list/EventLegend"
 import styled from "@emotion/styled"
+import { HeaderMenu } from "../components/HeaderMenu/HeaderMenu"
 
 const NOT_FINAL_AddEventButton = styled(VeryFancyButton)`
   position: fixed;
@@ -41,6 +42,7 @@ export default withRouter(function Index({ router }) {
   return (
     <ListAndDetail showDetail={showDetail}>
       <ListAndDetailMain>
+        <HeaderMenu />
         <Header>
           <MegaTitle>derkonzert</MegaTitle>
           <CurrentUser ssr={false}>
