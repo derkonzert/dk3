@@ -7,7 +7,7 @@ let cronJobsSetUp = false
 
 module.exports = async (_req, res) => {
   /* Establish database connection */
-  const { close: closeConnection } = await connect()
+  const connection = await connect()
 
   /* Initially set up cron jobs */
   if (!cronJobsSetUp) {
@@ -18,6 +18,8 @@ module.exports = async (_req, res) => {
   try {
     const [results, errors] = await cron.runAll()
 
+    await connection.close()
+
     sendJson(res, 200, {
       status: "ok",
       results: results,
@@ -26,8 +28,6 @@ module.exports = async (_req, res) => {
   } catch (err) {
     sendJson(res, 500, { error: err.message })
   }
-
-  await closeConnection()
 }
 
 module.exports.queryMissingMessage = queryMissingMessage

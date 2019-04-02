@@ -4,6 +4,7 @@ const { TokenExpiredError } = jwt
 const config = require("@dk3/config")
 const { HTTPStatusError } = require("@dk3/error")
 const { dao } = require("@dk3/db")
+const { Types: SystemEventTypes } = require("@dk3/db/lib/model/SystemEvent")
 const skills = require("@dk3/db/lib/model/userSkills")
 
 exports.signUp = async data => {
@@ -11,6 +12,9 @@ exports.signUp = async data => {
     const user = await dao.createUser(data)
 
     await exports.createDoubleOptInToken(user)
+    await dao.emitSystemEvent(SystemEventTypes.doiRequested, {
+      emittedBy: user._id,
+    })
 
     return true
   } catch (err) {

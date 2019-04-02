@@ -1,8 +1,15 @@
 const User = require("../lib/model/User")
 const Event = require("../lib/model/Event")
+const SystemEvent = require("../lib/model/SystemEvent")
 
 jest.mock("../lib/model/User", () => ({
   Model: {},
+}))
+jest.mock("../lib/model/SystemEvent", () => ({
+  Model: {},
+  Types: {
+    eventAdded: "event:added",
+  },
 }))
 jest.mock("../lib/model/Event", () => ({
   Model: {
@@ -36,6 +43,7 @@ describe("dao", () => {
       const cached = dao.cachedMethod("key", fn, { ttl: 30000 })
 
       const results = [await cached(0), await cached(1), await cached(2)]
+
       expect(results).toEqual([1, 1, 1])
       expect(fn).toHaveBeenCalledTimes(1)
 
@@ -246,6 +254,10 @@ describe("dao", () => {
       from: new Date(),
     }
 
+    beforeEach(() => {
+      SystemEvent.Model.create = jest.fn()
+    })
+
     it("throws on invalid data", () => {
       expect.assertions(1)
 
@@ -281,6 +293,19 @@ describe("dao", () => {
         ...eventData,
         bookmarkedBy: ["1234"],
         author: "1234",
+      })
+    })
+
+    it("creates system event", async () => {
+      const event = await dao.createEvent(
+        { eventData, autoBookmark: true },
+        { _id: "1234" }
+      )
+
+      expect(SystemEvent.Model.create).toHaveBeenCalledWith({
+        type: SystemEvent.Types.eventAdded,
+        relatedEvent: event._id,
+        emittedBy: "1234",
       })
     })
   })

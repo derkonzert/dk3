@@ -1,6 +1,7 @@
 const { DateTime } = require("luxon")
 const User = require("./model/User")
 const Event = require("./model/Event")
+const SystemEvent = require("./model/SystemEvent")
 
 /* Create cached dao method */
 
@@ -82,7 +83,17 @@ exports.createEvent = async ({ eventData, autoBookmark }, user) => {
     eventData.bookmarkedBy = [user._id]
   }
 
-  return await Event.Model.create({ author: user && user._id, ...eventData })
+  const event = await Event.Model.create({
+    author: user && user._id,
+    ...eventData,
+  })
+
+  exports.emitSystemEvent(SystemEvent.Types.eventAdded, {
+    emittedBy: user ? user._id : null,
+    relatedEvent: event._id,
+  })
+
+  return event
 }
 
 exports.bookmarkEvent = async ({ eventId, bookmarked, userId }) => {
@@ -148,4 +159,29 @@ exports.upcomingEvents = async ({ filter = {}, sort = {} } = {}) => {
   })
     .sort({ from: 1, ...sort })
     .exec()
+}
+
+/* System Events */
+exports.emitSystemEvent = async (type, { emittedBy, relatedEvent }) => {
+  const systemEvent = await SystemEvent.Model.create({
+    type,
+    emittedBy,
+    relatedEvent,
+  })
+
+  return systemEvent
+}
+
+exports.clearSystemEvents = async systemEvents => {
+  const result = await SystemEvent.Model.remove({
+    _id: {
+      $in: systemEvents.map(systemEvent => systemEvent._id),
+    },
+  }).exec()
+
+  return result
+}
+
+exports.systemEventsByType = type => {
+  return SystemEvent.Model.find({ type }).exec()
 }

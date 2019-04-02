@@ -1,4 +1,4 @@
-"use strict"
+const path = require("path")
 
 const { InvalidConfigurationError } = require("@dk3/error")
 
@@ -21,4 +21,8 @@ exports.get = (name, throwOnError) => {
 
 exports.override = (name, newValue) => {
   config[name] = newValue
+}
+
+exports.url = pathToAdd => {
+  return path.join(config.APP_URL, pathToAdd)
 }

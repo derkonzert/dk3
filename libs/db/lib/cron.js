@@ -27,30 +27,34 @@ exports.setup = async () => {
 exports.runAll = async () => {
   const startedAt = Date.now()
   /* Find jobs that are not currently running */
-  const cronJobs = await CronJob.Model.find({ running: false })
-    .sort({ lastExecuted: -1 })
-    .exec()
+  try {
+    const cronJobs = await CronJob.Model.find({ running: false })
+      .sort({ lastExecuted: -1 })
+      .exec()
 
-  const results = []
-  const errors = []
+    const results = []
+    const errors = []
 
-  for (let job of cronJobs) {
-    if (job.shouldRun()) {
-      try {
-        const result = await exports.runJob(job)
-        results.push(result)
-      } catch (err) {
-        errors.push(err)
-        logger(`cron "${job.name}" execution failed:`, err.message)
-      }
+    for (let job of cronJobs) {
+      if (job.shouldRun()) {
+        try {
+          const result = await exports.runJob(job)
+          results.push(result)
+        } catch (err) {
+          errors.push(err)
+          logger(`cron "${job.name}" execution failed:`, err.message)
+        }
 
-      if (Date.now() - startedAt >= 60 * 1000) {
-        break
+        if (Date.now() - startedAt >= 60 * 1000) {
+          break
+        }
       }
     }
-  }
 
-  return [results, errors]
+    return [results, errors]
+  } catch (err) {
+    throw err
+  }
 }
 
 exports.runJob = async cronJob => {
