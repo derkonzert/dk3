@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "docz": "^0.13.7",
-    "docz-theme-default": "^0.13.7",
+    "docz-theme-default": "^1.0.0",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "eslint-plugin-react": "^7.12.1",
