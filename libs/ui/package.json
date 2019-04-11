@@ -25,7 +25,7 @@
     "url": "https://github.com/jkempff/dk3/issues"
   },
   "devDependencies": {
-    "docz": "^0.13.7",
+    "docz": "^1.0.0",
     "docz-theme-default": "^0.13.7",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
