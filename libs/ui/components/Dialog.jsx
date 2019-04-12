@@ -1,60 +1,80 @@
 /* TODO: Make UI component based on reach-ui */
 import React from "react"
-import { keyframes } from "@emotion/core"
+import "@reach/dialog/styles.css"
 import styled from "@emotion/styled"
+import { useTransition, animated } from "react-spring"
 
-const backgroundFadeIn = keyframes`
-  from {
-    background: rgba(0, 0, 0, 0);
-  }
+import {
+  DialogOverlay as ReachDialogOverlay,
+  DialogContent as ReachDialogContent,
+} from "@reach/dialog"
 
-  to {
-    background: rgba(0, 0, 0, 0.2);
+import { ThemeProvider } from "../theme"
+
+export const DialogOverlay = styled(ReachDialogOverlay)`
+  &[data-reach-dialog-overlay] {
+    background: ${({ theme }) => theme.colors.dialogOverlayBackground};
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0 1rem;
+    overflow: auto;
+
+    z-index: 1;
   }
 `
 
-const slideIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-3rem);
+export const DialogContent = styled(ReachDialogContent)`
+  &[data-reach-dialog-content] {
+    width: 100%;
+    max-width: 35rem;
+    margin: 10vh auto;
+    background: ${({ theme }) => theme.colors.dialogContentBackground};
+    padding: 2rem;
+    border-radius: 4px;
+    outline: none;
   }
-
-  to {
-    opacity: 1;
-    transform: translateY(0rem);
-  }
 `
 
-export const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.35);
-  z-index: 40;
-  backdrop-filter: blur(3px);
-  animation: 200ms ${backgroundFadeIn};
-  will-change: opacity, transform;
-`
+const noOp = () => {}
 
-export const Container = styled.div`
-  width: 100%;
-  max-width: 35rem;
+const AnimatedDialogOverlay = animated(DialogOverlay)
+const AnimatedDialogContent = animated(DialogContent)
 
-  background: white;
-  border-radius: 0.6rem;
-  padding: 1.5rem;
+export const Dialog = ({
+  isOpen,
+  onDismiss = noOp,
+  initialFocusRef,
+  ...restProps
+}) => {
+  const transitions = useTransition(isOpen, null, {
+    from: { opacity: 0, y: "translate3d(0, 2rem, 0)" },
+    enter: { opacity: 1, y: "translate3d(0, 0rem, 0)" },
+    leave: { opacity: 0, y: "translate3d(0, 2rem, 0)" },
+    config: {
+      duration: 150,
+    },
+  })
 
-  animation: 200ms ${slideIn} 1 both;
-  animation-delay: 200ms;
-`
-
-export const Dialog = ({ children }) => (
-  <Overlay>
-    <Container>{children}</Container>
-  </Overlay>
-)
+  return transitions.map(
+    ({ item, key, props }) =>
+      item && (
+        <AnimatedDialogOverlay
+          isOpen={item}
+          key={key}
+          onDismiss={onDismiss}
+          initialFocusRef={initialFocusRef}
+          style={{ opacity: props.opacity }}
+        >
+          <ThemeProvider theme="light">
+            <AnimatedDialogContent
+              style={{ transform: props.y }}
+              {...restProps}
+            />
+          </ThemeProvider>
+        </AnimatedDialogOverlay>
+      )
+  )
+}

@@ -24,7 +24,7 @@ const EventSectionHeader = styled.div`
   margin: 1.5rem -1rem;
   padding: 1rem;
 
-  background: rgba(244, 242, 242, 0.8);
+  background: ${({ theme }) => theme.colors.stickyListTitleBackground};
   backdrop-filter: blur(4px);
 
   @media screen and (min-width: 92em) {

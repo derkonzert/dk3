@@ -1,6 +1,6 @@
 import { css } from "@emotion/core"
 
-export const global = css`
+export const global = theme => css`
   /* TODO: Reduce used font variants */
   @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,600|IBM+Plex+Sans+Condensed:700|IBM+Plex+Sans:400,600|IBM+Plex+Serif:400,700");
 
@@ -17,7 +17,8 @@ export const global = css`
     outline: none;
   }
   html {
-    background-color: #f4f2f2;
+    background-color: ${theme.colors.siteBackground};
+    color: ${theme.colors.siteColor};
     font-size: 62.5%; /* ~10px makes using rem simple */
   }
   body {
@@ -26,6 +27,12 @@ export const global = css`
     font-family: "IBM Plex Sans", sans-serif;
 
     -webkit-font-smoothing: antialiased;
+  }
+  /* TODO: fix this in layout components */
+  #__next {
+    /* iOS Safari: Fixes scaled down list content breaking the layout, making the detail page scroll "too far" */
+    /* TODO: this breaks position: sticky. */
+    overflow: hidden;
   }
 
   /* ~720px*/

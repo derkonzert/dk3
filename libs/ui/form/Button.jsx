@@ -36,7 +36,7 @@ export const Button = withSpacing()(styled.button`
   ${buttonBaseStyle};
   ${buttonBlockModifier};
 
-  color: black;
+  color: ${({ theme }) => theme.buttonColor};
   box-shadow: inset 0 0 0 0.1rem rgba(0, 0, 0, 0.15);
 
   &:hover {
@@ -53,7 +53,7 @@ export const VeryFancyButton = withSpacing()(styled.button`
   ${gradientBackground};
   ${buttonBlockModifier};
 
-  color: white;
+  color: ${({ theme }) => theme.colors.veryFancyButtonColor};
 
   &:hover {
     opacity: 0.85;
@@ -77,11 +77,12 @@ const fancyHoverKeyFrame = keyframes`
 export const FancyButton = withSpacing()(styled.button`
   ${buttonBaseStyle};
   position: relative;
-  background: white;
+
+  background: ${({ theme }) => theme.colors.fancyButtonBackground};
 
   ${buttonBlockModifier};
 
-  color: black;
+  color: ${({ theme }) => theme.colors.fancyButtonColor};
   z-index: 1;
 
   &:before {

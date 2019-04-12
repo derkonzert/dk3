@@ -1,8 +1,12 @@
 /* common styles */
 import { css } from "@emotion/core"
 
-export const gradientBackground = css`
-  background: linear-gradient(155deg, rgb(255, 87, 87) 15%, #6a32cc 100%);
+export const gradientBackground = ({ theme }) => css`
+  background: linear-gradient(
+    155deg,
+    ${theme.colors.mainGradientFrom} 15%,
+    ${theme.colors.mainGradientTo} 100%
+  );
 `
 
 export const noMargin = css`

@@ -2,6 +2,7 @@ import React from "react"
 import { keyframes } from "@emotion/core"
 import styled from "@emotion/styled"
 import { withSpacing } from "../utils/withSpacing"
+import { gradientBackground } from "../common"
 
 const rotate = keyframes`
   from {
@@ -30,13 +31,13 @@ const Outer = styled.div`
 
   box-sizing: border-box;
   /* Fallback for browsers not supporting conic-gradient */
-  background-image: linear-gradient(40deg, rgb(255, 87, 87), #6a32cc);
-  background-image: conic-gradient(
+  ${gradientBackground}
+  ${({ theme }) => `background-image: conic-gradient(
     from 40deg,
-    rgb(255, 87, 87),
-    #6a32cc,
-    rgb(255, 87, 87)
-  );
+    ${theme.colors.mainGradientFrom},
+    ${theme.colors.mainGradientTo},
+    ${theme.colors.mainGradientFrom}
+  );`}
 
   animation: ${rotate} 0.5s linear infinite;
 `
@@ -51,7 +52,7 @@ const Inner = styled.div`
   height: 1.6em;
   width: 1.6em;
 
-  background: #f9f9f9;
+  background: ${({ theme }) => theme.colors.siteBackground};
 `
 
 export const Spinner = withSpacing({ pa: 4 })(props => (

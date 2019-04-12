@@ -5,7 +5,8 @@
   "env": {
     "JWT_SECRET": "@dk3-jwt-secret",
     "SENDGRID_API_KEY": "@dki-sendgrid-api",
-    "MONGODB_URI": "@dk3-mongodb-uri"
+    "MONGODB_URI": "@dk3-mongodb-uri",
+    "SENTRY_DSN": "@dk3-sentry-dsn"
   },
   "build": {
     "env": {

@@ -1,18 +1,18 @@
 import React from "react"
-import { mount } from "enzyme"
 
 import {
   ListAndDetail,
   ListAndDetailMain,
   ListAndDetailSide,
 } from "./ListAndDetail"
+import { mountWithTheme } from "../utils/testHelpers"
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 describe("ListAndDetail", () => {
   it("mounts without throwing", () => {
     expect(() =>
-      mount(
+      mountWithTheme(
         <ListAndDetail showDetail>
           <ListAndDetailMain>MAIN PAGE</ListAndDetailMain>
           <ListAndDetailSide>DETAIL PAGE</ListAndDetailSide>
@@ -23,7 +23,7 @@ describe("ListAndDetail", () => {
 
   /* TODO: does this actually test something? */
   it("doesnt throw when changing showDetail", async done => {
-    const elem = mount(
+    const elem = mountWithTheme(
       <ListAndDetail>
         <ListAndDetailMain>MAIN PAGE</ListAndDetailMain>
         <ListAndDetailSide>DETAIL PAGE</ListAndDetailSide>

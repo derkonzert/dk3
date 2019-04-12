@@ -78,7 +78,10 @@ exports.updateUser = async ({ id, ...userData }) => {
 }
 
 /* Event methods */
-exports.createEvent = async ({ eventData, autoBookmark }, user) => {
+exports.createEvent = async (
+  { eventData, autoBookmark, noSystemEvent },
+  user
+) => {
   if (user && autoBookmark) {
     eventData.bookmarkedBy = [user._id]
   }
@@ -88,10 +91,12 @@ exports.createEvent = async ({ eventData, autoBookmark }, user) => {
     ...eventData,
   })
 
-  exports.emitSystemEvent(SystemEvent.Types.eventAdded, {
-    emittedBy: user ? user._id : null,
-    relatedEvent: event._id,
-  })
+  if (!noSystemEvent) {
+    exports.emitSystemEvent(SystemEvent.Types.eventAdded, {
+      emittedBy: user ? user._id : null,
+      relatedEvent: event._id,
+    })
+  }
 
   return event
 }

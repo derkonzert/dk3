@@ -8,7 +8,7 @@ apiUtils.sendJson = jest.fn()
 const cronService = require("..")
 
 describe("cron", () => {
-  let req, res, connection
+  let req, res, connection, results, errors
 
   beforeEach(() => {
     req = {}
@@ -20,10 +20,12 @@ describe("cron", () => {
     connection = { close: jest.fn() }
 
     db.cron.setup = jest.fn()
-    db.cron.runAll = jest.fn()
+    results = []
+    errors = []
+    db.cron.runAll = jest.fn().mockReturnValue([results, errors])
 
     db.connect.mockReset()
-    db.connect.mockReturnValue(connection)
+    db.connect.mockResolvedValue(connection)
   })
 
   it("runs setup script for cron once", async () => {
@@ -47,6 +49,8 @@ describe("cron", () => {
     } catch (err) {
       throw err
     }
+
+    expect(db.cron.runAll).toHaveBeenCalledTimes(1)
 
     expect(db.connect).toHaveBeenCalledTimes(1)
     expect(connection.close).toHaveBeenCalledTimes(1)

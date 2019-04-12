@@ -11,8 +11,12 @@ module.exports = async (_req, res) => {
 
   /* Initially set up cron jobs */
   if (!cronJobsSetUp) {
-    await cron.setup()
-    cronJobsSetUp = true
+    try {
+      await cron.setup()
+      cronJobsSetUp = true
+    } catch (err) {
+      throw err
+    }
   }
 
   try {

@@ -1,7 +1,7 @@
 import React from "react"
 import { TextInput } from "@dk3/ui/form/TextInput"
 import { State } from "react-powerplug"
-import { FancyButton, Button } from "@dk3/ui/form/Button"
+import { VeryFancyButton, Button } from "@dk3/ui/form/Button"
 import { withApollo } from "react-apollo"
 import { login } from "../lib/withApollo"
 
@@ -77,13 +77,13 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
                 Cancel
               </Button>
             )}
-            <FancyButton
+            <VeryFancyButton
               disabled={state.loading}
               ml={onCancel ? 3 : 0}
               type="submit"
             >
               Login
-            </FancyButton>
+            </VeryFancyButton>
           </div>
         </form>
       )}

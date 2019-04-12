@@ -1,22 +1,22 @@
 import React from "react"
-import { mount } from "enzyme"
 
 import { Box, FancyBox, SuperFancyBox } from "./Boxes"
+import { mountWithTheme } from "../utils/testHelpers"
 
 describe("Boxes", () => {
   describe("Box", () => {
     it("mounts without throwing", () => {
-      expect(() => mount(<Box />)).not.toThrow()
+      expect(() => mountWithTheme(<Box />)).not.toThrow()
     })
   })
   describe("FancyBox", () => {
     it("mounts without throwing", () => {
-      expect(() => mount(<FancyBox />)).not.toThrow()
+      expect(() => mountWithTheme(<FancyBox />)).not.toThrow()
     })
   })
   describe("SuperFancyBox", () => {
     it("mounts without throwing", () => {
-      expect(() => mount(<SuperFancyBox />)).not.toThrow()
+      expect(() => mountWithTheme(<SuperFancyBox />)).not.toThrow()
     })
   })
 })

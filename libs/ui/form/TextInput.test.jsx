@@ -1,6 +1,5 @@
 import React from "react"
 import { matchers } from "jest-emotion"
-import { mount } from "enzyme"
 
 import {
   TextInput,
@@ -10,48 +9,58 @@ import {
   InputDescription,
 } from "./TextInput"
 import { validInputStyle, invalidInputStyle } from "./inputStyles"
+import { mountWithTheme } from "../utils/testHelpers"
+import { themes } from "../theme"
 
 expect.extend(matchers)
 
 describe("TextInput", () => {
   it("mounts without throwing", () => {
-    expect(() => mount(<TextInput />)).not.toThrow()
+    expect(() => mountWithTheme(<TextInput />)).not.toThrow()
   })
 
-  it("renders an error", () => {
-    const element = mount(<TextInput error="My error" />)
-
-    expect(element.find(InputError).text()).toBe("My error")
-
-    element.setProps({ error: undefined })
+  it("by default renders no error", () => {
+    const element = mountWithTheme(<TextInput />)
 
     expect(element.find(InputError).exists()).toBe(false)
   })
 
-  it("renders a label", () => {
-    const element = mount(<TextInput label="My Label" />)
+  it("renders an error", () => {
+    const element = mountWithTheme(<TextInput error="My error" />)
 
-    expect(element.find(InputLabel).text()).toBe("My Label")
+    expect(element.find(InputError).text()).toBe("My error")
+  })
 
-    element.setProps({ label: undefined })
+  it("by default renders no label", () => {
+    const element = mountWithTheme(<TextInput />)
 
     expect(element.find(InputLabel).exists()).toBe(false)
   })
 
-  it("renders a description", () => {
-    const element = mount(<TextInput description="My Description" />)
+  it("renders a label", () => {
+    const element = mountWithTheme(<TextInput label="My Label" />)
 
-    expect(element.find(InputDescription).text()).toBe("My Description")
+    expect(element.find(InputLabel).text()).toBe("My Label")
+  })
 
-    element.setProps({ description: undefined })
+  it("by default renders no description", () => {
+    const element = mountWithTheme(<TextInput />)
 
     expect(element.find(InputDescription).exists()).toBe(false)
   })
 
+  it("renders a description", () => {
+    const element = mountWithTheme(<TextInput description="My Description" />)
+
+    expect(element.find(InputDescription).text()).toBe("My Description")
+  })
+
   it("renders different backgrounds for valid, invalid or no validation", () => {
-    const noValidationBg = mount(<TextInput />).find(InputBorder)
-    const validBg = mount(<TextInput validate valid />).find(InputBorder)
-    const invalidBg = mount(<TextInput validate valid={false} />).find(
+    const noValidationBg = mountWithTheme(<TextInput />).find(InputBorder)
+    const validBg = mountWithTheme(<TextInput validate valid />).find(
+      InputBorder
+    )
+    const invalidBg = mountWithTheme(<TextInput validate valid={false} />).find(
       InputBorder
     )
 
@@ -60,10 +69,11 @@ describe("TextInput", () => {
 
     expect(noValidationBg).toHaveStyleRule("background", "hsl(0,0%,80%)")
     expect(validBg).toHaveStyleRule(
-      ...stylesToArguments(validInputStyle.styles)
+      ...stylesToArguments(validInputStyle({ theme: themes.light }).styles)
     )
+
     expect(invalidBg).toHaveStyleRule(
-      ...stylesToArguments(invalidInputStyle.styles)
+      ...stylesToArguments(invalidInputStyle({ theme: themes.light }).styles)
     )
   })
 })

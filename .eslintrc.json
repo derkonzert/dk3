@@ -19,6 +19,12 @@
     "prettier/prettier": "error",
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "jsx|^_"
+      }
+    ]
   }
 }

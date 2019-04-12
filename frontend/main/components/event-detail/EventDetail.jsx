@@ -4,10 +4,11 @@ import gql from "graphql-tag"
 
 import { DateTime } from "luxon"
 
-import { MegaTitle, Text, WrappingText, Link } from "@dk3/ui/atoms/Typography"
+import { MegaTitle, Text, Link } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { ApproveEventButton } from "../form/ApproveEventButton"
+import RichText from "../../../../libs/rtxt/react"
 
 export const EVENT_DETAIL_FRAGMENT = gql`
   fragment EventDetailEvent on Event {
@@ -72,7 +73,11 @@ export const EventDetail = ({ id }) => {
               </ApproveEventButton>
             </Text>
             <hr />
-            <WrappingText>{event.description}</WrappingText>
+            {!!event.description && (
+              <Spacer mv={2}>
+                <RichText value={event.description} />
+              </Spacer>
+            )}
             {!!event.url && <Link href={event.url}>Tickets</Link>}
           </Spacer>
         )

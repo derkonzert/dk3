@@ -2,6 +2,7 @@ import React from "react"
 import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 import useClickOutside from "click-outside-hook"
+import FocusLock from "react-focus-lock"
 
 export const ListAndDetail = ({ showDetail, children }) => (
   <React.Fragment>
@@ -13,11 +14,11 @@ export const ListAndDetail = ({ showDetail, children }) => (
   </React.Fragment>
 )
 
-const mainPageShowDetail = css`
+const mainPageShowDetail = ({ theme }) => css`
   will-change: background-color;
   z-index: 0;
   pointer-events: initial;
-  background: rgba(22, 22, 22, 0.65);
+  background: ${theme.colors.overlayActive};
   transition-delay: 0s, 0s;
 `
 const MainPage = styled.div`
@@ -37,10 +38,10 @@ const MainPage = styled.div`
     z-index: -1;
     pointer-events: none;
 
-    background: rgba(22, 22, 22, 0);
+    background: ${({ theme }) => theme.colors.overlay};
     transition: 350ms background-color, 0s z-index 350ms;
 
-    ${props => (props.showDetail ? mainPageShowDetail : "")}
+    ${props => (props.showDetail ? mainPageShowDetail(props) : "")}
   }
 
   .cacheFixedPosition & {
@@ -52,6 +53,7 @@ const MainPage = styled.div`
 const mainPageInnerShowDetail = css`
   will-change: transform;
   transform: translateY(4rem) scale(0.96);
+  filter: blur(4px);
 `
 const MainPageInner = styled.div`
   box-sizing: content-box;
@@ -176,7 +178,7 @@ const sideInnerShowDetail = css`
 `
 const SideInner = styled.div`
   width: 100%;
-  background: white;
+  background: ${({ theme }) => theme.colors.detailBackground};
 
   transition: 350ms transform;
   transform: translateY(100%);
@@ -244,7 +246,9 @@ export const ListAndDetailSide = ({
     <Side data-side={showDetail} showDetail={showDetail} {...props}>
       <SideInner ref={ref} showDetail={showDetail}>
         <SideInnerContent>
-          <CacheContentFor ms={500}>{children}</CacheContentFor>
+          <FocusLock returnFocus>
+            <CacheContentFor ms={500}>{children}</CacheContentFor>
+          </FocusLock>
         </SideInnerContent>
       </SideInner>
     </Side>

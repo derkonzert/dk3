@@ -5,8 +5,35 @@ route: /components
 
 import { State } from "react-powerplug"
 import { Playground } from "docz"
+import { Title, Text } from "../atoms/Typography"
+import { Button } from "../form/Button"
 
 # Components
+
+## Dialog
+
+import { Dialog, DialogContent } from "./Dialog"
+
+This is a slightly customized version of `@reach/dialog`.
+
+<Playground>
+  <State initial={{ isOpen: true }}>
+    {({ state, setState }) => (
+      <React.Fragment>
+        <Dialog isOpen={state.isOpen} key="my-dialog">
+          <Title>Show me what you got!</Title>
+          <Text mv={2}>Or dont.</Text>
+          <Button onClick={() => alert('You showed what you got')}>Show what you got</Button>
+          <Button onClick={() => setState({ isOpen: false })}>Close</Button>
+        </Dialog>
+        <Button onClick={() => setState({ isOpen: !state.isOpen })}>
+          Show Dialog
+        </Button>
+      </React.Fragment>
+    )}
+
+  </State>
+</Playground>
 
 ## EventCard
 

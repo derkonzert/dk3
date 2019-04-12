@@ -1,16 +1,18 @@
 import React from "react"
-import { mount } from "enzyme"
 
 import { CalendarDay, Day } from "./CalendarDay"
+import { mountWithTheme } from "../utils/testHelpers"
 
 describe("CalendarDay", () => {
   it("mounts without throwing", () => {
-    expect(() => mount(<CalendarDay day={12} dayName="Fr" />)).not.toThrow()
+    expect(() =>
+      mountWithTheme(<CalendarDay day={12} dayName="Fr" />)
+    ).not.toThrow()
   })
 
   it("concerts days < 9 to 0x", () => {
     expect(
-      mount(<CalendarDay day={2} dayName="Fr" />)
+      mountWithTheme(<CalendarDay day={2} dayName="Fr" />)
         .find(Day)
         .text()
     ).toBe("02")
@@ -18,7 +20,7 @@ describe("CalendarDay", () => {
 
   it("has inverted variant", () => {
     expect(() =>
-      mount(<CalendarDay inverted day={12} dayName="Fr" />)
+      mountWithTheme(<CalendarDay inverted day={12} dayName="Fr" />)
     ).not.toThrow()
   })
 })

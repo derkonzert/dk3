@@ -1,4 +1,5 @@
 import React from "react"
+jest.mock("@reach/dialog/styles.css", () => undefined)
 
 import { mount } from "enzyme"
 

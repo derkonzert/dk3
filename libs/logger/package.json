@@ -25,6 +25,7 @@
     "url": "https://github.com/jkempff/dk3/issues"
   },
   "dependencies": {
-    "@emotion/styled": "^10.0.5"
+    "@dk3/config": "^0.0.0",
+    "@sentry/node": "^5.0.5"
   }
 }

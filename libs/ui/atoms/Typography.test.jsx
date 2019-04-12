@@ -1,5 +1,6 @@
 import React from "react"
-import { mount } from "enzyme"
+
+import { mountWithTheme } from "../utils/testHelpers"
 
 import {
   MegaTitle,
@@ -15,77 +16,77 @@ import {
 describe("Typography", () => {
   describe("MegaTitle", () => {
     it("mounts without Throwing", () => {
-      expect(() => mount(<MegaTitle />)).not.toThrow()
+      expect(() => mountWithTheme(<MegaTitle />)).not.toThrow()
     })
   })
 
   describe("Title", () => {
     it("mounts without Throwing", () => {
-      expect(() => mount(<Title />)).not.toThrow()
+      expect(() => mountWithTheme(<Title />)).not.toThrow()
     })
 
     it("has inverted", () => {
-      expect(() => mount(<Title inverted />)).not.toThrow()
+      expect(() => mountWithTheme(<Title inverted />)).not.toThrow()
     })
   })
 
   describe("SubTitle", () => {
     it("mounts without Throwing", () => {
-      expect(() => mount(<SubTitle />)).not.toThrow()
+      expect(() => mountWithTheme(<SubTitle />)).not.toThrow()
     })
 
     it("has inverted", () => {
-      expect(() => mount(<SubTitle inverted />)).not.toThrow()
+      expect(() => mountWithTheme(<SubTitle inverted />)).not.toThrow()
     })
   })
 
   describe("ListTitle", () => {
     it("mounts without Throwing", () => {
-      expect(() => mount(<ListTitle />)).not.toThrow()
+      expect(() => mountWithTheme(<ListTitle />)).not.toThrow()
     })
 
     it("has inverted", () => {
-      expect(() => mount(<ListTitle inverted />)).not.toThrow()
+      expect(() => mountWithTheme(<ListTitle inverted />)).not.toThrow()
     })
   })
 
   describe("Text", () => {
     it("mounts without Throwing", () => {
-      expect(() => mount(<Text />)).not.toThrow()
+      expect(() => mountWithTheme(<Text />)).not.toThrow()
     })
 
     it("has inverted", () => {
-      expect(() => mount(<Text inverted />)).not.toThrow()
+      expect(() => mountWithTheme(<Text inverted />)).not.toThrow()
     })
   })
 
   describe("WrappingText", () => {
     it("mounts without Throwing", () => {
-      expect(() => mount(<WrappingText />)).not.toThrow()
+      expect(() => mountWithTheme(<WrappingText />)).not.toThrow()
     })
 
     it("has inverted", () => {
-      expect(() => mount(<WrappingText inverted />)).not.toThrow()
+      expect(() => mountWithTheme(<WrappingText inverted />)).not.toThrow()
     })
   })
 
   describe("Link", () => {
     it("mounts without Throwing", () => {
-      expect(() => mount(<Link />)).not.toThrow()
+      expect(() => mountWithTheme(<Link />)).not.toThrow()
     })
 
     it("has inverted", () => {
-      expect(() => mount(<Link inverted />)).not.toThrow()
+      expect(() => mountWithTheme(<Link inverted />)).not.toThrow()
     })
   })
 
   describe("Description", () => {
     it("mounts without Throwing", () => {
-      expect(() => mount(<Description />)).not.toThrow()
+      expect(() => mountWithTheme(<Description />)).not.toThrow()
     })
 
     it("has inverted", () => {
-      expect(() => mount(<Description inverted />)).not.toThrow()
+      expect(() => mountWithTheme(<Description inverted />)).not.toThrow()
     })
   })
 })

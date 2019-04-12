@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@dk3/shared-frontend": "^0.0.0",
+    "@dk3/rtxt": "0.0.0",
     "@dk3/ui": "0.0.0",
     "@emotion/core": "^10.0.6",
     "apollo-boost": "^0.1.27",
@@ -46,5 +47,8 @@
     "react-apollo": "^2.4.0",
     "react-dom": "^16.7.0",
     "react-powerplug": "^1.0.0"
+  },
+  "devDependencies": {
+    "@zeit/next-css": "^1.0.1"
   }
 }

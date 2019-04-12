@@ -1,7 +1,7 @@
 import { css } from "@emotion/core"
 import { gradientBackground } from "../common"
 
-export const inputStyles = css`
+export const inputStyles = ({ theme }) => css`
   display: block;
   width: 100%;
   margin: 0;
@@ -11,7 +11,8 @@ export const inputStyles = css`
   font-weight: normal;
   font-size: 1.4rem;
 
-  background: white;
+  color: ${theme.colors.input};
+  background: ${theme.colors.inputBackground};
   border: 0 solid;
 
   border-radius: 2px;
@@ -23,20 +24,20 @@ export const inputStyles = css`
   }
 `
 
-export const validInputStyle = css`
-  background: rgb(55, 169, 124);
+export const validInputStyle = ({ theme }) => css`
+  background: ${theme.colors.inputValidBackground};
 `
 
-export const invalidInputStyle = css`
-  background: #d23939;
+export const invalidInputStyle = ({ theme }) => css`
+  background: ${theme.colors.inputInvalidBackground};
 `
 
-export const inputBorderStyles = css`
+export const inputBorderStyles = ({ theme }) => css`
   padding: 2px;
   border-radius: 3px;
-  background: hsl(0, 0%, 80%);
+  background: ${theme.colors.inputBorderColor};
 
   &:focus-within {
-    ${gradientBackground};
+    ${gradientBackground({ theme })};
   }
 `

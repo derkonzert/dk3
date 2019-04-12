@@ -37,5 +37,8 @@
     "react": "^16.8.4",
     "react-apollo": "^2.5.2",
     "react-powerplug": "^1.0.0"
+  },
+  "devDependencies": {
+    "@zeit/next-css": "^1.0.1"
   }
 }

@@ -9,7 +9,7 @@ const PageContenWrapper = styled.main`
   margin: 0 auto;
   width: 100%;
   max-width: 36rem;
-  background: white;
+  background: ${({ theme }) => theme.colors.boxBackground};
   padding: 1rem 3rem 3rem;
   text-align: center;
 `

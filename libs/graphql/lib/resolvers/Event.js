@@ -1,17 +1,19 @@
 exports.Event = {
   fancyness: async (event, args, { dao }) => {
+    // TODO: Only include "active" users, whatever that means..
     const userCount = await dao.cachedMethod(
       "fancyness.usercount",
       dao.allUsersCount,
       { ttl: 1000 * 60 * 60 }
     )()
 
-    const likedByPercentage = event.bookmarkedBy.length / userCount
+    const likedBy = event.bookmarkedBy.length
+    const likedByPercentage = likedBy / userCount
 
-    if (likedByPercentage > 0.6) {
+    if (likedByPercentage >= 0.2) {
       return 2
     }
-    if (likedByPercentage > 0.3) {
+    if (likedByPercentage >= 0.1) {
       return 1
     }
 

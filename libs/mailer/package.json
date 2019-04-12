@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@dk3/config": "^0.0.0",
+    "@dk3/logger": "^0.0.0",
     "@sendgrid/mail": "^6.3.1"
   }
 }

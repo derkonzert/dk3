@@ -1,6 +1,7 @@
 import React from "react"
 import { matchers } from "jest-emotion"
-import { mount } from "enzyme"
+
+import { mountWithTheme } from "../utils/testHelpers"
 
 import { HorizontalMenu, HorizontalMenuItem } from "./HorizontalMenu"
 
@@ -9,7 +10,7 @@ expect.extend(matchers)
 describe("HorizontalMenu", () => {
   it("mounts without throwing", () => {
     expect(() =>
-      mount(
+      mountWithTheme(
         <HorizontalMenu>
           <HorizontalMenuItem>Hey</HorizontalMenuItem>
           <HorizontalMenuItem>Ho</HorizontalMenuItem>

@@ -1,5 +1,4 @@
 import React from "react"
-import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 import VisuallyHidden from "@reach/visually-hidden"
 
@@ -13,7 +12,7 @@ export const Select = styled.div`
   justify-content: space-between;
   align-items: stretch;
   border-radius: 0.3rem;
-  border: 0.2rem solid #d9d9d9;
+  border: 0.2rem solid ${({ theme }) => theme.colors.inputBorderColor};
 `
 
 export const Option = styled.label`
@@ -37,9 +36,22 @@ export const Option = styled.label`
 
   user-select: none;
   -webkit-user-drag: none;
+`
 
-  ${({ checked }) => (checked ? optionCheckedStyle : optionUnCheckedStyle)};
-  ${({ unfavored, checked }) => (unfavored && checked ? unfavoredStyle : "")};
+export const CheckedOption = styled(Option)`
+  position: relative;
+  color: ${({ theme }) => theme.colors.checkboxColorActive};
+
+  border-radius: 0.3rem;
+
+  ${gradientBackground};
+`
+
+export const UncheckedOption = styled(Option)`
+  color: ${({ theme }) => theme.colors.checkboxColor};
+  background: transparent;
+
+  box-shadow: inset -0.2rem 0 0 0 ${({ theme }) => theme.colors.inputBorderColor};
 `
 
 export const Label = styled.label`
@@ -47,27 +59,6 @@ export const Label = styled.label`
   font-family: "IBM Plex Serif", serif;
   font-weight: bold;
   margin: 0 0.3rem;
-`
-
-export const optionUnCheckedStyle = css`
-  color: #ababab;
-  background: transparent;
-
-  box-shadow: inset -0.2rem 0 0 0 #d9d9d9;
-`
-
-export const optionCheckedStyle = css`
-  position: relative;
-  z-index: 1;
-  color: white;
-
-  border-radius: 0.3rem;
-
-  ${gradientBackground};
-`
-
-export const unfavoredStyle = css`
-  filter: saturate(0);
 `
 
 export const SegmentedControl = withSpacing({ mv: 3 })(
@@ -93,18 +84,21 @@ export const SegmentedControlOption = ({
   value,
   children,
   onSelect,
-  unfavored,
-}) => (
-  <Option checked={checked} unfavored={unfavored}>
-    <VisuallyHidden>
-      <input
-        type="radio"
-        value={value}
-        name={name}
-        onChange={onSelect}
-        checked={checked}
-      />
-    </VisuallyHidden>
-    {children}
-  </Option>
-)
+}) => {
+  const UsedOption = checked ? CheckedOption : UncheckedOption
+
+  return (
+    <UsedOption checked={checked}>
+      <VisuallyHidden>
+        <input
+          type="radio"
+          value={value}
+          name={name}
+          onChange={onSelect}
+          checked={checked}
+        />
+      </VisuallyHidden>
+      {children}
+    </UsedOption>
+  )
+}

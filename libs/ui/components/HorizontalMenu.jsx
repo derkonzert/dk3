@@ -15,5 +15,5 @@ export const HorizontalMenuItem = styled.a`
   padding: 1rem;
   font-size: 1.2rem;
   font-family: "IBM Plex Serif", serif;
-  color: #636161;
+  color: ${({ theme }) => theme.colors.horizontalMenuColor};
 `

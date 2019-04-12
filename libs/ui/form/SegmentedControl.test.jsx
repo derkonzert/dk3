@@ -1,19 +1,15 @@
 import React from "react"
 import { matchers } from "jest-emotion"
-import { mount } from "enzyme"
 
-import {
-  SegmentedControl,
-  SegmentedControlOption,
-  Option,
-} from "./SegmentedControl"
+import { SegmentedControl, SegmentedControlOption } from "./SegmentedControl"
+import { mountWithTheme } from "../utils/testHelpers"
 
 expect.extend(matchers)
 
 describe("SegmentedControl", () => {
   it("mounts without throwing", () => {
     expect(() =>
-      mount(
+      mountWithTheme(
         <SegmentedControl onChange={() => {}} name="you" value="1">
           <SegmentedControlOption value="1" />
           <SegmentedControlOption value="2" />
@@ -23,7 +19,7 @@ describe("SegmentedControl", () => {
   })
 
   it("passes name and checked state to options", () => {
-    const elem = mount(
+    const elem = mountWithTheme(
       <SegmentedControl onChange={() => {}} name="you" value="1">
         <SegmentedControlOption value="1" />
         <SegmentedControlOption value="2" />
@@ -45,7 +41,7 @@ describe("SegmentedControl", () => {
   it("handles onChange", () => {
     const onChange = jest.fn()
     const fakeEvent = { abc: "def" }
-    const elem = mount(
+    const elem = mountWithTheme(
       <SegmentedControl onChange={onChange} name="you" value="1">
         <SegmentedControlOption value="1" />
         <SegmentedControlOption value="2" />
@@ -63,15 +59,5 @@ describe("SegmentedControl", () => {
         ...fakeEvent,
       })
     )
-  })
-
-  describe("SegmentedControlOption", () => {
-    it("adds unfavored style", () => {
-      expect(
-        mount(<SegmentedControlOption unfavored />)
-          .find(Option)
-          .prop("unfavored")
-      ).toBe(true)
-    })
   })
 })

@@ -1,22 +1,16 @@
-import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 
 import { noMargin, gradientBackground } from "../common"
 import { withSpacing } from "../utils/withSpacing"
 
-const titleStyle = css`
-  ${noMargin};
-  font-family: "IBM Plex Serif", serif;
-  font-weight: bold;
-  color: black;
-  letter-spacing: 0;
-`
-
 export const MegaTitle = styled.h1`
-  ${titleStyle};
   position: relative;
   display: inline-block;
   font-size: 3.2rem;
+  font-family: "IBM Plex Serif", serif;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.title};
+  letter-spacing: 0;
   line-height: 1.4;
   margin: 1rem 0;
 
@@ -35,9 +29,14 @@ export const MegaTitle = styled.h1`
 `
 
 export const Title = styled.h2`
-  ${titleStyle};
+  ${noMargin}
   font-size: 2.4rem;
-  color: ${({ inverted }) => (inverted ? "white" : "black")};
+  font-family: "IBM Plex Serif", serif;
+  font-weight: bold;
+  color: black;
+  letter-spacing: 0;
+  color: ${({ inverted, theme }) =>
+    inverted ? theme.colors.titleInverted : theme.colors.title};
 `
 
 export const SubTitle = styled.h3`
@@ -45,7 +44,8 @@ export const SubTitle = styled.h3`
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 600;
   font-size: 1.8rem;
-  color: ${({ inverted }) => (inverted ? "white" : "black")};
+  color: ${({ inverted, theme }) =>
+    inverted ? theme.colors.titleInverted : theme.colors.title};
   letter-spacing: 0;
   line-height: 2.2rem;
 `
@@ -56,7 +56,8 @@ export const ListTitle = styled.h4`
 
   font-size: 2rem;
   font-weight: normal;
-  color: ${({ inverted }) => (inverted ? "white" : "black")};
+  color: ${({ inverted, theme }) =>
+    inverted ? theme.colors.titleInverted : theme.colors.title};
   letter-spacing: 0;
   line-height: 2rem;
 `
@@ -66,21 +67,23 @@ export const Description = styled.div`
   font-family: "IBM Plex Sans", serif;
 
   font-size: 1.2rem;
-  color: ${({ inverted }) => (inverted ? "#f9f9f9" : "#636161")};
+  color: ${({ inverted, theme }) =>
+    inverted ? theme.colors.descriptionInverted : theme.colors.description};
   letter-spacing: 0;
   line-height: 2rem;
 `
 
-export const Text = styled.p`
+export const Text = withSpacing()(styled.p`
   ${noMargin};
   font-family: "IBM Plex Sans", serif;
 
   font-size: 1.2rem;
-  color: ${({ inverted }) => (inverted ? "#f9f9f9" : "#3F3F3F")};
+  color: ${({ inverted, theme }) =>
+    inverted ? theme.colors.textInverted : theme.colors.text};
   letter-spacing: 0;
   line-height: 1.8rem;
   max-width: 38em;
-`
+`)
 
 export const WrappingText = styled(Text)`
   white-space: pre-wrap;
@@ -95,11 +98,13 @@ export const Link = withSpacing()(styled.a`
   border: none;
   background: none;
 
-  color: ${({ inverted }) => (inverted ? "#fff" : "#000")};
+  color: ${({ inverted, theme }) =>
+    inverted ? theme.colors.linkInverted : theme.colors.link};
   text-decoration: underline;
 
   &:hover {
-    color: ${({ inverted }) => (inverted ? "#eee" : "#333")};
+    color: ${({ inverted, theme }) =>
+      inverted ? theme.colors.linkHoverInverted : theme.colors.linkHover};
 
     ${gradientBackground};
     -webkit-background-clip: text;

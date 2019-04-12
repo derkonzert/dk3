@@ -6,9 +6,15 @@ export const Badge = styled.span`
 `
 
 export const RedBadge = styled(Badge)`
-  color: ${props => (props.inverted ? "white" : "rgb(228, 17, 17)")};
+  color: ${props =>
+    props.inverted
+      ? props.theme.colors.titleInverted
+      : props.theme.colors.redBadge};
 `
 
 export const GreenBadge = styled(Badge)`
-  color: ${props => (props.inverted ? "white" : "rgb(13, 132, 46)")};
+  color: ${props =>
+    props.inverted
+      ? props.theme.colors.titleInverted
+      : props.theme.colors.greenBadge};
 `

@@ -6,7 +6,6 @@ import { DateTime } from "luxon"
 
 import { FancyButton } from "@dk3/ui/form/Button"
 import { TextInput } from "@dk3/ui/form/TextInput"
-import { DateInput } from "@dk3/ui/form/DateInput"
 import { Title } from "@dk3/ui/atoms/Typography"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 
@@ -14,6 +13,8 @@ import {
   UPCOMING_EVENTS,
   UPCOMING_EVENTS_EVENT_FRAGMENT,
 } from "../list/EventList"
+import { DateTimeInput } from "@dk3/ui/form/DateTimeInput"
+import { TextArea } from "@dk3/ui/form/TextArea"
 
 export const CREATE_EVENT = gql`
   mutation createNewEvent($input: CreateEventInput!) {
@@ -25,9 +26,10 @@ export const CREATE_EVENT = gql`
 `
 
 export const CreateEventForm = ({ onCreated }) => {
-  const now = Date.now()
-  const to = new Date(now + 500)
-  const from = new Date(now)
+  const today = DateTime.local().set({ hour: 20, minute: 0 })
+
+  const to = today.plus({ hour: 3 }).toJSDate()
+  const from = today.toJSDate()
 
   return (
     <State
@@ -35,10 +37,10 @@ export const CreateEventForm = ({ onCreated }) => {
         title: "",
         url: "",
         location: "",
+        description: "",
         to,
         from,
-        to_time: "22:00",
-        from_time: "20:00",
+        showEndDate: false,
       }}
     >
       {({ state, setState, resetState }) => (
@@ -76,22 +78,16 @@ export const CreateEventForm = ({ onCreated }) => {
                   data-add-event-form
                   onSubmit={e => {
                     e.preventDefault()
-                    const { from, to, from_time, to_time, ...restState } = state
-                    const fromTime = from_time.split(":")
-                    const toTime = to_time.split(":")
+                    const {
+                      from,
+                      to,
+                      showEndDate: _showEndDate,
+                      ...restState
+                    } = state
 
                     const fromDt = DateTime.fromJSDate(from)
-                      .startOf("day")
-                      .set({
-                        hour: fromTime[0],
-                        minutes: fromTime[1],
-                      })
+
                     const toDt = DateTime.fromJSDate(to)
-                      .startOf("day")
-                      .set({
-                        hour: toTime[0],
-                        minutes: toTime[1],
-                      })
 
                     createEvent({
                       variables: {
@@ -124,38 +120,51 @@ export const CreateEventForm = ({ onCreated }) => {
                     onChange={e => setState({ location: e.target.value })}
                     label="Location"
                   />
-                  <DateInput
+                  <DateTimeInput
                     value={state.from}
                     name="from"
-                    onChange={from => {
+                    onChange={(event, from) => {
                       let to = state.to
+
                       if (from > to) {
-                        to = new Date(from.getTime() + 500)
+                        to = new Date(from.getTime() + 3 * 60 * 60 * 1000)
                       }
+
                       setState({ from, to })
                     }}
-                    label="From Date"
-                  />
-                  <TextInput
-                    mb={4}
-                    value={state.from_time}
-                    name="from_time"
-                    onChange={e => setState({ from_time: e.target.value })}
-                    label="From Time"
+                    dateLabel="Event Date"
+                    timeLabel="Door time"
                   />
 
-                  <DateInput
-                    value={state.to}
-                    name="to"
-                    onChange={to => setState({ to })}
-                    label="To"
-                  />
-                  <TextInput
+                  {state.showEndDate ? (
+                    <DateTimeInput
+                      value={state.to}
+                      name="to"
+                      onChange={(event, to) => setState({ to })}
+                      dateLabel="Event End Date"
+                      timeLabel="Time"
+                      mb={4}
+                    />
+                  ) : (
+                    <Spacer mb={4}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          onChange={() => setState({ showEndDate: true })}
+                          checked={state.showEndDate}
+                        />
+                        {" It's a festival"}
+                      </label>
+                    </Spacer>
+                  )}
+
+                  <TextArea
                     mb={4}
-                    value={state.to_time}
-                    name="to_time"
-                    onChange={e => setState({ to_time: e.target.value })}
-                    label="To Time"
+                    value={state.description}
+                    name="description"
+                    onChange={e => setState({ description: e.target.value })}
+                    label="Description"
+                    rows={4}
                   />
 
                   <FancyButton type="submit">Save new event</FancyButton>

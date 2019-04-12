@@ -54,6 +54,7 @@ const typeDefs = gql`
     location: String!
     url: String
     from: Date!
+    description: String
     to: Date
   }
 

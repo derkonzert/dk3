@@ -1,16 +1,16 @@
-/** @jsx jsx */
-import { jsx, css } from "@emotion/core"
+import React from "react"
+import styled from "@emotion/styled"
 import { gradientBackground } from "../common"
 import { withSpacing } from "../utils/withSpacing"
 
-const box = css`
+const BoxBase = styled.div`
   padding: 3px;
   border-radius: 4px;
-  background: #ffffff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  background-color: ${({ theme }) => theme.colors.boxBackground};
 `
 
-const boxInner = css`
+const BoxBaseInner = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -19,38 +19,35 @@ const boxInner = css`
   padding: 0;
 `
 
-const fancyBox = css`
-  ${box};
+const FancyBoxBase = styled(BoxBase)`
   ${gradientBackground};
 `
 
-const fancyBoxInner = css`
-  ${boxInner};
-  background: white;
+const FancyBoxBaseInner = styled(BoxBaseInner)`
+  background-color: ${({ theme }) => theme.colors.boxBackground};
 `
 
-const superFancyBox = css`
-  ${box};
+const SuperFancyBoxBase = styled(BoxBase)`
   ${gradientBackground};
   color: white;
 `
 
 export const Box = withSpacing({ mv: 3 })(({ children, ...props }) => (
-  <div css={box} {...props}>
-    <div css={boxInner}>{children}</div>
-  </div>
+  <BoxBase {...props}>
+    <BoxBaseInner>{children}</BoxBaseInner>
+  </BoxBase>
 ))
 
 export const FancyBox = withSpacing({ mv: 3 })(({ children, ...props }) => (
-  <div css={fancyBox} {...props}>
-    <div css={fancyBoxInner}>{children}</div>
-  </div>
+  <FancyBoxBase {...props}>
+    <FancyBoxBaseInner>{children}</FancyBoxBaseInner>
+  </FancyBoxBase>
 ))
 
 export const SuperFancyBox = withSpacing({ mv: 3 })(
   ({ children, ...props }) => (
-    <div css={superFancyBox} {...props}>
-      <div css={boxInner}>{children}</div>
-    </div>
+    <SuperFancyBoxBase {...props}>
+      <BoxBaseInner>{children}</BoxBaseInner>
+    </SuperFancyBoxBase>
   )
 )

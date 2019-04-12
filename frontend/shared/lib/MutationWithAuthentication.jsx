@@ -5,7 +5,7 @@ import { State } from "react-powerplug"
 
 import { Dialog } from "@dk3/ui/components/Dialog"
 import { SubTitle, Description } from "@dk3/ui/atoms/Typography"
-import { LoginOrSignUpForm } from "../form/LoginOrSignUpForm"
+import { LoginForm } from "../form/LoginForm"
 
 export const USER_AUTH_INFO = gql`
   query userId {
@@ -50,23 +50,22 @@ export const MutationWithAuthentication = ({
               cachedMutation = null
             })
           }
+
           return (
             <React.Fragment>
               <Mutation {...props}>
                 {mutate => children(requireAuthentication(mutate))}
               </Mutation>
-              {!!state.showDialog && (
-                <Dialog>
-                  <SubTitle>Login Required</SubTitle>
-                  <Description>{notLoggedInMessage}</Description>
-                  <LoginOrSignUpForm
-                    mv={3}
-                    onLogin={onLoginOrSignUp}
-                    onSignUp={onLoginOrSignUp}
-                    onCancel={onCancel}
-                  />
-                </Dialog>
-              )}
+
+              <Dialog key="mwa-dialog" isOpen={state.showDialog}>
+                <SubTitle>Login Required</SubTitle>
+                <Description>{notLoggedInMessage}</Description>
+                <LoginForm
+                  mv={3}
+                  onLogin={onLoginOrSignUp}
+                  onCancel={onCancel}
+                />
+              </Dialog>
             </React.Fragment>
           )
         }}

@@ -114,7 +114,49 @@ import { DateInput } from "./DateInput"
           id="test"
           label="Date (DD MM YYYY)"
           value={state.value}
-          onChange={date => setState({ value: date })}
+          onChange={(event, date) => setState({ value: date })}
+        />
+        {state.value.toString()}
+      </React.Fragment>
+    )}
+  </State>
+</Playground>
+
+## TimeInput
+
+import { TimeInput } from "./TimeInput"
+
+<Playground>
+  <State initial={{ value: new Date() }}>
+    {({ state, setState }) => (
+      <React.Fragment>
+        <TimeInput
+          id="test"
+          label="Time"
+          step={900 /* = 15 minutes */}
+          value={state.value}
+          onChange={(event, time) => setState({ value: time })}
+        />
+        {state.value.toString()}
+      </React.Fragment>
+    )}
+  </State>
+</Playground>
+
+## DateTimeInput
+
+import { DateTimeInput } from "./DateTimeInput"
+
+<Playground>
+  <State initial={{ value: new Date() }}>
+    {({ state, setState }) => (
+      <React.Fragment>
+        <DateTimeInput
+          id="test"
+          dateLabel="Date"
+          timeLabel="Door time"
+          value={state.value}
+          onChange={(event, date) => setState({ value: date })}
         />
         {state.value.toString()}
       </React.Fragment>
@@ -179,9 +221,7 @@ import { SegmentedControl, SegmentedControlOption } from "./SegmentedControl"
         <SegmentedControlOption value="occasionally">
           Occasionally
         </SegmentedControlOption>
-        <SegmentedControlOption value="never" unfavored>
-          Never
-        </SegmentedControlOption>
+        <SegmentedControlOption value="never">Never</SegmentedControlOption>
       </SegmentedControl>
     )}
   </State>

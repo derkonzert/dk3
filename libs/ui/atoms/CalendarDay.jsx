@@ -15,7 +15,8 @@ export const Day = styled.div`
   font-family: "IBM Plex Sans Condensed", sans-serif;
   font-weight: bold;
   font-size: 1.8rem;
-  color: ${({ inverted }) => (inverted ? "white" : "black")};
+  color: ${({ inverted, theme }) =>
+    inverted ? theme.colors.titleInverted : theme.colors.title};
   letter-spacing: 0;
   line-height: 1.2;
   text-align: center;
@@ -23,7 +24,8 @@ export const Day = styled.div`
 export const DayName = styled.div`
   font-family: "IBM Plex Sans", sans-serif;
   font-size: 1rem;
-  color: ${({ inverted }) => (inverted ? "white" : "#3f3f3f")};
+  color: ${({ inverted, theme }) =>
+    inverted ? theme.colors.textInverted : theme.colors.text};
   letter-spacing: 0;
   line-height: 1.2;
   text-align: center;

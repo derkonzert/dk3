@@ -1,10 +1,10 @@
 import React from "react"
-import { mount } from "enzyme"
 
 import { Spinner } from "./Spinner"
+import { mountWithTheme } from "../utils/testHelpers"
 
 describe("Spinner", () => {
   it("mounts without throwing", () => {
-    expect(() => mount(<Spinner />)).not.toThrow()
+    expect(() => mountWithTheme(<Spinner />)).not.toThrow()
   })
 })

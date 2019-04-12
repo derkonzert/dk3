@@ -39,7 +39,7 @@ export const getAccessToken = ctx => {
   return token
 }
 
-export default App => {
+export const withApollo = App => {
   class WithData extends React.Component {
     constructor(props) {
       super(props)

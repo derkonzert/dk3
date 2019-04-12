@@ -1,8 +1,9 @@
+const withCSS = require("@zeit/next-css")
 const sharedWebpack = require("@dk3/shared-frontend/next.webpack.config")
 
 const assetPrefix = process.env.NODE_ENV === "production" ? "/account" : ""
 
-module.exports = {
+module.exports = withCSS({
   target: "serverless",
 
   assetPrefix,
@@ -12,4 +13,4 @@ module.exports = {
   }),
 
   webpack: sharedWebpack,
-}
+})
