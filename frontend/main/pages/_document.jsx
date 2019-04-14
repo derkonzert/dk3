@@ -12,13 +12,26 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <html>
+      <html lang="en">
         <Head>
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0, user-scalable=no"
           />
           <link rel="manifest" href="/static/manifest.json" />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/static/favicon-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/static/favicon-16x16.png"
+          />
+          <link rel="shortcut icon" href="/static/favicon.ico" />
           <script src="/pwabuilder-sw-register.js" async />
         </Head>
         <body>
