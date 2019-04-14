@@ -32,7 +32,6 @@ export default class MyDocument extends Document {
             href="/static/favicon-16x16.png"
           />
           <link rel="shortcut icon" href="/static/favicon.ico" />
-          <script src="/pwabuilder-sw-register.js" async />
         </Head>
         <body>
           <Main />
