@@ -2,6 +2,7 @@ import React from "react"
 import { withRouter } from "next/router"
 import { DateTime } from "luxon"
 import gql from "graphql-tag"
+import slug from "slug"
 
 import { QueryWithAuthentication } from "@dk3/shared-frontend/lib/QueryWithAuthentication"
 import { MutationWithAuthentication } from "@dk3/shared-frontend/lib/MutationWithAuthentication"
@@ -153,13 +154,13 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                               return null
                             }}
                             linkProps={{
-                              href: `/c/${event.title}-${event.id}`,
+                              href: `/c/${slug(event.title)}-${event.id}`,
                               onClick: e => {
                                 e.preventDefault()
 
                                 router.push(
                                   `/?eventId=${event.id}`,
-                                  `/c/${event.title}-${event.id}`,
+                                  `/c/${slug(event.title)}-${event.id}`,
                                   {
                                     shallow: true,
                                   }
