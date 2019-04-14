@@ -1,8 +1,14 @@
 const mongoose = require("mongoose")
-
+const shortid = require("./shortid")
 const { DateTime } = require("luxon")
 
 const schemaDefinition = {
+  shortId: {
+    type: String,
+    unique: true,
+    default: shortid.generate,
+  },
+
   /* The events title */
   title: {
     type: String,

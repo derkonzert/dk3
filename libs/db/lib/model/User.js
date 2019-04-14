@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt")
+const shortid = require("./shortid")
 const mongoose = require("mongoose")
 
 const config = require("@dk3/config")
@@ -6,6 +7,12 @@ const config = require("@dk3/config")
 const skills = require("./userSkills")
 
 const Schema = new mongoose.Schema({
+  shortId: {
+    type: String,
+    unique: true,
+    default: shortid.generate,
+  },
+
   username: {
     type: String,
     trim: true,

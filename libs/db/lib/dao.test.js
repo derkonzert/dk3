@@ -183,12 +183,12 @@ describe("dao", () => {
 
   describe("updateUser", () => {
     const updateuUserData = { id: 1, username: "newname", other: "123" }
-    let findByIdExec
+    let findOneExec
 
     beforeEach(() => {
-      findByIdExec = jest.fn().mockReturnValue(userDoc)
+      findOneExec = jest.fn().mockReturnValue(userDoc)
       User.Model.findOneAndUpdate = jest.fn().mockReturnValue(User.Model)
-      User.Model.findById = jest.fn().mockReturnValue({ exec: findByIdExec })
+      User.Model.findOne = jest.fn().mockReturnValue({ exec: findOneExec })
     })
 
     it("calls findOneAndUpdate on User model", async () => {
@@ -206,7 +206,9 @@ describe("dao", () => {
       const result = await dao.updateUser(updateuUserData)
 
       expect(result).toBe(userDoc)
-      expect(User.Model.findById).toHaveBeenCalledWith(updateuUserData.id)
+      expect(User.Model.findOne).toHaveBeenCalledWith({
+        shortId: updateuUserData.id,
+      })
     })
   })
 
@@ -330,22 +332,22 @@ describe("dao", () => {
 
   describe("bookmarkEvent", async () => {
     beforeEach(() => {
-      Event.Model.findByIdAndUpdate = jest
+      Event.Model.findOneAndUpdate = jest
         .fn()
         .mockReturnValue({ exec: () => {} })
 
-      Event.Model.findById = jest.fn().mockReturnValue({ exec: () => {} })
+      Event.Model.findOne = jest.fn().mockReturnValue({ exec: () => {} })
     })
 
     it("adds user to bookmarkedBy if 'bookmarked' is truthy", async () => {
       await dao.bookmarkEvent({
-        eventId: "event-id",
+        eventShortId: "event-id",
         bookmarked: true,
         userId: "user-id",
       })
 
-      expect(Event.Model.findByIdAndUpdate).toHaveBeenCalledWith(
-        "event-id",
+      expect(Event.Model.findOneAndUpdate).toHaveBeenCalledWith(
+        { shortId: "event-id" },
         expect.objectContaining({
           $push: {
             bookmarkedBy: "user-id",
@@ -356,13 +358,13 @@ describe("dao", () => {
 
     it("removes user from bookmarkedBy if 'bookmarked' is truthy", async () => {
       await dao.bookmarkEvent({
-        eventId: "event-id",
+        eventShortId: "event-id",
         bookmarked: false,
         userId: "user-id",
       })
 
-      expect(Event.Model.findByIdAndUpdate).toHaveBeenCalledWith(
-        "event-id",
+      expect(Event.Model.findOneAndUpdate).toHaveBeenCalledWith(
+        { shortId: "event-id" },
         expect.objectContaining({
           $pull: {
             bookmarkedBy: "user-id",
@@ -372,7 +374,7 @@ describe("dao", () => {
     })
 
     it("throws when updating fails", () => {
-      Event.Model.findByIdAndUpdate.mockImplementation(() => {
+      Event.Model.findOneAndUpdate.mockImplementation(() => {
         throw new Error("Maybe the document wasnt found?")
       })
 
@@ -380,7 +382,7 @@ describe("dao", () => {
 
       return expect(
         dao.bookmarkEvent({
-          eventId: "event-id",
+          eventShortId: "event-id",
           bookmarked: false,
           userId: "user-id",
         })
@@ -390,23 +392,23 @@ describe("dao", () => {
 
   describe("approveEvent", () => {
     beforeEach(() => {
-      Event.Model.findByIdAndUpdate = jest
+      Event.Model.findOneAndUpdate = jest
         .fn()
         .mockReturnValue({ exec: () => {} })
 
-      Event.Model.findById = jest.fn().mockReturnValue({ exec: () => {} })
+      Event.Model.findOne = jest.fn().mockReturnValue({ exec: () => {} })
     })
 
     it("throws when updating the event fails", async () => {
       expect.assertions(1)
 
-      Event.Model.findByIdAndUpdate.mockImplementation(() => {
+      Event.Model.findOneAndUpdate.mockImplementation(() => {
         throw new Error("Uh Oh")
       })
 
       return expect(
         dao.approveEvent({
-          eventId: "event-id",
+          eventShortId: "event-id",
           approved: Symbol.for("approved"),
         })
       ).rejects.toThrow("Uh Oh")
@@ -414,12 +416,12 @@ describe("dao", () => {
 
     it("updates event with given approved value", async () => {
       await dao.approveEvent({
-        eventId: "event-id",
+        eventShortId: "event-id",
         approved: Symbol.for("approved"),
       })
 
-      expect(Event.Model.findByIdAndUpdate).toHaveBeenCalledWith(
-        "event-id",
+      expect(Event.Model.findOneAndUpdate).toHaveBeenCalledWith(
+        { shortId: "event-id" },
         expect.objectContaining({
           approved: Symbol.for("approved"),
         })

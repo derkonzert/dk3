@@ -1,4 +1,7 @@
 exports.Event = {
+  id: event => {
+    return event.shortId
+  },
   fancyness: async (event, args, { dao }) => {
     // TODO: Only include "active" users, whatever that means..
     const userCount = await dao.cachedMethod(

@@ -31,6 +31,6 @@ exports.Query = {
   event: async (_, { id }, { dao } /*, info*/) => {
     // TODO: only get fields from DB that are requested?
     // for example with https://www.npmjs.com/package/graphql-fields
-    return await dao.eventById(id)
+    return await dao.eventByShortId(id)
   },
 }

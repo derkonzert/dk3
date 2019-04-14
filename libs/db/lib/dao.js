@@ -43,6 +43,8 @@ exports.createUser = async data => {
 }
 
 exports.userById = async _id => await User.Model.findById(_id).exec()
+exports.userByShortId = async shortId =>
+  await User.Model.findOne({ shortId }).exec()
 
 exports.userByEmail = async email => await User.Model.findOne({ email }).exec()
 
@@ -54,7 +56,7 @@ exports.userByVerificationToken = async emailVerificationToken =>
 exports.allUsersCount = async () =>
   await User.Model.estimatedDocumentCount().exec()
 
-exports.updateUser = async ({ id, ...userData }) => {
+exports.updateUser = async ({ shortId, ...userData }) => {
   const whiteListedUserData = ["username"].reduce(
     (filteredUserData, allowedKey) => {
       if (userData[allowedKey]) {
@@ -67,11 +69,11 @@ exports.updateUser = async ({ id, ...userData }) => {
 
   try {
     await User.Model.findOneAndUpdate(
-      { _id: id },
+      { shortId },
       { ...whiteListedUserData }
     ).exec()
 
-    return await exports.userById(id)
+    return await exports.userByShortId(shortId)
   } catch (err) {
     throw err
   }
@@ -101,35 +103,43 @@ exports.createEvent = async (
   return event
 }
 
-exports.bookmarkEvent = async ({ eventId, bookmarked, userId }) => {
+exports.bookmarkEvent = async ({ eventShortId, bookmarked, userId }) => {
   try {
     const operation = bookmarked ? "$push" : "$pull"
 
-    await Event.Model.findByIdAndUpdate(eventId, {
-      [operation]: {
-        bookmarkedBy: userId,
-      },
-    }).exec()
+    await Event.Model.findOneAndUpdate(
+      { shortId: eventShortId },
+      {
+        [operation]: {
+          bookmarkedBy: userId,
+        },
+      }
+    ).exec()
 
-    return await Event.Model.findById(eventId).exec()
+    return await Event.Model.findOne({ shortId: eventShortId }).exec()
   } catch (err) {
     throw err
   }
 }
 
-exports.approveEvent = async ({ eventId, approved }) => {
+exports.approveEvent = async ({ eventShortId, approved }) => {
   try {
-    await Event.Model.findByIdAndUpdate(eventId, {
-      approved,
-    }).exec()
+    await Event.Model.findOneAndUpdate(
+      { shortId: eventShortId },
+      {
+        approved,
+      }
+    ).exec()
 
-    return await Event.Model.findById(eventId).exec()
+    return await Event.Model.findOne({ shortId: eventShortId }).exec()
   } catch (err) {
     throw err
   }
 }
 
 exports.eventById = async _id => await Event.Model.findById(_id).exec()
+exports.eventByShortId = async shortId =>
+  await Event.Model.findOne({ shortId }).exec()
 
 exports.allEvents = async ({ filter = {}, sort = {} } = {}) =>
   await Event.Model.find({

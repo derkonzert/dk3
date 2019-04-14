@@ -1,1 +1,5 @@
-module.exports.User = {}
+module.exports.User = {
+  id: user => {
+    return user.shortId
+  },
+}

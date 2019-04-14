@@ -72,8 +72,7 @@ exports.generateTokens = async (user, options = {}) => {
     jwt.sign(
       {
         _id: user._id,
-        email: user.email,
-        username: user.username,
+        shortId: user.shortId,
         softExpIn,
       },
       config.get("JWT_SECRET"),

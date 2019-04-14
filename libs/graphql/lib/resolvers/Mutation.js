@@ -13,7 +13,7 @@ exports.Mutation = {
     }
 
     return await dao.bookmarkEvent({
-      eventId: id,
+      eventShortId: id,
       bookmarked,
       userId: user._id,
     })
@@ -33,7 +33,7 @@ exports.Mutation = {
     }
 
     return await dao.approveEvent({
-      eventId: id,
+      eventShortId: id,
       approved,
     })
   },
@@ -41,12 +41,12 @@ exports.Mutation = {
   updateSelf: async (parent, args, { dao, user }) => {
     const { id, ...updateValues } = args.input
 
-    if (user._id !== id) {
+    if (user.shortId !== id) {
       throw new Error("Unauthorized request")
     }
 
     const result = await dao.updateUser({
-      id,
+      shortId: id,
       ...updateValues,
     })
 
