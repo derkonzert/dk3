@@ -13,6 +13,7 @@ import {
   Link,
   YouTube,
   Vimeo,
+  Spotify,
 } from "@dk3/rtxt/react"
 import { Iframe } from "@dk3/ui/atoms/Iframe"
 import { Link as UILink, Title } from "@dk3/ui/atoms/Typography"
@@ -30,6 +31,7 @@ const rtxtPlugins = [
   Link.createCopy({ meta: { Component: UILink } }),
   Vimeo.createCopy({ meta: { Component: Iframe } }),
   YouTube.createCopy({ meta: { Component: Iframe } }),
+  Spotify.createCopy({ meta: { Component: Iframe } }),
 ]
 
 class MyApp extends App {

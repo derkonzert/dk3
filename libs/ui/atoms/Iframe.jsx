@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import styled from "@emotion/styled"
 import { Button } from "../form/Button"
+import { Description, SubTitle } from "./Typography"
 
 export const Iframe = ({ src, id }) => {
   const [showEmbeded, setShowEmbeded] = useState(false)
@@ -17,9 +18,13 @@ export const Iframe = ({ src, id }) => {
           />
         ) : (
           <ShowEmbedWarning>
-            <Button ph={3} pv={4} mb={2} onClick={() => setShowEmbeded(true)}>
-              Show content from {src.substr(0, 30)}…
+            <SubTitle mb={3}>Show content from different website?</SubTitle>
+
+            <Button ph={3} pv={3} mb={2} onClick={() => setShowEmbeded(true)}>
+              Load content
             </Button>
+
+            <Description>{src.substr(0, 50)}…</Description>
           </ShowEmbedWarning>
         )}
       </Scaler>

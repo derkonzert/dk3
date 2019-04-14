@@ -38,7 +38,7 @@ export const YouTube = Plugins.YouTube.createCopy({
   renderer: function(token, props) {
     return React.createElement(this.meta.Component, {
       ...props,
-      src: `https://www.youtube.com/embed/${token.value.id}`,
+      src: token.value.embedUrl,
     })
   },
 })
@@ -48,7 +48,17 @@ export const Vimeo = Plugins.Vimeo.createCopy({
   renderer: function(token, props) {
     return React.createElement(this.meta.Component, {
       ...props,
-      src: `https://player.vimeo.com/video/${token.value.id}`,
+      src: token.value.embedUrl,
+    })
+  },
+})
+
+export const Spotify = Plugins.Spotify.createCopy({
+  meta: { Component: "iframe" },
+  renderer: function(token, props) {
+    return React.createElement(this.meta.Component, {
+      ...props,
+      src: token.value.embedUrl,
     })
   },
 })

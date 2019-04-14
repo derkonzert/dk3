@@ -28,7 +28,7 @@ export const MegaTitle = styled.h1`
   }
 `
 
-export const Title = styled.h2`
+export const Title = withSpacing()(styled.h2`
   ${noMargin}
   font-size: 2.4rem;
   font-family: "IBM Plex Serif", serif;
@@ -37,9 +37,9 @@ export const Title = styled.h2`
   letter-spacing: 0;
   color: ${({ inverted, theme }) =>
     inverted ? theme.colors.titleInverted : theme.colors.title};
-`
+`)
 
-export const SubTitle = styled.h3`
+export const SubTitle = withSpacing()(styled.h3`
   ${noMargin};
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 600;
@@ -48,7 +48,7 @@ export const SubTitle = styled.h3`
     inverted ? theme.colors.titleInverted : theme.colors.title};
   letter-spacing: 0;
   line-height: 2.2rem;
-`
+`)
 
 export const ListTitle = styled.h4`
   margin: 2.5rem 0;
