@@ -2,10 +2,10 @@ import React from "react"
 import { withRouter } from "next/router"
 import { DateTime } from "luxon"
 import gql from "graphql-tag"
-import slug from "slug"
 
 import { QueryWithAuthentication } from "@dk3/shared-frontend/lib/QueryWithAuthentication"
 import { MutationWithAuthentication } from "@dk3/shared-frontend/lib/MutationWithAuthentication"
+import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
 
 import { EventCard } from "@dk3/ui/components/EventCard"
 import { ListTitle } from "@dk3/ui/atoms/Typography"
@@ -27,25 +27,10 @@ const EventSectionHeader = styled.div`
 
   background: ${({ theme }) => theme.colors.stickyListTitleBackground};
   backdrop-filter: blur(4px);
-
-  @media screen and (min-width: 92em) {
-    @supports (position: sticky) {
-      background: transparent;
-      backdrop-filter: none;
-    }
-  }
 `
 
 const EventSectionTitle = styled(ListTitle)`
   margin: 0;
-
-  @media screen and (min-width: 92em) {
-    @supports (position: sticky) {
-      padding: 0 1.5rem;
-      transform: translateX(-100%);
-      text-align: right;
-    }
-  }
 `
 
 export const BOOKMARK_EVENT = gql`
@@ -154,13 +139,13 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                               return null
                             }}
                             linkProps={{
-                              href: `/c/${slug(event.title)}-${event.id}`,
+                              href: eventHref(event),
                               onClick: e => {
                                 e.preventDefault()
 
                                 router.push(
                                   `/?eventId=${event.id}`,
-                                  `/c/${slug(event.title)}-${event.id}`,
+                                  eventHref(event),
                                   {
                                     shallow: true,
                                   }

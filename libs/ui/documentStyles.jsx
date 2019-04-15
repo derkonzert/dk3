@@ -28,12 +28,6 @@ export const global = theme => css`
 
     -webkit-font-smoothing: antialiased;
   }
-  /* TODO: fix this in layout components */
-  #__next {
-    /* iOS Safari: Fixes scaled down list content breaking the layout, making the detail page scroll "too far" */
-    /* TODO: this breaks position: sticky. */
-    overflow: hidden;
-  }
 
   /* ~720px*/
   @media screen and (min-width: 45em) {

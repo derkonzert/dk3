@@ -1,6 +1,7 @@
 import React from "react"
 import { withRouter } from "next/router"
 import Link from "next/link"
+import dynamic from "next/dynamic"
 
 import {
   ListAndDetail,
@@ -10,16 +11,23 @@ import {
 
 import { EventList } from "../components/list/EventList"
 import { WhoAmI } from "../components/WhoAmI"
-import { CreateEventForm } from "../components/form/CreateEventForm"
-import { EventDetail } from "../components/event-detail/EventDetail"
+
 import { VeryFancyButton } from "@dk3/ui/form/Button"
 import { MegaTitle, Text, Link as UiLink } from "@dk3/ui/atoms/Typography"
 import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
+import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
 import { EventLegend } from "../components/list/EventLegend"
 import styled from "@emotion/styled"
 import { HeaderMenu } from "../components/HeaderMenu/HeaderMenu"
+
+const DynamicEventDetail = dynamic(() =>
+  import("../components/event-detail/EventDetail").then(mod => mod.EventDetail)
+)
+const DynamicCreateEventForm = dynamic(() =>
+  import("../components/form/CreateEventForm").then(mod => mod.CreateEventForm)
+)
 
 const NOT_FINAL_AddEventButton = styled(VeryFancyButton)`
   position: fixed;
@@ -78,7 +86,7 @@ export default withRouter(function Index({ router }) {
       <ListAndDetailSide requestClose={closeDetail}>
         {!!eventId && (
           <React.Fragment>
-            <EventDetail id={eventId} />
+            <DynamicEventDetail id={eventId} />
             <Spacer mh={4} mb={5}>
               <Link href="/">
                 <UiLink onClick={closeDetail}>Close</UiLink>
@@ -87,15 +95,11 @@ export default withRouter(function Index({ router }) {
           </React.Fragment>
         )}
         {!!addEvent && (
-          <CreateEventForm
+          <DynamicCreateEventForm
             onCreated={event => {
-              router.replace(
-                `/?eventId=${event.id}`,
-                `/c/${event.title}-${event.id}`,
-                {
-                  shallow: true,
-                }
-              )
+              router.replace(`/?eventId=${event.id}`, eventHref(event), {
+                shallow: true,
+              })
             }}
           />
         )}

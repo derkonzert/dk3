@@ -30,7 +30,7 @@ const defaultTheme = {
     mainGradientTo: "#6a32cc",
 
     dialogContentBackground: "white",
-    dialogOverlayBackground: "rgba(220, 220, 220, 0.25)",
+    dialogOverlayBackground: "rgba(220, 220, 220, 0.65)",
 
     horizontalMenuColor: "#636161",
 
@@ -93,7 +93,7 @@ const darkTheme = {
 
     veryFancyButtonColor: "white",
 
-    stickyListTitleBackground: "rgba(27, 27, 27, 0.95)",
+    stickyListTitleBackground: "rgba(27, 27, 27, 0.85)",
 
     inputError: "#d23939",
     input: "white",

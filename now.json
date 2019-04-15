@@ -82,9 +82,9 @@
       }
     },
     {
-      "src": "/c/(.)*-(?<eventId>.*)$",
+      "src": "/event/(.)*-(?<eventId>.*)$",
       "methods": ["GET"],
-      "dest": "frontend/main/c?eventId=$eventId",
+      "dest": "frontend/main/event?eventId=$eventId",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
