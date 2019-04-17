@@ -50,6 +50,12 @@ const defaultTheme = {
 
     checkboxColor: "#ababab",
     checkboxColorActive: "white",
+
+    messageBackground: "rgba(30, 232, 57, 0.18)",
+    messageColor: "rgb(11, 121, 56)",
+
+    errorMessageBackground: "rgba(210, 57, 57, 0.08)",
+    errorMessageColor: "#d23939",
   },
 }
 

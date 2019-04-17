@@ -1,9 +1,20 @@
 const config = require("@dk3/config")
 
 const { renderDoubleOptInMail } = require("./emails/doubleOptInMail")
+const { renderPasswordResetMail } = require("./emails/passwordResetMail")
 
 exports.sendDoubleOptInMail = async user => {
   const emailContents = renderDoubleOptInMail(user)
+
+  try {
+    await exports.sendEmail(user.email, emailContents)
+  } catch (err) {
+    throw err
+  }
+}
+
+exports.sendPasswordResetMail = async user => {
+  const emailContents = renderPasswordResetMail(user)
 
   try {
     await exports.sendEmail(user.email, emailContents)

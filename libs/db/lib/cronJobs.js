@@ -1,13 +1,10 @@
-// const dao = require("./dao")
-const { logger } = require("@dk3/logger")
 const { sendDoubleOptInMail } = require("@dk3/mailer")
+const { sendPasswordResetMail } = require("@dk3/mailer")
 
 const SystemEvent = require("./model/SystemEvent")
 const dao = require("./dao")
 
 exports.doubleOptIn = async () => {
-  logger("Sending out double opt in emails")
-
   try {
     const systemEvents = await dao.systemEventsByType(
       SystemEvent.Types.doiRequested
@@ -33,7 +30,32 @@ exports.doubleOptIn = async () => {
   }
 }
 
+exports.passwordReset = async () => {
+  try {
+    const systemEvents = await dao.systemEventsByType(
+      SystemEvent.Types.passwordResetRequested
+    )
+
+    for (let systemEvent of systemEvents) {
+      const user = await dao.userById(systemEvent.emittedBy)
+
+      await sendPasswordResetMail(user)
+    }
+
+    if (systemEvents.length) {
+      try {
+        await dao.clearSystemEvents(systemEvents)
+      } catch (err) {
+        throw err
+      }
+    }
+
+    return `Sent ${systemEvents.length} password reset mails`
+  } catch (err) {
+    throw err
+  }
+}
+
 exports.eventNotifications = async () => {
-  logger("---------- sending event notifications")
   return "Sent 0 event notificaitons"
 }

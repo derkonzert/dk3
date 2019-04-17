@@ -14,7 +14,8 @@ exports.createJob = async options => {
 }
 
 exports.cronJobConfigurations = [
-  { name: "doubleOptIn", interval: "10s", initialRun: true },
+  { name: "doubleOptIn", interval: "2m", initialRun: true },
+  { name: "passwordReset", interval: "2m", initialRun: true },
   { name: "eventNotifications", interval: "10m", initialRun: true },
 ]
 

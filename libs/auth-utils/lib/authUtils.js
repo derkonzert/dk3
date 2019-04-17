@@ -7,6 +7,18 @@ const { dao } = require("@dk3/db")
 const { Types: SystemEventTypes } = require("@dk3/db/lib/model/SystemEvent")
 const skills = require("@dk3/db/lib/model/userSkills")
 
+const generateBasicToken = async () =>
+  new Promise((resolve, reject) => {
+    require("crypto").randomBytes(48, function(err, buffer) {
+      if (err) {
+        return reject(err)
+      }
+
+      const token = buffer.toString("hex")
+      resolve(token)
+    })
+  })
+
 exports.signUp = async data => {
   try {
     const user = await dao.createUser(data)
@@ -30,12 +42,12 @@ exports.verifyEmail = async emailVerificationToken => {
       throw new Error("No user associated with given token")
     }
 
-    if (user.emailVerificationTokenExpiresIn < Date.now()) {
+    if (user.emailVerificationTokenExpiresAt < Date.now()) {
       throw new Error("Token has expired")
     }
 
     user.set("emailVerificationToken", null)
-    user.set("emailVerificationTokenExpiresIn", null)
+    user.set("emailVerificationTokenExpiresAt", null)
     user.emailVerified = true
     user.skills.push(skills.LOGIN)
 
@@ -49,19 +61,10 @@ exports.verifyEmail = async emailVerificationToken => {
 
 exports.createDoubleOptInToken = async user => {
   try {
-    const token = await new Promise((resolve, reject) => {
-      require("crypto").randomBytes(48, function(err, buffer) {
-        if (err) {
-          return reject(err)
-        }
-
-        const token = buffer.toString("hex")
-        resolve(token)
-      })
-    })
+    const token = await generateBasicToken()
 
     user.emailVerificationToken = token
-    user.emailVerificationTokenExpiresIn = Date.now() + ms("30min")
+    user.emailVerificationTokenExpiresAt = Date.now() + ms("30min")
 
     await user.save()
   } catch (err) {
@@ -186,4 +189,52 @@ exports.getUserFromRequest = async req => {
   }
 
   throw new HTTPStatusError({ title: "Not authenticated", statusCode: 401 })
+}
+
+exports.requestPasswordReset = async email => {
+  if (!email) {
+    throw new Error("No email given")
+  }
+
+  try {
+    const user = await dao.userByEmail(email)
+
+    if (!user) {
+      throw new Error("No user found for given email")
+    }
+
+    user.passwordResetToken = await generateBasicToken()
+    user.passwordResetTokenExpiresAt = Date.now() + ms("15min")
+
+    await user.save()
+
+    await dao.emitSystemEvent(SystemEventTypes.passwordResetRequested, {
+      emittedBy: user._id,
+    })
+  } catch (err) {
+    throw err
+  }
+}
+exports.passwordReset = async (passwordResetToken, password) => {
+  if (!password || password.length < 8) {
+    throw new Error(
+      "Password does not match requirements: min length 8 characters"
+    )
+  }
+
+  try {
+    const user = await dao.userByPasswordResetToken(passwordResetToken)
+
+    if (!user) {
+      throw new Error("No user associated with given token")
+    }
+
+    if (user.passwordResetTokenExpiresAt < Date.now()) {
+      throw new Error("Token has expired")
+    }
+
+    await dao.updateUserPassword({ password, userId: user._id })
+  } catch (err) {
+    throw err
+  }
 }

@@ -42,6 +42,16 @@ exports.createUser = async data => {
   }
 }
 
+exports.updateUserPassword = async ({ userId, password }) => {
+  try {
+    const passwordHash = User.Model.createPasswordHash(password)
+
+    await User.Model.findByIdAndUpdate(userId, { passwordHash }).exec()
+  } catch (err) {
+    throw err
+  }
+}
+
 exports.userById = async _id => await User.Model.findById(_id).exec()
 exports.userByShortId = async shortId =>
   await User.Model.findOne({ shortId }).exec()
@@ -52,6 +62,9 @@ exports.userByVerificationToken = async emailVerificationToken =>
   await User.Model.findOne({
     emailVerificationToken,
   }).exec()
+
+exports.userByPasswordResetToken = async passwordResetToken =>
+  await User.Model.findOne({ passwordResetToken }).exec()
 
 exports.allUsersCount = async () =>
   await User.Model.estimatedDocumentCount().exec()

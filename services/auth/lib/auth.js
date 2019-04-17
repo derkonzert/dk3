@@ -1,7 +1,13 @@
 const { json } = require("micro")
 const url = require("url")
 
-const { signUp, signIn, verifyEmail } = require("@dk3/auth-utils")
+const {
+  signUp,
+  signIn,
+  verifyEmail,
+  passwordReset,
+  requestPasswordReset,
+} = require("@dk3/auth-utils")
 const { sendJson } = require("@dk3/api-utils")
 const { HTTPStatusError } = require("@dk3/error")
 const { connect } = require("@dk3/db")
@@ -60,6 +66,27 @@ module.exports = async function auth(req, res) {
           return sendJson(res, 200, {
             accessToken: payload.accessToken,
           })
+        } catch (err) {
+          throw err
+        }
+
+      case "requestPasswordReset":
+        body = await json(req)
+
+        try {
+          await requestPasswordReset(body.email)
+
+          return sendJson(res, 200, { message: "Password reset requested" })
+        } catch (err) {
+          throw err
+        }
+      case "passwordReset":
+        body = await json(req)
+
+        try {
+          await passwordReset(body.token, body.password)
+
+          return sendJson(res, 200, { message: "Password reset" })
         } catch (err) {
           throw err
         }

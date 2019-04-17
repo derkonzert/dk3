@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 exports.Types = {
   eventAdded: "event:added",
   doiRequested: "doi:requested",
+  passwordResetRequested: "passwordResetRequested",
 }
 
 const schemaDefinition = {

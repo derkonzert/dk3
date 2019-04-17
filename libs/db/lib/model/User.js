@@ -40,6 +40,14 @@ const Schema = new mongoose.Schema({
     type: Number,
   },
 
+  passwordResetToken: {
+    type: String,
+  },
+
+  passwordResetTokenExpiresAt: {
+    type: Number,
+  },
+
   passwordHash: {
     type: String,
     required: true,

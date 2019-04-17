@@ -41,6 +41,7 @@ export const InputError = styled.div`
   margin: 0.3rem 0.3rem 0;
   font-size: 1.2rem;
   line-height: 1.4;
+  text-align: left;
   color: ${({ theme }) => theme.colors.inputError};
 `
 
