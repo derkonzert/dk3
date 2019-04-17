@@ -12,9 +12,11 @@
     "integration": "start-server-and-test integration:setup http://localhost:3000 integration:test-local",
     "integration:watch": "cypress open",
     "integration:ci": "start-server-and-test integration:setup http://localhost:3000 integration:test-ci",
+    "integration:ci-local": "start-server-and-test integration:setup http://localhost:3000 integration:test-ci-local",
     "integration:setup": "node scripts/start-ci",
     "integration:test-local": "cypress run",
-    "integration:test-ci": "cypress run --record"
+    "integration:test-ci": "cypress run --record",
+    "integration:test-ci-local": "cypress run"
   },
   "workspaces": [
     "libs/*",
