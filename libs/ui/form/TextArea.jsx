@@ -12,6 +12,7 @@ import { withSpacing } from "../utils/withSpacing"
 
 export const Area = styled.textarea`
   ${inputStyles}
+  ${({ readOnly }) => readOnly && "font-size: 1.2rem;"}
   resize: none;
 `
 

@@ -177,12 +177,18 @@ export const UpdateSelfForm = ({ onCreated }) => {
                         <FancyButton
                           type="submit"
                           block
-                          mv={5}
+                          mb={5}
                           disabled={state.username === data.me.username}
                         >
-                          Update your settings
+                          Save new username
                         </FancyButton>
 
+                        <Link href="/account/calendar" passHref>
+                          <UILink>
+                            <Small>Calendar Integration Setup</Small>
+                          </UILink>
+                        </Link>
+                        <br />
                         <Link href="/account/password" passHref>
                           <UILink>
                             <Small>Change Password</Small>

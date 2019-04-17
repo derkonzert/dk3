@@ -12,6 +12,7 @@ const typeDefs = gql`
     username: String
     upcomingEvents: [Event]
     skills: [String]
+    calendarToken: String
   }
 
   type AuthenticationInfo {
@@ -75,12 +76,18 @@ const typeDefs = gql`
     sendEmails: Boolean
   }
 
+  input UpdateCalendarTokenInput {
+    id: ID!
+    enableCalendar: Boolean!
+  }
+
   type Mutation {
     createEvent(input: CreateEventInput!): Event
     approveEvent(input: ApproveEventInput!): Event
     bookmarkEvent(input: BookmarkEventInput!): Event
 
     updateSelf(input: UpdateSelfInput!): User
+    updateCalendarToken(input: UpdateCalendarTokenInput!): User
   }
 `
 

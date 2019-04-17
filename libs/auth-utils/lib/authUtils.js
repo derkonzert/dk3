@@ -7,7 +7,7 @@ const { dao } = require("@dk3/db")
 const { Types: SystemEventTypes } = require("@dk3/db/lib/model/SystemEvent")
 const skills = require("@dk3/db/lib/model/userSkills")
 
-const generateBasicToken = async () =>
+exports.generateBasicToken = async () =>
   new Promise((resolve, reject) => {
     require("crypto").randomBytes(48, function(err, buffer) {
       if (err) {
@@ -61,7 +61,7 @@ exports.verifyEmail = async emailVerificationToken => {
 
 exports.createDoubleOptInToken = async user => {
   try {
-    const token = await generateBasicToken()
+    const token = await exports.generateBasicToken()
 
     user.emailVerificationToken = token
     user.emailVerificationTokenExpiresAt = Date.now() + ms("30min")
@@ -203,7 +203,7 @@ exports.requestPasswordReset = async email => {
       throw new Error("No user found for given email")
     }
 
-    user.passwordResetToken = await generateBasicToken()
+    user.passwordResetToken = await exports.generateBasicToken()
     user.passwordResetTokenExpiresAt = Date.now() + ms("15min")
 
     await user.save()

@@ -1,3 +1,5 @@
+const { generateBasicToken } = require("@dk3/auth-utils")
+
 exports.Mutation = {
   createEvent: async (parent, args, { dao, user }) => {
     const { ...eventData } = args.input
@@ -51,5 +53,31 @@ exports.Mutation = {
     })
 
     return result
+  },
+
+  updateCalendarToken: async (parent, args, { dao, user }) => {
+    const { id, enableCalendar } = args.input
+
+    if (user.shortId !== id) {
+      throw new Error("Unauthorized request")
+    }
+
+    const userModel = await dao.userById(user._id)
+
+    if (userModel.calendarToken && enableCalendar) {
+      /* There already is a token */
+      return userModel
+    } else if (enableCalendar) {
+      userModel.calendarToken = await generateBasicToken()
+
+      await userModel.save()
+
+      return userModel
+    } else if (userModel.calendarToken) {
+      userModel.set("calendarToken", null)
+
+      await userModel.save()
+      return userModel
+    }
   },
 }
