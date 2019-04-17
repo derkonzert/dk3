@@ -234,6 +234,11 @@ exports.passwordReset = async (passwordResetToken, password) => {
     }
 
     await dao.updateUserPassword({ password, userId: user._id })
+
+    user.set("passwordResetToken", null)
+    user.set("passwordResetTokenExpiresAt", null)
+
+    await user.save()
   } catch (err) {
     throw err
   }
