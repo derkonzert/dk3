@@ -85,6 +85,14 @@ export const Text = withSpacing()(styled.p`
   max-width: 38em;
 `)
 
+export const Small = styled.small`
+  font-size: 0.8em;
+`
+
+export const Strong = styled.strong`
+  font-weight: bold;
+`
+
 export const WrappingText = styled(Text)`
   white-space: pre-wrap;
 `

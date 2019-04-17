@@ -4,8 +4,10 @@ const html = user => `<h1>Hey ${user.username},</h1>
 <p>please visit the following link to <em>verify your email address</em>:
 <br />
 <br />
-<a href="${url(`auth/verify-email/${user.emailVerificationToken}`)}">
-${url(`auth/verify-email/${user.emailVerificationToken}`)}
+<a href="${url(
+  `/account/signup/activate?token=${user.emailVerificationToken}`
+)}">
+${url(`/account/signup/activate?token=${user.emailVerificationToken}`)}
 </a>
 <br />
 Thanks
@@ -16,7 +18,7 @@ const text = user => `Hey ${
   user.username
 }, please visit the following link to verify your email address:
 
-${url(`auth/verify-email/${user.emailVerificationToken}`)}
+${url(`/account/signup/activate?token=${user.emailVerificationToken}`)}
 
 Thanks
 `

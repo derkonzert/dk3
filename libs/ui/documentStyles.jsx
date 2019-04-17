@@ -26,6 +26,9 @@ export const global = theme => css`
     font-size: 1.6rem;
     font-family: "IBM Plex Sans", sans-serif;
 
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+
     -webkit-font-smoothing: antialiased;
   }
 

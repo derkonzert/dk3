@@ -19,7 +19,10 @@ module.exports = async function auth(req, res) {
 
     switch (query.operation) {
       case "verify-email":
-        const { token } = query
+        body = await json(req)
+
+        const { token } = body
+
         if (!token) {
           throw new HTTPStatusError({
             title: "No token to verify",

@@ -16,13 +16,7 @@ import { withThemeFromCookie } from "@dk3/shared-frontend/lib/withThemeFromCooki
 
 class MyApp extends App {
   render() {
-    const {
-      Component,
-      theme,
-      onThemeChange,
-      pageProps,
-      apolloClient,
-    } = this.props
+    const { Component, theme, pageProps, apolloClient } = this.props
 
     return (
       <Container>
@@ -44,10 +38,8 @@ class MyApp extends App {
 
                       {isLoggedIn ? (
                         <React.Fragment>
-                          <Link href="/account/">
-                            <HorizontalMenuItem href="/account/">
-                              Settings
-                            </HorizontalMenuItem>
+                          <Link href="/account/" passHref>
+                            <HorizontalMenuItem>Settings</HorizontalMenuItem>
                           </Link>
                           <HorizontalMenuItem
                             href="#"
@@ -62,15 +54,11 @@ class MyApp extends App {
                         </React.Fragment>
                       ) : (
                         <React.Fragment>
-                          <Link href="login">
-                            <HorizontalMenuItem href="/account/login">
-                              Login
-                            </HorizontalMenuItem>
+                          <Link href="/account/login" passHref>
+                            <HorizontalMenuItem>Login</HorizontalMenuItem>
                           </Link>
-                          <Link href="signup">
-                            <HorizontalMenuItem href="/account/signup">
-                              Sign Up
-                            </HorizontalMenuItem>
+                          <Link href="/account/signup" passHref>
+                            <HorizontalMenuItem>Sign Up</HorizontalMenuItem>
                           </Link>
                         </React.Fragment>
                       )}
@@ -83,16 +71,6 @@ class MyApp extends App {
               }}
             </CurrentUser>
           </ApolloProvider>
-          <button
-            style={{ position: "absolute" }}
-            onClick={() => {
-              const newTheme = theme === "light" ? "dark" : "light"
-
-              onThemeChange(newTheme)
-            }}
-          >
-            {theme === "light" ? "Use dark theme" : "Use light theme"}
-          </button>
         </ThemeProvider>
       </Container>
     )

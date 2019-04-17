@@ -3,13 +3,14 @@ import { TextInput } from "@dk3/ui/form/TextInput"
 import { State } from "react-powerplug"
 import { FancyButton, Button } from "@dk3/ui/form/Button"
 import { withApollo } from "react-apollo"
+import { login } from "../lib/withApollo"
 
 export const SignUpForm = withApollo(({ onSignUp, onCancel, client }) => {
   return (
     <State initial={{ username: "", email: "", password: "", message: "" }}>
-      {({ state, setState, resetState }) => (
+      {({ state, setState }) => (
         <form
-          onSubmit={e => {
+          onSubmit={async e => {
             e.preventDefault()
 
             const uri =
@@ -17,37 +18,35 @@ export const SignUpForm = withApollo(({ onSignUp, onCancel, client }) => {
                 ? "/auth/signUp"
                 : "http://localhost:8004/auth/signUp"
 
-            fetch(uri, {
-              method: "post",
-              headers: { "content-type": "application/json" },
-              body: JSON.stringify({
-                email: state.email,
-                username: state.username,
-                password: state.password,
-              }),
-            })
-              .then(resp => resp.json())
-              .then(data => {
-                if (data.message) {
-                  setState({
-                    message: data.message,
-                  })
-                }
-
-                if (data.accessToken) {
-                  localStorage.setItem("accessToken", data.accessToken)
-
-                  return client.resetStore()
-                }
+            try {
+              const response = await fetch(uri, {
+                method: "post",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({
+                  email: state.email,
+                  username: state.username,
+                  password: state.password,
+                }),
               })
-              .then(() => {
-                resetState()
 
-                onSignUp && onSignUp()
-              })
-              .catch(err => {
-                setState({ message: err.message })
-              })
+              const json = await response.json()
+
+              if (json.message) {
+                setState({
+                  message: json.message,
+                })
+              }
+
+              if (json.accessToken) {
+                await login({ token: json.accessToken })
+
+                await client.resetStore()
+              }
+
+              onSignUp && onSignUp()
+            } catch (err) {
+              setState({ message: err.message })
+            }
           }}
         >
           {!!state.message && <span>{state.message}</span>}
