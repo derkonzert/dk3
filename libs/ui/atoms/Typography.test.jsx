@@ -11,6 +11,7 @@ import {
   Link,
   ListTitle,
   Description,
+  Small,
 } from "./Typography"
 
 describe("Typography", () => {
@@ -87,6 +88,12 @@ describe("Typography", () => {
 
     it("has inverted", () => {
       expect(() => mountWithTheme(<Description inverted />)).not.toThrow()
+    })
+  })
+
+  describe("Small", () => {
+    it("mounts without Throwing", () => {
+      expect(() => mountWithTheme(<Small />)).not.toThrow()
     })
   })
 })
