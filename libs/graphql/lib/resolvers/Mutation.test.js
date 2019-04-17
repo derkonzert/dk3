@@ -59,7 +59,7 @@ describe("Mutation", () => {
       expect(result).toBe(expectedResult)
 
       expect(dao.bookmarkEvent).toHaveBeenCalledWith({
-        eventId: args.input.id,
+        eventShortId: args.input.id,
         bookmarked: args.input.bookmarked,
         userId: user._id,
       })
@@ -108,7 +108,7 @@ describe("Mutation", () => {
       expect(result).toBe(expectedResult)
 
       expect(dao.approveEvent).toHaveBeenCalledWith({
-        eventId: args.input.id,
+        eventShortId: args.input.id,
         approved: args.input.approved,
       })
     })
@@ -136,7 +136,7 @@ describe("Mutation", () => {
         Mutation.updateSelf(
           undefined,
           { input: { id: 1 } },
-          { user: { _id: 2 } }
+          { user: { shortId: 2 } }
         )
       ).rejects.toThrow()
     })
@@ -147,11 +147,11 @@ describe("Mutation", () => {
       await Mutation.updateSelf(
         undefined,
         { input: { id: 1, ...rest } },
-        { dao, user: { _id: 1 } }
+        { dao, user: { shortId: 1 } }
       )
 
       expect(dao.updateUser).toHaveBeenCalledWith({
-        id: 1,
+        shortId: 1,
         ...rest,
       })
     })
@@ -163,7 +163,7 @@ describe("Mutation", () => {
       const result = await Mutation.updateSelf(
         undefined,
         { input: { id: 1 } },
-        { dao, user: { _id: 1 } }
+        { dao, user: { shortId: 1 } }
       )
 
       expect(result).toBe(expectedResult)

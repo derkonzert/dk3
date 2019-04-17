@@ -18,6 +18,7 @@ config.get.mockImplementation(key => {
 
 const dummyUserData = {
   _id: "14123412asf3",
+  shortId: "nFj3lka2",
   username: "ju",
   email: "jus@email.com",
 }
@@ -136,9 +137,8 @@ describe("auth-utils", () => {
         if (!data._id) {
           callback(jwtSigningError)
         } else if (
-          data._id == dummyUserData._id &&
-          data.email === dummyUserData.email &&
-          data.username === dummyUserData.username &&
+          data._id === dummyUserData._id &&
+          data.shortId === dummyUserData.shortId &&
           options.expiresIn === 2 &&
           secret === "secret"
         ) {
