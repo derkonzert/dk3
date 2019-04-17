@@ -1,15 +1,16 @@
 import React from "react"
+import Link from "next/link"
 import { Mutation, Query } from "react-apollo"
 import gql from "graphql-tag"
 import { State } from "react-powerplug"
 
 import { Spinner } from "@dk3/ui/atoms/Spinner"
-import { GreenBadge } from "@dk3/ui/atoms/Badge"
 import { FancyButton } from "@dk3/ui/form/Button"
 import { TextInput } from "@dk3/ui/form/TextInput"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
+import { Small, Link as UILink } from "@dk3/ui/atoms/Typography"
 import { currentUserQuery } from "@dk3/shared-frontend/lib/CurrentUser"
-import { Description } from "@dk3/ui/atoms/Typography"
+import { Message } from "@dk3/ui/atoms/Message"
 
 export const USER_DATA_FRAGMENT = gql`
   fragment UserData on User {
@@ -109,12 +110,10 @@ export const UpdateSelfForm = ({ onCreated }) => {
                         }}
                       >
                         <TextInput
-                          mb={4}
                           disabled
                           value={state.email}
                           name="email"
                           label="Email Address"
-                          description="Changing your email address will be possible in the future"
                         />
 
                         <TextInput
@@ -126,21 +125,26 @@ export const UpdateSelfForm = ({ onCreated }) => {
 
                         {state.showSuccess &&
                           state.username === data.me.username && (
-                            <Description>
-                              <GreenBadge>
-                                Successfully updated your username to &quot;
-                                {state.username}&quot;
-                              </GreenBadge>
-                            </Description>
+                            <Message>
+                              Your username is now &quot;
+                              {state.username}&quot;
+                            </Message>
                           )}
 
                         <FancyButton
                           type="submit"
-                          mt={4}
+                          block
+                          mv={5}
                           disabled={state.username === data.me.username}
                         >
                           Update your settings
                         </FancyButton>
+
+                        <Link href="/account/password" passHref>
+                          <UILink>
+                            <Small>Change Password</Small>
+                          </UILink>
+                        </Link>
                       </form>
                     </Spacer>
                   )

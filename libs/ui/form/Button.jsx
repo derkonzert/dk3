@@ -32,7 +32,7 @@ export const buttonBlockStyle = css`
 
 export const buttonBlockModifier = ({ block }) => !!block && buttonBlockStyle
 
-export const Button = withSpacing()(styled.button`
+const Btn = styled.button`
   ${buttonBaseStyle};
   ${buttonBlockModifier};
 
@@ -46,7 +46,10 @@ export const Button = withSpacing()(styled.button`
   &:active {
     background-color: rgba(0, 0, 0, 0.05);
   }
-`)
+`
+
+export const Button = withSpacing()(Btn)
+export const ButtonLink = withSpacing()(Btn.withComponent("a"))
 
 const VeryFancy = styled.button`
   ${buttonBaseStyle};

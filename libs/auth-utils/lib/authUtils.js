@@ -216,6 +216,10 @@ exports.requestPasswordReset = async email => {
   }
 }
 exports.passwordReset = async (passwordResetToken, password) => {
+  if (!passwordResetToken) {
+    throw new Error("No token given")
+  }
+
   if (!password || password.length < 8) {
     throw new Error(
       "Password does not match requirements: min length 8 characters"

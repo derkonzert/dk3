@@ -11,11 +11,13 @@ export default function Index() {
   return (
     <React.Fragment>
       <ListTitle>Password Reset</ListTitle>
-      <Text>Request an email with a password reset link.</Text>
       {emailSent ? (
-        <Text>
+        <Text mv={4}>
           If an account exists with this email, we sent you an email with a link
           to reset your password.
+          <br />
+          <br />
+          Make sure to also check your spam folder.
         </Text>
       ) : (
         <State initial={{ email: "" }}>
@@ -51,6 +53,7 @@ export default function Index() {
                 }
               }}
             >
+              <Text>Request an email with a password reset link.</Text>
               <TextInput
                 mv={3}
                 type="email"

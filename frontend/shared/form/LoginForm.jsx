@@ -69,6 +69,11 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
           />
           <TextInput
             label="Password"
+            description={
+              <Link href="/account/password">
+                <a>Forgot?</a>
+              </Link>
+            }
             value={state.password}
             onChange={e => setState({ password: e.target.value })}
             type="password"
