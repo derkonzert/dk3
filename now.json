@@ -17,6 +17,7 @@
     { "src": "services/auth/lib/auth.js", "use": "@now/node" },
     { "src": "services/api/lib/api.js", "use": "@now/node" },
     { "src": "services/cron/lib/cron.js", "use": "@now/node" },
+    { "src": "services/webcal/lib/webcal.js", "use": "@now/node" },
     { "src": "libs/ui/package.json", "use": "@now/static-build" },
     { "src": "frontend/static/*", "use": "@now/static" },
     {
@@ -49,6 +50,10 @@
       "src": "/cron",
       "methods": ["GET"],
       "dest": "/services/cron/lib/cron.js"
+    },
+    {
+      "src": "/webcal/(.*).ics$",
+      "dest": "/services/webcal/lib/webcal.js?token=$1"
     },
     {
       "src": "/api",

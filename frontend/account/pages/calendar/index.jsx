@@ -120,9 +120,9 @@ export default function UpdateCalendarSettingForm() {
                                 calendar setup
                               </Text>
                               <VeryFancyLink
-                                href={`webcal://dk3.tech/webcal/${
+                                href={`webcal://stage.dk3.tech/webcal/${
                                   data.me.calendarToken
-                                }`}
+                                }.ics`}
                               >
                                 Integrate Into Calendar App
                               </VeryFancyLink>
@@ -136,9 +136,9 @@ export default function UpdateCalendarSettingForm() {
                                 mb={0}
                                 readOnly
                                 rows={5}
-                                value={`webcal://dk3.tech/webcal/${
+                                value={`webcal://stage.dk3.tech/webcal/${
                                   data.me.calendarToken
-                                }`}
+                                }.ics`}
                                 onFocus={e => {
                                   try {
                                     e.target.setSelectionRange(
