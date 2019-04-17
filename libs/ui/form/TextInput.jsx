@@ -27,9 +27,11 @@ export const InputLabel = styled.label`
   line-height: 1.35;
 `
 
-export const InputDescription = styled.span`
+export const InputDescription = styled.div`
   margin-left: 0.3rem;
   font-size: 1.2rem;
+  line-height: 1.4;
+  text-align: left;
   color: ${({ theme }) => theme.colors.description};
   font-style: italic;
 `
@@ -38,6 +40,7 @@ export const InputError = styled.div`
   display: block;
   margin: 0.3rem 0.3rem 0;
   font-size: 1.2rem;
+  line-height: 1.4;
   color: ${({ theme }) => theme.colors.inputError};
 `
 
@@ -54,15 +57,13 @@ export const TextInput = withSpacing({ mb: 3 })(
   }) => (
     <div className={className}>
       {(!!label || !!description) && (
-        <InputLabel htmlFor={name}>
-          {label}
-          {!!description && <InputDescription>{description}</InputDescription>}
-        </InputLabel>
+        <InputLabel htmlFor={name}>{label}</InputLabel>
       )}
       <InputBorder validate={validate} valid={valid}>
         <Input {...props} id={name} name={name} />
       </InputBorder>
       {!!error && <InputError>{error}</InputError>}
+      {!!description && <InputDescription>{description}</InputDescription>}
     </div>
   )
 )

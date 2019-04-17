@@ -39,7 +39,7 @@ module.exports = async function auth(req, res) {
           })
         }
 
-        return sendJson(res, 201, { message: "E-Mail verified" })
+        return sendJson(res, 200, { message: "E-Mail verified" })
       case "signUp":
         body = await json(req)
 

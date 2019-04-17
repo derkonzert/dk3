@@ -41,8 +41,9 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
         setMessage(err.message)
       }
     }
+
     checkDoiToken()
-  })
+  }, [])
 
   return (
     <React.Fragment>

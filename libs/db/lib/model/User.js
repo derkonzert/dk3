@@ -33,7 +33,11 @@ const Schema = new mongoose.Schema({
   },
 
   emailVerificationToken: {
-    type: "String",
+    type: String,
+  },
+
+  emailVerificationTokenExpiresAt: {
+    type: Number,
   },
 
   passwordHash: {
@@ -43,7 +47,7 @@ const Schema = new mongoose.Schema({
 
   skills: {
     type: [String],
-    default: [skills.LOGIN],
+    default: [],
   },
 
   created: {

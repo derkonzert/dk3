@@ -102,7 +102,7 @@ export const UpdateSelfForm = ({ onCreated }) => {
                             variables: {
                               input: {
                                 id: data.me.id,
-                                username,
+                                username: username.trim(),
                               },
                             },
                           })
@@ -113,11 +113,12 @@ export const UpdateSelfForm = ({ onCreated }) => {
                           disabled
                           value={state.email}
                           name="email"
-                          label="E-Mail Address"
+                          label="Email Address"
+                          description="Changing your email address will be possible in the future"
                         />
 
                         <TextInput
-                          value={state.username}
+                          value={state.username.trim()}
                           name="username"
                           onChange={e => setState({ username: e.target.value })}
                           label="Username"

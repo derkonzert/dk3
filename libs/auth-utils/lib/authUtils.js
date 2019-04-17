@@ -24,17 +24,20 @@ exports.signUp = async data => {
 
 exports.verifyEmail = async emailVerificationToken => {
   try {
-    /* Parse the token, this will throw if the token has expired */
-    await exports.parseJwtToken(emailVerificationToken)
-
     const user = await dao.userByVerificationToken(emailVerificationToken)
 
     if (!user) {
       throw new Error("No user associated with given token")
     }
 
+    if (user.emailVerificationTokenExpiresIn < Date.now()) {
+      throw new Error("Token has expired")
+    }
+
     user.set("emailVerificationToken", null)
+    user.set("emailVerificationTokenExpiresIn", null)
     user.emailVerified = true
+    user.skills.push(skills.LOGIN)
 
     await user.save()
 
@@ -46,18 +49,24 @@ exports.verifyEmail = async emailVerificationToken => {
 
 exports.createDoubleOptInToken = async user => {
   try {
-    const { accessToken: token } = await exports.generateTokens(user, {
-      expiresIn: "15m",
+    const token = await new Promise((resolve, reject) => {
+      require("crypto").randomBytes(48, function(err, buffer) {
+        if (err) {
+          return reject(err)
+        }
+
+        const token = buffer.toString("hex")
+        resolve(token)
+      })
     })
 
     user.emailVerificationToken = token
+    user.emailVerificationTokenExpiresIn = Date.now() + ms("30min")
 
     await user.save()
   } catch (err) {
     throw err
   }
-
-  // Create notification
 }
 
 const absoluteTimestampInSeconds = milliseconds =>

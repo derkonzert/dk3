@@ -22,6 +22,10 @@ export const inputStyles = ({ theme }) => css`
     outline: none;
     box-shadow: 0 0.1rem 0.6rem rgba(0, 0, 0, 0.36);
   }
+
+  &:disabled {
+    opacity: 0.5;
+  }
 `
 
 export const validInputStyle = ({ theme }) => css`

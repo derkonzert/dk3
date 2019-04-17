@@ -16,7 +16,7 @@ import { withThemeFromCookie } from "@dk3/shared-frontend/lib/withThemeFromCooki
 
 class MyApp extends App {
   render() {
-    const { Component, theme, pageProps, apolloClient } = this.props
+    const { Component, theme, router, pageProps, apolloClient } = this.props
 
     return (
       <Container>
@@ -43,10 +43,14 @@ class MyApp extends App {
                           </Link>
                           <HorizontalMenuItem
                             href="#"
-                            onClick={e => {
+                            onClick={async e => {
                               e.preventDefault()
-                              logout()
-                              apolloClient.resetStore()
+
+                              await logout()
+
+                              await apolloClient.resetStore()
+
+                              router.push("/")
                             }}
                           >
                             Logout
