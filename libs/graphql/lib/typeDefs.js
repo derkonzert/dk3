@@ -8,6 +8,7 @@ const typeDefs = gql`
   type User {
     id: String
     email: String
+    sendEmails: Boolean
     username: String
     upcomingEvents: [Event]
     skills: [String]
@@ -70,7 +71,8 @@ const typeDefs = gql`
 
   input UpdateSelfInput {
     id: ID!
-    username: String!
+    username: String
+    sendEmails: Boolean
   }
 
   type Mutation {

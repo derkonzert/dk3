@@ -58,6 +58,11 @@ const Schema = new mongoose.Schema({
     default: [],
   },
 
+  sendEmails: {
+    type: Boolean,
+    default: true,
+  },
+
   created: {
     type: Date,
     default: Date.now,

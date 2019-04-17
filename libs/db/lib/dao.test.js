@@ -182,7 +182,12 @@ describe("dao", () => {
   })
 
   describe("updateUser", () => {
-    const updateuUserData = { shortId: 1, username: "newname", other: "123" }
+    const updateUserData = {
+      shortId: 1,
+      username: "newname",
+      sendEmails: true,
+      other: "123",
+    }
     let findOneExec
     let findOneAndUpdateExec
 
@@ -196,23 +201,26 @@ describe("dao", () => {
     })
 
     it("calls findOneAndUpdate on User model", async () => {
-      await dao.updateUser(updateuUserData)
+      await dao.updateUser(updateUserData)
 
       expect(User.Model.findOneAndUpdate).toHaveBeenCalledWith(
         {
-          shortId: updateuUserData.shortId,
+          shortId: updateUserData.shortId,
         },
-        { username: updateuUserData.username }
+        {
+          username: updateUserData.username,
+          sendEmails: updateUserData.sendEmails,
+        }
       )
       expect(findOneAndUpdateExec).toHaveBeenCalledTimes(1)
     })
 
     it("returns result from User findOne", async () => {
-      const result = await dao.updateUser(updateuUserData)
+      const result = await dao.updateUser(updateUserData)
 
       expect(result).toBe(userDoc)
       expect(User.Model.findOne).toHaveBeenCalledWith({
-        shortId: updateuUserData.shortId,
+        shortId: updateUserData.shortId,
       })
     })
   })

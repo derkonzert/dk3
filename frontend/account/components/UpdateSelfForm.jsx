@@ -6,7 +6,8 @@ import { State } from "react-powerplug"
 
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { FancyButton } from "@dk3/ui/form/Button"
-import { TextInput } from "@dk3/ui/form/TextInput"
+import { TextInput, InputLabel } from "@dk3/ui/form/TextInput"
+import { Checkbox } from "@dk3/ui/form/Checkbox"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { Small, Link as UILink } from "@dk3/ui/atoms/Typography"
 import { currentUserQuery } from "@dk3/shared-frontend/lib/CurrentUser"
@@ -16,6 +17,7 @@ export const USER_DATA_FRAGMENT = gql`
   fragment UserData on User {
     id
     username
+    sendEmails
     email
   }
 `
@@ -70,6 +72,9 @@ export const UpdateSelfForm = ({ onCreated }) => {
             initial={{
               showSuccess: false,
               username: data.me.username,
+              usernameError: "",
+              sendEmails: data.me.sendEmails,
+              sendEmailsError: "",
               email: data.me.email,
             }}
           >
@@ -88,48 +93,86 @@ export const UpdateSelfForm = ({ onCreated }) => {
                 }}
               >
                 {updateSelf => {
+                  function saveChanges(state) {
+                    const { username, sendEmails } = state
+
+                    /* TODO: dont allow just any username */
+
+                    const formErrors = []
+
+                    if (username.trim().length < 2) {
+                      formErrors.push([
+                        "usernameError",
+                        "The username should at least have 2 characters",
+                      ])
+                    }
+
+                    if (formErrors.length) {
+                      setState(
+                        formErrors.reduce((errors, [field, errorMessage]) => {
+                          errors[field] = errorMessage
+                          return errors
+                        }, {})
+                      )
+
+                      return
+                    }
+
+                    updateSelf({
+                      variables: {
+                        input: {
+                          id: data.me.id,
+                          username: username.trim(),
+                          sendEmails: sendEmails,
+                        },
+                      },
+                    })
+                  }
                   return (
                     <Spacer pa={4}>
                       <form
                         data-add-event-form
                         onSubmit={e => {
-                          const { username } = state
-
                           e.preventDefault()
 
-                          /* TODO: dont allow just any username */
-
-                          updateSelf({
-                            variables: {
-                              input: {
-                                id: data.me.id,
-                                username: username.trim(),
-                              },
-                            },
-                          })
+                          saveChanges(state)
                         }}
                       >
+                        {state.showSuccess &&
+                          state.username === data.me.username && (
+                            <Message mb={3}>
+                              All changes have been saved
+                            </Message>
+                          )}
+
                         <TextInput
                           disabled
                           value={state.email}
                           name="email"
                           label="Email Address"
                         />
+                        <InputLabel>Notification Settings:</InputLabel>
+                        <Checkbox
+                          checked={state.sendEmails}
+                          error={state.sendEmailsError}
+                          name="sendEmails"
+                          onChange={e => {
+                            const checked = e.target.checked
+
+                            setState({ sendEmails: checked }, () => {
+                              saveChanges({ ...state, sendEmails: checked })
+                            })
+                          }}
+                          label="Send me emails to inform me about events and updates"
+                        />
 
                         <TextInput
                           value={state.username.trim()}
+                          error={state.usernameError}
                           name="username"
                           onChange={e => setState({ username: e.target.value })}
                           label="Username"
                         />
-
-                        {state.showSuccess &&
-                          state.username === data.me.username && (
-                            <Message>
-                              Your username is now &quot;
-                              {state.username}&quot;
-                            </Message>
-                          )}
 
                         <FancyButton
                           type="submit"

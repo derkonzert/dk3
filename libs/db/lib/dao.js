@@ -70,9 +70,9 @@ exports.allUsersCount = async () =>
   await User.Model.estimatedDocumentCount().exec()
 
 exports.updateUser = async ({ shortId, ...userData }) => {
-  const whiteListedUserData = ["username"].reduce(
+  const whiteListedUserData = ["username", "sendEmails"].reduce(
     (filteredUserData, allowedKey) => {
-      if (userData[allowedKey]) {
+      if (allowedKey in userData) {
         filteredUserData[allowedKey] = userData[allowedKey]
       }
       return filteredUserData
