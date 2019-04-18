@@ -1,12 +1,14 @@
 import React, { useRef, useEffect } from "react"
 
+import Link from "next/link"
 import { withRouter } from "next/router"
 import { Mutation, Query } from "react-apollo"
 import gql from "graphql-tag"
 import { State } from "react-powerplug"
 
+import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
-import { FancyButton } from "@dk3/ui/form/Button"
+import { ButtonLink, FancyButton } from "@dk3/ui/form/Button"
 import { TextInput } from "@dk3/ui/form/TextInput"
 import { TextArea } from "@dk3/ui/form/TextArea"
 import { Checkbox } from "@dk3/ui/form/Checkbox"
@@ -106,7 +108,7 @@ FormStatus.UNTOUCHED = "UNTOUCHED"
 FormStatus.TOUCHED = "TOUCHED"
 FormStatus.SAVING = "SAVING"
 
-export const UpdateEventForm = withRouter(({ id, router }) => {
+export const UpdateEventForm = withRouter(({ id }) => {
   return (
     <CurrentUser>
       {({ user }) =>
@@ -124,7 +126,7 @@ export const UpdateEventForm = withRouter(({ id, router }) => {
               return (
                 <State
                   initial={{
-                    formStatus: "",
+                    formStatus: FormStatus.UNTOUCHED,
                     formMessage: "", // custom message case of error
                     title: data.event.title || "",
                     titleError: "",
@@ -148,14 +150,9 @@ export const UpdateEventForm = withRouter(({ id, router }) => {
                       update={(cache, { data: { updateEvent } }) => {
                         updateCache(cache, EVENT_DATA, updateEvent)
 
-                        setState(
-                          {
-                            formStatus: FormStatus.SUCCESS,
-                          },
-                          () => {
-                            router.back()
-                          }
-                        )
+                        setState({
+                          formStatus: FormStatus.SUCCESS,
+                        })
                       }}
                     >
                       {updateEvent => {
@@ -351,9 +348,19 @@ export const UpdateEventForm = withRouter(({ id, router }) => {
                                 rows={5}
                               />
 
-                              <FancyButton type="submit" block mb={5}>
+                              <FancyButton type="submit" block pa={3} mb={3}>
                                 Save changes
                               </FancyButton>
+
+                              <Link
+                                passHref
+                                href={`/?eventId=${data.event.id}`}
+                                as={eventHref(data.event)}
+                              >
+                                <ButtonLink mb={4} block>
+                                  Back
+                                </ButtonLink>
+                              </Link>
                             </form>
                           </Spacer>
                         )

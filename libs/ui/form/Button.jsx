@@ -14,6 +14,8 @@ const buttonBaseStyle = css`
   font-weight: 600;
   line-height: 1.6rem;
   letter-spacing: -0.4px;
+  text-align: center;
+  color: inherit;
 
   flex: 1 1 auto;
 

@@ -87,7 +87,7 @@ export const EventDetail = ({ id }) => {
                         as={`/update-event/${event.id}`}
                         passHref
                       >
-                        <ButtonLink>Edit</ButtonLink>
+                        <ButtonLink ml={2}>Edit</ButtonLink>
                       </Link>
                     )}
                   </React.Fragment>
