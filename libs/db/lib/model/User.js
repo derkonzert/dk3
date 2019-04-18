@@ -65,7 +65,6 @@ const Schema = new mongoose.Schema({
 
   calendarToken: {
     type: String,
-    unique: true,
   },
 
   created: {
