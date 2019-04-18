@@ -214,7 +214,7 @@ export const UpdateEventForm = withRouter(({ id }) => {
                             {}
                           )
                           setState({
-                            formStatus: "saving",
+                            formStatus: FormStatus.SAVING,
                             ...allErrorsCleared,
                           })
 
