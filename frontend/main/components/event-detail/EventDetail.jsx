@@ -5,11 +5,11 @@ import Link from "next/link"
 
 import { DateTime } from "luxon"
 
-import { MegaTitle, Text, Link as UiLink } from "@dk3/ui/atoms/Typography"
+import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { Flex } from "@dk3/ui/atoms/Flex"
-import { ButtonLink } from "@dk3/ui/form/Button"
+import { ButtonLink, VeryFancyLink } from "@dk3/ui/form/Button"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 import { hasSkill } from "@dk3/shared-frontend/lib/hasSkill"
 import styled from "@emotion/styled"
@@ -72,9 +72,21 @@ export const EventDetail = ({ id }) => {
         if (loading) return <Spinner pv={6}>Loading</Spinner>
         const { event } = data
         const fromDt = DateTime.fromISO(event.from, {
-          setZone: "Europe/Berlin",
+          zone: "Europe/Berlin",
         })
-        const toDt = DateTime.fromISO(event.to, { setZone: "Europe/Berlin" })
+        const toDt = DateTime.fromISO(event.to, { zone: "Europe/Berlin" })
+
+        const hoursDiff = toDt.diff(fromDt, "hours").toObject()
+        let daysDiff
+
+        const isSingleDayEvent = hoursDiff.hours < 12
+
+        if (!isSingleDayEvent) {
+          daysDiff = toDt
+            .endOf("day")
+            .diff(fromDt.startOf("day"), "days")
+            .toObject()
+        }
 
         return (
           <Spacer ma={4} style={{ position: "relative" }}>
@@ -93,11 +105,24 @@ export const EventDetail = ({ id }) => {
               </Spacer>
             )}
             <Text>
-              {fromDt.toFormat("dd. MMMM yyyy")}
-              {", "}
-              {fromDt.toFormat("HH:mm")} &ndash; {toDt.toFormat("HH:mm")} Uhr
-              <br />
-              {event.location}
+              {isSingleDayEvent ? (
+                <React.Fragment>
+                  {fromDt.toFormat("dd. MMMM yyyy")}
+                  {", "}
+                  {fromDt.toFormat("HH:mm")} &ndash; {toDt.toFormat("HH:mm")}
+                  <br />
+                  at {event.location}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {fromDt.toFormat("dd. MMMM yyyy")}, {fromDt.toFormat("HH:mm")}
+                  {" – "}
+                  {toDt.toFormat("dd. MMMM")}, {toDt.toFormat("HH:mm")}
+                  <br />
+                  {`${Math.round(daysDiff.days)} days event at `}
+                  {event.location}
+                </React.Fragment>
+              )}
             </Text>
             <hr />
             <Flex justifyContent="space-between" alignItems="center">
@@ -148,12 +173,20 @@ export const EventDetail = ({ id }) => {
               </div>
             </Flex>
             <hr />
-            {!!event.description && (
+            {event.description ? (
               <Spacer mv={2}>
                 <RichText value={event.description} />
               </Spacer>
+            ) : (
+              <Text>No further description available at the moment.</Text>
             )}
-            {!!event.url && <UiLink href={event.url}>Tickets</UiLink>}
+            {!!event.url && (
+              <Spacer mt={4}>
+                <VeryFancyLink ph={4} pv={3} href={event.url}>
+                  Buy Tickets
+                </VeryFancyLink>
+              </Spacer>
+            )}
           </Spacer>
         )
       }}
