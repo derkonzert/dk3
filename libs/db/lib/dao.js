@@ -116,6 +116,16 @@ exports.createEvent = async (
   return event
 }
 
+exports.updateEvent = async ({ shortId, ...eventData }) => {
+  try {
+    await Event.Model.findOneAndUpdate({ shortId }, { ...eventData }).exec()
+
+    return await exports.eventByShortId(shortId)
+  } catch (err) {
+    throw err
+  }
+}
+
 exports.bookmarkEvent = async ({ eventShortId, bookmarked, userId }) => {
   try {
     const operation = bookmarked ? "$push" : "$pull"

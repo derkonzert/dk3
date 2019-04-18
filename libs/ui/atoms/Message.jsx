@@ -13,7 +13,17 @@ export const Message = withSpacing({ pv: 2, ph: 3 })(styled(Base)`
   background-color: ${({ theme }) => theme.colors.messageBackground};
 `)
 
+export const SuccessMessage = withSpacing({ pv: 2, ph: 3 })(styled(Base)`
+  color: ${({ theme }) => theme.colors.messageColorSuccess};
+  background-color: ${({ theme }) => theme.colors.messageBackgroundSuccess};
+`)
+
 export const ErrorMessage = withSpacing({ pv: 2, ph: 3 })(styled(Base)`
-  color: ${({ theme }) => theme.colors.errorMessageColor};
-  background-color: ${({ theme }) => theme.colors.errorMessageBackground};
+  color: ${({ theme }) => theme.colors.messageColorError};
+  background-color: ${({ theme }) => theme.colors.messageBackgroundError};
+`)
+
+export const WarningMessage = withSpacing({ pv: 2, ph: 3 })(styled(Base)`
+  color: ${({ theme }) => theme.colors.messageColorWarning};
+  background-color: ${({ theme }) => theme.colors.messageBackgroundWarning};
 `)

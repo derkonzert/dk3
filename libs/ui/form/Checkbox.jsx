@@ -16,26 +16,29 @@ export const Fill = styled.div`
 
   input[type="checkbox"] {
     margin-right: 1rem;
+    flex: 0 0 auto;
   }
 `
 
+export const Label = styled.span`
+  flex: 1 1 auto;
+`
+
 export const Checkbox = withSpacing({ mb: 3 })(
-  ({
-    label,
-    valid,
-    validate,
-    error,
-    description,
-    name,
-    className,
-    ...props
-  }) => (
+  ({ label, error, description, name, className, checked, ...props }) => (
     <div className={className}>
-      <InputBorder validate={validate} valid={valid}>
+      <InputBorder validate={checked} valid={checked}>
         <Fill>
           {(!!label || !!description) && (
             <InputLabel htmlFor={name}>
-              <input type="checkbox" {...props} id={name} name={name} /> {label}
+              <input
+                checked={checked}
+                type="checkbox"
+                {...props}
+                id={name}
+                name={name}
+              />
+              <Label>{label}</Label>
             </InputLabel>
           )}
           {!!description && <InputDescription>{description}</InputDescription>}

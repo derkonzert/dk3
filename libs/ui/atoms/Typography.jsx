@@ -120,5 +120,3 @@ export const Link = withSpacing()(styled.a`
     box-decoration-break: clone;
   }
 `)
-
-export const ButtonLink = Link.withComponent("button")

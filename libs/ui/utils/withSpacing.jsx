@@ -99,9 +99,11 @@ export const mapPropsToStyles = props => {
 
 export const withSpacing = defaultProps => Component => {
   /* TODO: remove spacing props, so they don't get rendered in Component */
-  const ComposedComponent = styled(props => (
-    <Component {...cleanProps(props)} />
-  ))(mapPropsToStyles)
+  const ComposedComponent = styled(
+    React.forwardRef((props, ref) => (
+      <Component ref={ref} {...cleanProps(props)} />
+    ))
+  )(mapPropsToStyles)
 
   ComposedComponent.defaultProps = defaultProps
 

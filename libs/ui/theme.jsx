@@ -51,11 +51,17 @@ const defaultTheme = {
     checkboxColor: "#ababab",
     checkboxColorActive: "white",
 
-    messageBackground: "rgba(30, 232, 57, 0.18)",
-    messageColor: "rgb(11, 121, 56)",
+    messageBackground: "rgba(0, 0, 0, 0.15)",
+    messageColor: "rgb(74, 74, 74)",
 
-    errorMessageBackground: "rgba(210, 57, 57, 0.08)",
-    errorMessageColor: "#d23939",
+    messageBackgroundSuccess: "rgba(30, 232, 57, 0.18)",
+    messageColorSuccess: "rgb(11, 121, 56)",
+
+    messageBackgroundError: "rgba(210, 57, 57, 0.08)",
+    messageColorError: "#d23939",
+
+    messageBackgroundWarning: "rgba(241, 143, 38, 0.18)",
+    messageColorWarning: "#9c5405",
   },
 }
 

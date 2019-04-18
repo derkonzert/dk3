@@ -98,6 +98,17 @@
       }
     },
     {
+      "src": "/update-event/(?<eventId>.*)$",
+      "methods": ["GET"],
+      "dest": "frontend/main/update-event?eventId=$eventId",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
+    },
+    {
       "src": "/add-new-event$",
       "methods": ["GET"],
       "dest": "frontend/main/index?addEvent=true",

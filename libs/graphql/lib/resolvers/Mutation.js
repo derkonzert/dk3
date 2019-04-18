@@ -1,4 +1,5 @@
 const { generateBasicToken } = require("@dk3/auth-utils")
+const userSkills = require("@dk3/db/lib/model/userSkills")
 
 exports.Mutation = {
   createEvent: async (parent, args, { dao, user }) => {
@@ -11,7 +12,7 @@ exports.Mutation = {
     const { id, bookmarked } = args.input
 
     if (!user) {
-      throw new Error("Unauthorized request")
+      throw new Error("Unauthenticated request")
     }
 
     return await dao.bookmarkEvent({
@@ -25,7 +26,7 @@ exports.Mutation = {
     const { id, approved } = args.input
 
     if (!user) {
-      throw new Error("Unauthorized request")
+      throw new Error("Unauthenticated request")
     }
 
     const userModel = await dao.userById(user._id)
@@ -40,8 +41,33 @@ exports.Mutation = {
     })
   },
 
+  updateEvent: async (parent, args, { dao, user }) => {
+    const { id, ...updateValues } = args.input
+
+    if (!user) {
+      throw new Error("Unauthenticated request")
+    }
+
+    const userModel = await dao.userById(user._id)
+
+    if (!userModel.hasSkill(userSkills.UPDATE_EVENT)) {
+      throw new Error("Unauthorized request")
+    }
+
+    const result = await dao.updateEvent({
+      shortId: id,
+      ...updateValues,
+    })
+
+    return result
+  },
+
   updateSelf: async (parent, args, { dao, user }) => {
     const { id, ...updateValues } = args.input
+
+    if (!user) {
+      throw new Error("Unauthenticated request")
+    }
 
     if (user.shortId !== id) {
       throw new Error("Unauthorized request")
@@ -57,6 +83,10 @@ exports.Mutation = {
 
   updateCalendarToken: async (parent, args, { dao, user }) => {
     const { id, enableCalendar } = args.input
+
+    if (!user) {
+      throw new Error("Unauthenticated request")
+    }
 
     if (user.shortId !== id) {
       throw new Error("Unauthorized request")

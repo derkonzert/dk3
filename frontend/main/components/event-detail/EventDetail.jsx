@@ -1,14 +1,18 @@
 import React from "react"
 import { Query } from "react-apollo"
 import gql from "graphql-tag"
+import Link from "next/link"
 
 import { DateTime } from "luxon"
 
-import { MegaTitle, Text, Link } from "@dk3/ui/atoms/Typography"
+import { MegaTitle, Text, Link as UILink } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
+import { ButtonLink } from "@dk3/ui/form/Button"
 import { ApproveEventButton } from "../form/ApproveEventButton"
 import RichText from "../../../../libs/rtxt/react"
+import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
+import { hasSkill } from "@dk3/shared-frontend/lib/hasSkill"
 
 export const EVENT_DETAIL_FRAGMENT = gql`
   fragment EventDetailEvent on Event {
@@ -64,13 +68,31 @@ export const EventDetail = ({ id }) => {
             <hr />
             <Text>
               <strong>Anonymously</strong> submitted
-              <ApproveEventButton
-                ml={2}
-                eventId={event.id}
-                approved={event.approved}
-              >
-                Approve
-              </ApproveEventButton>
+              <CurrentUser>
+                {({ user }) => (
+                  <React.Fragment>
+                    {hasSkill(user, "APPROVE_EVENT") && (
+                      <ApproveEventButton
+                        ml={2}
+                        eventId={event.id}
+                        approved={event.approved}
+                      >
+                        Approve
+                      </ApproveEventButton>
+                    )}
+
+                    {hasSkill(user, "UPDATE_EVENT") && (
+                      <Link
+                        href={`/update-event?eventId=${event.id}`}
+                        as={`/update-event/${event.id}`}
+                        passHref
+                      >
+                        <ButtonLink>Edit</ButtonLink>
+                      </Link>
+                    )}
+                  </React.Fragment>
+                )}
+              </CurrentUser>
             </Text>
             <hr />
             {!!event.description && (
@@ -78,7 +100,7 @@ export const EventDetail = ({ id }) => {
                 <RichText value={event.description} />
               </Spacer>
             )}
-            {!!event.url && <Link href={event.url}>Tickets</Link>}
+            {!!event.url && <UILink href={event.url}>Tickets</UILink>}
           </Spacer>
         )
       }}

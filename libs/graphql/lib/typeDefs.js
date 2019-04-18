@@ -60,6 +60,17 @@ const typeDefs = gql`
     to: Date
   }
 
+  input UpdateEventInput {
+    id: ID!
+    title: String
+    location: String
+    url: String
+    from: Date
+    description: String
+    to: Date
+    approved: Boolean
+  }
+
   input ApproveEventInput {
     id: ID!
     approved: Boolean!
@@ -83,6 +94,7 @@ const typeDefs = gql`
 
   type Mutation {
     createEvent(input: CreateEventInput!): Event
+    updateEvent(input: UpdateEventInput!): Event
     approveEvent(input: ApproveEventInput!): Event
     bookmarkEvent(input: BookmarkEventInput!): Event
 
