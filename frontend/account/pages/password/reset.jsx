@@ -87,34 +87,39 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
             }}
           >
             {state.formError && <ErrorMessage>{state.formError}</ErrorMessage>}
-            {state.formSuccess && (
-              <Message>Your new password has been set!</Message>
+            {state.formSuccess ? (
+              <React.Fragment>
+                <Message>Your new password is now saved!</Message>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <TextInput
+                  mv={3}
+                  type="password"
+                  name="password"
+                  error={state.passwordError}
+                  label="New Password"
+                  value={state.password}
+                  required
+                  onChange={e => {
+                    setState({ password: e.target.value })
+                  }}
+                />
+                <TextInput
+                  mv={3}
+                  type="password"
+                  name="password-repeat"
+                  error={state.passwordRepeatError}
+                  label="Repeat New Password"
+                  value={state.passwordRepeat}
+                  required
+                  onChange={e => {
+                    setState({ passwordRepeat: e.target.value })
+                  }}
+                />
+                <FancyButton type="submit">Set New Password</FancyButton>
+              </React.Fragment>
             )}
-            <TextInput
-              mv={3}
-              type="password"
-              name="password"
-              error={state.passwordError}
-              label="New Password"
-              value={state.password}
-              required
-              onChange={e => {
-                setState({ password: e.target.value })
-              }}
-            />
-            <TextInput
-              mv={3}
-              type="password"
-              name="password-repeat"
-              error={state.passwordRepeatError}
-              label="Repeat New Password"
-              value={state.passwordRepeat}
-              required
-              onChange={e => {
-                setState({ passwordRepeat: e.target.value })
-              }}
-            />
-            <FancyButton type="submit">Set New Password</FancyButton>
           </form>
         )}
       </State>

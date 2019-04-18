@@ -38,6 +38,7 @@ const Btn = styled.button`
   ${buttonBaseStyle};
   ${buttonBlockModifier};
 
+  background-color: transparent;
   color: ${({ theme }) => theme.colors.buttonColor};
   box-shadow: inset 0 0 0 0.1rem ${({ theme }) => theme.colors.buttonBorder};
 

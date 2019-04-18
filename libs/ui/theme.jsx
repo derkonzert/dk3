@@ -103,7 +103,7 @@ const darkTheme = {
 
     horizontalMenuColor: "#e9e9e9",
 
-    hr: "#e2e2e2",
+    hr: "rgb(56, 56, 56)",
 
     buttonColor: "white",
     buttonBorder: "rgba(255, 255, 255, 0.25)",
