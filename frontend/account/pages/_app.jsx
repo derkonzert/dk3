@@ -17,7 +17,7 @@ import { withThemeFromCookie } from "@dk3/shared-frontend/lib/withThemeFromCooki
 
 class MyApp extends App {
   render() {
-    const { Component, theme, router, pageProps, apolloClient } = this.props
+    const { Component, theme, pageProps, apolloClient } = this.props
 
     return (
       <Container>
@@ -64,7 +64,7 @@ class MyApp extends App {
 
                                   await apolloClient.resetStore()
 
-                                  router.push("/")
+                                  window.location.href = "/"
                                 }}
                               >
                                 Logout

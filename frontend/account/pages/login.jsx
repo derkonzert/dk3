@@ -1,11 +1,10 @@
 import React from "react"
-import { withRouter } from "next/router"
 
 import { Description, ListTitle } from "@dk3/ui/atoms/Typography"
 
 import { LoginForm } from "@dk3/shared-frontend/form/LoginForm"
 
-export default withRouter(function Index({ router, isLoggedIn }) {
+export default function Index({ isLoggedIn }) {
   return (
     <React.Fragment>
       <ListTitle>Login</ListTitle>
@@ -17,11 +16,11 @@ export default withRouter(function Index({ router, isLoggedIn }) {
           <Description>Enter your credentials to sign in</Description>
           <LoginForm
             onLogin={() => {
-              router.push("/", "/")
+              window.location.href = "/"
             }}
           />
         </React.Fragment>
       )}
     </React.Fragment>
   )
-})
+}

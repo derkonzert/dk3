@@ -21,7 +21,7 @@ export default function Index({ isLoggedIn }) {
           <UpdateSelfForm />
         </React.Fragment>
       ) : (
-        <Link href="login" passHref>
+        <Link href="/login" as="/account/login" passHref>
           <UILink>Please login</UILink>
         </Link>
       )}
