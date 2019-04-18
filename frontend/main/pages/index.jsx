@@ -1,6 +1,5 @@
 import React from "react"
 import { withRouter } from "next/router"
-import Link from "next/link"
 import dynamic from "next/dynamic"
 
 import {
@@ -13,7 +12,7 @@ import { EventList } from "../components/list/EventList"
 import { WhoAmI } from "../components/WhoAmI"
 
 import { VeryFancyButton } from "@dk3/ui/form/Button"
-import { MegaTitle, Text, Link as UiLink } from "@dk3/ui/atoms/Typography"
+import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
 import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
@@ -44,7 +43,7 @@ export default withRouter(function Index({ router }) {
   const showDetail = !!eventId || !!addEvent
   const closeDetail = e => {
     e.preventDefault()
-    router.back()
+    router.push("/")
   }
 
   return (
@@ -87,11 +86,6 @@ export default withRouter(function Index({ router }) {
         {!!eventId && (
           <React.Fragment>
             <DynamicEventDetail id={eventId} />
-            <Spacer mh={4} mb={5}>
-              <Link href="/">
-                <UiLink onClick={closeDetail}>Close</UiLink>
-              </Link>
-            </Spacer>
           </React.Fragment>
         )}
         {!!addEvent && (

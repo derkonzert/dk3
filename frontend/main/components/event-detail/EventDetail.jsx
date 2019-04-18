@@ -5,7 +5,7 @@ import Link from "next/link"
 
 import { DateTime } from "luxon"
 
-import { MegaTitle, Text, Link as UILink } from "@dk3/ui/atoms/Typography"
+import { MegaTitle, Text, Link as UiLink } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { ButtonLink } from "@dk3/ui/form/Button"
@@ -13,6 +13,7 @@ import { ApproveEventButton } from "../form/ApproveEventButton"
 import RichText from "../../../../libs/rtxt/react"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 import { hasSkill } from "@dk3/shared-frontend/lib/hasSkill"
+import styled from "@emotion/styled"
 
 export const EVENT_DETAIL_FRAGMENT = gql`
   fragment EventDetailEvent on Event {
@@ -39,6 +40,19 @@ export const EVENT_DETAIL = gql`
   ${EVENT_DETAIL_FRAGMENT}
 `
 
+const EventDetailClose = styled.a`
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 5rem;
+  line-height: 1.2;
+  width: 4rem;
+  text-align: center;
+  text-decoration: none;
+  font-family: "IBM Plex Serif";
+  color: ${({ theme }) => theme.colors.text};
+`
+
 export const EventDetail = ({ id }) => {
   return (
     <Query query={EVENT_DETAIL} variables={{ id }}>
@@ -51,8 +65,16 @@ export const EventDetail = ({ id }) => {
         const toDt = DateTime.fromISO(event.to)
 
         return (
-          <Spacer pa={4}>
-            <MegaTitle mb={3}>{event.title}</MegaTitle>
+          <Spacer ma={4} style={{ position: "relative" }}>
+            <MegaTitle mr={5} mb={3}>
+              {event.title}
+            </MegaTitle>
+
+            <Link href="/" passHref>
+              <EventDetailClose title="Close detail page">
+                &times;
+              </EventDetailClose>
+            </Link>
             {!event.approved && (
               <Spacer mb={2} style={{ color: "red" }}>
                 Event has not yet been checked for validity
@@ -100,7 +122,7 @@ export const EventDetail = ({ id }) => {
                 <RichText value={event.description} />
               </Spacer>
             )}
-            {!!event.url && <UILink href={event.url}>Tickets</UILink>}
+            {!!event.url && <UiLink href={event.url}>Tickets</UiLink>}
           </Spacer>
         )
       }}

@@ -3,7 +3,7 @@ import styled from "@emotion/styled"
 import { noMargin, gradientBackground } from "../common"
 import { withSpacing } from "../utils/withSpacing"
 
-export const MegaTitle = styled.h1`
+export const MegaTitle = withSpacing()(styled.h1`
   position: relative;
   display: inline-block;
   font-size: 3.2rem;
@@ -26,7 +26,7 @@ export const MegaTitle = styled.h1`
 
     ${gradientBackground};
   }
-`
+`)
 
 export const Title = withSpacing()(styled.h2`
   ${noMargin}
