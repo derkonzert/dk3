@@ -6,15 +6,13 @@ import { State } from "react-powerplug"
 
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 
-import { Spacer } from "@dk3/ui/atoms/Spacer"
-
-import { Message } from "@dk3/ui/atoms/Message"
+import { ErrorMessage } from "@dk3/ui/atoms/Message"
 import { TextArea } from "@dk3/ui/form/TextArea"
 import { Button, VeryFancyLink } from "@dk3/ui/form/Button"
-import { Text, ListTitle, SubTitle, Small } from "@dk3/ui/atoms/Typography"
+import { Hr, Text, ListTitle, SubTitle, Small } from "@dk3/ui/atoms/Typography"
 
 export const USER_DATA_FRAGMENT = gql`
-  fragment UserData on User {
+  fragment UserCalendarData on User {
     id
     calendarToken
   }
@@ -23,7 +21,7 @@ export const USER_DATA_FRAGMENT = gql`
 export const USER_DATA = gql`
   query {
     me {
-      ...UserData
+      ...UserCalendarData
     }
   }
   ${USER_DATA_FRAGMENT}
@@ -32,7 +30,7 @@ export const USER_DATA = gql`
 export const UPDATE_CALENDAR_TOKEN = gql`
   mutation updateCalendarToken($input: UpdateCalendarTokenInput!) {
     updateCalendarToken(input: $input) {
-      ...UserData
+      ...UserCalendarData
     }
   }
   ${USER_DATA_FRAGMENT}
@@ -42,25 +40,29 @@ export default function UpdateCalendarSettingForm() {
   return (
     <React.Fragment>
       <ListTitle mb={2}>Calendar Integration</ListTitle>
-      <Text>
+      <Text mv={3}>
         {
           "With this integration, you can have all events that you've bookmarked here, synced into your calendar."
         }
       </Text>
+      <Hr mv={4} />
       <Query query={USER_DATA}>
         {({ loading, error, data }) => {
           if (error) {
-            return <div>{error.message}</div>
+            return <ErrorMessage>{error.message}</ErrorMessage>
           }
 
           if (loading) {
             return <Spinner />
           }
 
+          if (!data.me) {
+            return <ErrorMessage>{"You're not logged in"}</ErrorMessage>
+          }
+
           return (
             <State
               initial={{
-                showSuccess: false,
                 enableCalendar: !!data.me.calendarToken,
               }}
             >
@@ -95,104 +97,95 @@ export default function UpdateCalendarSettingForm() {
                       })
                     }
                     return (
-                      <Spacer pa={4}>
-                        <form
-                          data-add-event-form
-                          onSubmit={e => {
-                            e.preventDefault()
+                      <form
+                        data-add-event-form
+                        onSubmit={e => {
+                          e.preventDefault()
 
-                            saveChanges(state)
-                          }}
-                        >
-                          {state.showSuccess &&
-                            state.username === data.me.username && (
-                              <Message mb={3}>
-                                All changes have been saved
-                              </Message>
-                            )}
+                          saveChanges(state)
+                        }}
+                      >
+                        {data.me.calendarToken ? (
+                          <React.Fragment>
+                            <SubTitle>Setup</SubTitle>
+                            <Text mv={3}>
+                              Try clicking the following button, to integrate
+                              the derkonzert calendar subscription with your
+                              calendar setup
+                            </Text>
+                            <VeryFancyLink
+                              href={`webcal://stage.dk3.tech/webcal/${
+                                data.me.calendarToken
+                              }.ics`}
+                            >
+                              Integrate Into Calendar App
+                            </VeryFancyLink>
 
-                          {data.me.calendarToken ? (
-                            <React.Fragment>
-                              <SubTitle>Setup</SubTitle>
-                              <Text mv={3}>
-                                Try clicking the following button, to integrate
-                                the derkonzert calendar subscription with your
-                                calendar setup
-                              </Text>
-                              <VeryFancyLink
-                                href={`webcal://stage.dk3.tech/webcal/${
-                                  data.me.calendarToken
-                                }.ics`}
-                              >
-                                Integrate Into Calendar App
-                              </VeryFancyLink>
+                            <Text mv={3}>
+                              Or copy the following url and use your calendars
+                              add subscription feature:
+                            </Text>
 
-                              <Text mv={3}>
-                                Or copy the following url and use your calendars
-                                add subscription feature:
-                              </Text>
+                            <TextArea
+                              mb={0}
+                              readOnly
+                              rows={5}
+                              value={`webcal://stage.dk3.tech/webcal/${
+                                data.me.calendarToken
+                              }.ics`}
+                              onFocus={e => {
+                                try {
+                                  e.target.setSelectionRange(
+                                    0,
+                                    e.target.value.length
+                                  )
+                                } catch (err) {
+                                  // Fail silently
+                                }
+                              }}
+                            />
 
-                              <TextArea
-                                mb={0}
-                                readOnly
-                                rows={5}
-                                value={`webcal://stage.dk3.tech/webcal/${
-                                  data.me.calendarToken
-                                }.ics`}
-                                onFocus={e => {
-                                  try {
-                                    e.target.setSelectionRange(
-                                      0,
-                                      e.target.value.length
-                                    )
-                                  } catch (err) {
-                                    // Fail silently
-                                  }
-                                }}
-                              />
+                            <Text mb={3}>
+                              <Small>
+                                {
+                                  "This is your personal URL, don't give it to anyone."
+                                }
+                              </Small>
+                            </Text>
 
-                              <Text mb={3}>
-                                <Small>
-                                  {
-                                    "This is your personal URL, don't give it to anyone."
-                                  }
-                                </Small>
-                              </Text>
-
-                              <SubTitle mt={5}>Disable Integration</SubTitle>
-                              <Text mv={3}>
-                                Note that you will have to setup your calendar
-                                completely new, if it was disabled for once
-                              </Text>
-                              <Button
-                                onClick={() => {
-                                  setState({ enableCalendar: false }, () => {
-                                    saveChanges({
-                                      ...state,
-                                      enableCalendar: false,
-                                    })
-                                  })
-                                }}
-                              >
-                                Turn off
-                              </Button>
-                            </React.Fragment>
-                          ) : (
+                            <SubTitle mt={5}>Disable Integration</SubTitle>
+                            <Text mv={3}>
+                              Note that you will have to setup your calendar
+                              completely new, if it was disabled for once
+                            </Text>
                             <Button
                               onClick={() => {
-                                setState({ enableCalendar: true }, () => {
+                                setState({ enableCalendar: false }, () => {
                                   saveChanges({
                                     ...state,
-                                    enableCalendar: true,
+                                    enableCalendar: false,
                                   })
                                 })
                               }}
                             >
-                              Enable calendar integration
+                              Turn off
                             </Button>
-                          )}
-                        </form>
-                      </Spacer>
+                          </React.Fragment>
+                        ) : (
+                          <Button
+                            onClick={() => {
+                              setState({ enableCalendar: true }, () => {
+                                saveChanges({
+                                  ...state,
+                                  enableCalendar: true,
+                                })
+                              })
+                            }}
+                          >
+                            Enable calendar integration
+                          </Button>
+                        )}
+                      </form>
                     )
                   }}
                 </Mutation>

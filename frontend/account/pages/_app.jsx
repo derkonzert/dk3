@@ -38,15 +38,19 @@ class MyApp extends App {
                           ↩︎ Back to derkonzert
                         </HorizontalMenuItem>
 
-                        <div>
+                        <Flex justifyItems="flex-end">
                           {isLoggedIn ? (
                             <React.Fragment>
-                              <Link href="/account/" passHref>
+                              <Link href="/" as="/account" passHref>
                                 <HorizontalMenuItem>
                                   Settings
                                 </HorizontalMenuItem>
                               </Link>
-                              <Link href="/account/calendar" passHref>
+                              <Link
+                                href="/calendar"
+                                as="/account/calendar"
+                                passHref
+                              >
                                 <HorizontalMenuItem>
                                   Calendar
                                 </HorizontalMenuItem>
@@ -68,15 +72,19 @@ class MyApp extends App {
                             </React.Fragment>
                           ) : (
                             <React.Fragment>
-                              <Link href="/account/login" passHref>
+                              <Link href="/login" as="/account/login" passHref>
                                 <HorizontalMenuItem>Login</HorizontalMenuItem>
                               </Link>
-                              <Link href="/account/signup" passHref>
+                              <Link
+                                href="/signup"
+                                as="/account/signup"
+                                passHref
+                              >
                                 <HorizontalMenuItem>Sign Up</HorizontalMenuItem>
                               </Link>
                             </React.Fragment>
                           )}
-                        </div>
+                        </Flex>
                       </Flex>
                     </HorizontalMenu>
                     <PageWrapper>

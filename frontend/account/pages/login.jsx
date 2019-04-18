@@ -17,7 +17,7 @@ export default withRouter(function Index({ router, isLoggedIn }) {
           <Description>Enter your credentials to sign in</Description>
           <LoginForm
             onLogin={() => {
-              router.go("/")
+              router.push("/", "/")
             }}
           />
         </React.Fragment>

@@ -11,7 +11,7 @@ import { Spacer } from "@dk3/ui/atoms/Spacer"
 export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
   return (
     <State initial={{ email: "", password: "", message: "", loading: false }}>
-      {({ state, setState, resetState }) => (
+      {({ state, setState }) => (
         <form
           onSubmit={e => {
             setState({ loading: true })
@@ -50,8 +50,6 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
                 }
               })
               .then(() => {
-                resetState()
-
                 onLogin && onLogin()
               })
               .catch(err => {

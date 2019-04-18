@@ -219,7 +219,7 @@ export const UpdateSelfForm = ({ onCreated }) => {
                         Save new username
                       </FancyButton>
 
-                      <Link href="/account/password" passHref>
+                      <Link href="/password" as="/account/password" passHref>
                         <UILink>
                           <Small>Change Password</Small>
                         </UILink>

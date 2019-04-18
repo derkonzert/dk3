@@ -9,7 +9,7 @@ import { UpdateSelfForm } from "../components/UpdateSelfForm"
 export default function Index({ isLoggedIn }) {
   return (
     <React.Fragment>
-      <ListTitle>Settings</ListTitle>
+      <ListTitle mb={3}>Settings</ListTitle>
 
       {isLoggedIn ? (
         <React.Fragment>
@@ -17,11 +17,11 @@ export default function Index({ isLoggedIn }) {
             This is the place for all available account settings, so you can
             adjust derkonzert to the way you like it.
           </Text>
-          <Hr />
+          <Hr mv={4} />
           <UpdateSelfForm />
         </React.Fragment>
       ) : (
-        <Link href="login">
+        <Link href="login" passHref>
           <UILink>Please login</UILink>
         </Link>
       )}
