@@ -9,7 +9,6 @@ import {
 } from "@dk3/ui/layouts/ListAndDetail"
 
 import { EventList } from "../components/list/EventList"
-import { WhoAmI } from "../components/WhoAmI"
 
 import { VeryFancyButton } from "@dk3/ui/form/Button"
 import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
@@ -50,21 +49,19 @@ export default withRouter(function Index({ router }) {
     <ListAndDetail showDetail={showDetail}>
       <ListAndDetailMain>
         <HeaderMenu />
-        <Header>
-          <MegaTitle>derkonzert</MegaTitle>
-          <CurrentUser ssr={false}>
-            {({ isLoggedIn }) =>
-              isLoggedIn ? null : (
-                <Text>
-                  {
-                    "derkonzert is a simple list of concerts in Munich. It's supposed to be a haystack of needles, without any boundaries to any specific music style."
-                  }
-                </Text>
-              )
-            }
-          </CurrentUser>
-          <WhoAmI />
-        </Header>
+        <CurrentUser>
+          {({ isLoggedIn }) => (
+            <Header compact={isLoggedIn}>
+              <MegaTitle>derkonzert</MegaTitle>
+
+              <Text>
+                {
+                  "derkonzert is a simple list of concerts in Munich. It's supposed to be a haystack of needles, without any boundaries to any specific music style."
+                }
+              </Text>
+            </Header>
+          )}
+        </CurrentUser>
 
         <Spacer pa={4}>
           <EventList />

@@ -8,9 +8,11 @@ import {
   HorizontalMenuItem,
 } from "@dk3/ui/components/HorizontalMenu"
 
+const HorizontalMenuItemInfo = HorizontalMenuItem.withComponent("span")
+
 export const HeaderMenu = () => (
   <CurrentUser>
-    {({ isLoggedIn, loading }) => {
+    {({ isLoggedIn, loading, user }) => {
       if (loading) {
         return <Spinner />
       }
@@ -18,20 +20,21 @@ export const HeaderMenu = () => (
       return (
         <HorizontalMenu>
           {isLoggedIn ? (
-            <Link href="/account/">
-              <HorizontalMenuItem href="/account/">Account</HorizontalMenuItem>
-            </Link>
+            <React.Fragment>
+              <HorizontalMenuItemInfo>
+                Hi {user.username}
+              </HorizontalMenuItemInfo>
+              <Link href="/account/" passHref>
+                <HorizontalMenuItem>Account</HorizontalMenuItem>
+              </Link>
+            </React.Fragment>
           ) : (
             <React.Fragment>
-              <Link href="/account/login">
-                <HorizontalMenuItem href="/account/login">
-                  Login
-                </HorizontalMenuItem>
+              <Link href="/account/login" passHref>
+                <HorizontalMenuItem>Login</HorizontalMenuItem>
               </Link>
-              <Link href="/account/signup">
-                <HorizontalMenuItem href="/account/signup">
-                  Sign Up
-                </HorizontalMenuItem>
+              <Link href="/account/signup" passHref>
+                <HorizontalMenuItem>Sign Up</HorizontalMenuItem>
               </Link>
             </React.Fragment>
           )}
