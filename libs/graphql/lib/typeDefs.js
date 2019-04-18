@@ -9,6 +9,7 @@ const typeDefs = gql`
     id: String
     email: String
     sendEmails: Boolean
+    publicUsername: Boolean
     username: String
     upcomingEvents: [Event]
     skills: [String]
@@ -85,6 +86,7 @@ const typeDefs = gql`
     id: ID!
     username: String
     sendEmails: Boolean
+    publicUsername: Boolean
   }
 
   input UpdateCalendarTokenInput {

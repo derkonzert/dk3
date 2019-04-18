@@ -2,7 +2,7 @@ import React from "react"
 
 import Link from "next/link"
 
-import { Link as UILink, ListTitle } from "@dk3/ui/atoms/Typography"
+import { Hr, Link as UILink, ListTitle, Text } from "@dk3/ui/atoms/Typography"
 
 import { UpdateSelfForm } from "../components/UpdateSelfForm"
 
@@ -13,6 +13,11 @@ export default function Index({ isLoggedIn }) {
 
       {isLoggedIn ? (
         <React.Fragment>
+          <Text mv={3}>
+            This is the place for all available account settings, so you can
+            adjust derkonzert to the way you like it.
+          </Text>
+          <Hr />
           <UpdateSelfForm />
         </React.Fragment>
       ) : (

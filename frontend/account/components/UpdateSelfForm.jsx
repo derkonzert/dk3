@@ -6,18 +6,20 @@ import { State } from "react-powerplug"
 
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { FancyButton } from "@dk3/ui/form/Button"
-import { TextInput, InputLabel } from "@dk3/ui/form/TextInput"
+import { TextInput } from "@dk3/ui/form/TextInput"
 import { Checkbox } from "@dk3/ui/form/Checkbox"
-import { Spacer } from "@dk3/ui/atoms/Spacer"
-import { Small, Link as UILink } from "@dk3/ui/atoms/Typography"
+
+import { Small, Link as UILink, SubTitle, Text } from "@dk3/ui/atoms/Typography"
+import { ErrorMessage } from "@dk3/ui/atoms/Message"
 import { currentUserQuery } from "@dk3/shared-frontend/lib/CurrentUser"
-import { Message } from "@dk3/ui/atoms/Message"
+import { SuccessMessage } from "@dk3/ui/atoms/Message"
 
 export const USER_DATA_FRAGMENT = gql`
   fragment UserData on User {
     id
     username
     sendEmails
+    publicUsername
     email
   }
 `
@@ -60,11 +62,15 @@ export const UpdateSelfForm = ({ onCreated }) => {
     <Query query={USER_DATA}>
       {({ loading, error, data }) => {
         if (error) {
-          return <div>{error.message}</div>
+          return <ErrorMessage>{error.message}</ErrorMessage>
         }
 
         if (loading) {
           return <Spinner />
+        }
+
+        if (!data.me) {
+          return <ErrorMessage>{"You're not logged in"}</ErrorMessage>
         }
 
         return (
@@ -73,6 +79,8 @@ export const UpdateSelfForm = ({ onCreated }) => {
               showSuccess: false,
               username: data.me.username,
               usernameError: "",
+              publicUsername: data.me.publicUsername,
+              publicUsernameError: "",
               sendEmails: data.me.sendEmails,
               sendEmailsError: "",
               email: data.me.email,
@@ -94,7 +102,7 @@ export const UpdateSelfForm = ({ onCreated }) => {
               >
                 {updateSelf => {
                   function saveChanges(state) {
-                    const { username, sendEmails } = state
+                    const { username, publicUsername, sendEmails } = state
 
                     /* TODO: dont allow just any username */
 
@@ -123,79 +131,100 @@ export const UpdateSelfForm = ({ onCreated }) => {
                         input: {
                           id: data.me.id,
                           username: username.trim(),
-                          sendEmails: sendEmails,
+                          sendEmails,
+                          publicUsername,
                         },
                       },
                     })
                   }
                   return (
-                    <Spacer pa={4}>
-                      <form
-                        data-add-event-form
-                        onSubmit={e => {
-                          e.preventDefault()
+                    <form
+                      data-add-event-form
+                      onSubmit={e => {
+                        e.preventDefault()
 
-                          saveChanges(state)
+                        saveChanges(state)
+                      }}
+                    >
+                      {state.showSuccess &&
+                        state.username === data.me.username && (
+                          <SuccessMessage mb={3}>
+                            All changes have been saved
+                          </SuccessMessage>
+                        )}
+
+                      <SubTitle mt={4}>Notifications:</SubTitle>
+
+                      <Text mv={3}>
+                        We would like to notify you, when new events arrive, one
+                        of your bookmarked events changes, or gets canceled.
+                      </Text>
+                      <Checkbox
+                        checked={state.sendEmails}
+                        error={state.sendEmailsError}
+                        name="sendEmails"
+                        onChange={e => {
+                          const checked = e.target.checked
+
+                          setState({ sendEmails: checked }, () => {
+                            saveChanges({ ...state, sendEmails: checked })
+                          })
                         }}
+                        label="Send me emails to inform me about events and updates"
+                      />
+
+                      <SubTitle mt={4}>Privacy:</SubTitle>
+                      <Text mv={3}>
+                        If you like, your username can be shown on the detail
+                        page of an event that {"you've"} bookmarked.
+                      </Text>
+                      <Checkbox
+                        checked={state.publicUsername}
+                        error={state.publicUsernameError}
+                        name="publicUsername"
+                        onChange={e => {
+                          const checked = e.target.checked
+
+                          setState({ publicUsername: checked }, () => {
+                            saveChanges({ ...state, publicUsername: checked })
+                          })
+                        }}
+                        label="Show my username publically on events I bookmarked"
+                      />
+                      <SubTitle mt={4}>Your Account:</SubTitle>
+                      <Text mv={3}>
+                        Your email address currently can not be changed. If you
+                        need to change it, please contact us via email.
+                      </Text>
+                      <TextInput
+                        disabled
+                        value={state.email}
+                        name="email"
+                        label="Email Address"
+                      />
+                      <TextInput
+                        value={state.username.trim()}
+                        error={state.usernameError}
+                        name="username"
+                        onChange={e => setState({ username: e.target.value })}
+                        label="Username"
+                      />
+
+                      <FancyButton
+                        type="submit"
+                        block
+                        mb={4}
+                        disabled={state.username === data.me.username}
                       >
-                        {state.showSuccess &&
-                          state.username === data.me.username && (
-                            <Message mb={3}>
-                              All changes have been saved
-                            </Message>
-                          )}
+                        Save new username
+                      </FancyButton>
 
-                        <TextInput
-                          disabled
-                          value={state.email}
-                          name="email"
-                          label="Email Address"
-                        />
-                        <InputLabel>Notification Settings:</InputLabel>
-                        <Checkbox
-                          checked={state.sendEmails}
-                          error={state.sendEmailsError}
-                          name="sendEmails"
-                          onChange={e => {
-                            const checked = e.target.checked
-
-                            setState({ sendEmails: checked }, () => {
-                              saveChanges({ ...state, sendEmails: checked })
-                            })
-                          }}
-                          label="Send me emails to inform me about events and updates"
-                        />
-
-                        <TextInput
-                          value={state.username.trim()}
-                          error={state.usernameError}
-                          name="username"
-                          onChange={e => setState({ username: e.target.value })}
-                          label="Username"
-                        />
-
-                        <FancyButton
-                          type="submit"
-                          block
-                          mb={5}
-                          disabled={state.username === data.me.username}
-                        >
-                          Save new username
-                        </FancyButton>
-
-                        <Link href="/account/calendar" passHref>
-                          <UILink>
-                            <Small>Calendar Integration Setup</Small>
-                          </UILink>
-                        </Link>
-                        <br />
-                        <Link href="/account/password" passHref>
-                          <UILink>
-                            <Small>Change Password</Small>
-                          </UILink>
-                        </Link>
-                      </form>
-                    </Spacer>
+                      <Link href="/account/password" passHref>
+                        <UILink>
+                          <Small>Change Password</Small>
+                        </UILink>
+                      </Link>
+                    </form>
                   )
                 }}
               </Mutation>

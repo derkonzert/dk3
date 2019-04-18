@@ -53,6 +53,8 @@ exports.updateUserPassword = async ({ userId, password }) => {
 }
 
 exports.userById = async _id => await User.Model.findById(_id).exec()
+exports.usersByIds = async ids =>
+  await User.Model.find({ _id: { $in: ids } }).exec()
 exports.userByShortId = async shortId =>
   await User.Model.findOne({ shortId }).exec()
 
@@ -70,15 +72,16 @@ exports.allUsersCount = async () =>
   await User.Model.estimatedDocumentCount().exec()
 
 exports.updateUser = async ({ shortId, ...userData }) => {
-  const whiteListedUserData = ["username", "sendEmails"].reduce(
-    (filteredUserData, allowedKey) => {
-      if (allowedKey in userData) {
-        filteredUserData[allowedKey] = userData[allowedKey]
-      }
-      return filteredUserData
-    },
-    {}
-  )
+  const whiteListedUserData = [
+    "username",
+    "sendEmails",
+    "publicUsername",
+  ].reduce((filteredUserData, allowedKey) => {
+    if (allowedKey in userData) {
+      filteredUserData[allowedKey] = userData[allowedKey]
+    }
+    return filteredUserData
+  }, {})
 
   try {
     await User.Model.findOneAndUpdate(

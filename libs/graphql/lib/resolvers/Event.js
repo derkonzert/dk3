@@ -23,12 +23,28 @@ exports.Event = {
     return 0
   },
 
+  author: async (event, args, { dao }) => {
+    if (!event.author) {
+      return null
+    }
+
+    return await dao.userById(event.author)
+  },
+
   bookmarkedByMe: async (event, args, { user }) => {
     if (!user) {
       return false
     }
 
     return event.bookmarkedBy.indexOf(user._id) >= 0
+  },
+
+  bookmarkedBy: async (event, _args, { dao }) => {
+    if (event.bookmarkedBy.length) {
+      return await dao.usersByIds(event.bookmarkedBy)
+    }
+
+    return []
   },
 
   recentlyAdded: event => {

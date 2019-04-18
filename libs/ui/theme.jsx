@@ -33,8 +33,12 @@ const defaultTheme = {
     dialogOverlayBackground: "rgba(220, 220, 220, 0.65)",
 
     horizontalMenuColor: "#636161",
+    hr: "#e2e2e2",
 
     buttonColor: "black",
+    buttonBorder: "rgba(0, 0, 0, 0.15)",
+    buttonBorderHover: "rgba(0, 0, 0, 0.35)",
+    buttonBackgroundActive: "rgba(0, 0, 0, 0.05)",
     fancyButtonColor: "black",
     fancyButtonBackground: "white",
     veryFancyButtonColor: "white",
@@ -99,7 +103,12 @@ const darkTheme = {
 
     horizontalMenuColor: "#e9e9e9",
 
+    hr: "#e2e2e2",
+
     buttonColor: "white",
+    buttonBorder: "rgba(255, 255, 255, 0.25)",
+    buttonBorderHover: "rgba(255, 255, 255, 0.45)",
+    buttonBackgroundActive: "rgba(255, 255, 255, 0.05)",
     fancyButtonColor: "white",
     fancyButtonBackground: "#292929",
 

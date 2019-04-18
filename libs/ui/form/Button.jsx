@@ -38,15 +38,16 @@ const Btn = styled.button`
   ${buttonBaseStyle};
   ${buttonBlockModifier};
 
-  color: ${({ theme }) => theme.buttonColor};
-  box-shadow: inset 0 0 0 0.1rem rgba(0, 0, 0, 0.15);
+  color: ${({ theme }) => theme.colors.buttonColor};
+  box-shadow: inset 0 0 0 0.1rem ${({ theme }) => theme.colors.buttonBorder};
 
   &:hover {
-    box-shadow: inset 0 0 0 0.1rem rgba(0, 0, 0, 0.35);
+    box-shadow: inset 0 0 0 0.1rem
+      ${({ theme }) => theme.colors.buttonBorderHover};
   }
 
   &:active {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: ${({ theme }) => theme.colors.buttonBackgroundActive};
   }
 `
 

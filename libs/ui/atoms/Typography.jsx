@@ -43,7 +43,7 @@ export const SubTitle = withSpacing()(styled.h3`
   ${noMargin};
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 600;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: ${({ inverted, theme }) =>
     inverted ? theme.colors.titleInverted : theme.colors.title};
   letter-spacing: 0;
@@ -60,6 +60,12 @@ export const ListTitle = styled.h4`
     inverted ? theme.colors.titleInverted : theme.colors.title};
   letter-spacing: 0;
   line-height: 2rem;
+`
+
+export const Hr = styled.hr`
+  border: 0 none;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.hr};
 `
 
 export const Description = styled.div`

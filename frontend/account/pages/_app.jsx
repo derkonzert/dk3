@@ -6,6 +6,7 @@ import { PageWrapper } from "../components/PageWrapper"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 import { withApollo, logout } from "@dk3/shared-frontend/lib/withApollo"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
+import { Flex } from "@dk3/ui/atoms/Flex"
 import {
   HorizontalMenu,
   HorizontalMenuItem,
@@ -32,40 +33,51 @@ class MyApp extends App {
                 return (
                   <React.Fragment>
                     <HorizontalMenu>
-                      <HorizontalMenuItem href="/">
-                        ↩︎ Back to derkonzert
-                      </HorizontalMenuItem>
+                      <Flex grow={1} justifyContent="space-between">
+                        <HorizontalMenuItem href="/">
+                          ↩︎ Back to derkonzert
+                        </HorizontalMenuItem>
 
-                      {isLoggedIn ? (
-                        <React.Fragment>
-                          <Link href="/account/" passHref>
-                            <HorizontalMenuItem>Settings</HorizontalMenuItem>
-                          </Link>
-                          <HorizontalMenuItem
-                            href="#"
-                            onClick={async e => {
-                              e.preventDefault()
+                        <div>
+                          {isLoggedIn ? (
+                            <React.Fragment>
+                              <Link href="/account/" passHref>
+                                <HorizontalMenuItem>
+                                  Settings
+                                </HorizontalMenuItem>
+                              </Link>
+                              <Link href="/account/calendar" passHref>
+                                <HorizontalMenuItem>
+                                  Calendar
+                                </HorizontalMenuItem>
+                              </Link>
+                              <HorizontalMenuItem
+                                href="#"
+                                onClick={async e => {
+                                  e.preventDefault()
 
-                              await logout()
+                                  await logout()
 
-                              await apolloClient.resetStore()
+                                  await apolloClient.resetStore()
 
-                              router.push("/")
-                            }}
-                          >
-                            Logout
-                          </HorizontalMenuItem>
-                        </React.Fragment>
-                      ) : (
-                        <React.Fragment>
-                          <Link href="/account/login" passHref>
-                            <HorizontalMenuItem>Login</HorizontalMenuItem>
-                          </Link>
-                          <Link href="/account/signup" passHref>
-                            <HorizontalMenuItem>Sign Up</HorizontalMenuItem>
-                          </Link>
-                        </React.Fragment>
-                      )}
+                                  router.push("/")
+                                }}
+                              >
+                                Logout
+                              </HorizontalMenuItem>
+                            </React.Fragment>
+                          ) : (
+                            <React.Fragment>
+                              <Link href="/account/login" passHref>
+                                <HorizontalMenuItem>Login</HorizontalMenuItem>
+                              </Link>
+                              <Link href="/account/signup" passHref>
+                                <HorizontalMenuItem>Sign Up</HorizontalMenuItem>
+                              </Link>
+                            </React.Fragment>
+                          )}
+                        </div>
+                      </Flex>
                     </HorizontalMenu>
                     <PageWrapper>
                       <Component {...pageProps} {...currentUserProps} />

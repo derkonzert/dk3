@@ -8,12 +8,15 @@ import { DateTime } from "luxon"
 import { MegaTitle, Text, Link as UiLink } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
+import { Flex } from "@dk3/ui/atoms/Flex"
 import { ButtonLink } from "@dk3/ui/form/Button"
-import { ApproveEventButton } from "../form/ApproveEventButton"
-import RichText from "../../../../libs/rtxt/react"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 import { hasSkill } from "@dk3/shared-frontend/lib/hasSkill"
 import styled from "@emotion/styled"
+
+import { ApproveEventButton } from "../form/ApproveEventButton"
+import RichText from "../../../../libs/rtxt/react"
+import { BookmarkedBy } from "./BookmarkedBy"
 
 export const EVENT_DETAIL_FRAGMENT = gql`
   fragment EventDetailEvent on Event {
@@ -27,6 +30,14 @@ export const EVENT_DETAIL_FRAGMENT = gql`
     to
     location
     fancyness
+    author {
+      id
+      username
+    }
+    bookmarkedBy {
+      id
+      username
+    }
     bookmarkedByMe
   }
 `
@@ -59,10 +70,11 @@ export const EventDetail = ({ id }) => {
       {({ loading, error, data }) => {
         if (error) return <span>Error loading posts.</span>
         if (loading) return <Spinner pv={6}>Loading</Spinner>
-
         const { event } = data
-        const fromDt = DateTime.fromISO(event.from)
-        const toDt = DateTime.fromISO(event.to)
+        const fromDt = DateTime.fromISO(event.from, {
+          setZone: "Europe/Berlin",
+        })
+        const toDt = DateTime.fromISO(event.to, { setZone: "Europe/Berlin" })
 
         return (
           <Spacer ma={4} style={{ position: "relative" }}>
@@ -88,34 +100,53 @@ export const EventDetail = ({ id }) => {
               {event.location}
             </Text>
             <hr />
-            <Text>
-              <strong>Anonymously</strong> submitted
-              <CurrentUser>
-                {({ user }) => (
+            <Flex justifyContent="space-between" alignItems="center">
+              <Text>
+                {event.author && event.author.username ? (
                   <React.Fragment>
-                    {hasSkill(user, "APPROVE_EVENT") && (
-                      <ApproveEventButton
-                        ml={2}
-                        eventId={event.id}
-                        approved={event.approved}
-                      >
-                        Approve
-                      </ApproveEventButton>
-                    )}
-
-                    {hasSkill(user, "UPDATE_EVENT") && (
-                      <Link
-                        href={`/update-event?eventId=${event.id}`}
-                        as={`/update-event/${event.id}`}
-                        passHref
-                      >
-                        <ButtonLink ml={2}>Edit</ButtonLink>
-                      </Link>
-                    )}
+                    Submitted by <strong>{event.author.username}</strong>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <strong>Anonymously</strong> submitted
                   </React.Fragment>
                 )}
-              </CurrentUser>
-            </Text>
+                {!!event.bookmarkedBy.length && (
+                  <BookmarkedBy
+                    author={event.author}
+                    users={event.bookmarkedBy}
+                  />
+                )}
+              </Text>
+
+              <div>
+                <CurrentUser>
+                  {({ user }) => (
+                    <React.Fragment>
+                      {hasSkill(user, "APPROVE_EVENT") && (
+                        <ApproveEventButton
+                          ml={2}
+                          eventId={event.id}
+                          approved={event.approved}
+                        >
+                          Approve
+                        </ApproveEventButton>
+                      )}
+
+                      {hasSkill(user, "UPDATE_EVENT") && (
+                        <Link
+                          href={`/update-event?eventId=${event.id}`}
+                          as={`/update-event/${event.id}`}
+                          passHref
+                        >
+                          <ButtonLink ml={2}>Edit</ButtonLink>
+                        </Link>
+                      )}
+                    </React.Fragment>
+                  )}
+                </CurrentUser>
+              </div>
+            </Flex>
             <hr />
             {!!event.description && (
               <Spacer mv={2}>
