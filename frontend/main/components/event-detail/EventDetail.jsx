@@ -182,7 +182,13 @@ export const EventDetail = ({ id }) => {
             )}
             {!!event.url && (
               <Spacer mt={4}>
-                <VeryFancyLink ph={4} pv={3} href={event.url}>
+                <VeryFancyLink
+                  ph={4}
+                  pv={3}
+                  href={event.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Buy Tickets
                 </VeryFancyLink>
               </Spacer>

@@ -27,6 +27,8 @@ export const Link = Plugins.Link.createCopy({
       {
         ...props,
         href: token.value.href,
+        target: "_blank",
+        rel: "noopener noreferrer",
       },
       token.value.href
     )

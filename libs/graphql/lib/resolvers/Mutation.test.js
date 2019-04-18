@@ -41,7 +41,7 @@ describe("Mutation", () => {
 
       return expect(
         Mutation.bookmarkEvent(undefined, { input: {} }, { dao })
-      ).rejects.toThrow("Unauthorized request")
+      ).rejects.toThrow("Unauthenticated request")
     })
 
     it("calls dao bookmarkEvent with data from args and context", async () => {
@@ -72,7 +72,7 @@ describe("Mutation", () => {
 
       return expect(
         Mutation.approveEvent(undefined, { input: {} }, { dao })
-      ).rejects.toThrow("Unauthorized request")
+      ).rejects.toThrow("Unauthenticated request")
     })
 
     it("throws when user doesnt have the required skill", () => {

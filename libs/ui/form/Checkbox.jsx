@@ -27,7 +27,7 @@ export const Label = styled.span`
 export const Checkbox = withSpacing({ mb: 3 })(
   ({ label, error, description, name, className, checked, ...props }) => (
     <div className={className}>
-      <InputBorder validate={checked} valid={checked}>
+      <InputBorder>
         <Fill>
           {(!!label || !!description) && (
             <InputLabel htmlFor={name}>

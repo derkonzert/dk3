@@ -58,8 +58,6 @@ const mainPageInnerShowDetail = css`
 const MainPageInner = styled.div`
   box-sizing: content-box;
   padding: 0;
-  margin: 0 auto;
-  max-width: 68.8rem;
 
   transition: 350ms transform ease-out;
 
@@ -189,7 +187,7 @@ const SideInner = styled.div`
   ${props => (props.showDetail ? sideInnerShowDetail : "")}
 `
 
-const SideInnerContent = styled.div`
+export const CenteredContent = styled.div`
   margin: 0 auto;
   max-width: 68.8rem;
 `
@@ -245,11 +243,11 @@ export const ListAndDetailSide = ({
   return (
     <Side data-side={showDetail} showDetail={showDetail} {...props}>
       <SideInner ref={ref} showDetail={showDetail}>
-        <SideInnerContent>
+        <CenteredContent>
           <FocusLock returnFocus>
             <CacheContentFor ms={500}>{children}</CacheContentFor>
           </FocusLock>
-        </SideInnerContent>
+        </CenteredContent>
       </SideInner>
     </Side>
   )

@@ -19,7 +19,7 @@ export const Square = styled.span`
 `
 
 export const EventLegend = () => (
-  <Wrapper mv={5} data-legend>
+  <Wrapper mb={6} data-legend>
     <Description>
       <Square>
         <Box mv={2}>&nbsp;</Box>

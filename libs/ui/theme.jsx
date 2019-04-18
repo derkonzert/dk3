@@ -48,7 +48,7 @@ const defaultTheme = {
     inputError: "#d23939",
     input: "black",
     inputBackground: "white",
-    inputValidBackground: "rgb(55, 169, 124)",
+    inputValidBackground: "rgb(11, 121, 56)",
     inputInvalidBackground: "#d23939",
     inputBorderColor: "hsl(0, 0%, 80%)",
 
@@ -119,7 +119,7 @@ const darkTheme = {
     inputError: "#d23939",
     input: "white",
     inputBackground: "black",
-    inputValidBackground: "rgb(55, 169, 124)",
+    inputValidBackground: "rgb(11, 121, 56)",
     inputInvalidBackground: "#d23939",
     inputBorderColor: "#393939",
 
