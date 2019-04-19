@@ -3,20 +3,44 @@ const { logger } = require("@dk3/logger")
 const cronJobs = require("./cronJobs")
 const CronJob = require("./model/CronJob")
 
-exports.createJob = async options => {
+exports.createJob = async ({ forceUpdate, ...options }) => {
+  let newlySaved = false
+
   try {
     const newJob = new CronJob.Model(options)
 
     await newJob.save()
+    newlySaved = true
   } catch (err) {
     /* silently fail */
   }
+
+  if (!newlySaved && forceUpdate) {
+    try {
+      await CronJob.Model.findOneAndUpdate({ name: options.name }, options)
+    } catch (err) {
+      throw err
+    }
+  }
+}
+
+const eventNotificationsLastExecuted = new Date()
+if (eventNotificationsLastExecuted.getUTCHours() > 18) {
+  eventNotificationsLastExecuted.setHours(18, 0, 0, 0)
+} else {
+  eventNotificationsLastExecuted.setHours(6, 0, 0, 0)
 }
 
 exports.cronJobConfigurations = [
   { name: "doubleOptIn", interval: "2m", initialRun: true },
   { name: "passwordReset", interval: "2m", initialRun: true },
-  { name: "eventNotifications", interval: "10m", initialRun: true },
+  {
+    name: "eventNotifications",
+    interval: "12h",
+    lastExecuted: eventNotificationsLastExecuted,
+    initialRun: false,
+    forceUpdate: true,
+  },
 ]
 
 exports.setup = async () => {
@@ -73,10 +97,18 @@ exports.runJob = async cronJob => {
 
     cronJob.running = false
     cronJob.lastExecuted = new Date()
+
     await cronJob.save()
 
     return cronResult
   } catch (err) {
+    try {
+      // Try to unblock the job at least
+      cronJob.running = false
+      await cronJob.save()
+    } catch (err) {
+      throw err
+    }
     throw err
   }
 }

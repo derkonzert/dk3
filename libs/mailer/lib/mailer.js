@@ -2,26 +2,27 @@ const config = require("@dk3/config")
 
 const { renderDoubleOptInMail } = require("./emails/doubleOptInMail")
 const { renderPasswordResetMail } = require("./emails/passwordResetMail")
+const {
+  renderEventNotificationMail,
+} = require("./emails/eventNotificationMail")
 
-exports.sendDoubleOptInMail = async user => {
-  const emailContents = renderDoubleOptInMail(user)
+const createMailSender = renderer => async (user, data) => {
+  const contents = renderer(user, data)
 
   try {
-    await exports.sendEmail(user.email, emailContents)
+    await exports.sendEmail(user.email, contents)
   } catch (err) {
     throw err
   }
 }
 
-exports.sendPasswordResetMail = async user => {
-  const emailContents = renderPasswordResetMail(user)
+exports.sendDoubleOptInMail = createMailSender(renderDoubleOptInMail)
 
-  try {
-    await exports.sendEmail(user.email, emailContents)
-  } catch (err) {
-    throw err
-  }
-}
+exports.sendPasswordResetMail = createMailSender(renderPasswordResetMail)
+
+exports.sendEventNotificationEmail = createMailSender(
+  renderEventNotificationMail
+)
 
 exports.sendEmail = async (to, { subject, text, html }) => {
   const apiKey = config.get("SENDGRID_API_KEY", false)

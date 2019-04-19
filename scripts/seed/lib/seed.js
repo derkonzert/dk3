@@ -84,7 +84,10 @@ const seedEvents = async users => {
     data.approved = concertData.length % 10 !== 0
 
     try {
-      const event = await dao.createEvent({ eventData: data }, {})
+      const event = await dao.createEvent(
+        { eventData: data, emitEvent: false },
+        {}
+      )
 
       savedData.push(event)
     } catch (err) {

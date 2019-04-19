@@ -41,7 +41,7 @@ class MyApp extends App {
                         <Flex justifyItems="flex-end">
                           {isLoggedIn ? (
                             <React.Fragment>
-                              <Link href="/" as="/account" passHref>
+                              <Link href="/" as="/account/" passHref>
                                 <HorizontalMenuItem>
                                   Settings
                                 </HorizontalMenuItem>

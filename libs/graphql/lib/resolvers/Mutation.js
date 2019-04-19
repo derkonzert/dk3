@@ -5,7 +5,7 @@ exports.Mutation = {
   createEvent: async (parent, args, { dao, user }) => {
     const { ...eventData } = args.input
 
-    return await dao.createEvent({ eventData }, user)
+    return await dao.createEvent({ eventData, autoBookmark: true }, user)
   },
 
   bookmarkEvent: async (parent, args, { dao, user }) => {

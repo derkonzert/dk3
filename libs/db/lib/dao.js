@@ -58,6 +58,9 @@ exports.usersByIds = async ids =>
 exports.userByShortId = async shortId =>
   await User.Model.findOne({ shortId }).exec()
 
+exports.usersWithSendEmail = async () =>
+  await User.Model.find({ sendEmails: true })
+
 exports.userByEmail = async email => await User.Model.findOne({ email }).exec()
 
 exports.userByVerificationToken = async emailVerificationToken =>
@@ -97,7 +100,7 @@ exports.updateUser = async ({ shortId, ...userData }) => {
 
 /* Event methods */
 exports.createEvent = async (
-  { eventData, autoBookmark, noSystemEvent },
+  { eventData, autoBookmark, emitEvent = true },
   user
 ) => {
   if (user && autoBookmark) {
@@ -109,7 +112,7 @@ exports.createEvent = async (
     ...eventData,
   })
 
-  if (!noSystemEvent) {
+  if (emitEvent) {
     exports.emitSystemEvent(SystemEvent.Types.eventAdded, {
       emittedBy: user ? user._id : null,
       relatedEvent: event._id,
@@ -164,6 +167,8 @@ exports.approveEvent = async ({ eventShortId, approved }) => {
 }
 
 exports.eventById = async _id => await Event.Model.findById(_id).exec()
+exports.eventsByIds = async ids =>
+  await Event.Model.find({ _id: { $in: ids } }).exec()
 exports.eventByShortId = async shortId =>
   await Event.Model.findOne({ shortId }).exec()
 
@@ -214,7 +219,7 @@ exports.emitSystemEvent = async (type, { emittedBy, relatedEvent }) => {
 }
 
 exports.clearSystemEvents = async systemEvents => {
-  const result = await SystemEvent.Model.remove({
+  const result = await SystemEvent.Model.deleteMany({
     _id: {
       $in: systemEvents.map(systemEvent => systemEvent._id),
     },

@@ -28,9 +28,9 @@ Schema.methods.shouldRun = function() {
 
   const now = Date.now()
   const lastExecutedTimestamp = new Date(this.lastExecuted).getTime()
-  const intervalMS = ms(this.interval)
+  const intervalMs = ms(this.interval)
 
-  return lastExecutedTimestamp + intervalMS <= now
+  return lastExecutedTimestamp + intervalMs <= now
 }
 
 exports.Schema = Schema
