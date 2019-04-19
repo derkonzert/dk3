@@ -7,6 +7,7 @@ import { DateTime } from "luxon"
 
 import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
+import { ErrorMessage } from "@dk3/ui/atoms/Message"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { Flex } from "@dk3/ui/atoms/Flex"
 import { ButtonLink, VeryFancyLink } from "@dk3/ui/form/Button"
@@ -68,9 +69,14 @@ export const EventDetail = ({ id }) => {
   return (
     <Query query={EVENT_DETAIL} variables={{ id }}>
       {({ loading, error, data }) => {
-        if (error) return <span>Error loading posts.</span>
+        if (error) return <ErrorMessage>Error loading event data</ErrorMessage>
         if (loading) return <Spinner pv={6}>Loading</Spinner>
         const { event } = data
+
+        if (!event) {
+          return <MegaTitle>404 Event not found</MegaTitle>
+        }
+
         const fromDt = DateTime.fromISO(event.from, {
           zone: "Europe/Berlin",
         })

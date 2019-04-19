@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.boxBackground};
 `
 
-export default withRouter(function Event({ router }) {
+const EventPage = function Event({ router }) {
   return (
     <ListAndDetail>
       <ListAndDetailMain>
@@ -20,4 +20,12 @@ export default withRouter(function Event({ router }) {
       </ListAndDetailMain>
     </ListAndDetail>
   )
-})
+}
+
+// EventPage.getInitialProps = ctx => {
+//   console.log(ctx)
+
+//   return {}
+// }
+
+export default withRouter(EventPage)

@@ -93,6 +93,9 @@ export const withApollo = App => {
       {
         uri,
         getToken: () => token,
+        on404: () => {
+          res.statusCode = 404
+        },
       }
     )
 
