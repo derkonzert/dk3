@@ -168,7 +168,11 @@ exports.approveEvent = async ({ eventShortId, approved }) => {
 
 exports.eventById = async _id => await Event.Model.findById(_id).exec()
 exports.eventsByIds = async ids =>
-  await Event.Model.find({ _id: { $in: ids } }).exec()
+  await Event.Model.find({ _id: { $in: ids } })
+    .sort({
+      from: 1,
+    })
+    .exec()
 exports.eventByShortId = async shortId =>
   await Event.Model.findOne({ shortId }).exec()
 

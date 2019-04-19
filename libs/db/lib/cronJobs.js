@@ -86,7 +86,7 @@ exports.eventNotifications = async () => {
     }
 
     try {
-      // await dao.clearSystemEvents(systemEvents)
+      await dao.clearSystemEvents(systemEvents)
     } catch (err) {
       throw err
     }

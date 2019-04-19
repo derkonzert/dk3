@@ -29,7 +29,7 @@ describe("Mutation", () => {
       expect(result).toBe(expectedResult)
 
       expect(dao.createEvent).toHaveBeenCalledWith(
-        { eventData: expect.objectContaining(input) },
+        { eventData: expect.objectContaining(input), autoBookmark: true },
         user
       )
     })

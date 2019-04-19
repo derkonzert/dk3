@@ -26,6 +26,8 @@
   "dependencies": {
     "@dk3/config": "^0.0.0",
     "@dk3/logger": "^0.0.0",
-    "@sendgrid/mail": "^6.3.1"
+    "@sendgrid/mail": "^6.3.1",
+    "luxon": "^1.12.1",
+    "slug": "^1.1.0"
   }
 }

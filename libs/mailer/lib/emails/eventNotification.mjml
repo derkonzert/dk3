@@ -1,0 +1,58 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+
+    </mj-attributes>
+    <mj-font name="IBM Plex Sans" href="http://fonts.googleapis.com/css?family=IBM+Plex+Sans"></mj-font>
+    <mj-font name="IBM Plex Serif" href="http://fonts.googleapis.com/css?family=IBM+Plex+Serif"></mj-font>
+  </mj-head>
+  <mj-body background-color="#f9f9f9">
+
+    <mj-section>
+      <mj-column>
+        <mj-text font-size="32px" color="#000" font-family="IBM Plex Serif" font-weight="bold">derkonzert</mj-text>
+
+        <mj-text line-height="142%" font-size="18px" color="#101010" font-family="IBM Plex Sans">These are the latest additions to the derkonzert event list:</mj-text>
+      </mj-column>
+    </mj-section>
+    <!-- EXAMPLE DATE -->
+    <mj-section border-radius="4px" padding="0 0">
+      <mj-column>
+        <mj-text color="#636363" font-size="14px" font-family="IBM Plex Serif">09.05.2019:</mj-text>
+      </mj-column>
+    </mj-section>
+    <!-- EXAMPLE DATE END -->
+
+    <!-- EXAMPLE EVENT -->
+    <mj-section border-radius="4px" padding="0">
+      <mj-column>
+        <mj-button href="/" text-align="left" width="100%" background-color="#fff" font-size="18px" color="#101010" font-family="IBM Plex Sans">
+          Mono
+        </mj-button>
+      </mj-column>
+    </mj-section>
+    <!-- EXAMPLE EVENT END -->
+
+    <mj-section padding="50px 0 0">
+      <mj-column>
+        <mj-text mj-class="footer-text" align="center" padding="0 10px">
+          <p style="Margin:0; padding-bottom:10px; font-size:10px; line-height:15px; Margin-bottom:10px; color:#111111; font-family: 'Open Sans', 'Raleway', Arial, Helvetica, sans-serif;">We only send emails to individuals who have registered at our site:
+            <a href="http://derkonzert.de/" name="footer_dk3homepage" style="color:#111111; text-decoration:underline;">derkonzert.de</a>
+          </p>
+
+          <p style="Margin:0; padding-bottom:10px; font-size:10px; line-height:15px; Margin-bottom:10px; color:#111111; font-family: 'Open Sans', 'Raleway', Arial, Helvetica, sans-serif;">
+            <a href="http://derkonzert.de/pages/imprint" name="footer_privacy" style="color:#111111; text-decoration:underline;">
+              <strong>Imprint</strong>
+            </a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="http://derkonzert.de/pages/privacy" name="footer_privacy" style="color:#111111; text-decoration:underline;">
+              <strong>Privacy</strong>
+            </a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="http://derkonzert.de/account" style="text-decoration:underline; color:#111111;">
+              <strong>Manage Subscription</strong>
+            </a>
+          </p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
