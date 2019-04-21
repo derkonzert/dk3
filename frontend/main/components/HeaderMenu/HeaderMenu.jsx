@@ -24,7 +24,7 @@ export const HeaderMenu = () => (
               <HorizontalMenuItemInfo>
                 Hi {user.username}
               </HorizontalMenuItemInfo>
-              <Link href="/?addEvent=1" as="/add-event" passHref>
+              <Link href="/?addEvent=1" as="/add-new-event" passHref>
                 <HorizontalMenuItem>Add Event</HorizontalMenuItem>
               </Link>
               <Link href="/account/" passHref>
@@ -33,7 +33,7 @@ export const HeaderMenu = () => (
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <Link href="/?addEvent=1" as="/add-event" passHref>
+              <Link href="/?addEvent=1" as="/add-new-event" passHref>
                 <HorizontalMenuItem>Add Event</HorizontalMenuItem>
               </Link>
               <Link href="/account/login" passHref>
