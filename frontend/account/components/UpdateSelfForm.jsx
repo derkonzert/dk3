@@ -20,6 +20,7 @@ export const USER_DATA_FRAGMENT = gql`
     username
     sendEmails
     publicUsername
+    autoBookmark
     email
   }
 `
@@ -80,9 +81,8 @@ export const UpdateSelfForm = ({ onCreated }) => {
               username: data.me.username,
               usernameError: "",
               publicUsername: data.me.publicUsername,
-              publicUsernameError: "",
+              autoBookmark: data.me.autoBookmark,
               sendEmails: data.me.sendEmails,
-              sendEmailsError: "",
               email: data.me.email,
             }}
           >
@@ -102,7 +102,12 @@ export const UpdateSelfForm = ({ onCreated }) => {
               >
                 {updateSelf => {
                   function saveChanges(state) {
-                    const { username, publicUsername, sendEmails } = state
+                    const {
+                      username,
+                      publicUsername,
+                      autoBookmark,
+                      sendEmails,
+                    } = state
 
                     /* TODO: dont allow just any username */
 
@@ -131,6 +136,7 @@ export const UpdateSelfForm = ({ onCreated }) => {
                         input: {
                           id: data.me.id,
                           username: username.trim(),
+                          autoBookmark,
                           sendEmails,
                           publicUsername,
                         },
@@ -139,6 +145,7 @@ export const UpdateSelfForm = ({ onCreated }) => {
                   }
                   return (
                     <form
+                      style={{ textAlign: "left" }}
                       data-add-event-form
                       onSubmit={e => {
                         e.preventDefault()
@@ -191,6 +198,24 @@ export const UpdateSelfForm = ({ onCreated }) => {
                         }}
                         label="Show my username publically on events I bookmarked"
                       />
+
+                      <SubTitle mt={4}>Convenience:</SubTitle>
+
+                      <Text mv={3}>
+                        Automatically bookmark events that you add yourself
+                      </Text>
+                      <Checkbox
+                        checked={state.autoBookmark}
+                        name="autoBookmark"
+                        onChange={e => {
+                          const checked = e.target.checked
+
+                          setState({ autoBookmark: checked }, () => {
+                            saveChanges({ ...state, autoBookmark: checked })
+                          })
+                        }}
+                        label="Automatically bookmark events that you add yourself"
+                      />
                       <SubTitle mt={4}>Your Account:</SubTitle>
                       <Text mv={3}>
                         Your email address currently can not be changed. If you
@@ -203,7 +228,7 @@ export const UpdateSelfForm = ({ onCreated }) => {
                         label="Email Address"
                       />
                       <TextInput
-                        value={state.username.trim()}
+                        value={state.username.toLowerCase().trim()}
                         error={state.usernameError}
                         name="username"
                         onChange={e => setState({ username: e.target.value })}

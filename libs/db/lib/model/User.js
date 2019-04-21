@@ -17,6 +17,7 @@ const Schema = new mongoose.Schema({
     type: String,
     trim: true,
     required: true,
+    lowercase: true,
   },
 
   email: {
@@ -59,6 +60,11 @@ const Schema = new mongoose.Schema({
   },
 
   sendEmails: {
+    type: Boolean,
+    default: true,
+  },
+
+  autoBookmark: {
     type: Boolean,
     default: true,
   },

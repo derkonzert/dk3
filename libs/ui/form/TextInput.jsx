@@ -27,7 +27,7 @@ export const InputLabel = styled.label`
   line-height: 1.35;
 `
 
-export const InputDescription = styled.div`
+export const InputDescription = withSpacing()(styled.div`
   margin-left: 0.3rem;
   font-size: 1.2rem;
   line-height: 1.4;
@@ -38,7 +38,7 @@ export const InputDescription = styled.div`
   a {
     color: inherit;
   }
-`
+`)
 
 export const InputError = styled.div`
   display: block;

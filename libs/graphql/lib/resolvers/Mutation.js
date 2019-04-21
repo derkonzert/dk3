@@ -3,9 +3,12 @@ const userSkills = require("@dk3/db/lib/model/userSkills")
 
 exports.Mutation = {
   createEvent: async (parent, args, { dao, user }) => {
-    const { ...eventData } = args.input
+    const { autoBookmark, ...eventData } = args.input
 
-    return await dao.createEvent({ eventData, autoBookmark: true }, user)
+    return await dao.createEvent(
+      { eventData, autoBookmark: !!user && !!user._id && autoBookmark },
+      user
+    )
   },
 
   bookmarkEvent: async (parent, args, { dao, user }) => {

@@ -175,6 +175,7 @@ const sideInnerShowDetail = css`
   transform: translateY(0);
 `
 const SideInner = styled.div`
+  padding: 2rem;
   width: 100%;
   background: ${({ theme }) => theme.colors.detailBackground};
 
@@ -252,3 +253,19 @@ export const ListAndDetailSide = ({
     </Side>
   )
 }
+const ListAndDetailCloseWrapper = styled.a`
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 5rem;
+  line-height: 1.2;
+  width: 4rem;
+  text-align: center;
+  text-decoration: none;
+  font-family: "IBM Plex Serif";
+  color: ${({ theme }) => theme.colors.text};
+`
+
+export const ListAndDetailClose = props => (
+  <ListAndDetailCloseWrapper {...props}>&times;</ListAndDetailCloseWrapper>
+)

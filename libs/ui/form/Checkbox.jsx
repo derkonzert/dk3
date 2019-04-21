@@ -2,16 +2,12 @@ import React from "react"
 import styled from "@emotion/styled"
 
 import { inputStyles } from "./inputStyles"
-import {
-  InputBorder,
-  InputLabel,
-  InputDescription,
-  InputError,
-} from "./TextInput"
+import { InputLabel, InputDescription, InputError } from "./TextInput"
 import { withSpacing } from "../utils/withSpacing"
 
 export const Fill = styled.div`
   ${inputStyles}
+  padding-left: 0;
   text-align: left;
 
   input[type="checkbox"] {
@@ -24,26 +20,25 @@ export const Label = styled.span`
   flex: 1 1 auto;
 `
 
-export const Checkbox = withSpacing({ mb: 3 })(
+export const Checkbox = withSpacing({ mv: 3 })(
   ({ label, error, description, name, className, checked, ...props }) => (
     <div className={className}>
-      <InputBorder>
-        <Fill>
-          {(!!label || !!description) && (
-            <InputLabel htmlFor={name}>
-              <input
-                checked={checked}
-                type="checkbox"
-                {...props}
-                id={name}
-                name={name}
-              />
-              <Label>{label}</Label>
-            </InputLabel>
-          )}
-          {!!description && <InputDescription>{description}</InputDescription>}
-        </Fill>
-      </InputBorder>
+      <Fill>
+        {(!!label || !!description) && (
+          <InputLabel htmlFor={name}>
+            <input
+              checked={checked}
+              type="checkbox"
+              {...props}
+              id={name}
+              name={name}
+            />
+            <Label>{label}</Label>
+          </InputLabel>
+        )}
+        {!!description && <InputDescription>{description}</InputDescription>}
+      </Fill>
+
       {!!error && <InputError>{error}</InputError>}
     </div>
   )

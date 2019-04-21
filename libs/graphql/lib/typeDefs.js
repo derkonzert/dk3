@@ -14,6 +14,7 @@ const typeDefs = gql`
     upcomingEvents: [Event]
     skills: [String]
     calendarToken: String
+    autoBookmark: Boolean
   }
 
   type AuthenticationInfo {
@@ -59,6 +60,7 @@ const typeDefs = gql`
     from: Date!
     description: String
     to: Date
+    autoBookmark: Boolean
   }
 
   input UpdateEventInput {
@@ -86,6 +88,7 @@ const typeDefs = gql`
     id: ID!
     username: String
     sendEmails: Boolean
+    autoBookmark: Boolean
     publicUsername: Boolean
   }
 

@@ -29,7 +29,27 @@ describe("Mutation", () => {
       expect(result).toBe(expectedResult)
 
       expect(dao.createEvent).toHaveBeenCalledWith(
-        { eventData: expect.objectContaining(input), autoBookmark: true },
+        { eventData: expect.objectContaining(input), autoBookmark: false },
+        user
+      )
+    })
+
+    it("sets autoBookmark if user is logged in and has autoBookmark set", async () => {
+      const input = { some: "data", autoBookmark: true }
+      const user = { _id: 123 }
+      const expectedResult = {}
+      dao.createEvent.mockReturnValue(expectedResult)
+
+      const result = await Mutation.createEvent(
+        undefined,
+        { input },
+        { dao, user }
+      )
+
+      expect(result).toBe(expectedResult)
+
+      expect(dao.createEvent).toHaveBeenCalledWith(
+        expect.objectContaining({ autoBookmark: true }),
         user
       )
     })

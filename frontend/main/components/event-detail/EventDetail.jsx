@@ -5,6 +5,7 @@ import Link from "next/link"
 
 import { DateTime } from "luxon"
 
+import { ListAndDetailClose } from "@dk3/ui/layouts/ListAndDetail"
 import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { ErrorMessage } from "@dk3/ui/atoms/Message"
@@ -52,17 +53,8 @@ export const EVENT_DETAIL = gql`
   ${EVENT_DETAIL_FRAGMENT}
 `
 
-const EventDetailClose = styled.a`
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 5rem;
-  line-height: 1.2;
-  width: 4rem;
-  text-align: center;
-  text-decoration: none;
-  font-family: "IBM Plex Serif";
-  color: ${({ theme }) => theme.colors.text};
+const Wrapper = styled.div`
+  position: relative;
 `
 
 export const EventDetail = ({ id }) => {
@@ -95,15 +87,13 @@ export const EventDetail = ({ id }) => {
         }
 
         return (
-          <Spacer ma={4} style={{ position: "relative" }}>
+          <Wrapper>
             <MegaTitle mr={5} mb={3}>
               {event.title}
             </MegaTitle>
 
             <Link href="/" passHref>
-              <EventDetailClose title="Close detail page">
-                &times;
-              </EventDetailClose>
+              <ListAndDetailClose title="Close detail page" />
             </Link>
             {!event.approved && (
               <Spacer mb={2} style={{ color: "red" }}>
@@ -199,7 +189,7 @@ export const EventDetail = ({ id }) => {
                 </VeryFancyLink>
               </Spacer>
             )}
-          </Spacer>
+          </Wrapper>
         )
       }}
     </Query>

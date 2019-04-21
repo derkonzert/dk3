@@ -1,13 +1,15 @@
 import React from "react"
-import { Mutation } from "react-apollo"
+import { Query, Mutation } from "react-apollo"
 import gql from "graphql-tag"
 import { State } from "react-powerplug"
 import { DateTime } from "luxon"
+import Link from "next/link"
 
-import { FancyButton } from "@dk3/ui/form/Button"
-import { TextInput } from "@dk3/ui/form/TextInput"
-import { Title } from "@dk3/ui/atoms/Typography"
-import { Spacer } from "@dk3/ui/atoms/Spacer"
+import { VeryFancyButton } from "@dk3/ui/form/Button"
+import { TextInput, InputDescription } from "@dk3/ui/form/TextInput"
+import { Checkbox } from "@dk3/ui/form/Checkbox"
+import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
+import { ListAndDetailClose } from "@dk3/ui/layouts/ListAndDetail"
 
 import {
   UPCOMING_EVENTS,
@@ -15,6 +17,19 @@ import {
 } from "../list/EventList"
 import { DateTimeInput } from "@dk3/ui/form/DateTimeInput"
 import { TextArea } from "@dk3/ui/form/TextArea"
+import { Flex } from "@dk3/ui/atoms/Flex"
+import { Spinner } from "@dk3/ui/atoms/Spinner"
+import { ErrorMessage } from "@dk3/ui/atoms/Message"
+import styled from "@emotion/styled"
+
+export const CREATE_EVENT_USER_INFO = gql`
+  query meHasAutobookmark {
+    me {
+      id
+      autoBookmark
+    }
+  }
+`
 
 export const CREATE_EVENT = gql`
   mutation createNewEvent($input: CreateEventInput!) {
@@ -25,6 +40,14 @@ export const CREATE_EVENT = gql`
   ${UPCOMING_EVENTS_EVENT_FRAGMENT}
 `
 
+const Wrapper = styled.div`
+  position: relative;
+`
+
+const Form = styled.form`
+  max-width: 52rem;
+`
+
 export const CreateEventForm = ({ onCreated }) => {
   const today = DateTime.local().set({ hour: 20, minute: 0 })
 
@@ -32,148 +55,280 @@ export const CreateEventForm = ({ onCreated }) => {
   const from = today.toJSDate()
 
   return (
-    <State
-      initial={{
-        title: "",
-        url: "",
-        location: "",
-        description: "",
-        to,
-        from,
-        showEndDate: false,
-      }}
-    >
-      {({ state, setState, resetState }) => (
-        <Mutation
-          mutation={CREATE_EVENT}
-          update={(cache, { data: { createEvent } }) => {
-            const { upcomingEvents } = cache.readQuery({
-              query: UPCOMING_EVENTS,
-              variables: {
-                filter: "all",
-              },
-            })
+    <Query query={CREATE_EVENT_USER_INFO}>
+      {({ loading, error, data }) => {
+        if (loading) {
+          return <Spinner />
+        }
 
-            cache.writeQuery({
-              query: UPCOMING_EVENTS,
-              variables: { filter: "all" },
-              data: {
-                upcomingEvents: [createEvent, ...upcomingEvents].sort(
-                  (a, b) => {
-                    return a.from > b.from ? 1 : -1
-                  }
-                ),
-              },
-            })
+        if (error) {
+          return <ErrorMessage>{error}</ErrorMessage>
+        }
 
-            resetState()
+        return (
+          <State
+            initial={{
+              title: "",
+              titleError: "",
+              url: "",
+              location: "",
+              locationError: "",
+              description: "",
+              to,
+              from,
+              showEndDate: false,
+              autoBookmark: data.me ? data.me.autoBookmark : false,
+            }}
+          >
+            {({ state, setState, resetState }) => (
+              <Mutation
+                mutation={CREATE_EVENT}
+                update={(cache, { data: { createEvent } }) => {
+                  const { upcomingEvents } = cache.readQuery({
+                    query: UPCOMING_EVENTS,
+                    variables: {
+                      filter: "all",
+                    },
+                  })
 
-            onCreated && onCreated(createEvent)
-          }}
-        >
-          {createEvent => {
-            return (
-              <Spacer pa={4}>
-                <form
-                  data-add-event-form
-                  onSubmit={e => {
-                    e.preventDefault()
-                    const {
-                      from,
-                      to,
-                      showEndDate: _showEndDate,
-                      ...restState
-                    } = state
+                  cache.writeQuery({
+                    query: UPCOMING_EVENTS,
+                    variables: { filter: "all" },
+                    data: {
+                      upcomingEvents: [createEvent, ...upcomingEvents].sort(
+                        (a, b) => {
+                          return a.from > b.from ? 1 : -1
+                        }
+                      ),
+                    },
+                  })
 
-                    const fromDt = DateTime.fromJSDate(from)
+                  resetState()
 
-                    const toDt = DateTime.fromJSDate(to)
+                  onCreated && onCreated(createEvent)
+                }}
+              >
+                {createEvent => {
+                  return (
+                    <Wrapper>
+                      <Form
+                        data-add-event-form
+                        onSubmit={e => {
+                          e.preventDefault()
+                          const {
+                            title,
+                            url,
+                            location,
+                            description,
+                            to,
+                            from,
+                            autoBookmark,
+                          } = state
 
-                    createEvent({
-                      variables: {
-                        input: {
-                          ...restState,
-                          from: fromDt.toISO(),
-                          to: toDt.toISO(),
-                        },
-                      },
-                    })
-                  }}
-                >
-                  <Title>Add Event</Title>
-                  <TextInput
-                    value={state.title}
-                    name="title"
-                    onChange={e => setState({ title: e.target.value })}
-                    label="Title"
-                  />
-                  <TextInput
-                    value={state.url}
-                    name="url"
-                    onChange={e => setState({ url: e.target.value })}
-                    label="Tickets URL"
-                  />
-                  <TextInput
-                    mb={4}
-                    value={state.location}
-                    name="location"
-                    onChange={e => setState({ location: e.target.value })}
-                    label="Location"
-                  />
-                  <DateTimeInput
-                    value={state.from}
-                    name="from"
-                    onChange={(event, from) => {
-                      let to = state.to
+                          const fromDt = DateTime.fromJSDate(from)
+                          const toDt = DateTime.fromJSDate(to)
 
-                      if (from > to) {
-                        to = new Date(from.getTime() + 3 * 60 * 60 * 1000)
-                      }
+                          const formErrors = []
 
-                      setState({ from, to })
-                    }}
-                    dateLabel="Event Date"
-                    timeLabel="Door time"
-                  />
+                          if (!title.trim()) {
+                            formErrors.push([
+                              "titleError",
+                              "The event title is required",
+                            ])
+                          }
 
-                  {state.showEndDate ? (
-                    <DateTimeInput
-                      value={state.to}
-                      name="to"
-                      onChange={(event, to) => setState({ to })}
-                      dateLabel="Event End Date"
-                      timeLabel="Time"
-                      mb={4}
-                    />
-                  ) : (
-                    <Spacer mb={4}>
-                      <label>
-                        <input
+                          if (!location.trim()) {
+                            formErrors.push([
+                              "locationError",
+                              "The event's location is required",
+                            ])
+                          }
+
+                          if (fromDt.diffNow("days") <= -0.5) {
+                            formErrors.push([
+                              "fromError",
+                              "The event is in the past?",
+                            ])
+                          }
+
+                          setState(
+                            formErrors.reduce(
+                              (errors, [field, errorMessage]) => {
+                                errors[field] = errorMessage
+                                return errors
+                              },
+                              {
+                                titleError: "",
+                                fromError: "",
+                                locationError: "",
+                              }
+                            )
+                          )
+
+                          if (formErrors.length) {
+                            return
+                          }
+
+                          createEvent({
+                            variables: {
+                              input: {
+                                title,
+                                url,
+                                location,
+                                description,
+                                autoBookmark,
+                                from: fromDt.toISO(),
+                                to: toDt.toISO(),
+                              },
+                            },
+                          })
+                        }}
+                      >
+                        <MegaTitle mr={5} mb={3}>
+                          Create New Event
+                        </MegaTitle>
+                        <Text mb={4}>
+                          {
+                            "Add a concert to the list, so that others don't miss it."
+                          }
+                          <br />
+
+                          {"Don't worry about style or genres."}
+                        </Text>
+
+                        <Link href="/" passHref>
+                          <ListAndDetailClose title="Back to event list" />
+                        </Link>
+
+                        <TextInput
+                          value={state.title}
+                          name="title"
+                          error={state.titleError}
+                          onChange={e => setState({ title: e.target.value })}
+                          label="Title"
+                        />
+                        <TextInput
+                          mb={3}
+                          value={state.location}
+                          name="location"
+                          error={state.locationError}
+                          onChange={e => setState({ location: e.target.value })}
+                          label="Location"
+                        />
+                        <DateTimeInput
+                          value={state.from}
+                          name="from"
+                          dateError={state.fromError}
+                          onChange={(_event, from) => {
+                            let to = state.to
+
+                            if (from > to) {
+                              to = new Date(from.getTime() + 3 * 60 * 60 * 1000)
+                            }
+
+                            setState({ from, to })
+                          }}
+                          dateLabel="Event Date"
+                          timeLabel="Door time"
+                          mb={2}
+                        />
+
+                        <Checkbox
+                          mt={0}
+                          mb={2}
+                          label="It's a festival or it lasts more than one day"
                           type="checkbox"
-                          onChange={() => setState({ showEndDate: true })}
+                          onChange={() =>
+                            setState({ showEndDate: !state.showEndDate })
+                          }
                           checked={state.showEndDate}
                         />
-                        {" It's a festival"}
-                      </label>
-                    </Spacer>
-                  )}
 
-                  <TextArea
-                    mb={4}
-                    value={state.description}
-                    name="description"
-                    onChange={e => setState({ description: e.target.value })}
-                    label="Description"
-                    rows={4}
-                  />
+                        {state.showEndDate && (
+                          <DateTimeInput
+                            value={state.to}
+                            name="to"
+                            onChange={(event, to) => setState({ to })}
+                            dateLabel="Event End Date"
+                            timeLabel="Time"
+                            mb={3}
+                          />
+                        )}
 
-                  <FancyButton type="submit">Save new event</FancyButton>
-                </form>
-              </Spacer>
-            )
-          }}
-        </Mutation>
-      )}
-    </State>
+                        <TextArea
+                          mb={1}
+                          value={state.description}
+                          name="description"
+                          description="optional"
+                          onChange={e =>
+                            setState({ description: e.target.value })
+                          }
+                          label="Description"
+                          rows={4}
+                        />
+                        <InputDescription mb={3}>
+                          Youtube, Vimeo and Spotify links will be embedded
+                          automatically
+                        </InputDescription>
+
+                        <TextInput
+                          mb={1}
+                          value={state.url}
+                          name="url"
+                          description="optional"
+                          onChange={e => setState({ url: e.target.value })}
+                          label="Tickets URL"
+                        />
+                        <InputDescription mb={3}>
+                          This will speed-up the verification of your event
+                        </InputDescription>
+
+                        <Text mv={4}>
+                          {`After the new event is saved, it will be visible to
+                      all visitors immediately, and another user will double-check everything later,
+                      to make sure all information is correct.`}
+                        </Text>
+
+                        <Flex
+                          mb={6}
+                          alignItems="center"
+                          justifyContent="flex-start"
+                          wrap="wrap"
+                        >
+                          <Flex grow={0}>
+                            <VeryFancyButton
+                              ph={4}
+                              pv={3}
+                              mr={4}
+                              type="submit"
+                              style={{ whiteSpace: "nowrap" }}
+                            >
+                              Save New Event
+                            </VeryFancyButton>
+                          </Flex>
+                          {!!data.me && (
+                            <Checkbox
+                              mv={2}
+                              label={"Auto-Bookmark this event"}
+                              type="checkbox"
+                              onChange={() =>
+                                setState({
+                                  autoBookmark: !state.autoBookmark,
+                                })
+                              }
+                              checked={state.autoBookmark}
+                            />
+                          )}
+                        </Flex>
+                      </Form>
+                    </Wrapper>
+                  )
+                }}
+              </Mutation>
+            )}
+          </State>
+        )
+      }}
+    </Query>
   )
 }

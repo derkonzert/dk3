@@ -112,7 +112,7 @@ describe("Query", () => {
     it("passes the id argument down to dao", async () => {
       const context = {
         dao: {
-          eventByShortId: jest.fn(),
+          eventByShortId: jest.fn().mockResolvedValue({}),
         },
       }
 

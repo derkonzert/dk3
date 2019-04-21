@@ -78,6 +78,7 @@ exports.updateUser = async ({ shortId, ...userData }) => {
   const whiteListedUserData = [
     "username",
     "sendEmails",
+    "autoBookmark",
     "publicUsername",
   ].reduce((filteredUserData, allowedKey) => {
     if (allowedKey in userData) {
