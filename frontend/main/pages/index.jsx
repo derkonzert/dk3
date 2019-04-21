@@ -1,6 +1,6 @@
 import React from "react"
 import { withRouter } from "next/router"
-
+import Link from "next/link"
 import dynamic from "next/dynamic"
 
 import {
@@ -12,17 +12,21 @@ import {
 
 import { EventList } from "../components/list/EventList"
 
-import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
+import {
+  MegaTitle,
+  Text,
+  Title,
+  Link as UILink,
+} from "@dk3/ui/atoms/Typography"
 import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
-import { Footer, FooterLink } from "@dk3/ui/components/Footer"
+import { Footer, FooterLink, FooterCheckbox } from "@dk3/ui/components/Footer"
 
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
 import { EventLegend } from "../components/list/EventLegend"
 
 import { HeaderMenu } from "../components/HeaderMenu/HeaderMenu"
-import { Checkbox } from "@dk3/ui/form/Checkbox"
 import { Flex } from "@dk3/ui/atoms/Flex"
 
 const DynamicEventDetail = dynamic(() =>
@@ -70,32 +74,68 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
             <Spacer ph={4}>
               <Flex flexDirection="column" alignItems="center">
                 <EventLegend />
-
-                <Text>
-                  Ut wisi enim ad minim veniam, quis nostrud exerci tation
-                  ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-                  consequat. Duis autem vel eum iriure dolor in hendrerit in
-                  vulputate velit esse molestie consequat, vel illum dolore eu
-                  feugiat nulla facilisis at vero eros et accumsan et iusto odio
-                  dignissim qui blandit praesent luptatum zzril delenit augue
-                  duis dolore te feugait nulla facilisi.
-                </Text>
               </Flex>
+
+              <div
+                style={{ maxWidth: "45rem", margin: "0 auto", width: "100%" }}
+              >
+                <Title>About derkonzert</Title>
+                <Text mv={3}>
+                  This website is a non-commercial project, that allows
+                  enthusiastic concert visitors to curate a list of events for
+                  Munich (Germany).
+                </Text>
+                <Text mv={3}>
+                  Its purposes are the discovery of new music, not missing
+                  important concerts and enhancing Munichs concert culture.
+                </Text>
+                <Text mv={3}>
+                  All events are maintained manually by its visitors and users.
+                </Text>
+                <Text mv={3}>
+                  The event list is not limited to certain genres or musical
+                  styles. Everyone is invited to participate and to contribute.
+                </Text>
+                <Text mv={3}>
+                  Registered users can receive email notifications about updates
+                  to the list, bookmark events they would like to visit, and
+                  sync those into their calendars.
+                </Text>
+                <CurrentUser>
+                  {({ isLoggedIn }) =>
+                    isLoggedIn ? (
+                      <Text mv={3}>
+                        <Link href="/account/signup" passHref>
+                          <UILink>Create an account</UILink>
+                        </Link>
+                      </Text>
+                    ) : null
+                  }
+                </CurrentUser>
+                <Text mv={3}>
+                  The entire project is open source and{" "}
+                  <UILink href="https://github.com/jkempff/dk3">
+                    available on github
+                  </UILink>
+                  .
+                </Text>
+              </div>
               <Flex
+                mt={5}
                 basis="100%"
                 flexDirection="row"
                 alignItems="center"
                 justifyContent="center"
                 style={{ textAlign: "center" }}
               >
-                <Flex basis="20%" justifyContent="center">
+                <Flex basis="auto" grow="0.2" justifyContent="center">
                   <FooterLink href="/pages/imprint">Imprint</FooterLink>
                 </Flex>
-                <Flex basis="20%" justifyContent="center">
+                <Flex basis="auto" grow="0.2" justifyContent="center">
                   <FooterLink href="/pages/privacy">Privacy</FooterLink>
                 </Flex>
-                <Flex basis="20%" justifyContent="center">
-                  <Checkbox
+                <Flex basis="auto" grow="0.2" justifyContent="center">
+                  <FooterCheckbox
                     label="Dark Mode"
                     checked={themeName === "dark"}
                     onChange={e => {

@@ -276,6 +276,7 @@ export const CreateEventForm = ({ onCreated }) => {
                         )}
 
                         <TextArea
+                          mt={4}
                           mb={1}
                           value={state.description}
                           name="description"
@@ -302,7 +303,7 @@ export const CreateEventForm = ({ onCreated }) => {
                           disabled={state.isSaving}
                         />
                         <InputDescription mb={3}>
-                          This will speed-up the verification of your event
+                          This can speed-up the verification of your event
                         </InputDescription>
 
                         <Text mv={4}>

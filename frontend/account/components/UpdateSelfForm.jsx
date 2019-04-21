@@ -183,7 +183,7 @@ export const UpdateSelfForm = ({ onCreated }) => {
                       <SubTitle mt={4}>Privacy:</SubTitle>
                       <Text mv={3}>
                         If you like, your username can be shown on the detail
-                        page of an event that {"you've"} bookmarked.
+                        page of an event that {"you've"} added or bookmarked.
                       </Text>
                       <Checkbox
                         checked={state.publicUsername}
@@ -196,13 +196,13 @@ export const UpdateSelfForm = ({ onCreated }) => {
                             saveChanges({ ...state, publicUsername: checked })
                           })
                         }}
-                        label="Show my username publically on events I bookmarked"
+                        label="Show my username publically on events I added or bookmarked"
                       />
 
                       <SubTitle mt={4}>Convenience:</SubTitle>
 
                       <Text mv={3}>
-                        Automatically bookmark events that you add yourself
+                        Bookmark events that you add yourself by default.
                       </Text>
                       <Checkbox
                         checked={state.autoBookmark}
