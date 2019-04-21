@@ -89,7 +89,7 @@
     {
       "src": "/event/(.)*-(?<eventId>.*)$",
       "methods": ["GET"],
-      "dest": "frontend/main/event?eventId=$eventId",
+      "dest": "frontend/main/index?showEvent=1&eventId=$eventId",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
