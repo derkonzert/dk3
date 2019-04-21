@@ -68,6 +68,7 @@ export const CreateEventForm = ({ onCreated }) => {
         return (
           <State
             initial={{
+              isSaving: false,
               title: "",
               titleError: "",
               url: "",
@@ -83,6 +84,12 @@ export const CreateEventForm = ({ onCreated }) => {
             {({ state, setState, resetState }) => (
               <Mutation
                 mutation={CREATE_EVENT}
+                onError={err => {
+                  setState({
+                    isSaving: false,
+                    formError: err.message,
+                  })
+                }}
                 update={(cache, { data: { createEvent } }) => {
                   const { upcomingEvents } = cache.readQuery({
                     query: UPCOMING_EVENTS,
@@ -169,6 +176,10 @@ export const CreateEventForm = ({ onCreated }) => {
                             return
                           }
 
+                          setState({
+                            isSaving: true,
+                          })
+
                           createEvent({
                             variables: {
                               input: {
@@ -200,12 +211,17 @@ export const CreateEventForm = ({ onCreated }) => {
                           <ListAndDetailClose title="Back to event list" />
                         </Link>
 
+                        {!!state.formError && (
+                          <ErrorMessage mv={3}>{state.formError}</ErrorMessage>
+                        )}
+
                         <TextInput
                           value={state.title}
                           name="title"
                           error={state.titleError}
                           onChange={e => setState({ title: e.target.value })}
                           label="Title"
+                          disabled={state.isSaving}
                         />
                         <TextInput
                           mb={3}
@@ -214,6 +230,7 @@ export const CreateEventForm = ({ onCreated }) => {
                           error={state.locationError}
                           onChange={e => setState({ location: e.target.value })}
                           label="Location"
+                          disabled={state.isSaving}
                         />
                         <DateTimeInput
                           value={state.from}
@@ -231,6 +248,7 @@ export const CreateEventForm = ({ onCreated }) => {
                           dateLabel="Event Date"
                           timeLabel="Door time"
                           mb={2}
+                          disabled={state.isSaving}
                         />
 
                         <Checkbox
@@ -242,6 +260,7 @@ export const CreateEventForm = ({ onCreated }) => {
                             setState({ showEndDate: !state.showEndDate })
                           }
                           checked={state.showEndDate}
+                          disabled={state.isSaving}
                         />
 
                         {state.showEndDate && (
@@ -252,6 +271,7 @@ export const CreateEventForm = ({ onCreated }) => {
                             dateLabel="Event End Date"
                             timeLabel="Time"
                             mb={3}
+                            disabled={state.isSaving}
                           />
                         )}
 
@@ -265,6 +285,7 @@ export const CreateEventForm = ({ onCreated }) => {
                           }
                           label="Description"
                           rows={4}
+                          disabled={state.isSaving}
                         />
                         <InputDescription mb={3}>
                           Youtube, Vimeo and Spotify links will be embedded
@@ -278,6 +299,7 @@ export const CreateEventForm = ({ onCreated }) => {
                           description="optional"
                           onChange={e => setState({ url: e.target.value })}
                           label="Tickets URL"
+                          disabled={state.isSaving}
                         />
                         <InputDescription mb={3}>
                           This will speed-up the verification of your event
@@ -302,6 +324,7 @@ export const CreateEventForm = ({ onCreated }) => {
                               mr={4}
                               type="submit"
                               style={{ whiteSpace: "nowrap" }}
+                              disabled={state.isSaving}
                             >
                               Save New Event
                             </VeryFancyButton>
@@ -317,6 +340,7 @@ export const CreateEventForm = ({ onCreated }) => {
                                 })
                               }
                               checked={state.autoBookmark}
+                              disabled={state.isSaving}
                             />
                           )}
                         </Flex>
