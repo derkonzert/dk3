@@ -58,6 +58,13 @@ export const withApollo = App => {
 
     componentDidMount() {
       window.addEventListener("storage", this.syncLogout)
+
+      // In some cases (e.g. navigating back in iOS Safari),
+      // the initial props were cached in the first html request
+      // but the user already logged out / or logged in.
+      if (this.props.token != getAccessToken()) {
+        this.apolloClient.resetStore()
+      }
     }
 
     componentWillUnmount() {
