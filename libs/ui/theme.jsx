@@ -66,6 +66,8 @@ const defaultTheme = {
 
     messageBackgroundWarning: "rgba(241, 143, 38, 0.18)",
     messageColorWarning: "#9c5405",
+
+    addEventButtonShadow: "rgba(0, 0, 0, 0.35)",
   },
 }
 

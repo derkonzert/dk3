@@ -1,5 +1,6 @@
 import React from "react"
 import { withRouter } from "next/router"
+import Link from "next/link"
 import dynamic from "next/dynamic"
 
 import {
@@ -11,15 +12,15 @@ import {
 
 import { EventList } from "../components/list/EventList"
 
-import { VeryFancyButton } from "@dk3/ui/form/Button"
 import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
 import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { Footer } from "@dk3/ui/components/Footer"
+import { AddEventButton } from "@dk3/ui/components/AddEventButton"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
 import { EventLegend } from "../components/list/EventLegend"
-import styled from "@emotion/styled"
+
 import { HeaderMenu } from "../components/HeaderMenu/HeaderMenu"
 
 const DynamicEventDetail = dynamic(() =>
@@ -28,14 +29,6 @@ const DynamicEventDetail = dynamic(() =>
 const DynamicCreateEventForm = dynamic(() =>
   import("../components/form/CreateEventForm").then(mod => mod.CreateEventForm)
 )
-
-const NOT_FINAL_AddEventButton = styled(VeryFancyButton)`
-  position: fixed;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 12;
-`
 
 export default withRouter(function Index({ router }) {
   const {
@@ -68,17 +61,16 @@ export default withRouter(function Index({ router }) {
 
           <Spacer pa={4}>
             <EventList />
-            <NOT_FINAL_AddEventButton
-              data-add-event
-              pa={4}
-              onClick={() => {
-                router.push(`/?addEvent=1`, `/add-new-event`, {
-                  shallow: true,
-                })
-              }}
-            >
-              Add Event
-            </NOT_FINAL_AddEventButton>
+            <Link href="/?addEvent=1" as="/add-new-event" passHref>
+              <AddEventButton
+                data-add-event
+                pa={4}
+                position={showDetail ? "absolute" : "fixed"}
+                title="Add a new event"
+              >
+                +
+              </AddEventButton>
+            </Link>
           </Spacer>
         </CenteredContent>
         <Footer>

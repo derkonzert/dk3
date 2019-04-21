@@ -43,8 +43,8 @@ export const global = theme => css`
   /* ~1280px*/
   @media screen and (min-width: 80em) {
     html {
-      /* ~14px scale everything up a little */
-      font-size: 90%;
+      /* ~13px scale everything up a little */
+      font-size: 81.25%;
     }
   }
 `
