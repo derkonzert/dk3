@@ -1,6 +1,6 @@
 import React from "react"
 import { withRouter } from "next/router"
-import Link from "next/link"
+
 import dynamic from "next/dynamic"
 
 import {
@@ -15,13 +15,15 @@ import { EventList } from "../components/list/EventList"
 import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
 import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
-import { Footer } from "@dk3/ui/components/Footer"
-import { AddEventButton } from "@dk3/ui/components/AddEventButton"
+import { Footer, FooterLink } from "@dk3/ui/components/Footer"
+
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
 import { EventLegend } from "../components/list/EventLegend"
 
 import { HeaderMenu } from "../components/HeaderMenu/HeaderMenu"
+import { Checkbox } from "@dk3/ui/form/Checkbox"
+import { Flex } from "@dk3/ui/atoms/Flex"
 
 const DynamicEventDetail = dynamic(() =>
   import("../components/event-detail/EventDetail").then(mod => mod.EventDetail)
@@ -30,7 +32,7 @@ const DynamicCreateEventForm = dynamic(() =>
   import("../components/form/CreateEventForm").then(mod => mod.CreateEventForm)
 )
 
-export default withRouter(function Index({ router }) {
+export default withRouter(function Index({ router, themeName, onThemeChange }) {
   const {
     query: { eventId, addEvent },
   } = router
@@ -61,31 +63,47 @@ export default withRouter(function Index({ router }) {
 
           <Spacer pa={4}>
             <EventList />
-            <Link href="/?addEvent=1" as="/add-new-event" passHref>
-              <AddEventButton
-                data-add-event
-                pa={4}
-                position={showDetail ? "absolute" : "fixed"}
-                title="Add a new event"
-              >
-                +
-              </AddEventButton>
-            </Link>
           </Spacer>
         </CenteredContent>
         <Footer>
           <CenteredContent>
             <Spacer ph={4}>
-              <EventLegend />
-              <Text>
-                Ut wisi enim ad minim veniam, quis nostrud exerci tation
-                ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-                consequat. Duis autem vel eum iriure dolor in hendrerit in
-                vulputate velit esse molestie consequat, vel illum dolore eu
-                feugiat nulla facilisis at vero eros et accumsan et iusto odio
-                dignissim qui blandit praesent luptatum zzril delenit augue duis
-                dolore te feugait nulla facilisi.
-              </Text>
+              <Flex flexDirection="column" alignItems="center">
+                <EventLegend />
+
+                <Text>
+                  Ut wisi enim ad minim veniam, quis nostrud exerci tation
+                  ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
+                  consequat. Duis autem vel eum iriure dolor in hendrerit in
+                  vulputate velit esse molestie consequat, vel illum dolore eu
+                  feugiat nulla facilisis at vero eros et accumsan et iusto odio
+                  dignissim qui blandit praesent luptatum zzril delenit augue
+                  duis dolore te feugait nulla facilisi.
+                </Text>
+              </Flex>
+              <Flex
+                basis="100%"
+                flexDirection="row"
+                alignItems="center"
+                justifyContent="center"
+                style={{ textAlign: "center" }}
+              >
+                <Flex basis="20%" justifyContent="center">
+                  <FooterLink href="/pages/imprint">Imprint</FooterLink>
+                </Flex>
+                <Flex basis="20%" justifyContent="center">
+                  <FooterLink href="/pages/privacy">Privacy</FooterLink>
+                </Flex>
+                <Flex basis="20%" justifyContent="center">
+                  <Checkbox
+                    label="Dark Mode"
+                    checked={themeName === "dark"}
+                    onChange={e => {
+                      onThemeChange(e.target.checked ? "dark" : "light")
+                    }}
+                  />
+                </Flex>
+              </Flex>
             </Spacer>
           </CenteredContent>
         </Footer>

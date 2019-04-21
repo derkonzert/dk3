@@ -185,7 +185,7 @@ export const EventDetail = ({ id }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Buy Tickets
+                  Find Tickets
                 </VeryFancyLink>
               </Spacer>
             )}

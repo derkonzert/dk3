@@ -1,5 +1,6 @@
 import React from "react"
 import { withRouter } from "next/router"
+import Link from "next/link"
 import { DateTime } from "luxon"
 import gql from "graphql-tag"
 
@@ -13,6 +14,7 @@ import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { RedBadge, GreenBadge } from "@dk3/ui/atoms/Badge"
 import styled from "@emotion/styled"
 import { groupedEvents } from "./eventDataHelper"
+import { AddEventButton } from "@dk3/ui/components/AddEventButton"
 
 const EventSection = styled.div`
   position: relative;
@@ -170,6 +172,11 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                 </EventSection>
               )
             })}
+            <Link href="/?addEvent=1" as="/add-new-event" passHref>
+              <AddEventButton data-add-event pa={4} title="Add a new event">
+                +
+              </AddEventButton>
+            </Link>
           </React.Fragment>
         )
       }}

@@ -50,18 +50,12 @@ class MyApp extends App {
           <PageWrapper>
             <Container>
               <ApolloProvider client={apolloClient}>
-                <Component {...pageProps} />
+                <Component
+                  {...pageProps}
+                  themeName={theme}
+                  onThemeChange={onThemeChange}
+                />
               </ApolloProvider>
-              <button
-                style={{ position: "fixed", left: 0, bottom: 0 }}
-                onClick={() => {
-                  const newTheme = theme === "light" ? "dark" : "light"
-
-                  onThemeChange(newTheme)
-                }}
-              >
-                {theme === "light" ? "Use dark theme" : "Use light theme"}
-              </button>
             </Container>
           </PageWrapper>
         </RichTextProvider>

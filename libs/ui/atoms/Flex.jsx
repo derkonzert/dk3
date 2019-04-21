@@ -5,6 +5,9 @@ export const Flex = withSpacing()(
   styled.div(props => {
     const styles = { display: "flex" }
 
+    if (props.basis) {
+      styles.flexBasis = props.basis
+    }
     if (props.wrap) {
       styles.flexWrap = props.wrap
     }
@@ -15,8 +18,8 @@ export const Flex = withSpacing()(
       styles.justifyContent = props.justifyContent
     }
 
-    if (props.direction) {
-      styles.flexDirection = props.direction
+    if (props.flexDirection) {
+      styles.flexDirection = props.flexDirection
     }
 
     if (props.grow) {

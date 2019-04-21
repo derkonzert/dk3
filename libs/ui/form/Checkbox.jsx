@@ -9,9 +9,11 @@ export const Fill = styled.div`
   ${inputStyles}
   padding-left: 0;
   text-align: left;
+  background: transparent;
 
   input[type="checkbox"] {
-    margin-right: 1rem;
+    margin-right: 0.8rem;
+    margin-top: 0.4rem;
     flex: 0 0 auto;
   }
 `

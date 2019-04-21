@@ -6,8 +6,6 @@ import styled from "@emotion/styled"
 import { Description } from "@dk3/ui/atoms/Typography"
 
 export const Wrapper = styled(Spacer)`
-  max-width: 36rem;
-  width: 100%;
   margin-left: auto;
   margin-right: auto;
 `
