@@ -15,7 +15,7 @@ import {
 import { ThemeProvider } from "@dk3/ui/theme"
 import { withThemeFromCookie } from "@dk3/shared-frontend/lib/withThemeFromCookie"
 import { Footer } from "@dk3/ui/components/Footer"
-import { FooterLinks } from "@dk3/shared-frontend/FooterLinks"
+import { FooterLinks } from "@dk3/shared-frontend/lib/FooterLinks"
 
 class MyApp extends App {
   render() {
