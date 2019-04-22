@@ -1,3 +1,5 @@
+const { DateTime } = require("luxon")
+
 const { sendDoubleOptInMail } = require("@dk3/mailer")
 const { sendPasswordResetMail } = require("@dk3/mailer")
 const { sendEventNotificationEmail } = require("@dk3/mailer")
@@ -74,14 +76,21 @@ exports.eventNotifications = async () => {
       systemEvents.map(event => event.relatedEvent)
     )
 
-    if (!addedEvents.length) {
+    /* Don't send emails for events that are already over */
+    const addedEventsWithoutArchived = addedEvents.filter(event => {
+      return DateTime.fromJSDate(event.to).diffNow() > 0
+    })
+
+    if (!addedEventsWithoutArchived.length) {
       return sentMessage()
     }
 
     const users = await dao.usersWithSendEmail()
 
     for (let user of users) {
-      await sendEventNotificationEmail(user, { addedEvents })
+      await sendEventNotificationEmail(user, {
+        addedEvents: addedEventsWithoutArchived,
+      })
       sentNotifications += 1
     }
 
