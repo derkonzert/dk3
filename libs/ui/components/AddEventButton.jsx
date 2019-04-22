@@ -21,6 +21,10 @@ const Positioner = styled.div`
     bottom: 5.5rem;
     left: 0;
     transform: none;
+
+    @media screen and (min-width: 45em) {
+      bottom: 3rem;
+    }
   }
 `
 
