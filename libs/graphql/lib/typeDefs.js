@@ -33,6 +33,8 @@ const typeDefs = gql`
     artists: [String]
     location: String
     approved: Boolean
+    canceled: Boolean
+    postponed: Boolean
     bookmarkedByMe: Boolean
     bookmarkedBy: [User]
     author: User

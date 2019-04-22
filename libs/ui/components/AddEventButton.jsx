@@ -18,7 +18,6 @@ const Positioner = styled.div`
   @supports (position: sticky) {
     position: sticky;
     bottom: 3rem;
-    transform: none;
   }
 `
 
@@ -29,6 +28,15 @@ const Wrapper = styled.a`
   padding: 4px;
   box-shadow: 0 2px 3px ${({ theme }) => theme.colors.addEventButtonShadow};
   text-decoration: none;
+
+  transition: 220ms transform;
+  will-change: transform;
+
+  user-drag: none;
+
+  &:active {
+    transform: scale(0.96);
+  }
 `
 
 const Content = styled.div`

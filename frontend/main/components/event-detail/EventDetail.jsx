@@ -2,11 +2,12 @@ import React from "react"
 import { Query } from "react-apollo"
 import gql from "graphql-tag"
 import Link from "next/link"
+import Head from "next/head"
 
 import { DateTime } from "luxon"
 
 import { ListAndDetailClose } from "@dk3/ui/layouts/ListAndDetail"
-import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
+import { MegaTitle, Text, Hr } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { ErrorMessage } from "@dk3/ui/atoms/Message"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
@@ -32,6 +33,8 @@ export const EVENT_DETAIL_FRAGMENT = gql`
     to
     location
     fancyness
+    canceled
+    postponed
     author {
       id
       username
@@ -88,9 +91,30 @@ export const EventDetail = ({ id }) => {
 
         return (
           <Wrapper>
+            <Head>
+              <title>{event.title} on derkonzert</title>
+              <meta
+                name="description"
+                content={
+                  event.description
+                    ? event.description.substr(0, 120)
+                    : `${event.title} at ${
+                        event.location
+                      } on the ${fromDt.toFormat("dd.MM.yyyy")}`
+                }
+              />
+            </Head>
             <MegaTitle mr={5} mb={3}>
               {event.title}
             </MegaTitle>
+
+            {(event.postponed || event.canceled) && (
+              <ErrorMessage mv={2}>
+                {event.canceled
+                  ? "This has been canceled."
+                  : "The event has been postponed."}
+              </ErrorMessage>
+            )}
 
             <Link href="/" passHref>
               <ListAndDetailClose title="Close detail page" />
@@ -120,7 +144,7 @@ export const EventDetail = ({ id }) => {
                 </React.Fragment>
               )}
             </Text>
-            <hr />
+            <Hr />
             <Flex justifyContent="space-between" alignItems="center">
               <Text>
                 {event.author && event.author.username ? (
@@ -168,7 +192,7 @@ export const EventDetail = ({ id }) => {
                 </CurrentUser>
               </div>
             </Flex>
-            <hr />
+            <Hr />
             {event.description ? (
               <Spacer mv={2}>
                 <RichText value={event.description} />

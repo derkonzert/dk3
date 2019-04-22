@@ -35,6 +35,10 @@ const schemaDefinition = {
     type: Boolean,
     default: false,
   },
+  /* Wether or not he event has been canceled */
+  canceled: { type: Boolean, default: false },
+  /* Wether or not he event has been postponed */
+  postponed: { type: Boolean, default: false },
   /* When does the event start? */
   from: {
     type: Date,
