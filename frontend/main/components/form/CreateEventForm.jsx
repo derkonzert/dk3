@@ -202,9 +202,6 @@ export const CreateEventForm = ({ onCreated }) => {
                           {
                             "Add a concert to the list, so that others don't miss it."
                           }
-                          <br />
-
-                          {"Don't worry about style or genres."}
                         </Text>
 
                         <Link href="/" passHref>

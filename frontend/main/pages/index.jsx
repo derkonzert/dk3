@@ -60,8 +60,12 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
 
                 <Text>
                   {
-                    "derkonzert is a simple list of concerts in Munich. It's supposed to be a haystack of needles, without any boundaries to any specific music style."
+                    "derkonzert is a simple list of concerts in Munich. It's supposed to be a haystack of needles, without any boundaries to any specific music style. "
                   }
+                  <Link passHref href="/pages/about">
+                    <UILink>Learn more about derkonzert</UILink>
+                  </Link>
+                  .
                 </Text>
               </Header>
             )}

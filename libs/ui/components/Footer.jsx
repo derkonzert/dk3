@@ -16,11 +16,13 @@ export const FooterLink = styled.a`
   font-weight: normal;
   font-size: 1.2rem;
   line-height: 1.35;
+  text-underline-position: under;
 `
 
 export const FooterCheckbox = styled(Checkbox)`
   label {
     font-family: "IBM Plex Serif", serif;
     text-decoration: underline;
+    text-underline-position: under;
   }
 `

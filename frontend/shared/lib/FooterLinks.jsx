@@ -12,6 +12,9 @@ export const FooterLinks = ({ themeName, onThemeChange }) => (
     style={{ textAlign: "center" }}
   >
     <Flex basis="auto" grow="0.2" justifyContent="center">
+      <FooterLink href="/pages/about">About</FooterLink>
+    </Flex>
+    <Flex basis="auto" grow="0.2" justifyContent="center">
       <FooterLink href="/pages/imprint">Imprint</FooterLink>
     </Flex>
     <Flex basis="auto" grow="0.2" justifyContent="center">
@@ -20,6 +23,7 @@ export const FooterLinks = ({ themeName, onThemeChange }) => (
     {!!(themeName && onThemeChange) && (
       <Flex basis="auto" grow="0.2" justifyContent="center">
         <FooterCheckbox
+          mv={0}
           label="Dark Mode"
           checked={themeName === "dark"}
           onChange={onThemeChange}
