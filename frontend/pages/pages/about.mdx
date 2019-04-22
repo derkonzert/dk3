@@ -1,47 +1,219 @@
+import { State } from "react-powerplug"
+import Head from "next/head"
+
+import { SuccessMessage } from "@dk3/ui/atoms/Message"
+import { Flex } from "@dk3/ui/atoms/Flex"
 import { VeryFancyLink } from "@dk3/ui/form/Button"
+import {
+  MegaTitle,
+  Title,
+  SubTitle,
+  Text,
+  Link,
+} from "@dk3/ui/atoms/Typography"
+import { EventCard } from "@dk3/ui/components/EventCard"
 
-import { Link } from "@dk3/ui/atoms/Typography"
+<Head>
+  <title>About derkonzert.de</title>
+  <meta
+    name="description"
+    content="derkonzert is about concerts in Munich. All concerts and events are picked -
+  or submitted - by its users and visitors, real people who love music."
+  />
+</Head>
 
-# About derkonzert
+<MegaTitle mb={2}>About derkonzert</MegaTitle>
 
-derkonzert is about concerts in Munich. All concerts and events are picked - or submitted - by real people,
-who love music.
+<Text mv={3}>
+  derkonzert is about concerts in Munich. All concerts and events are picked -
+  or submitted - by its users and visitors, real people who love music.
+</Text>
 
-This list of concerts is supposed to be an alternative to big websites, that just aggregate everything that's going on
-in munich.
+<Title mt={4}>Philosophy</Title>
 
-## Tod dem Genre
+<Text mv={3}>
+  Tod dem Genre! As an open community for concerts in Munich, all musical styles
+  are allowed. Nothing is bad. Everything is good. Discovering music is
+  beautiful.
+</Text>
 
-As you may have noticed, there's no option to filter the list. This is by intention. Discovering music is beautiful,
-and genres kind of prevent this. Thats why there is no filter, but a track preview button.
+<Text mv={3}>
+  You are invited, to take part in this project by sharing and adding your
+  favourite concerts and "Geheimtipps". Don't hesitate. If you like it, others
+  will too.
+</Text>
 
-### Submitting concerts
+<Title mt={4} mb={3}>
+  Features
+</Title>
 
-You are invited, to take part in this project by sharing and adding your favourite concerts and "Geheimtipps".
-Nothing is bad. If you like it, others will too.
+<Text mv={3}>
+  You don't need an account, to use derkonzert. Everyone can see all events, and
+  everyone can submit new events! But of course there are some benefits from
+  having an account:
+</Text>
 
-After you've send a submission, it will be flagged as _not verified_. This means that I haven't had time to check if the concert is actually real.
-_Sometimes this may take a while._
+<SubTitle mt={4} mb={2}>
+  Bookmarks
+</SubTitle>
 
-### Highlighted concerts
+<Text mv={3}>
+  As a registered user, you can bookmark important concerts for yourself, to not
+  forget about them and have them synced into your calendar.
+</Text>
+  
+<Text mv={3}>
+  Try it out yourself here:
+</Text>
 
-All submissions are being reviewed by a team of users. When viewing the list with highlighting activated,
-some concerts are presented a little more prominent, based on those users musical taste.
+<State initial={{ bookmarked: false }}>
+  {({ state, setState }) => (
+    <React.Fragment>
+      <EventCard
+        bookmarked={state.bookmarked}
+        onBookmarkClick={() => setState({ bookmarked: true })}
+        title="Awesome Event You Wanna Go To"
+        day={0}
+        dayName="doom"
+        description="Click the bookmark icon on the right!"
+      />
+      {state.bookmarked && (
+        <SuccessMessage mb={3}>
+          Hoorray, You've added the "Example Event" to your bookmarks!
+        </SuccessMessage>
+      )}
+    </React.Fragment>
+  )}
+</State>
 
-This feature is meant to work as some kind of recommendation system, is not limited to genres and does of course
-not necessarily represent everyones musical taste.
+<Text mv={3}>
+  Additionally, with this bookmarking feature, you actively recommend events to
+  all other derkonzert visitors:
+</Text>
 
-If you don't want this kind of curation, you can disable the highlighting
-by clicking the button at the top of the list, at any time.
+<SubTitle mt={4} mb={2}>
+  Highlighted Events
+</SubTitle>
 
-### Who is behind this platform?
+<Text mv={3}>
+  You may have noticed, that some events look a little different in the list.
+  This depends on the number of users who have bookmarked it:
+</Text>
 
-Next to many friends, giving me feedback and throwing in their ideas, it's me: <Link href="http://ju.am">Ju</Link>
+<EventCard
+  mt={4}
+  bookmarked
+  title="Most Popular Event"
+  day={1}
+  fancyLevel={2}
+  dayName="doom"
+  description="Alot users bookmarked this event"
+/>
 
-### Bugs
+<EventCard
+  title="More Popular Event"
+  day={2}
+  fancyLevel={1}
+  dayName="doom"
+  description="Many users bookmarked this event"
+/>
 
-If you find any errors or weird behavior, contact me and describe what happend at <Link href="mailto:kontakt@derkonzert.de">kontakt@derkonzert.de</Link>.
+<EventCard
+  title="Regular Popular Event"
+  day={3}
+  dayName="doom"
+  description="Some users bookmarked this event"
+/>
 
-Also send an email, if you think the website is missing something, or if you have an idea on how to improve it.
+<Text mv={3}>
+  …that way, you can contribute to derkonzert, by simply marking all events
+  you'd like to go to.
+</Text>
 
-<VeryFancyLink href="/">Back to derkonzert</VeryFancyLink>
+<SubTitle mt={4} mb={2}>
+  Calendar Integration
+</SubTitle>
+
+<Text mv={3}>
+  If you are using a digital calendar, like e.g. the ones from google, or apple,
+  you can have all your bookmarks synced into it.
+</Text>
+
+<Text mv={3}>
+  <Link href="/account/calendar">Manage calendar integration</Link>
+</Text>
+
+<SubTitle mt={4} mb={2}>
+  Email Notifications
+</SubTitle>
+
+<Text mv={3}>
+  You can receive email notifications about freshly submitted events and certain
+  updates to your bookmarked events, so that you don't have to check the list
+  every day manually.
+</Text>
+
+<Text mv={3}>
+  In the near future, you can also be notified, if one of your bookmarked events
+  get canceled or postponed for some reason.
+</Text>
+
+<Text mv={3}>
+  <Link href="/account/">Manage notification settings</Link>
+</Text>
+
+<SubTitle mt={4} mb={2}>
+  Visibility
+</SubTitle>
+
+<Text mv={3}>
+  If you like, you can have your username next to the events that you submitted
+  or bookmarked. This of course depends on your privacy settings: disable the
+  feature, and no one will ever see your username or email address.
+</Text>
+
+<Text mv={3}>
+  <Link href="/account/">Manage public username setting</Link>
+</Text>
+
+<SubTitle mt={4} mb={2}>
+  Dark Mode
+</SubTitle>
+
+<Text mv={3}>
+  Just in case, if the current design is too light for you, scroll down to the
+  very bottom of this page and switch to "Dark mode"!
+</Text>
+
+<Title mv={4}>Who is behind this platform?</Title>
+
+<Text mv={3}>
+  Next to many friends, giving me feedback and throwing in their ideas, and all
+  the users contributing events to the list, it's me:{" "}
+  <Link href="http://ju.am">Ju</Link>
+</Text>
+
+<Text mv={3}>
+  When I started derkonzert in 2015, it was merely meant as a calendar for
+  myself, but it quickly became much more. I discovered alot of new music that I
+  love today and that I probably would'nt know, if it wasn't for the awesome
+  derkonzert users.
+</Text>
+
+<SubTitle mt={4} mb={2}>
+  Website Issues
+</SubTitle>
+
+<Text mv={3}>
+  If you find any errors or weird behavior, contact me and describe what happend
+  at <Link href="mailto:kontakt@derkonzert.de">kontakt@derkonzert.de</Link>.
+</Text>
+
+<Text mv={3}>
+  Also send an email, if you think the website is missing something, or if you
+  have an idea on how to improve it.
+</Text>
+
+<Text mv={4}>
+  <VeryFancyLink href="/">Back to derkonzert</VeryFancyLink>
+</Text>
