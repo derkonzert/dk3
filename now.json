@@ -25,6 +25,10 @@
       "use": "@now/next@0.0.85-canary.9"
     },
     {
+      "src": "frontend/pages/next.config.js",
+      "use": "@now/next@0.0.85-canary.9"
+    },
+    {
       "src": "frontend/main/next.config.js",
       "use": "@now/next@0.0.85-canary.9"
     }
@@ -79,6 +83,16 @@
     {
       "src": "/account/(.*)",
       "dest": "/frontend/account/$1",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
+    },
+    {
+      "src": "/pages/(.*)",
+      "dest": "/frontend/pages/$1",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
