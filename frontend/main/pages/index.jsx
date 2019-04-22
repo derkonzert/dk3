@@ -20,7 +20,9 @@ import {
 } from "@dk3/ui/atoms/Typography"
 import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
-import { Footer, FooterLink, FooterCheckbox } from "@dk3/ui/components/Footer"
+import { Footer } from "@dk3/ui/components/Footer"
+
+import { FooterLinks } from "@dk3/shared-frontend/lib/FooterLinks"
 
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
@@ -103,7 +105,7 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
                 </Text>
                 <CurrentUser>
                   {({ isLoggedIn }) =>
-                    isLoggedIn ? (
+                    !isLoggedIn ? (
                       <Text mv={3}>
                         <Link href="/account/signup" passHref>
                           <UILink>Create an account</UILink>
@@ -120,30 +122,12 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
                   .
                 </Text>
               </div>
-              <Flex
-                mt={5}
-                basis="100%"
-                flexDirection="row"
-                alignItems="center"
-                justifyContent="center"
-                style={{ textAlign: "center" }}
-              >
-                <Flex basis="auto" grow="0.2" justifyContent="center">
-                  <FooterLink href="/pages/imprint">Imprint</FooterLink>
-                </Flex>
-                <Flex basis="auto" grow="0.2" justifyContent="center">
-                  <FooterLink href="/pages/privacy">Privacy</FooterLink>
-                </Flex>
-                <Flex basis="auto" grow="0.2" justifyContent="center">
-                  <FooterCheckbox
-                    label="Dark Mode"
-                    checked={themeName === "dark"}
-                    onChange={e => {
-                      onThemeChange(e.target.checked ? "dark" : "light")
-                    }}
-                  />
-                </Flex>
-              </Flex>
+              <FooterLinks
+                themeName={themeName}
+                onThemeChange={e => {
+                  onThemeChange(e.target.checked ? "dark" : "light")
+                }}
+              />
             </Spacer>
           </CenteredContent>
         </Footer>

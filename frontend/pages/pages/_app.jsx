@@ -14,10 +14,18 @@ import {
 
 import { ThemeProvider } from "@dk3/ui/theme"
 import { withThemeFromCookie } from "@dk3/shared-frontend/lib/withThemeFromCookie"
+import { FooterLinks } from "@dk3/shared-frontend/FooterLinks"
+import { Footer } from "@dk3/ui/components/Footer"
 
 class MyApp extends App {
   render() {
-    const { Component, theme, pageProps, apolloClient } = this.props
+    const {
+      onThemeChange,
+      Component,
+      theme,
+      pageProps,
+      apolloClient,
+    } = this.props
 
     return (
       <Container>
@@ -90,6 +98,14 @@ class MyApp extends App {
                     <PageWrapper>
                       <Component {...pageProps} {...currentUserProps} />
                     </PageWrapper>
+                    <Footer>
+                      <FooterLinks
+                        themeName={theme}
+                        onThemeChange={e => {
+                          onThemeChange(e.target.checked ? "dark" : "light")
+                        }}
+                      />
+                    </Footer>
                   </React.Fragment>
                 )
               }}
