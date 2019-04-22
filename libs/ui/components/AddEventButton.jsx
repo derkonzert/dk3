@@ -6,8 +6,9 @@ const Positioner = styled.div`
   display: flex;
   /* position: ${props => props.position || "fixed"}; */
   position: fixed;
-  bottom: 3rem;
-  left: 0;
+  bottom: 5.5rem;
+  left: 50%;
+  transform: translateX(-50%);
 
   margin-top: 2rem;
   width: 100%;
@@ -17,7 +18,9 @@ const Positioner = styled.div`
 
   @supports (position: sticky) {
     position: sticky;
-    bottom: 3rem;
+    bottom: 5.5rem;
+    left: 0;
+    transform: none;
   }
 `
 

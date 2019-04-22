@@ -14,8 +14,6 @@ export default class MyDocument extends Document {
     return (
       <html lang="en">
         <Head>
-          <title>derkonzert.de: Concerts in Munich</title>
-
           <meta
             name="description"
             content="derkonzert is a simple list of concerts in Munich. It's supposed to be a haystack of needles, without any boundaries to any specific music style."
