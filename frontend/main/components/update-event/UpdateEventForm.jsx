@@ -142,6 +142,10 @@ export const UpdateEventForm = withRouter(({ id }) => {
                     toError: "",
                     approved: data.event.approved,
                     approvedError: "",
+                    canceled: data.event.canceled,
+                    canceledError: "",
+                    postponed: data.event.postponed,
+                    postponedError: "",
                   }}
                 >
                   {({ state, setState }) => (
@@ -159,6 +163,8 @@ export const UpdateEventForm = withRouter(({ id }) => {
                         function saveChanges(state) {
                           const {
                             approved,
+                            canceled,
+                            postponed,
                             title,
                             location,
                             from,
@@ -229,6 +235,8 @@ export const UpdateEventForm = withRouter(({ id }) => {
                                 url,
                                 description,
                                 approved,
+                                canceled,
+                                postponed,
                               },
                             },
                           })
@@ -264,6 +272,40 @@ export const UpdateEventForm = withRouter(({ id }) => {
                                   })
                                 }}
                                 label="Approved Event"
+                              />
+
+                              <Checkbox
+                                checked={state.canceled}
+                                error={state.canceledError}
+                                name="canceled"
+                                onChange={e => {
+                                  const checked = e.target.checked
+
+                                  setState({ canceled: checked }, () => {
+                                    saveChanges({
+                                      ...state,
+                                      canceled: checked,
+                                    })
+                                  })
+                                }}
+                                label="Canceled Event"
+                              />
+
+                              <Checkbox
+                                checked={state.postponed}
+                                error={state.postponedError}
+                                name="postponed"
+                                onChange={e => {
+                                  const checked = e.target.checked
+
+                                  setState({ postponed: checked }, () => {
+                                    saveChanges({
+                                      ...state,
+                                      postponed: checked,
+                                    })
+                                  })
+                                }}
+                                label="Postponed Event"
                               />
 
                               <TextInput

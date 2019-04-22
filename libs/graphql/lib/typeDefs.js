@@ -74,6 +74,8 @@ const typeDefs = gql`
     description: String
     to: Date
     approved: Boolean
+    canceled: Boolean
+    postponed: Boolean
   }
 
   input ApproveEventInput {
