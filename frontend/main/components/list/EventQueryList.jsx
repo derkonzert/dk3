@@ -130,6 +130,22 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                                 )
                               }
 
+                              if (event.canceled) {
+                                return (
+                                  <RedBadge inverted={inverted}>
+                                    Canceled!
+                                  </RedBadge>
+                                )
+                              }
+
+                              if (event.postponed) {
+                                return (
+                                  <RedBadge inverted={inverted}>
+                                    Postponed!
+                                  </RedBadge>
+                                )
+                              }
+
                               if (event.recentlyAdded) {
                                 return (
                                   <GreenBadge inverted={inverted}>
