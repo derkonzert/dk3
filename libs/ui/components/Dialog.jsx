@@ -13,28 +13,38 @@ import { ThemeProvider } from "../theme"
 
 export const DialogOverlay = styled(ReachDialogOverlay)`
   &[data-reach-dialog-overlay] {
-    background: ${({ theme }) => theme.colors.dialogOverlayBackground};
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    margin: 0 1rem;
+    margin: 0;
     overflow: auto;
 
     z-index: 1;
+
+    background: ${({ theme }) => theme.colors.dialogContentBackground};
+
+    @media screen and (min-width: 45em) {
+      background: ${({ theme }) => theme.colors.dialogOverlayBackground};
+    }
   }
 `
 
 export const DialogContent = styled(ReachDialogContent)`
   &[data-reach-dialog-content] {
     width: 100%;
-    max-width: 35rem;
-    margin: 10vh auto;
+    margin: 0 auto;
+
     background: ${({ theme }) => theme.colors.dialogContentBackground};
     padding: 2rem;
     border-radius: 4px;
     outline: none;
+
+    @media screen and (min-width: 45em) {
+      margin: 10vh auto;
+      max-width: 35rem;
+    }
   }
 `
 

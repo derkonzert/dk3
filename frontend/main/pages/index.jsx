@@ -1,4 +1,5 @@
 import React from "react"
+import Head from "next/head"
 import { withRouter } from "next/router"
 import Link from "next/link"
 import dynamic from "next/dynamic"
@@ -38,6 +39,9 @@ const DynamicCreateEventForm = dynamic(() =>
   import("../components/form/CreateEventForm").then(mod => mod.CreateEventForm)
 )
 
+const DK_DESCRIPTION =
+  "derkonzert is a simple list of concerts in Munich. It's supposed to be a haystack of needles, without any boundaries to any specific music style."
+
 export default withRouter(function Index({ router, themeName, onThemeChange }) {
   const {
     query: { eventId, addEvent },
@@ -52,6 +56,10 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
     <ListAndDetail showDetail={showDetail}>
       <ListAndDetailMain>
         <CenteredContent>
+          <Head>
+            <title>derkonzert – concert community in Munich</title>
+            <meta name="description" content={DK_DESCRIPTION} />
+          </Head>
           <HeaderMenu />
           <CurrentUser>
             {({ isLoggedIn }) => (
@@ -59,9 +67,7 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
                 <MegaTitle>derkonzert</MegaTitle>
 
                 <Text>
-                  {
-                    "derkonzert is a simple list of concerts in Munich. It's supposed to be a haystack of needles, without any boundaries to any specific music style. "
-                  }
+                  {DK_DESCRIPTION}{" "}
                   <Link passHref href="/pages/about">
                     <UILink>Learn more about derkonzert</UILink>
                   </Link>

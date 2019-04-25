@@ -52,7 +52,7 @@ const defaultTheme = {
     inputInvalidBackground: "#d23939",
     inputBorderColor: "hsl(0, 0%, 80%)",
 
-    checkboxColor: "#ababab",
+    checkboxColor: "#6d6d6d",
     checkboxColorActive: "white",
 
     messageBackground: "rgba(0, 0, 0, 0.15)",
