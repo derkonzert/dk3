@@ -127,9 +127,11 @@ describe("auth", () => {
       micro.json.mockReturnValue(credentials)
 
       const dummyJWT = "someFakeJwtToken"
+      const expectedLastLogin = new Date()
 
       authUtils.signIn.mockReturnValue({
         accessToken: dummyJWT,
+        lastLogin: expectedLastLogin,
       })
 
       await auth({ url: "/?operation=signIn" }, response)
@@ -144,6 +146,7 @@ describe("auth", () => {
         200,
         expect.objectContaining({
           accessToken: dummyJWT,
+          lastLogin: expectedLastLogin,
         })
       )
     })

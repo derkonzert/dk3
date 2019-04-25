@@ -69,12 +69,17 @@ describe("auth-utils", () => {
       jwt.sign.mockReset()
     })
 
-    it("creates a jwt token when credentials match", async () => {
+    it("creates a jwt token when credentials match and updates lastLogin", async () => {
+      const lastLogin = new Date()
+      const saveMock = jest.fn()
+
       db.dao.userByEmail.mockResolvedValue({
         username: "ju",
         email: "jus@email.com",
+        lastLogin,
         comparePassword: pw => pw === "password",
         hasSkill: () => true,
+        save: saveMock,
       })
 
       const token = await authUtils.signIn("jus@email.com", "password")
@@ -83,7 +88,10 @@ describe("auth-utils", () => {
 
       expect(token).toEqual({
         accessToken: "fake token",
+        lastLogin,
       })
+
+      expect(saveMock).toHaveBeenCalledTimes(1)
     })
 
     it("throws when user cant be found", async () => {

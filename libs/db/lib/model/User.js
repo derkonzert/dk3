@@ -13,6 +13,11 @@ const Schema = new mongoose.Schema({
     default: shortid.generate,
   },
 
+  lastLogin: {
+    type: Date,
+    default: null,
+  },
+
   username: {
     type: String,
     trim: true,

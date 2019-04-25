@@ -126,9 +126,14 @@ exports.signIn = async (email, password) => {
       })
     }
 
-    const tokens = await exports.generateTokens(user)
+    const { lastLogin } = user
 
-    return tokens
+    user.lastLogin = new Date()
+    await user.save()
+
+    const { accessToken } = await exports.generateTokens(user)
+
+    return { lastLogin, accessToken }
   } catch (err) {
     throw err
   }
