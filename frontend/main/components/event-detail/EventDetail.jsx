@@ -104,7 +104,7 @@ export const EventDetail = ({ id }) => {
                 }
               />
             </Head>
-            <MegaTitle mr={5} mb={3}>
+            <MegaTitle data-event-title mr={5} mb={3}>
               {event.title}
             </MegaTitle>
 

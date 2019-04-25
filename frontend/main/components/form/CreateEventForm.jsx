@@ -49,7 +49,9 @@ const Form = styled.form`
 `
 
 export const CreateEventForm = ({ onCreated }) => {
-  const today = DateTime.local().set({ hour: 20, minute: 0 })
+  const today = DateTime.local()
+    .plus({ days: 1 })
+    .set({ hour: 20, minute: 0 })
 
   const to = today.plus({ hour: 3 }).toJSDate()
   const from = today.toJSDate()
