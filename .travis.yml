@@ -18,6 +18,5 @@ jobs:
     - stage: "Tests"
       name: "Unit Tests"
       script: yarn test && codecov
-    # TODO: FOR NOW DEACTIVATED: runs out of memory in CI
-    # - name: "Integration Tests"
-    #   script: yarn integration:ci
+    - name: "Integration Tests"
+      script: yarn integration:ci
