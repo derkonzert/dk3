@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core"
+import { withTheme } from "emotion-theming"
 
 import { Bookmark } from "../icons/Bookmark"
 import { Box, FancyBox, SuperFancyBox } from "../atoms/Boxes"
@@ -98,62 +99,66 @@ export const bookmarkActive = css`
   opacity: 1;
 `
 
-export const EventCard = ({
-  title,
-  description,
-  fancyLevel,
-  day,
-  dayName,
-  large,
-  renderBadge,
-  approved = true,
-  bookmarked = false,
-  linkProps = {},
-  onBookmarkClick,
-  ...props
-}) => {
-  const ActualBox = approved ? boxes[fancyLevel] || Box : Box
-  const superFancy = approved ? fancyLevel === 2 : false
-  const textContentCss = [textContentStyle]
+export const EventCard = withTheme(
+  ({
+    theme,
+    title,
+    description,
+    fancyLevel,
+    day,
+    dayName,
+    large,
+    renderBadge,
+    approved = true,
+    bookmarked = false,
+    linkProps = {},
+    onBookmarkClick,
+    ...props
+  }) => {
+    const ActualBox = approved ? boxes[fancyLevel] || Box : Box
+    const superFancy = approved ? fancyLevel === 2 : false
+    const textContentCss = [textContentStyle]
 
-  if (large && superFancy) {
-    textContentCss.push(textContentStyleLargeFancy)
-  } else if (large) {
-    textContentCss.push(textContentStyleLarge)
+    if (large && superFancy) {
+      textContentCss.push(textContentStyleLargeFancy)
+    } else if (large) {
+      textContentCss.push(textContentStyleLarge)
+    }
+    const inverted = superFancy ? theme.name !== "dark" : false
+
+    return (
+      <ActualBox css={boxHoverStyle} {...props}>
+        <div css={cardContent}>
+          <a css={linkStyle} {...linkProps}>
+            {!large && (
+              <CalendarDay
+                css={calendar}
+                day={day}
+                dayName={dayName}
+                inverted={inverted}
+              />
+            )}
+            <div css={textContentCss}>
+              <SubTitle inverted={inverted}>{title}</SubTitle>
+              <Description inverted={inverted}>
+                {!!renderBadge && renderBadge({ inverted })}
+                {description}
+              </Description>
+            </div>
+          </a>
+          <button
+            css={[bookmark, bookmarked && bookmarkActive]}
+            aria-label={
+              bookmarked
+                ? `Remove "${title}" from your bookmarks`
+                : `Add "${title}" to your bookmarks`
+            }
+            onClick={onBookmarkClick}
+          >
+            <Bookmark bookmarked={bookmarked} />
+          </button>
+        </div>
+      </ActualBox>
+    )
   }
-
-  return (
-    <ActualBox css={boxHoverStyle} {...props}>
-      <div css={cardContent}>
-        <a css={linkStyle} {...linkProps}>
-          {!large && (
-            <CalendarDay
-              css={calendar}
-              day={day}
-              dayName={dayName}
-              inverted={superFancy}
-            />
-          )}
-          <div css={textContentCss}>
-            <SubTitle inverted={superFancy}>{title}</SubTitle>
-            <Description inverted={superFancy}>
-              {!!renderBadge && renderBadge({ inverted: superFancy })}
-              {description}
-            </Description>
-          </div>
-        </a>
-        <button
-          css={[bookmark, bookmarked && bookmarkActive]}
-          aria-label={
-            bookmarked
-              ? `Remove "${title}" from your bookmarks`
-              : `Add "${title}" to your bookmarks`
-          }
-          onClick={onBookmarkClick}
-        >
-          <Bookmark bookmarked={bookmarked} />
-        </button>
-      </div>
-    </ActualBox>
-  )
-}
+)

@@ -2,6 +2,7 @@ import React from "react"
 import { ThemeProvider as EmotionThemeProvider } from "emotion-theming"
 
 const defaultTheme = {
+  name: "light",
   colors: {
     black: "#000",
     siteColor: "#3f3f3f",
@@ -73,6 +74,7 @@ const defaultTheme = {
 
 const darkTheme = {
   ...defaultTheme,
+  name: "dark",
   colors: {
     ...defaultTheme.colors,
     siteColor: "#f9f9f9",
