@@ -44,13 +44,20 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
                 }
 
                 if (data.accessToken) {
-                  login({ token: data.accessToken })
+                  login({ token: data.accessToken, lastLogin: data.lastLogin })
 
-                  return client.resetStore()
+                  return Promise.all([data, client.resetStore()])
                 }
+
+                throw new Error("Please try again")
               })
-              .then(() => {
-                onLogin && onLogin()
+              .then(([data]) => {
+                if (data.lastLogin) {
+                  onLogin && onLogin(data)
+                } else {
+                  // User logged in for the first time
+                  window.location.href = "/account/setup"
+                }
               })
               .catch(err => {
                 setState({ message: err.message, loading: false })
