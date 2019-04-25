@@ -18,7 +18,7 @@ export const HeaderMenu = () => (
       }
 
       return (
-        <HorizontalMenu>
+        <HorizontalMenu data-main-nav>
           {isLoggedIn ? (
             <React.Fragment>
               <HorizontalMenuItemInfo>

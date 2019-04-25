@@ -24,7 +24,7 @@ describe("Add event", function() {
 
     cy.get("[data-add-event-form]").submit()
 
-    cy.get("[data-side='true'] h1").contains("This Awesome Band")
+    cy.get("[data-event-title]").contains("This Awesome Band")
     cy.get("[href='https://some.nice/url']").should("exist")
   })
 

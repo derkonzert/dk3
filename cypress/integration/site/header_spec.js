@@ -8,10 +8,4 @@ describe("Header", function() {
   it("Shows project name", function() {
     cy.get("h1").contains("derkonzert")
   })
-
-  it("when logged in shows username", () => {
-    cy.window().login("ju")
-
-    cy.get("header").contains("WhoAmI: ju")
-  })
 })
