@@ -58,6 +58,7 @@ export const AccountSetupForm = () => {
           <State
             initial={{
               step: 0,
+              submitting: false,
               publicUsername: data.me.publicUsername,
               autoBookmark: data.me.autoBookmark,
               sendEmails: data.me.sendEmails,
@@ -69,11 +70,13 @@ export const AccountSetupForm = () => {
                 update={() => {
                   setState({
                     step: state.step + 1,
+                    submitting: false,
                   })
                 }}
               >
                 {updateSelf => {
                   function saveChanges(key, value) {
+                    setState({ submitting: true })
                     updateSelf({
                       variables: {
                         input: {
@@ -113,6 +116,7 @@ export const AccountSetupForm = () => {
                           </Text>
 
                           <Button
+                            disabled={state.submitting}
                             mh={2}
                             onClick={() => saveChanges("autoBookmark", false)}
                           >
@@ -120,6 +124,7 @@ export const AccountSetupForm = () => {
                           </Button>
 
                           <VeryFancyButton
+                            disabled={state.submitting}
                             mv={2}
                             onClick={() => saveChanges("autoBookmark", true)}
                           >
@@ -138,6 +143,7 @@ export const AccountSetupForm = () => {
                           </Text>
 
                           <Button
+                            disabled={state.submitting}
                             mh={2}
                             onClick={() => saveChanges("sendEmails", false)}
                           >
@@ -145,6 +151,7 @@ export const AccountSetupForm = () => {
                           </Button>
 
                           <VeryFancyButton
+                            disabled={state.submitting}
                             mv={2}
                             onClick={() => saveChanges("sendEmails", true)}
                           >
@@ -164,6 +171,7 @@ export const AccountSetupForm = () => {
                           </Text>
 
                           <Button
+                            disabled={state.submitting}
                             mh={2}
                             onClick={() => saveChanges("publicUsername", false)}
                           >
@@ -171,6 +179,7 @@ export const AccountSetupForm = () => {
                           </Button>
 
                           <VeryFancyButton
+                            disabled={state.submitting}
                             mv={2}
                             onClick={() => saveChanges("publicUsername", true)}
                           >
