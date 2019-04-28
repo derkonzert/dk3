@@ -39,4 +39,10 @@ exports.Query = {
 
     return event
   },
+
+  locations: async (_, { search }, { dao }) => {
+    const locations = await dao.locationsSearch(search)
+
+    return locations.map(name => ({ name }))
+  },
 }

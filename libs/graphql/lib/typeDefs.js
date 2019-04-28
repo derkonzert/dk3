@@ -22,6 +22,10 @@ const typeDefs = gql`
     softExpiresAt: Date
   }
 
+  type LocationSuggestion {
+    name: String!
+  }
+
   type Event {
     id: String
     title: String
@@ -53,6 +57,8 @@ const typeDefs = gql`
     pastEvents: [Event]
     # Event by ID
     event(id: ID!): Event
+    # Locations by search term
+    locations(search: String!): [LocationSuggestion]
   }
 
   input CreateEventInput {

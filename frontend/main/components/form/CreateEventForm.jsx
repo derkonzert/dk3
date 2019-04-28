@@ -7,6 +7,7 @@ import Link from "next/link"
 
 import { VeryFancyButton } from "@dk3/ui/form/Button"
 import { TextInput, InputDescription } from "@dk3/ui/form/TextInput"
+import { AutoComplete } from "@dk3/ui/form/AutoComplete"
 import { Checkbox } from "@dk3/ui/form/Checkbox"
 import { MegaTitle, Text } from "@dk3/ui/atoms/Typography"
 import { ListAndDetailClose } from "@dk3/ui/layouts/ListAndDetail"
@@ -40,6 +41,14 @@ export const CREATE_EVENT = gql`
   ${UPCOMING_EVENTS_EVENT_FRAGMENT}
 `
 
+export const GET_LOCATION_OPTIONS = gql`
+  query locationOptions($search: String!) {
+    locations(search: $search) {
+      name
+    }
+  }
+`
+
 const Wrapper = styled.div`
   position: relative;
 `
@@ -58,7 +67,7 @@ export const CreateEventForm = ({ onCreated }) => {
 
   return (
     <Query query={CREATE_EVENT_USER_INFO}>
-      {({ loading, error, data }) => {
+      {({ client, loading, error, data }) => {
         if (loading) {
           return <Spinner />
         }
@@ -222,15 +231,35 @@ export const CreateEventForm = ({ onCreated }) => {
                           label="Title"
                           disabled={state.isSaving}
                         />
-                        <TextInput
+
+                        <AutoComplete
                           mb={3}
-                          value={state.location}
+                          id="location"
+                          value={{
+                            name: state.location,
+                            label: state.location,
+                          }}
                           name="location"
                           error={state.locationError}
-                          onChange={e => setState({ location: e.target.value })}
+                          onChange={option => {
+                            const location = option ? option.value : ""
+                            setState({ location })
+                          }}
                           label="Location"
                           disabled={state.isSaving}
+                          loadOptions={async inputValue => {
+                            const { data } = await client.query({
+                              query: GET_LOCATION_OPTIONS,
+                              variables: { search: inputValue },
+                            })
+
+                            return data.locations.map(({ name }) => ({
+                              label: name,
+                              value: name,
+                            }))
+                          }}
                         />
+
                         <DateTimeInput
                           value={state.from}
                           name="from"

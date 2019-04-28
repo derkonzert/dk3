@@ -187,6 +187,43 @@ exports.eventsByIds = async ids =>
 exports.eventByShortId = async shortId =>
   await Event.Model.findOne({ shortId }).exec()
 
+function escapeRegexCharacters(string) {
+  return string.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&")
+}
+
+function suggest(query, fieldKey) {
+  return new Promise((resolve, reject) => {
+    Event.Model.aggregate(
+      [
+        { $unwind: fieldKey },
+        {
+          $group: {
+            _id: fieldKey,
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { count: -1 } },
+      ],
+      (err, results) => {
+        if (err) {
+          return reject(err)
+        }
+
+        const filterRegExp = new RegExp(escapeRegexCharacters(query), "i")
+
+        resolve(
+          results
+            .map(result => result._id)
+            .filter(item => item.match(filterRegExp) !== null)
+        )
+      }
+    )
+  })
+}
+exports.locationsSearch = async search => {
+  return await suggest(search, "$location")
+}
+
 exports.allEvents = async ({ filter = {}, sort = {} } = {}) =>
   await Event.Model.find({
     ...filter,
