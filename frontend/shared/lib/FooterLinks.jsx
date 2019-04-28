@@ -5,14 +5,18 @@ import { FooterLink, FooterCheckbox } from "@dk3/ui/components/Footer"
 export const FooterLinks = ({ themeName, onThemeChange }) => (
   <Flex
     mt={5}
+    mh={8}
     basis="100%"
     flexDirection="row"
     alignItems="center"
     justifyContent="center"
-    style={{ textAlign: "center" }}
+    style={{ textAlign: "center", maxWidth: "68.8rem" }}
   >
     <Flex basis="auto" grow="0.2" justifyContent="center">
       <FooterLink href="/pages/about">About</FooterLink>
+    </Flex>
+    <Flex basis="auto" grow="0.2" justifyContent="center">
+      <FooterLink href="/archive">Archive</FooterLink>
     </Flex>
     <Flex basis="auto" grow="0.2" justifyContent="center">
       <FooterLink href="/pages/imprint">Imprint</FooterLink>

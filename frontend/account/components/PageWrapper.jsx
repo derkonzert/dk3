@@ -3,20 +3,28 @@ import { Global } from "@emotion/core"
 import styled from "@emotion/styled"
 
 import { global } from "@dk3/ui/documentStyles"
-import { Spacer } from "@dk3/ui/atoms/Spacer"
 
-const PageContenWrapper = styled.main`
+import { withSpacing } from "@dk3/ui/utils/withSpacing"
+
+export const PageContenWrapper = withSpacing({ mv: 5 })(styled.main`
   margin: 0 auto;
   width: 100%;
   max-width: 36rem;
   background: ${({ theme }) => theme.colors.boxBackground};
   padding: 1rem 3rem 3rem;
   text-align: center;
+  align-self: flex-start;
+`)
+
+const Wrapper = styled.div`
+  display: grid;
+  grid-template-rows: min-content auto min-content;
+  min-height: 100vh;
 `
 
 export const PageWrapper = ({ children }) => (
-  <Spacer mv={5}>
+  <Wrapper>
     <Global styles={global} />
-    <PageContenWrapper>{children}</PageContenWrapper>
-  </Spacer>
+    {children}
+  </Wrapper>
 )
