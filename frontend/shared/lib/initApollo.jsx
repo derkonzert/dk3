@@ -17,7 +17,6 @@ if (!process.browser) {
 function create(initialState, { getToken, uri, on404 }) {
   const httpLink = new BatchHttpLink({
     uri,
-    credentials: "same-origin",
     batchInterval: process.browser ? 50 : 0,
   })
 

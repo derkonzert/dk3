@@ -25,7 +25,27 @@ exports.Query = {
     return await dao.upcomingEvents()
   },
 
-  pastEvents: async (_, args, context) => await context.dao.pastEvents(),
+  pastEvents: async (_, args, { dao }) => {
+    const totalCount = await dao.cachedMethod(
+      "pastEvents.totalCount",
+      dao.allPastEventsCount,
+      { ttl: 1000 * 60 * 60 }
+    )()
+
+    const { page } = args
+
+    const [events, hasMore] = await Promise.all([
+      dao.pastEvents({ page }),
+      dao.hasMorePastEvents({ page }),
+    ])
+
+    return {
+      events,
+      hasMore,
+      nextPage: page + 1,
+      totalCount,
+    }
+  },
 
   /* Single Nodes */
   event: async (_, { id }, { dao } /*, info*/) => {

@@ -234,17 +234,34 @@ exports.allEvents = async ({ filter = {}, sort = {} } = {}) =>
 exports.allEventsCount = async () =>
   await Event.Model.estimatedDocumentCount().exec()
 
-exports.pastEvents = async ({ filter = {}, sort = {} } = {}) =>
-  await Event.Model.find({
+const pastEventsQuery = () =>
+  Event.Model.find({
     to: {
       $lt: DateTime.local()
         .startOf("day")
         .toJSDate(),
     },
-    ...filter,
-  })
-    .sort({ from: -1, ...sort })
+  }).sort({ from: -1 })
+
+const PAST_EVENTS_PER_PAGE = 60
+exports.pastEvents = async ({ page = 0 }) =>
+  await pastEventsQuery({ page })
+    .skip(page * PAST_EVENTS_PER_PAGE)
+    .limit(PAST_EVENTS_PER_PAGE)
     .exec()
+exports.hasMorePastEvents = async ({ page = 0 }) => {
+  const nextEvents = await pastEventsQuery()
+    .skip((page + 1) * PAST_EVENTS_PER_PAGE)
+    .limit(1)
+    .exec()
+
+  return nextEvents.length > 0
+}
+exports.allPastEventsCount = async () => {
+  return await pastEventsQuery()
+    .countDocuments()
+    .exec()
+}
 
 exports.upcomingEvents = async ({ filter = {}, sort = {} } = {}) => {
   return await Event.Model.find({

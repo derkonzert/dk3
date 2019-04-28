@@ -46,6 +46,13 @@ const typeDefs = gql`
     recentlyAdded: Int
   }
 
+  type ArchivedEvents {
+    events: [Event]
+    nextPage: Int
+    hasMore: Boolean
+    totalCount: Int
+  }
+
   type Query {
     # The viewing user
     me: User
@@ -54,7 +61,7 @@ const typeDefs = gql`
     # Upcoming events
     upcomingEvents(filter: String): [Event]
     # Past events
-    pastEvents: [Event]
+    pastEvents(page: Int!): ArchivedEvents
     # Event by ID
     event(id: ID!): Event
     # Locations by search term
