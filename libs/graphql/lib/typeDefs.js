@@ -78,6 +78,10 @@ const typeDefs = gql`
     postponed: Boolean
   }
 
+  input DeleteEventInput {
+    id: ID!
+  }
+
   input ApproveEventInput {
     id: ID!
     approved: Boolean!
@@ -102,12 +106,19 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    # Create an event
     createEvent(input: CreateEventInput!): Event
+    # Update an event
     updateEvent(input: UpdateEventInput!): Event
+    # Delete an event
+    deleteEvent(input: DeleteEventInput!): Event
+    # Set approved to true on an event
     approveEvent(input: ApproveEventInput!): Event
+    # Bookmark an event
     bookmarkEvent(input: BookmarkEventInput!): Event
-
+    # Update logged in user Mutations
     updateSelf(input: UpdateSelfInput!): User
+    # Update logged in users calendar integration token
     updateCalendarToken(input: UpdateCalendarTokenInput!): User
   }
 `

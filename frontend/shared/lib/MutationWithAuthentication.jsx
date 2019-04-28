@@ -3,9 +3,7 @@ import { Mutation, Query } from "react-apollo"
 import gql from "graphql-tag"
 import { State } from "react-powerplug"
 
-import { Dialog } from "@dk3/ui/components/Dialog"
-import { SubTitle, Description } from "@dk3/ui/atoms/Typography"
-import { LoginForm } from "../form/LoginForm"
+import { LoginDialog } from "../form/LoginDialog"
 
 export const USER_AUTH_INFO = gql`
   query userId {
@@ -57,15 +55,16 @@ export const MutationWithAuthentication = ({
                 {mutate => children(requireAuthentication(mutate))}
               </Mutation>
 
-              <Dialog key="mwa-dialog" isOpen={state.showDialog}>
-                <SubTitle>Login Required</SubTitle>
-                <Description>{notLoggedInMessage}</Description>
-                <LoginForm
-                  mv={3}
+              {
+                <LoginDialog
+                  key="mwa-dialog"
+                  isOpen={state.showDialog}
+                  title="Login Required"
+                  description={notLoggedInMessage}
                   onLogin={onLoginOrSignUp}
                   onCancel={onCancel}
                 />
-              </Dialog>
+              }
             </React.Fragment>
           )
         }}

@@ -6,3 +6,5 @@ exports.LOGIN = "LOGIN"
 exports.APPROVE_EVENT = "APPROVE_EVENT"
 /* Can approve events */
 exports.UPDATE_EVENT = "UPDATE_EVENT"
+/* Can delete events */
+exports.DELETE_EVENT = "DELETE_EVENT"

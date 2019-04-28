@@ -80,6 +80,10 @@ exports.generateTokens = async (user, options = {}) => {
     ms(config.get("ACCESS_TOKEN_SOFT_EXPIRE"))
   )
 
+  const expiresIn = options.expiresIn || config.get("ACCESS_TOKEN_LIFE")
+
+  const expiresAt = Date.now() + ms(expiresIn)
+
   const accessToken = await new Promise((resolve, reject) =>
     jwt.sign(
       {
@@ -90,7 +94,7 @@ exports.generateTokens = async (user, options = {}) => {
       config.get("JWT_SECRET"),
       {
         algorithm: "HS512",
-        expiresIn: options.expiresIn || config.get("ACCESS_TOKEN_LIFE"),
+        expiresIn,
       },
       (err, token) => {
         if (err) {
@@ -102,7 +106,7 @@ exports.generateTokens = async (user, options = {}) => {
     )
   )
 
-  return { accessToken }
+  return { accessToken, expiresAt }
 }
 
 exports.signIn = async (email, password) => {
@@ -131,9 +135,9 @@ exports.signIn = async (email, password) => {
     user.lastLogin = new Date()
     await user.save()
 
-    const { accessToken } = await exports.generateTokens(user)
+    const { accessToken, expiresAt } = await exports.generateTokens(user)
 
-    return { lastLogin, accessToken }
+    return { lastLogin, accessToken, expiresAt }
   } catch (err) {
     throw err
   }

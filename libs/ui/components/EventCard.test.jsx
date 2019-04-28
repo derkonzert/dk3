@@ -3,7 +3,7 @@ import { matchers } from "jest-emotion"
 
 import { mountWithTheme } from "../utils/testHelpers"
 
-import { Box, FancyBox, SuperFancyBox } from "../atoms/Boxes"
+import { BaseBox } from "../atoms/Boxes"
 import { EventCard } from "./EventCard"
 
 expect.extend(matchers)
@@ -28,21 +28,21 @@ describe("EventCard", () => {
     expect(elem.find("button")).toHaveStyleRule("opacity", "1")
   })
 
-  it("uses boxes depending on fancyLevel", () => {
+  it("sets fancyLevel on BaseBox", () => {
     expect(
       mountWithTheme(<EventCard fancyLevel={0} />)
-        .find(Box)
-        .exists()
-    ).toBe(true)
+        .find(BaseBox)
+        .prop("fancyLevel")
+    ).toBe(0)
     expect(
       mountWithTheme(<EventCard fancyLevel={1} />)
-        .find(FancyBox)
-        .exists()
-    ).toBe(true)
+        .find(BaseBox)
+        .prop("fancyLevel")
+    ).toBe(1)
     expect(
       mountWithTheme(<EventCard fancyLevel={2} />)
-        .find(SuperFancyBox)
-        .exists()
-    ).toBe(true)
+        .find(BaseBox)
+        .prop("fancyLevel")
+    ).toBe(2)
   })
 })

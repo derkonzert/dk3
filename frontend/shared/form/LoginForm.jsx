@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import styled from "@emotion/styled"
 import { TextInput } from "@dk3/ui/form/TextInput"
 import { Link as UILink, Small } from "@dk3/ui/atoms/Typography"
 import { State } from "react-powerplug"
@@ -7,12 +8,27 @@ import { VeryFancyButton, Button } from "@dk3/ui/form/Button"
 import { withApollo } from "react-apollo"
 import { login } from "../lib/withApollo"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
+import { Spinner } from "@dk3/ui/atoms/Spinner"
+
+const Form = styled.form`
+  position: relative;
+`
+
+const LoadingOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 4.5rem 0;
+  background: ${({ theme }) => theme.colors.formLoadingOverlay};
+`
 
 export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
   return (
     <State initial={{ email: "", password: "", message: "", loading: false }}>
       {({ state, setState }) => (
-        <form
+        <Form
           onSubmit={e => {
             setState({ loading: true })
             e.preventDefault()
@@ -44,7 +60,11 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
                 }
 
                 if (data.accessToken) {
-                  login({ token: data.accessToken, lastLogin: data.lastLogin })
+                  login({
+                    token: data.accessToken,
+                    lastLogin: data.lastLogin,
+                    expiresAt: data.expiresAt,
+                  })
 
                   return Promise.all([data, client.resetStore()])
                 }
@@ -52,9 +72,9 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
                 throw new Error("Please try again")
               })
               .then(([data]) => {
-                if (data.lastLogin) {
-                  onLogin && onLogin(data)
-                } else {
+                onLogin && onLogin(data)
+
+                if (!data.lastLogin) {
                   // User logged in for the first time
                   window.location.href = "/account/setup"
                 }
@@ -71,6 +91,7 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
             onChange={e => setState({ email: e.target.value })}
             type="email"
             name="email"
+            disabled={state.loading}
           />
           <TextInput
             label="Password"
@@ -83,10 +104,16 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
             onChange={e => setState({ password: e.target.value })}
             type="password"
             name="password"
+            disabled={state.loading}
           />
           <div style={{ display: "flex" }}>
             {!!onCancel && (
-              <Button type="button" mr={3} onClick={onCancel}>
+              <Button
+                disabled={state.loading}
+                type="button"
+                mr={3}
+                onClick={onCancel}
+              >
                 Cancel
               </Button>
             )}
@@ -98,14 +125,19 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
               Login
             </VeryFancyButton>
           </div>
-          <Spacer mt={3}>
+          <Spacer mt={3} style={{ textAlign: "center" }}>
             <Link href="/account/signup">
               <UILink>
                 <Small>{"I don't have an account yet"}</Small>
               </UILink>
             </Link>
           </Spacer>
-        </form>
+          {state.loading && (
+            <LoadingOverlay>
+              <Spinner />
+            </LoadingOverlay>
+          )}
+        </Form>
       )}
     </State>
   )

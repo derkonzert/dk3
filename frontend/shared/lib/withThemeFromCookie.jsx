@@ -25,7 +25,10 @@ export const withThemeFromCookie = Component => {
     onThemeChange(theme) {
       this.setState({ theme })
 
-      cookie.set("theme", theme)
+      cookie.set("theme", theme, {
+        secure: process.env.NODE_ENV === "production",
+        expires: 356,
+      })
     }
 
     render() {

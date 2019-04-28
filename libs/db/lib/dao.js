@@ -133,6 +133,16 @@ exports.updateEvent = async ({ shortId, ...eventData }) => {
   }
 }
 
+exports.deleteEvent = async ({ shortId }) => {
+  try {
+    const result = await Event.Model.findOneAndDelete({ shortId }).exec()
+
+    return result
+  } catch (err) {
+    throw err
+  }
+}
+
 exports.bookmarkEvent = async ({ eventShortId, bookmarked, userId }) => {
   try {
     const operation = bookmarked ? "$push" : "$pull"

@@ -84,7 +84,10 @@ class MyApp extends App {
                   this.setState({
                     showCookieConsent: false,
                   })
-                  cookie.set("cookieConsent", true)
+                  cookie.set("cookieConsent", true, {
+                    expires: 365,
+                    secure: process.env.NODE_ENV === "production",
+                  })
                 }}
               >
                 <Text>

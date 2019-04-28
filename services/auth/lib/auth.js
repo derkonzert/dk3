@@ -65,6 +65,7 @@ module.exports = async function auth(req, res) {
 
           return sendJson(res, 200, {
             accessToken: payload.accessToken,
+            expiresAt: payload.expiresAt,
             lastLogin: payload.lastLogin,
           })
         } catch (err) {

@@ -24,6 +24,8 @@ import { EVENT_DETAIL_FRAGMENT } from "../event-detail/EventDetail"
 import { DateTimeInput } from "@dk3/ui/form/DateTimeInput"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 import { hasSkill } from "@dk3/shared-frontend/lib/hasSkill"
+import { DeleteEventButton } from "./DeleteEventButton"
+import { Flex } from "@dk3/ui/atoms/Flex"
 
 export const EVENT_DATA = gql`
   query eventDetail($id: ID!) {
@@ -389,6 +391,19 @@ export const UpdateEventForm = withRouter(({ id }) => {
                                 label="Description"
                                 rows={5}
                               />
+
+                              <Flex mv={4} justifyContent="center">
+                                <Flex grow={0}>
+                                  <DeleteEventButton
+                                    eventId={data.event.id}
+                                    onClick={() => {
+                                      window.location.href = "/"
+                                    }}
+                                  >
+                                    Delete Event
+                                  </DeleteEventButton>
+                                </Flex>
+                              </Flex>
 
                               <FancyButton type="submit" block pa={3} mb={3}>
                                 Save changes

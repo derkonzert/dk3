@@ -3,11 +3,9 @@ import { jsx, css } from "@emotion/core"
 import { withTheme } from "emotion-theming"
 
 import { Bookmark } from "../icons/Bookmark"
-import { Box, FancyBox, SuperFancyBox } from "../atoms/Boxes"
+import { BaseBox } from "../atoms/Boxes"
 import { SubTitle, Description } from "../atoms/Typography"
 import { CalendarDay } from "../atoms/CalendarDay"
-
-const boxes = [Box, FancyBox, SuperFancyBox]
 
 const cardContent = css`
   display: flex;
@@ -115,7 +113,6 @@ export const EventCard = withTheme(
     onBookmarkClick,
     ...props
   }) => {
-    const ActualBox = approved ? boxes[fancyLevel] || Box : Box
     const superFancy = approved ? fancyLevel === 2 : false
     const textContentCss = [textContentStyle]
 
@@ -127,7 +124,11 @@ export const EventCard = withTheme(
     const inverted = superFancy ? theme.name !== "dark" : false
 
     return (
-      <ActualBox css={boxHoverStyle} {...props}>
+      <BaseBox
+        fancyLevel={approved ? fancyLevel : 0}
+        css={boxHoverStyle}
+        {...props}
+      >
         <div css={cardContent}>
           <a css={linkStyle} {...linkProps}>
             {!large && (
@@ -158,7 +159,7 @@ export const EventCard = withTheme(
             <Bookmark bookmarked={bookmarked} />
           </button>
         </div>
-      </ActualBox>
+      </BaseBox>
     )
   }
 )

@@ -1,3 +1,4 @@
+const ms = require("ms")
 const jwt = require("jsonwebtoken")
 const config = require("@dk3/config")
 const db = require("@dk3/db")
@@ -8,7 +9,7 @@ jest.mock("@dk3/db")
 
 config.get.mockImplementation(key => {
   if (key === "ACCESS_TOKEN_LIFE") {
-    return 2
+    return "10 min"
   } else if (key === "ACCESS_TOKEN_SOFT_EXPIRE") {
     return "1 days"
   } else if (key === "JWT_SECRET") {
@@ -69,7 +70,7 @@ describe("auth-utils", () => {
       jwt.sign.mockReset()
     })
 
-    it("creates a jwt token when credentials match and updates lastLogin", async () => {
+    it("creates a jwt token, lastLogin and expiresAt", async () => {
       const lastLogin = new Date()
       const saveMock = jest.fn()
 
@@ -82,14 +83,13 @@ describe("auth-utils", () => {
         save: saveMock,
       })
 
-      const token = await authUtils.signIn("jus@email.com", "password")
+      const result = await authUtils.signIn("jus@email.com", "password")
 
       expect(db.dao.userByEmail).toBeCalledWith("jus@email.com")
 
-      expect(token).toEqual({
-        accessToken: "fake token",
-        lastLogin,
-      })
+      expect(result.accessToken).toEqual("fake token")
+      expect(result.lastLogin).toEqual(lastLogin)
+      expect(result.expiresAt).toEqual(expect.any(Number))
 
       expect(saveMock).toHaveBeenCalledTimes(1)
     })
@@ -147,7 +147,7 @@ describe("auth-utils", () => {
         } else if (
           data._id === dummyUserData._id &&
           data.shortId === dummyUserData.shortId &&
-          options.expiresIn === 2 &&
+          options.expiresIn === "10 min" &&
           secret === "secret"
         ) {
           callback(null, "someaccesstoken")
@@ -165,11 +165,10 @@ describe("auth-utils", () => {
       try {
         const result = await authUtils.generateTokens(dummyUserData)
 
-        expect(result).toEqual(
-          expect.objectContaining({
-            accessToken: "someaccesstoken",
-          })
-        )
+        expect(result.accessToken).toEqual("someaccesstoken")
+        expect(result.expiresAt).toEqual(expect.any(Number))
+        expect(result.expiresAt).toBeGreaterThan(Date.now())
+        expect(result.expiresAt).toBeLessThanOrEqual(Date.now() + ms("10 mins"))
       } catch (err) {
         throw err
       }

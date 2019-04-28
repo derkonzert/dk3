@@ -58,6 +58,7 @@ export const EVENT_DETAIL = gql`
 
 const Wrapper = styled.div`
   position: relative;
+  padding-bottom: 4rem;
 `
 
 export const EventDetail = ({ id }) => {

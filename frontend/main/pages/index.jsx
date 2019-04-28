@@ -31,12 +31,21 @@ import { EventLegend } from "../components/list/EventLegend"
 
 import { HeaderMenu } from "../components/HeaderMenu/HeaderMenu"
 import { Flex } from "@dk3/ui/atoms/Flex"
+import { Spinner } from "@dk3/ui/atoms/Spinner"
 
-const DynamicEventDetail = dynamic(() =>
-  import("../components/event-detail/EventDetail").then(mod => mod.EventDetail)
+const DynamicEventDetail = dynamic(
+  () =>
+    import("../components/event-detail/EventDetail").then(
+      mod => mod.EventDetail
+    ),
+  { loading: Spinner }
 )
-const DynamicCreateEventForm = dynamic(() =>
-  import("../components/form/CreateEventForm").then(mod => mod.CreateEventForm)
+const DynamicCreateEventForm = dynamic(
+  () =>
+    import("../components/form/CreateEventForm").then(
+      mod => mod.CreateEventForm
+    ),
+  { loading: Spinner }
 )
 
 const DK_DESCRIPTION =

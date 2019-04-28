@@ -1,4 +1,4 @@
-import { css } from "docz-plugin-css"
+// import { css } from "docz-plugin-css"
 
 export default {
   title: "@dk3/ui",
@@ -7,7 +7,7 @@ export default {
   dest: "/dist",
   hashRouter: true,
   codeSandbox: false,
-  plugins: [css()],
+  // plugins: [css()],
   themeConfig: {
     showPlaygroundEditor: false,
     colors: {

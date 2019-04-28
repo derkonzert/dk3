@@ -44,6 +44,8 @@ const defaultTheme = {
     fancyButtonBackground: "white",
     veryFancyButtonColor: "white",
 
+    deleteButtonColor: "#a90505",
+
     stickyListTitleBackground: "rgba(244, 242, 242, 0.95)",
 
     inputError: "#d23939",
@@ -69,6 +71,8 @@ const defaultTheme = {
     messageColorWarning: "#9c5405",
 
     addEventButtonShadow: "rgba(0, 0, 0, 0.35)",
+
+    formLoadingOverlay: "rgba(255, 255, 255, 0.8)",
   },
 }
 
@@ -115,8 +119,9 @@ const darkTheme = {
     buttonBackgroundActive: "rgba(255, 255, 255, 0.05)",
     fancyButtonColor: "white",
     fancyButtonBackground: "#292929",
-
     veryFancyButtonColor: "white",
+
+    deleteButtonColor: "#f75a5a",
 
     stickyListTitleBackground: "rgba(27, 27, 27, 0.85)",
 

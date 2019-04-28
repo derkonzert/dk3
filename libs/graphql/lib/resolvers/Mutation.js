@@ -65,6 +65,24 @@ exports.Mutation = {
     return result
   },
 
+  deleteEvent: async (parent, args, { dao, user }) => {
+    const { id } = args.input
+
+    if (!user || !user._id) {
+      throw new Error("Unauthenticated request")
+    }
+
+    const userModel = await dao.userById(user._id)
+
+    if (!userModel.hasSkill(userSkills.DELETE_EVENT)) {
+      throw new Error("Unauthorized request")
+    }
+
+    const result = await dao.deleteEvent({ shortId: id })
+
+    return result
+  },
+
   updateSelf: async (parent, args, { dao, user }) => {
     const { id, ...updateValues } = args.input
 

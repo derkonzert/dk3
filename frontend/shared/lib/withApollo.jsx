@@ -9,8 +9,13 @@ import initApollo from "./initApollo"
 import nextCookie from "next-cookies"
 import cookie from "js-cookie"
 
-export const login = async ({ token }) => {
-  cookie.set("token", token, { expires: 1 })
+export const login = async ({ token, expiresAt }) => {
+  const expires = (expiresAt - Date.now()) / (1000 * 60 * 60 * 24)
+
+  cookie.set("token", token, {
+    expires,
+    secure: process.env.NODE_ENV === "production",
+  })
 }
 
 export const logout = () => {

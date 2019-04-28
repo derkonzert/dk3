@@ -18,6 +18,8 @@ export const UPCOMING_EVENTS_EVENT_FRAGMENT = gql`
     location
     fancyness
     approved
+    postponed
+    canceled
     bookmarkedByMe
     recentlyAdded
   }
