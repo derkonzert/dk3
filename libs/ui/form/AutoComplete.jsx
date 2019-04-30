@@ -6,7 +6,7 @@ import {
   InputLabel,
   InputDescription,
   InputBorder,
-  InputError,
+  InputFeedback,
 } from "./TextInput"
 
 const alwaysHidden = () => ({
@@ -71,7 +71,7 @@ export const AutoComplete = withSpacing({ mb: 3 })(
           {...props}
         />
       </InputBorder>
-      {!!error && <InputError>{error}</InputError>}
+      {!!error && <InputFeedback error>{error}</InputFeedback>}
     </div>
   )
 )

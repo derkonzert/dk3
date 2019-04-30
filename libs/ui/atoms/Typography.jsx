@@ -62,6 +62,10 @@ export const ListTitle = withSpacing()(styled.h4`
   line-height: 2rem;
 `)
 
+export const ListTitleAppendix = styled.span`
+  color: ${({ theme }) => theme.colors.titleAppendix};
+`
+
 export const Hr = withSpacing({ mv: 3 })(styled.hr`
   border: 0 none;
   height: 1px;

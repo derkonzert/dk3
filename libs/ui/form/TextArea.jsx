@@ -6,7 +6,7 @@ import {
   InputBorder,
   InputLabel,
   InputDescription,
-  InputError,
+  InputFeedback,
 } from "./TextInput"
 import { withSpacing } from "../utils/withSpacing"
 
@@ -37,7 +37,7 @@ export const TextArea = withSpacing({ mb: 3 })(
       <InputBorder validate={validate} valid={valid}>
         <Area {...props} id={name} name={name} />
       </InputBorder>
-      {!!error && <InputError>{error}</InputError>}
+      {!!error && <InputFeedback error>{error}</InputFeedback>}
     </div>
   )
 )

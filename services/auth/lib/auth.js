@@ -10,7 +10,7 @@ const {
 } = require("@dk3/auth-utils")
 const { sendJson } = require("@dk3/api-utils")
 const { HTTPStatusError } = require("@dk3/error")
-const { connect } = require("@dk3/db")
+const { connect, dao } = require("@dk3/db")
 
 let dbConnection
 
@@ -24,6 +24,46 @@ module.exports = async function auth(req, res) {
     const { query } = url.parse(req.url, true)
 
     switch (query.operation) {
+      case "unique-username":
+        body = await json(req)
+
+        if (!body.check) {
+          throw new HTTPStatusError({
+            title: "Missing property",
+            statusCode: 400,
+          })
+        }
+
+        try {
+          const isUnique = await dao.isUniqueUsername(body.check)
+
+          return sendJson(res, 200, {
+            isUnique,
+          })
+        } catch (err) {
+          throw new HTTPStatusError({ title: err.message, statusCode: 400 })
+        }
+
+      case "unique-email":
+        body = await json(req)
+
+        if (!body.check) {
+          throw new HTTPStatusError({
+            title: "Missing property",
+            statusCode: 400,
+          })
+        }
+
+        try {
+          const isUnique = await dao.isUniqueEmail(body.check)
+
+          return sendJson(res, 200, {
+            isUnique,
+          })
+        } catch (err) {
+          throw new HTTPStatusError({ title: err.message, statusCode: 400 })
+        }
+
       case "verify-email":
         body = await json(req)
 
@@ -55,7 +95,7 @@ module.exports = async function auth(req, res) {
           throw new HTTPStatusError({ title: err.message, statusCode: 400 })
         }
 
-        return sendJson(res, 201, { message: "User created" })
+        return sendJson(res, 201, { success: true, message: "User created" })
 
       case "signIn":
         body = await json(req)

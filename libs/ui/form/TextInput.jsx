@@ -8,12 +8,14 @@ import {
   invalidInputStyle,
 } from "./inputStyles"
 import { withSpacing } from "../utils/withSpacing"
+import { Spinner } from "../atoms/Spinner"
 
 export const Input = styled.input`
   ${inputStyles}
 `
 
 export const InputBorder = styled.div`
+  position: relative;
   ${inputBorderStyles};
   ${({ valid, validate, ...props }) =>
     validate ? (valid ? validInputStyle(props) : invalidInputStyle(props)) : ""}
@@ -40,13 +42,24 @@ export const InputDescription = withSpacing()(styled.div`
   }
 `)
 
-export const InputError = styled.div`
+export const InputSpinner = styled(Spinner)`
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  width: auto;
+  padding: 0.4rem;
+  transform: scale(0.5);
+`
+
+export const InputFeedback = styled.div`
   display: block;
   margin: 0.3rem 0.3rem 0;
   font-size: 1.2rem;
   line-height: 1.4;
   text-align: left;
-  color: ${({ theme }) => theme.colors.inputError};
+  color: ${({ theme, isError }) =>
+    isError ? theme.colors.inputError : theme.colors.inputSuccess};
 `
 
 export const TextInput = withSpacing({ mb: 3 })(
@@ -55,9 +68,11 @@ export const TextInput = withSpacing({ mb: 3 })(
     valid,
     validate,
     error,
+    success,
     description,
     name,
     className,
+    withSpinner,
     ...props
   }) => (
     <div className={className}>
@@ -69,8 +84,11 @@ export const TextInput = withSpacing({ mb: 3 })(
       )}
       <InputBorder validate={validate} valid={valid}>
         <Input {...props} id={name} name={name} />
+        {withSpinner && <InputSpinner />}
       </InputBorder>
-      {!!error && <InputError>{error}</InputError>}
+      {(error || success) && (
+        <InputFeedback isError={!!error}>{error || success}</InputFeedback>
+      )}
     </div>
   )
 )

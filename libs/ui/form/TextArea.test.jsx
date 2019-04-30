@@ -2,7 +2,7 @@ import React from "react"
 import { matchers } from "jest-emotion"
 
 import {
-  InputError,
+  InputFeedback,
   InputBorder,
   InputLabel,
   InputDescription,
@@ -22,13 +22,13 @@ describe("TextArea", () => {
   it("by default renders no error", () => {
     const element = mountWithTheme(<TextArea />)
 
-    expect(element.find(InputError).exists()).toBe(false)
+    expect(element.find(InputFeedback).exists()).toBe(false)
   })
 
   it("renders an error", () => {
     const element = mountWithTheme(<TextArea error="My error" />)
 
-    expect(element.find(InputError).text()).toBe("My error")
+    expect(element.find(InputFeedback).text()).toBe("My error")
   })
 
   it("by default renders no label", () => {

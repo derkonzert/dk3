@@ -3,7 +3,7 @@ import { matchers } from "jest-emotion"
 
 import {
   TextInput,
-  InputError,
+  InputFeedback,
   InputBorder,
   InputLabel,
   InputDescription,
@@ -22,13 +22,13 @@ describe("TextInput", () => {
   it("by default renders no error", () => {
     const element = mountWithTheme(<TextInput />)
 
-    expect(element.find(InputError).exists()).toBe(false)
+    expect(element.find(InputFeedback).exists()).toBe(false)
   })
 
   it("renders an error", () => {
     const element = mountWithTheme(<TextInput error="My error" />)
 
-    expect(element.find(InputError).text()).toBe("My error")
+    expect(element.find(InputFeedback).text()).toBe("My error")
   })
 
   it("by default renders no label", () => {

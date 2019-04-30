@@ -81,6 +81,16 @@
       }
     },
     {
+      "src": "/account/setup/(?<step>.*)",
+      "dest": "/frontend/account/setup?step=$step",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
+    },
+    {
       "src": "/account/(.*)",
       "dest": "/frontend/account/$1",
       "headers": {
@@ -126,6 +136,17 @@
       "src": "/add-new-event$",
       "methods": ["GET"],
       "dest": "frontend/main/index?addEvent=true",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
+    },
+    {
+      "src": "/mine$",
+      "methods": ["GET"],
+      "dest": "frontend/main/index?showMine=true",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",

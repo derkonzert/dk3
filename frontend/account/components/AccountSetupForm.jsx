@@ -1,5 +1,6 @@
-import React from "react"
-
+import React, { useEffect } from "react"
+import Link from "next/link"
+import { withRouter } from "next/router"
 import { Mutation, Query } from "react-apollo"
 import gql from "graphql-tag"
 import { State } from "react-powerplug"
@@ -7,8 +8,9 @@ import { State } from "react-powerplug"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { VeryFancyButton, Button, VeryFancyLink } from "@dk3/ui/form/Button"
 
-import { SubTitle, Text } from "@dk3/ui/atoms/Typography"
+import { Text, Title, Link as UiLink } from "@dk3/ui/atoms/Typography"
 import { ErrorMessage } from "@dk3/ui/atoms/Message"
+import { StepsView } from "./StepsView"
 
 export const ACCOUNT_SETUP_FRAGMENT = gql`
   fragment AccountSetupUserFragment on User {
@@ -38,7 +40,20 @@ export const UPDATE_SELF = gql`
   ${ACCOUNT_SETUP_FRAGMENT}
 `
 
-export const AccountSetupForm = () => {
+export const AccountSetupForm = withRouter(({ router }) => {
+  const lastStep = React.useRef()
+  const step = router.query.step ? parseInt(router.query.step, 10) : 0
+
+  useEffect(() => {
+    lastStep.current = step
+  })
+
+  function nextStep() {
+    router.push(`/setup?step=${step + 1}`, `/account/setup/${step + 1}`, {
+      shallow: true,
+    })
+  }
+
   return (
     <Query query={ACCOUNT_SETUP}>
       {({ loading, error, data }) => {
@@ -57,7 +72,6 @@ export const AccountSetupForm = () => {
         return (
           <State
             initial={{
-              step: 0,
               submitting: false,
               publicUsername: data.me.publicUsername,
               autoBookmark: data.me.autoBookmark,
@@ -69,9 +83,10 @@ export const AccountSetupForm = () => {
                 mutation={UPDATE_SELF}
                 update={() => {
                   setState({
-                    step: state.step + 1,
                     submitting: false,
                   })
+
+                  nextStep()
                 }}
               >
                 {updateSelf => {
@@ -87,10 +102,13 @@ export const AccountSetupForm = () => {
                     })
                   }
                   return (
-                    <div data-account-setup-form>
-                      {state.step === 0 && (
-                        <React.Fragment>
-                          <SubTitle mt={4}>Congratulations!</SubTitle>
+                    <StepsView
+                      data-account-setup-form
+                      backwards={lastStep.current && lastStep.current > step}
+                    >
+                      {step === 0 && (
+                        <React.Fragment key="welcome">
+                          <Title mt={4}>Congratulations!</Title>
 
                           <Text mv={3}>
                             Your new account is now ready to use! There are a
@@ -98,19 +116,21 @@ export const AccountSetupForm = () => {
                             look at.
                           </Text>
                           <VeryFancyButton
+                            pv={3}
+                            ph={4}
                             mv={2}
-                            onClick={() => setState({ step: 1 })}
+                            onClick={() => nextStep()}
                           >
                             {"Setup my account!"}
                           </VeryFancyButton>
                         </React.Fragment>
                       )}
 
-                      {state.step === 1 && (
-                        <React.Fragment>
-                          <SubTitle mt={4}>Auto-Bookmarking (1 of 3)</SubTitle>
+                      {step === 1 && (
+                        <React.Fragment key="bookmarking">
+                          <Title mt={4}>Auto-Bookmarking</Title>
 
-                          <Text mv={3}>
+                          <Text mt={3} mb={4}>
                             When you add an event to the derkonzert list, would
                             like us to automatically bookmark it for you?
                           </Text>
@@ -132,11 +152,11 @@ export const AccountSetupForm = () => {
                           </VeryFancyButton>
                         </React.Fragment>
                       )}
-                      {state.step === 2 && (
-                        <React.Fragment>
-                          <SubTitle mt={4}>Notifications (2 of 3)</SubTitle>
+                      {step === 2 && (
+                        <React.Fragment key="notify">
+                          <Title mt={4}>Notifications</Title>
 
-                          <Text mv={3}>
+                          <Text mt={3} mb={4}>
                             Do you want us to send you an email, when new events
                             have been added, or one of your bookmarked events
                             changed?
@@ -160,11 +180,11 @@ export const AccountSetupForm = () => {
                         </React.Fragment>
                       )}
 
-                      {state.step === 3 && (
-                        <React.Fragment>
-                          <SubTitle mt={4}>Public Username (3 of 3)</SubTitle>
+                      {step === 3 && (
+                        <React.Fragment key="username">
+                          <Title mt={4}>Public Username</Title>
 
-                          <Text mv={3}>
+                          <Text mt={3} mb={4}>
                             Would you like to have your username displayed
                             publically next to events that you have added, or
                             bookmarked?
@@ -188,22 +208,25 @@ export const AccountSetupForm = () => {
                         </React.Fragment>
                       )}
 
-                      {state.step === 4 && (
-                        <React.Fragment>
-                          <SubTitle mt={4}>All setup!</SubTitle>
+                      {step === 4 && (
+                        <React.Fragment key="finished">
+                          <Title mt={4}>All setup!</Title>
 
-                          <Text mv={3}>
+                          <Text mt={3} mb={4}>
                             And that was that. You did great! If you change your
                             mind, you can always update your settings on the
-                            Settings page.
+                            <Link href="/" as="/account/" passHref>
+                              <UiLink>Settings page</UiLink>
+                            </Link>
+                            .
                           </Text>
 
-                          <VeryFancyLink href="/">
+                          <VeryFancyLink pv={3} ph={4} href="/">
                             Go to derkonzert
                           </VeryFancyLink>
                         </React.Fragment>
                       )}
-                    </div>
+                    </StepsView>
                   )
                 }}
               </Mutation>
@@ -213,4 +236,4 @@ export const AccountSetupForm = () => {
       }}
     </Query>
   )
-}
+})

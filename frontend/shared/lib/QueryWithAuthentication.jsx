@@ -2,7 +2,7 @@ import React from "react"
 import { Query } from "react-apollo"
 
 import { LoginForm } from "../form/LoginForm"
-import { SubTitle, Description } from "@dk3/ui/atoms/Typography"
+import { Title, Text } from "@dk3/ui/atoms/Typography"
 
 import { USER_AUTH_INFO } from "./MutationWithAuthentication"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
@@ -19,11 +19,11 @@ export const QueryWithAuthentication = ({
 
       if (required && !data.me) {
         return (
-          <React.Fragment>
-            <SubTitle>Login required</SubTitle>
-            <Description>{notLoggedInMessage}</Description>
+          <div style={{ maxWidth: "36rem", margin: "5rem auto" }}>
+            <Title mt={3}>Login required</Title>
+            <Text mb={3}>{notLoggedInMessage}</Text>
             <LoginForm />
-          </React.Fragment>
+          </div>
         )
       }
       return <Query {...props} />

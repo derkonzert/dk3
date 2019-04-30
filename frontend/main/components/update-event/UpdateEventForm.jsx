@@ -389,6 +389,17 @@ export const UpdateEventForm = withRouter(({ id }) => {
                                 }
                                 name="description"
                                 label="Description"
+                                description={
+                                  <a
+                                    href={`http://open.spotify.com/search/results/${encodeURIComponent(
+                                      state.title
+                                    )}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    Find on Spotify
+                                  </a>
+                                }
                                 rows={5}
                               />
 

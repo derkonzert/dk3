@@ -475,11 +475,13 @@ describe("dao", () => {
     beforeEach(() => {
       Event.Model.find = jest.fn().mockReturnValue(Event.Model)
       Event.Model.sort = jest.fn().mockReturnValue(Event.Model)
+      Event.Model.skip = jest.fn().mockReturnValue(Event.Model)
+      Event.Model.limit = jest.fn().mockReturnValue(Event.Model)
       Event.Model.exec = jest.fn().mockReturnValue(Event.Model)
     })
 
     it("calls find on model", async () => {
-      await dao.pastEvents()
+      await dao.pastEvents({})
 
       expect(Event.Model.find).toHaveBeenCalledWith({
         to: { $lt: expect.any(Date) },
@@ -488,17 +490,14 @@ describe("dao", () => {
       expect(Event.Model.exec).toHaveBeenCalled()
     })
 
-    it("extends filter and sort arguments", async () => {
+    it("paginates db requests", async () => {
       await dao.pastEvents({
-        filter: { custom: "filter" },
-        sort: { location: 1 },
+        page: 2,
+        perPage: 60,
       })
 
-      expect(Event.Model.find).toHaveBeenCalledWith({
-        custom: "filter",
-        to: { $lt: expect.any(Date) },
-      })
-      expect(Event.Model.sort).toHaveBeenCalledWith({ from: -1, location: 1 })
+      expect(Event.Model.skip).toHaveBeenCalledWith(2 * 60)
+      expect(Event.Model.limit).toHaveBeenCalledWith(60)
       expect(Event.Model.exec).toHaveBeenCalled()
     })
   })

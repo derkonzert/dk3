@@ -1,8 +1,10 @@
 /** @jsx jsx */
 import { jsx, css } from "@emotion/core"
 import { withTheme } from "emotion-theming"
+import styled from "@emotion/styled"
 
-import { Bookmark } from "../icons/Bookmark"
+import { rgba } from "../theme/rgba"
+import { Bookmark as BookmarkIcon } from "../icons/Bookmark"
 import { BaseBox } from "../atoms/Boxes"
 import { SubTitle, Description } from "../atoms/Typography"
 import { CalendarDay } from "../atoms/CalendarDay"
@@ -51,7 +53,7 @@ const calendar = css`
   border-right: 1px solid rgba(0, 0, 0, 0.075);
 `
 
-const bookmark = css`
+const BookmarkButton = styled.button`
   display: block;
   appearance: none;
 
@@ -81,20 +83,26 @@ const bookmark = css`
     vertical-align: middle;
     width: 1.4rem;
   }
+
+  ${({ active }) =>
+    active &&
+    css`
+      opacity: 1;
+    `}
 `
 
-export const boxHoverStyle = css`
-  & {
-    transition: 150ms box-shadow;
-  }
+export const EventBox = styled(BaseBox)`
+  transition: 150ms box-shadow;
 
   &:hover {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   }
-`
 
-export const bookmarkActive = css`
-  opacity: 1;
+  ${({ approved, theme }) =>
+    !approved &&
+    css`
+      background-color: ${rgba(theme.colors.boxBackground, 0.5)};
+    `}
 `
 
 export const EventCard = withTheme(
@@ -124,9 +132,9 @@ export const EventCard = withTheme(
     const inverted = superFancy ? theme.name !== "dark" : false
 
     return (
-      <BaseBox
+      <EventBox
+        approved={approved}
         fancyLevel={approved ? fancyLevel : 0}
-        css={boxHoverStyle}
         {...props}
       >
         <div css={cardContent}>
@@ -147,8 +155,8 @@ export const EventCard = withTheme(
               </Description>
             </div>
           </a>
-          <button
-            css={[bookmark, bookmarked && bookmarkActive]}
+          <BookmarkButton
+            active={bookmarked}
             aria-label={
               bookmarked
                 ? `Remove "${title}" from your bookmarks`
@@ -156,10 +164,10 @@ export const EventCard = withTheme(
             }
             onClick={onBookmarkClick}
           >
-            <Bookmark bookmarked={bookmarked} />
-          </button>
+            <BookmarkIcon bookmarked={bookmarked} />
+          </BookmarkButton>
         </div>
-      </BaseBox>
+      </EventBox>
     )
   }
 )

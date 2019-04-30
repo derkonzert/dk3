@@ -9,7 +9,7 @@ import { MutationWithAuthentication } from "@dk3/shared-frontend/lib/MutationWit
 import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
 
 import { EventCard } from "@dk3/ui/components/EventCard"
-import { ListTitle } from "@dk3/ui/atoms/Typography"
+import { ListTitle, ListTitleAppendix } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { RedBadge, GreenBadge } from "@dk3/ui/atoms/Badge"
 import styled from "@emotion/styled"
@@ -45,6 +45,7 @@ export const BOOKMARK_EVENT = gql`
   }
 `
 
+const ensureDoubles = int => `${int <= 9 ? "0" : ""}${int}`
 const twelveOurs = 1000 * 60 * 60 * 12
 
 export const EventQueryList = withRouter(({ query, filter, router }) => {
@@ -54,6 +55,7 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
       query={query}
       variables={{ filter }}
       ssr={false}
+      notLoggedInMessage="You need an account to view your bookmarked events."
       fetchPolicy={filter === "mine" ? "cache-and-network" : "cache-first"}
     >
       {({ loading, error, data }) => {
@@ -76,9 +78,9 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                 groupName = (
                   <EventSectionTitle>
                     {dt.toLocaleString({ month: "long" })}{" "}
-                    <span style={{ color: "#757575" }}>
+                    <ListTitleAppendix>
                       {group.date.getFullYear()}
-                    </span>
+                    </ListTitleAppendix>
                   </EventSectionTitle>
                 )
               }
@@ -94,6 +96,10 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                     const dayName = isRange
                       ? `${to.getDate() - date.getDate() + 1} days`
                       : date.toString().substr(0, 3)
+
+                    const doorTime = `${ensureDoubles(
+                      date.getHours()
+                    )}:${ensureDoubles(date.getMinutes())}`
 
                     return (
                       <MutationWithAuthentication
@@ -116,7 +122,7 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                             large={group.isToday || group.isTomorrow}
                             title={event.title}
                             day={date.getDate()}
-                            description={event.location}
+                            description={`${event.location} — ${doorTime}`}
                             dayName={dayName}
                             approved={event.approved}
                             bookmarked={event.bookmarkedByMe}

@@ -11,9 +11,10 @@ export const PageContenWrapper = withSpacing({ mv: 5 })(styled.main`
   width: 100%;
   max-width: 36rem;
   background: ${({ theme }) => theme.colors.boxBackground};
-  padding: 1rem 3rem 3rem;
+  padding: 1rem 3rem 4rem;
   text-align: center;
   align-self: flex-start;
+  overflow: hidden;
 `)
 
 const Wrapper = styled.div`

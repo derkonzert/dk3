@@ -13,6 +13,7 @@ const defaultTheme = {
 
     title: "#000",
     titleInverted: "white",
+    titleAppendix: "#757575",
     text: "#3f3f3f",
     textInverted: "#f9f9f9",
     description: "#636161",
@@ -49,9 +50,10 @@ const defaultTheme = {
     stickyListTitleBackground: "rgba(244, 242, 242, 0.95)",
 
     inputError: "#d23939",
+    inputSuccess: "#0b7938",
     input: "black",
     inputBackground: "white",
-    inputValidBackground: "rgb(11, 121, 56)",
+    inputValidBackground: "#0b7938",
     inputInvalidBackground: "#d23939",
     inputBorderColor: "hsl(0, 0%, 80%)",
 
@@ -62,7 +64,7 @@ const defaultTheme = {
     messageColor: "rgb(74, 74, 74)",
 
     messageBackgroundSuccess: "rgba(30, 232, 57, 0.18)",
-    messageColorSuccess: "rgb(11, 121, 56)",
+    messageColorSuccess: "#0b7938",
 
     messageBackgroundError: "rgba(210, 57, 57, 0.08)",
     messageColorError: "#d23939",
@@ -89,6 +91,7 @@ const darkTheme = {
 
     title: "#fff",
     titleInverted: "black",
+    titleAppendix: "#757575",
     text: "#f9f9f9",
     textInverted: "#3f3f3f",
     description: "#f9f9f9",
@@ -128,7 +131,7 @@ const darkTheme = {
     inputError: "#d23939",
     input: "white",
     inputBackground: "black",
-    inputValidBackground: "rgb(11, 121, 56)",
+    inputValidBackground: "#0b7938",
     inputInvalidBackground: "#d23939",
     inputBorderColor: "#393939",
 

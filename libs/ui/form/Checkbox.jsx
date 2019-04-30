@@ -2,7 +2,7 @@ import React from "react"
 import styled from "@emotion/styled"
 
 import { inputStyles } from "./inputStyles"
-import { InputLabel, InputDescription, InputError } from "./TextInput"
+import { InputLabel, InputDescription, InputFeedback } from "./TextInput"
 import { withSpacing } from "../utils/withSpacing"
 
 export const Fill = styled.div`
@@ -41,7 +41,7 @@ export const Checkbox = withSpacing({ mv: 3 })(
         {!!description && <InputDescription>{description}</InputDescription>}
       </Fill>
 
-      {!!error && <InputError>{error}</InputError>}
+      {!!error && <InputFeedback error>{error}</InputFeedback>}
     </div>
   )
 )

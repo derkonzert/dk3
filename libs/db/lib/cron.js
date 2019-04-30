@@ -25,10 +25,10 @@ exports.createJob = async ({ forceUpdate, ...options }) => {
 }
 
 const eventNotificationsLastExecuted = new Date()
-if (eventNotificationsLastExecuted.getUTCHours() > 18) {
-  eventNotificationsLastExecuted.setHours(18, 0, 0, 0)
+if (eventNotificationsLastExecuted.getUTCHours() > 16) {
+  eventNotificationsLastExecuted.setUTCHours(16, 0, 0, 0)
 } else {
-  eventNotificationsLastExecuted.setHours(6, 0, 0, 0)
+  eventNotificationsLastExecuted.setUTCHours(4, 0, 0, 0)
 }
 
 exports.cronJobConfigurations = [

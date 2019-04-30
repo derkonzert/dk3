@@ -63,6 +63,18 @@ exports.usersWithSendEmail = async () =>
 
 exports.userByEmail = async email => await User.Model.findOne({ email }).exec()
 
+exports.isUniqueUsername = async username => {
+  const existingCount = await User.Model.findOne({ username }).count()
+
+  return existingCount === 0
+}
+
+exports.isUniqueEmail = async email => {
+  const existingCount = await User.Model.findOne({ email }).count()
+
+  return existingCount === 0
+}
+
 exports.userByVerificationToken = async emailVerificationToken =>
   await User.Model.findOne({
     emailVerificationToken,
@@ -243,15 +255,14 @@ const pastEventsQuery = () =>
     },
   }).sort({ from: -1 })
 
-const PAST_EVENTS_PER_PAGE = 60
-exports.pastEvents = async ({ page = 0 }) =>
+exports.pastEvents = async ({ page = 0, perPage = 60 }) =>
   await pastEventsQuery({ page })
-    .skip(page * PAST_EVENTS_PER_PAGE)
-    .limit(PAST_EVENTS_PER_PAGE)
+    .skip(page * perPage)
+    .limit(perPage)
     .exec()
-exports.hasMorePastEvents = async ({ page = 0 }) => {
+exports.hasMorePastEvents = async ({ page = 0, perPage = 60 }) => {
   const nextEvents = await pastEventsQuery()
-    .skip((page + 1) * PAST_EVENTS_PER_PAGE)
+    .skip((page + 1) * perPage)
     .limit(1)
     .exec()
 
