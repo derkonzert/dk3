@@ -53,12 +53,17 @@ const DK_DESCRIPTION =
 
 export default withRouter(function Index({ router, themeName, onThemeChange }) {
   const {
-    query: { eventId, addEvent },
+    query: { eventId, addEvent, showMine },
   } = router
+
   const showDetail = !!eventId || !!addEvent
   const closeDetail = e => {
     e.preventDefault()
-    router.push("/")
+    if (showMine) {
+      router.push("/?showMine=1", "/mine")
+    } else {
+      router.push("/")
+    }
   }
 
   return (
@@ -154,7 +159,7 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
       <ListAndDetailSide requestClose={closeDetail}>
         {!!eventId && (
           <React.Fragment>
-            <DynamicEventDetail id={eventId} />
+            <DynamicEventDetail id={eventId} showMine={showMine} />
           </React.Fragment>
         )}
         {!!addEvent && (

@@ -168,7 +168,9 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                                 e.preventDefault()
 
                                 router.push(
-                                  `/?eventId=${event.id}`,
+                                  `/?eventId=${event.id}${
+                                    filter === "mine" ? "&showMine=1" : ""
+                                  }`,
                                   eventHref(event),
                                   {
                                     shallow: true,

@@ -61,7 +61,7 @@ const Wrapper = styled.div`
   padding-bottom: 4rem;
 `
 
-export const EventDetail = ({ id }) => {
+export const EventDetail = ({ id, showMine }) => {
   return (
     <Query query={EVENT_DETAIL} variables={{ id }}>
       {({ loading, error, data }) => {
@@ -117,7 +117,11 @@ export const EventDetail = ({ id }) => {
               </ErrorMessage>
             )}
 
-            <Link href="/" passHref>
+            <Link
+              href={`/${showMine ? "?showMine=1" : ""}`}
+              as={`/${showMine ? "mine" : ""}`}
+              passHref
+            >
               <ListAndDetailClose title="Close detail page" />
             </Link>
             {!event.approved && (
