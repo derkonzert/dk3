@@ -120,6 +120,7 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                             data-event
                             data-event-approved={event.approved}
                             large={group.isToday || group.isTomorrow}
+                            id={event.id}
                             title={event.title}
                             day={date.getDate()}
                             description={`${event.location} — ${doorTime}`}

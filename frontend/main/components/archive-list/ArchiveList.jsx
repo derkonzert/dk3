@@ -1,14 +1,25 @@
 import React from "react"
 import { DateTime } from "luxon"
-import Link from "next/link"
+import dynamic from "next/dynamic"
 import gql from "graphql-tag"
 import styled from "@emotion/styled"
+
+const DynamicInView = dynamic(
+  () =>
+    import("react-intersection-observer").then(async mod => {
+      if (typeof window.IntersectionObserver === "undefined") {
+        await import("intersection-observer")
+      }
+      return mod.InView
+    }),
+  { ssr: false }
+)
+
 import { Query } from "react-apollo"
 import { ErrorMessage } from "@dk3/ui/atoms/Message"
 import { MegaTitle, Text, Strong, ListTitle } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { Flex } from "@dk3/ui/atoms/Flex"
-import { FancyButton } from "@dk3/ui/form/Button"
 import { Box } from "@dk3/ui/atoms/Boxes"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { groupedEventsArchive } from "../list/eventDataHelper"
@@ -25,6 +36,7 @@ export const ARCHIVED_EVENTS_EVENT_FRAGMENT = gql`
     id
     title
     from
+    location
   }
 `
 
@@ -79,17 +91,16 @@ export const ArchiveList = () => {
                     </ListTitle>
                     <Flex mv={3} wrap="wrap">
                       {group.events.map(event => (
-                        <Link
+                        <BoxLink
                           key={event.id}
                           href={`${eventHref(event)}`}
-                          passHref
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
-                          <BoxLink>
-                            <Box pa={2} mt={0} mb={2} mr={2}>
-                              <Text>{event.title}</Text>
-                            </Box>
-                          </BoxLink>
-                        </Link>
+                          <Box pa={2} mt={0} mb={2} mr={2}>
+                            <Text>{event.title}</Text>
+                          </Box>
+                        </BoxLink>
                       ))}
                     </Flex>
                   </React.Fragment>
@@ -97,32 +108,43 @@ export const ArchiveList = () => {
               })}
 
               {hasMore && (
-                <FancyButton
-                  onClick={() => {
-                    fetchMore({
-                      variables: {
-                        page: data.pastEvents.nextPage,
-                      },
-                      updateQuery: (prev, { fetchMoreResult }) => {
-                        if (!fetchMoreResult) return prev
-                        return Object.assign({}, prev, {
-                          pastEvents: {
-                            __typename: "ArchivedEvents",
-                            events: [
-                              ...prev.pastEvents.events,
-                              ...fetchMoreResult.pastEvents.events,
-                            ],
-                            hasMore: fetchMoreResult.pastEvents.hasMore,
-                            nextPage: fetchMoreResult.pastEvents.nextPage,
-                            totalCount: fetchMoreResult.pastEvents.totalCount,
-                          },
-                        })
-                      },
-                    })
+                <DynamicInView
+                  as="div"
+                  onChange={inView => {
+                    // if inView is true and it still hasMore
+                    if (inView && hasMore) {
+                      fetchMore({
+                        variables: {
+                          page: data.pastEvents.nextPage,
+                        },
+                        updateQuery: (prev, { fetchMoreResult }) => {
+                          if (!fetchMoreResult) return prev
+                          return Object.assign({}, prev, {
+                            pastEvents: {
+                              __typename: "ArchivedEvents",
+                              events: [
+                                ...prev.pastEvents.events,
+                                ...fetchMoreResult.pastEvents.events,
+                              ],
+                              hasMore: fetchMoreResult.pastEvents.hasMore,
+                              nextPage: fetchMoreResult.pastEvents.nextPage,
+                              totalCount: fetchMoreResult.pastEvents.totalCount,
+                            },
+                          })
+                        },
+                      })
+                    }
                   }}
                 >
-                  Fetch more events
-                </FancyButton>
+                  <Spacer pv={5}>
+                    <Flex flexDirection="column" alignItems="center">
+                      <Spinner />
+                      <Flex>
+                        <Text>… scanning through the archives.</Text>
+                      </Flex>
+                    </Flex>
+                  </Spacer>
+                </DynamicInView>
               )}
             </React.Fragment>
           )
