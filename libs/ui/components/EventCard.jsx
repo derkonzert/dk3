@@ -108,6 +108,7 @@ export const EventBox = styled(BaseBox)`
 export const EventCard = withTheme(
   ({
     theme,
+    id,
     title,
     description,
     fancyLevel,
@@ -164,7 +165,7 @@ export const EventCard = withTheme(
             }
             onClick={onBookmarkClick}
           >
-            <BookmarkIcon bookmarked={bookmarked} />
+            <BookmarkIcon id={id} bookmarked={bookmarked} />
           </BookmarkButton>
         </div>
       </EventBox>

@@ -70,8 +70,9 @@ import { EventCard } from "@dk3/ui/components/EventCard"
   {({ state, setState }) => (
     <React.Fragment>
       <EventCard
+        id="0"
         bookmarked={state.bookmarked}
-        onBookmarkClick={() => setState({ bookmarked: true })}
+        onBookmarkClick={() => setState({ bookmarked: !state.bookmarked })}
         title="Awesome Event You Wanna Go To"
         day={0}
         dayName="doom"
@@ -79,7 +80,7 @@ import { EventCard } from "@dk3/ui/components/EventCard"
       />
       {state.bookmarked && (
         <SuccessMessage mb={3}>
-          Hoorray, You've added the "Example Event" to your bookmarks!
+          Awesome! You've added the event to your bookmarks!
         </SuccessMessage>
       )}
     </React.Fragment>
@@ -102,6 +103,7 @@ import { EventCard } from "@dk3/ui/components/EventCard"
 
 <EventCard
   mt={4}
+  id="1"
   bookmarked
   title="Most Popular Event"
   day={1}
@@ -111,6 +113,7 @@ import { EventCard } from "@dk3/ui/components/EventCard"
 />
 
 <EventCard
+  id="2"
   title="More Popular Event"
   day={2}
   fancyLevel={1}
@@ -119,6 +122,7 @@ import { EventCard } from "@dk3/ui/components/EventCard"
 />
 
 <EventCard
+  id="3"
   title="Regular Popular Event"
   day={3}
   dayName="doom"

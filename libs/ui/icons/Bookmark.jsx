@@ -1,7 +1,7 @@
 import React from "react"
 import { useSpring, animated } from "react-spring"
 
-export const Bookmark = React.memo(({ bookmarked }) => {
+export const Bookmark = React.memo(({ bookmarked, id }) => {
   const { transform } = useSpring({
     transform: bookmarked
       ? "translateY(0%) skewY(0deg)"
@@ -16,12 +16,12 @@ export const Bookmark = React.memo(({ bookmarked }) => {
       viewBox="0 0 384 512"
     >
       <defs>
-        <clipPath id="drop">
+        <clipPath id={`drop-${id}`}>
           <path d="M336,0 L48,0 C21.49,0 0,21.49 0,48 L0,512 L192,400 L384,512 L384,48 C384,21.49 362.51,0 336,0 Z" />
         </clipPath>
       </defs>
 
-      <g clipPath="url(#drop)">
+      <g clipPath={`url(#drop-${id})`}>
         <animated.g fill="currentColor" style={{ transform }}>
           <path d="M336,0 L48,0 C21.49,0 0,21.49 0,48 L0,512 L192,400 L384,512 L384,48 C384,21.49 362.51,0 336,0 Z" />
         </animated.g>
