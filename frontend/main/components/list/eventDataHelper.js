@@ -15,6 +15,29 @@ export const isToday = date => {
 export const isTomorrow = date =>
   new Date(Date.now() + 86400000).toDateString() === date.toDateString()
 
+export const groupedEventsArchive = events => {
+  return events.reduce((groups, event) => {
+    const currentYear = groups[groups.length - 1]
+    const eventFrom = new Date(event.from)
+
+    if (!currentYear) {
+      groups.push({
+        date: eventFrom,
+        events: [event],
+      })
+    } else if (currentYear.date.getMonth() !== eventFrom.getMonth()) {
+      groups.push({
+        date: eventFrom,
+        events: [event],
+      })
+    } else {
+      groups[groups.length - 1].events.push(event)
+    }
+
+    return groups
+  }, [])
+}
+
 export const groupedEvents = events => {
   let lastEventDate
   return events.sort(sortEvents).reduce((groups, event) => {

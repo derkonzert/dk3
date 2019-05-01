@@ -35,8 +35,8 @@ exports.Query = {
     const { page } = args
 
     const [events, hasMore] = await Promise.all([
-      dao.pastEvents({ page }),
-      dao.hasMorePastEvents({ page }),
+      dao.pastEvents({ page, perPage: 120 }),
+      dao.hasMorePastEvents({ page, perPage: 120 }),
     ])
 
     return {

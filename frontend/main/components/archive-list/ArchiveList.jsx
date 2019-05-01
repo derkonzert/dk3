@@ -1,14 +1,23 @@
 import React from "react"
-
+import { DateTime } from "luxon"
+import Link from "next/link"
 import gql from "graphql-tag"
+import styled from "@emotion/styled"
 import { Query } from "react-apollo"
 import { ErrorMessage } from "@dk3/ui/atoms/Message"
-import { MegaTitle, Text, Strong } from "@dk3/ui/atoms/Typography"
+import { MegaTitle, Text, Strong, ListTitle } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { Flex } from "@dk3/ui/atoms/Flex"
 import { FancyButton } from "@dk3/ui/form/Button"
 import { Box } from "@dk3/ui/atoms/Boxes"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
+import { groupedEventsArchive } from "../list/eventDataHelper"
+import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
+
+const BoxLink = styled.a`
+  text-decoration: none;
+  color: inherit;
+`
 
 export const ARCHIVED_EVENTS_EVENT_FRAGMENT = gql`
   fragment ArchivedEventsEventFragment on Event {
@@ -16,14 +25,6 @@ export const ARCHIVED_EVENTS_EVENT_FRAGMENT = gql`
     id
     title
     from
-    to
-    location
-    fancyness
-    approved
-    postponed
-    canceled
-    bookmarkedByMe
-    recentlyAdded
   }
 `
 
@@ -68,13 +69,32 @@ export const ArchiveList = () => {
                 archive.
               </Text>
 
-              <Flex mv={4} wrap="wrap">
-                {events.map(event => (
-                  <Box pa={3} mt={0} mh={2} key={event.id}>
-                    {event.title}
-                  </Box>
-                ))}
-              </Flex>
+              {groupedEventsArchive(events, false).map(group => {
+                const dt = DateTime.fromJSDate(group.date)
+
+                return (
+                  <React.Fragment key={group.date.getTime()}>
+                    <ListTitle>
+                      {dt.toLocaleString({ month: "long", year: "numeric" })}
+                    </ListTitle>
+                    <Flex mv={3} wrap="wrap">
+                      {group.events.map(event => (
+                        <Link
+                          key={event.id}
+                          href={`${eventHref(event)}`}
+                          passHref
+                        >
+                          <BoxLink>
+                            <Box pa={2} mt={0} mb={2} mr={2}>
+                              <Text>{event.title}</Text>
+                            </Box>
+                          </BoxLink>
+                        </Link>
+                      ))}
+                    </Flex>
+                  </React.Fragment>
+                )
+              })}
 
               {hasMore && (
                 <FancyButton

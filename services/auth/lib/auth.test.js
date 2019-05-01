@@ -59,6 +59,111 @@ describe("auth", () => {
     )
   })
 
+  describe("verify-email", () => {
+    it("calls verify-email helper with token from resp body", async () => {
+      const token = "some_token_123"
+
+      micro.json.mockReturnValue({
+        token,
+      })
+
+      await auth({ url: "/?operation=verify-email" }, response)
+
+      expect(authUtils.verifyEmail).toHaveBeenCalledWith(token)
+      expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 200, {
+        message: expect.any(String),
+      })
+    })
+
+    it("throws when no token is given", async () => {
+      micro.json.mockReturnValue({})
+
+      await auth({ url: "/?operation=verify-email" }, response)
+
+      expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 400, {
+        message: "No token to verify, status=400",
+      })
+    })
+
+    it("throws when password reset helper fails", async () => {
+      const token = "some_token_123"
+
+      micro.json.mockReturnValue({
+        token,
+      })
+
+      authUtils.verifyEmail.mockImplementationOnce(() => {
+        throw new Error("something doesnt add up")
+      })
+
+      await auth({ url: "/?operation=verify-email" }, response)
+
+      expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 400, {
+        message: "something doesnt add up, status=400",
+      })
+    })
+  })
+
+  describe("requestPasswordReset", () => {
+    it("calls password reset helper with email from resp body", async () => {
+      const email = "some@email.come"
+
+      micro.json.mockReturnValue({
+        email,
+      })
+
+      await auth({ url: "/?operation=requestPasswordReset" }, response)
+
+      expect(authUtils.requestPasswordReset).toHaveBeenCalledWith(email)
+      expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 200, {
+        message: expect.any(String),
+      })
+    })
+
+    it("throws when password reset helper fails", async () => {
+      authUtils.requestPasswordReset.mockImplementationOnce(() => {
+        throw new Error("something doesnt add up")
+      })
+
+      await auth({ url: "/?operation=requestPasswordReset" }, response)
+
+      expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 400, {
+        message: "something doesnt add up, status=400",
+      })
+    })
+  })
+
+  describe("passwordReset", () => {
+    it("calls password reset helper with token and password from resp body", async () => {
+      const token = "123fasdf"
+      const password = "some!password1"
+
+      micro.json.mockReturnValue({
+        token,
+        password,
+      })
+
+      await auth({ url: "/?operation=passwordReset" }, response)
+
+      expect(authUtils.passwordReset).toHaveBeenCalledWith(token, password)
+      expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 200, {
+        message: expect.any(String),
+      })
+    })
+
+    it("throws when password reset helper fails", async () => {
+      authUtils.passwordReset.mockImplementationOnce(() => {
+        throw new Error("something doesnt add up")
+      })
+
+      await auth({ url: "/?operation=passwordReset" }, response)
+
+      expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 400, {
+        message: "something doesnt add up, status=400",
+      })
+    })
+  })
+
   describe("signUp handler", () => {
     it("registers new users", async () => {
       authUtils.signUp.mockResolvedValue(true)

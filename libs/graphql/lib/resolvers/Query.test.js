@@ -94,17 +94,34 @@ describe("Query", () => {
   })
 
   describe("pastEvents", () => {
+    let dao, pastEventsTotalCallMock
+    beforeEach(() => {
+      pastEventsTotalCallMock = jest.fn().mockReturnValue(1000)
+      dao = {
+        pastEvents: jest.fn(),
+        hasMorePastEvents: jest.fn(),
+        cachedMethod: jest.fn().mockReturnValue(pastEventsTotalCallMock),
+      }
+    })
+
     it("returns past events from dao", () => {
       expect.assertions(1)
       const expectedResult = [1, 2, 3]
+      dao.pastEvents.mockReturnValue(expectedResult)
+      dao.hasMorePastEvents.mockReturnValue(true)
+
       const context = {
-        dao: {
-          pastEvents: jest.fn().mockReturnValue(expectedResult),
-        },
+        dao,
       }
+
       return expect(
-        Query.pastEvents(undefined, undefined, context)
-      ).resolves.toBe(expectedResult)
+        Query.pastEvents(undefined, { page: 1 }, context)
+      ).resolves.toEqual({
+        events: expectedResult,
+        hasMore: true,
+        totalCount: 1000,
+        nextPage: 2,
+      })
     })
   })
 

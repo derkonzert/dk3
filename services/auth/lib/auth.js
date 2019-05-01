@@ -120,7 +120,7 @@ module.exports = async function auth(req, res) {
 
           return sendJson(res, 200, { message: "Password reset requested" })
         } catch (err) {
-          throw err
+          throw new HTTPStatusError({ title: err.message, statusCode: 400 })
         }
       case "passwordReset":
         body = await json(req)
@@ -130,7 +130,7 @@ module.exports = async function auth(req, res) {
 
           return sendJson(res, 200, { message: "Password reset" })
         } catch (err) {
-          throw err
+          throw new HTTPStatusError({ title: err.message, statusCode: 400 })
         }
 
       default:
