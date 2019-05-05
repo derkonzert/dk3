@@ -157,9 +157,8 @@ const Form = ({ data, onCreated }) => {
               onChange={e => {
                 const checked = e.target.checked
 
-                setFormState({ ...formState, sendEmails: checked }, () => {
-                  saveChanges({ ...formState, sendEmails: checked })
-                })
+                setFormState({ ...formState, sendEmails: checked })
+                saveChanges({ ...formState, sendEmails: checked })
               }}
               label="Send me emails to inform me about events and updates"
             />
@@ -176,9 +175,8 @@ const Form = ({ data, onCreated }) => {
               onChange={e => {
                 const checked = e.target.checked
 
-                setFormState({ ...formState, publicUsername: checked }, () => {
-                  saveChanges({ ...formState, publicUsername: checked })
-                })
+                setFormState({ ...formState, publicUsername: checked })
+                saveChanges({ ...formState, publicUsername: checked })
               }}
               label="Show my username publically on events I added or bookmarked"
             />
@@ -194,9 +192,8 @@ const Form = ({ data, onCreated }) => {
               onChange={e => {
                 const checked = e.target.checked
 
-                setFormState({ ...formState, autoBookmark: checked }, () => {
-                  saveChanges({ ...formState, autoBookmark: checked })
-                })
+                setFormState({ ...formState, autoBookmark: checked })
+                saveChanges({ ...formState, autoBookmark: checked })
               }}
               label="Automatically bookmark events that you add yourself"
             />
