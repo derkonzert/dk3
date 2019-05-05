@@ -41,6 +41,7 @@ export const DeleteEventButton = ({ eventId, onClick, children, ...props }) => {
               <React.Fragment>
                 <DeleteButton
                   {...props}
+                  type="button"
                   onClick={() => setShowConfirmation(true)}
                 >
                   {children}

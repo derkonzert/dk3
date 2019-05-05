@@ -169,7 +169,7 @@ export const EventDetail = ({ id, showMine }) => {
                 )}
               </Text>
 
-              <div>
+              <Flex grow={0}>
                 <CurrentUser>
                   {({ user }) => (
                     <React.Fragment>
@@ -195,7 +195,7 @@ export const EventDetail = ({ id, showMine }) => {
                     </React.Fragment>
                   )}
                 </CurrentUser>
-              </div>
+              </Flex>
             </Flex>
             <Hr />
             {event.description ? (
@@ -206,17 +206,20 @@ export const EventDetail = ({ id, showMine }) => {
               <Text>No further description available at the moment.</Text>
             )}
             {!!event.url && (
-              <Spacer mt={4}>
-                <VeryFancyLink
-                  ph={4}
-                  pv={3}
-                  href={event.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Find Tickets
-                </VeryFancyLink>
-              </Spacer>
+              <React.Fragment>
+                <Hr />
+                <Spacer mt={4}>
+                  <VeryFancyLink
+                    ph={4}
+                    pv={3}
+                    href={event.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Find Tickets
+                  </VeryFancyLink>
+                </Spacer>
+              </React.Fragment>
             )}
           </Wrapper>
         )
