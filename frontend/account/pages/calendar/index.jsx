@@ -114,7 +114,7 @@ export default function UpdateCalendarSettingForm() {
                               calendar setup
                             </Text>
                             <VeryFancyLink
-                              href={`webcal://stage.dk3.tech/webcal/${
+                              href={`webcal://derkonzert.de/webcal/${
                                 data.me.calendarToken
                               }.ics`}
                             >
@@ -130,7 +130,7 @@ export default function UpdateCalendarSettingForm() {
                               mb={0}
                               readOnly
                               rows={5}
-                              value={`webcal://stage.dk3.tech/webcal/${
+                              value={`webcal://derkonzert.de/webcal/${
                                 data.me.calendarToken
                               }.ics`}
                               onFocus={e => {
