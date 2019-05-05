@@ -17,6 +17,7 @@
     { "src": "services/auth/lib/auth.js", "use": "@now/node" },
     { "src": "services/api/lib/api.js", "use": "@now/node" },
     { "src": "services/cron/lib/cron.js", "use": "@now/node" },
+    { "src": "services/redirects/lib/redirects.js", "use": "@now/node" },
     { "src": "services/webcal/lib/webcal.js", "use": "@now/node" },
     { "src": "libs/ui/package.json", "use": "@now/static-build" },
     { "src": "frontend/static/*", "use": "@now/static" },
@@ -34,6 +35,11 @@
     }
   ],
   "routes": [
+    {
+      "src": "/concert/(?<concertSlug>.*)",
+      "methods": ["GET"],
+      "dest": "/services/redirects/lib/redirects.js?url=/concert/$concertSlug"
+    },
     {
       "src": "/auth/verify-email/(.*)",
       "methods": ["GET"],
@@ -202,6 +208,56 @@
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "DENY",
         "X-XSS-Protection": "1; mode=block"
+      }
+    },
+
+    {
+      "src": "/login",
+      "status": 301,
+      "headers": {
+        "Location": "/account/login"
+      }
+    },
+    {
+      "src": "/stay-up-to-date",
+      "status": 301,
+      "headers": {
+        "Location": "/pages/about"
+      }
+    },
+    {
+      "src": "/about",
+      "status": 301,
+      "headers": {
+        "Location": "/pages/about"
+      }
+    },
+    {
+      "src": "/imprint",
+      "status": 301,
+      "headers": {
+        "Location": "/pages/imprint"
+      }
+    },
+    {
+      "src": "/privacy",
+      "status": 301,
+      "headers": {
+        "Location": "/pages/privacy"
+      }
+    },
+    {
+      "src": "/concert-archive",
+      "status": 301,
+      "headers": {
+        "Location": "/archive"
+      }
+    },
+    {
+      "src": "/add-concert",
+      "status": 301,
+      "headers": {
+        "Location": "/add-new-event"
       }
     }
   ]
