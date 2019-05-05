@@ -1,5 +1,5 @@
 describe("Redirect", () => {
   it("should not throw", () => {
-    expect(() => require("../../lib/model/Redirect")).not.thThrow()
+    expect(() => require("../../lib/model/Redirect")).not.toThrow()
   })
 })
