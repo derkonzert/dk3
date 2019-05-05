@@ -11,8 +11,8 @@ export const Select = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  border-radius: 0.3rem;
-  border: 0.2rem solid ${({ theme }) => theme.colors.inputBorderColor};
+  border-radius: 3px;
+  border: 2px solid ${({ theme }) => theme.colors.inputBorderColor};
 `
 
 export const Option = styled.label`
@@ -24,8 +24,9 @@ export const Option = styled.label`
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 700;
 
+  height: 3.462rem;
   padding: 0.5rem 0 0.4rem;
-  margin: -0.2rem;
+  margin: -2px;
 
   font-size: 1.4rem;
   letter-spacing: 0;
@@ -42,7 +43,7 @@ export const CheckedOption = styled(Option)`
   position: relative;
   color: ${({ theme }) => theme.colors.checkboxColorActive};
 
-  border-radius: 0.3rem;
+  border-radius: 3px;
 
   ${gradientBackground};
 `
@@ -51,7 +52,17 @@ export const UncheckedOption = styled(Option)`
   color: ${({ theme }) => theme.colors.checkboxColor};
   background: transparent;
 
-  box-shadow: inset -0.2rem 0 0 0 ${({ theme }) => theme.colors.inputBorderColor};
+  border-radius: 3px;
+
+  box-shadow: inset -2px 0 0 0 ${({ theme }) => theme.colors.inputBorderColor};
+
+  &:first-of-type {
+    border-radius: 3px 0 0 3px;
+  }
+
+  &:last-of-type {
+    border-radius: 0 3px 3px 0;
+  }
 `
 
 export const Label = styled.label`

@@ -18,6 +18,7 @@ import {
   Text,
   Title,
   Link as UILink,
+  Slogan,
 } from "@dk3/ui/atoms/Typography"
 import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
@@ -32,6 +33,8 @@ import { EventLegend } from "../components/list/EventLegend"
 import { HeaderMenu } from "../components/HeaderMenu/HeaderMenu"
 import { Flex } from "@dk3/ui/atoms/Flex"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
+
+const Main = Spacer.withComponent("main")
 
 const DynamicEventDetail = dynamic(
   () =>
@@ -48,8 +51,7 @@ const DynamicCreateEventForm = dynamic(
   { loading: Spinner }
 )
 
-const DK_DESCRIPTION =
-  "derkonzert is a simple list of concerts in Munich. It's supposed to be a haystack of needles, without any boundaries to any specific music style."
+const DK_DESCRIPTION = "A user curated list of fine concerts in Munich."
 
 export default withRouter(function Index({ router, themeName, onThemeChange }) {
   const {
@@ -75,25 +77,21 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
             <meta name="description" content={DK_DESCRIPTION} />
           </Head>
           <HeaderMenu />
-          <CurrentUser>
-            {({ isLoggedIn }) => (
-              <Header compact={isLoggedIn}>
-                <MegaTitle>derkonzert</MegaTitle>
 
-                <Text>
-                  {DK_DESCRIPTION}{" "}
-                  <Link passHref href="/pages/about">
-                    <UILink>Learn more about derkonzert</UILink>
-                  </Link>
-                  .
-                </Text>
-              </Header>
-            )}
-          </CurrentUser>
+          <Header>
+            <MegaTitle>derkonzert</MegaTitle>
+            <Slogan>
+              {DK_DESCRIPTION}{" "}
+              <Link passHref href="/pages/about">
+                <UILink>Read more…</UILink>
+              </Link>
+              .
+            </Slogan>
+          </Header>
 
-          <Spacer pa={4}>
+          <Main pa={4}>
             <EventList />
-          </Spacer>
+          </Main>
         </CenteredContent>
         <Footer>
           <CenteredContent>

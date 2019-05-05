@@ -14,20 +14,20 @@ export const Wrapper = styled.div`
 export const Day = styled.div`
   font-family: "IBM Plex Sans Condensed", sans-serif;
   font-weight: bold;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: ${({ inverted, theme }) =>
     inverted ? theme.colors.titleInverted : theme.colors.title};
   letter-spacing: 0;
-  line-height: 1.2;
+  line-height: 1.4;
   text-align: center;
 `
 export const DayName = styled.div`
   font-family: "IBM Plex Sans", sans-serif;
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: ${({ inverted, theme }) =>
-    inverted ? theme.colors.textInverted : theme.colors.text};
+    inverted ? theme.colors.descriptionInverted : theme.colors.description};
   letter-spacing: 0;
-  line-height: 1.2;
+  line-height: 1.3;
   text-align: center;
 `
 

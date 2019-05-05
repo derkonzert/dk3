@@ -6,7 +6,7 @@ import { withSpacing } from "../utils/withSpacing"
 export const MegaTitle = withSpacing()(styled.h1`
   position: relative;
   display: inline-block;
-  font-size: 3.2rem;
+  font-size: 3.75rem;
   font-family: "IBM Plex Serif", serif;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.title};
@@ -72,20 +72,32 @@ export const Hr = withSpacing({ mv: 3 })(styled.hr`
   background-color: ${({ theme }) => theme.colors.hr};
 `)
 
-export const Description = styled.div`
+export const Slogan = styled.h2`
   ${noMargin};
-  font-family: "IBM Plex Sans", serif;
+  font-family: "IBM Plex Serif", serif;
 
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  font-weight: normal;
   color: ${({ inverted, theme }) =>
     inverted ? theme.colors.descriptionInverted : theme.colors.description};
   letter-spacing: 0;
   line-height: 2rem;
 `
 
+export const Description = styled.div`
+  ${noMargin};
+  font-family: "IBM Plex Sans", sans-serif;
+
+  font-size: 1.2rem;
+  color: ${({ inverted, theme }) =>
+    inverted ? theme.colors.descriptionInverted : theme.colors.description};
+  letter-spacing: 0;
+  line-height: 1.3;
+`
+
 export const Text = withSpacing()(styled.p`
   ${noMargin};
-  font-family: "IBM Plex Sans", serif;
+  font-family: "IBM Plex Sans", sans-serif;
 
   font-size: 1.2rem;
   color: ${({ inverted, theme }) =>

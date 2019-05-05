@@ -97,7 +97,7 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
             label="Password"
             description={
               <Link href="/account/password">
-                <a>Forgot?</a>
+                <a>{"Can't remember?"}</a>
               </Link>
             }
             value={state.password}

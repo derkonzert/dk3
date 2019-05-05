@@ -35,7 +35,7 @@ const linkStyle = css`
 
 const textContentStyle = css`
   flex-grow: 1;
-  padding: 0.7rem 0 0.5rem;
+  padding: 0.7rem 0 0.7rem;
 `
 
 const textContentStyleLarge = css`
