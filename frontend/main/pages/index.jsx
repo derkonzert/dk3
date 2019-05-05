@@ -14,11 +14,11 @@ import {
 import { EventList } from "../components/list/EventList"
 
 import {
-  MegaTitle,
   Text,
   Title,
   Link as UILink,
   Slogan,
+  LogoTitle,
 } from "@dk3/ui/atoms/Typography"
 import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
@@ -79,13 +79,12 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
           <HeaderMenu />
 
           <Header>
-            <MegaTitle>derkonzert</MegaTitle>
+            <LogoTitle>derkonzert</LogoTitle>
             <Slogan>
               {DK_DESCRIPTION}{" "}
               <Link passHref href="/pages/about">
                 <UILink>Read more…</UILink>
               </Link>
-              .
             </Slogan>
           </Header>
 

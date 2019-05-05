@@ -1,7 +1,21 @@
 import React, { useState } from "react"
 import styled from "@emotion/styled"
 import { Button } from "../form/Button"
-import { Description, SubTitle } from "./Typography"
+import { Description } from "./Typography"
+
+export function getHostName(url) {
+  var match = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i)
+  if (
+    match != null &&
+    match.length > 2 &&
+    typeof match[2] === "string" &&
+    match[2].length > 0
+  ) {
+    return match[2]
+  } else {
+    return null
+  }
+}
 
 export const Iframe = ({ src, id }) => {
   const [showEmbeded, setShowEmbeded] = useState(false)
@@ -18,13 +32,11 @@ export const Iframe = ({ src, id }) => {
           />
         ) : (
           <ShowEmbedWarning>
-            <SubTitle mb={3}>Show content from different website?</SubTitle>
-
             <Button ph={3} pv={3} mb={2} onClick={() => setShowEmbeded(true)}>
-              Load content
+              Click, to load content from {getHostName(src)}
             </Button>
 
-            <Description>{src.substr(0, 50)}…</Description>
+            <Description>{src}</Description>
           </ShowEmbedWarning>
         )}
       </Scaler>
@@ -39,6 +51,7 @@ const Wrapper = styled.div`
   width: 100%;
   margin: 1rem 0;
   background: ${({ theme }) => theme.colors.siteBackground};
+  box-shadow: inset 0 0 1px ${({ theme }) => theme.colors.description};
 `
 
 const Scaler = styled.div`

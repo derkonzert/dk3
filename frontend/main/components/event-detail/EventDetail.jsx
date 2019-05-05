@@ -15,11 +15,13 @@ import { Flex } from "@dk3/ui/atoms/Flex"
 import { ButtonLink, VeryFancyLink } from "@dk3/ui/form/Button"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 import { hasSkill } from "@dk3/shared-frontend/lib/hasSkill"
+import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
 import styled from "@emotion/styled"
 
 import { ApproveEventButton } from "../form/ApproveEventButton"
 import RichText from "../../../../libs/rtxt/react"
 import { BookmarkedBy } from "./BookmarkedBy"
+import GoogleStructuredData from "./GoogleStructuredData"
 
 export const EVENT_DETAIL_FRAGMENT = gql`
   fragment EventDetailEvent on Event {
@@ -221,6 +223,16 @@ export const EventDetail = ({ id, showMine }) => {
                 </Spacer>
               </React.Fragment>
             )}
+            <GoogleStructuredData
+              name={event.title}
+              description={`${event.title} on ${fromDt.toFormat(
+                "dd. MMMM yyyy"
+              )} at ${event.location} in Munich`}
+              startDate={new Date(event.from)}
+              url={`https://derkonzert.de${eventHref(event)}`}
+              locationName={event.location}
+              locationAddress="Munich"
+            />
           </Wrapper>
         )
       }}

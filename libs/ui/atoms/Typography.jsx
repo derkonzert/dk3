@@ -1,17 +1,17 @@
+import { css } from "@emotion/core"
 import styled from "@emotion/styled"
 
 import { noMargin, gradientBackground } from "../common"
 import { withSpacing } from "../utils/withSpacing"
 
-export const MegaTitle = withSpacing()(styled.h1`
+const logoStyle = ({ theme }) => css`
   position: relative;
   display: inline-block;
-  font-size: 3.75rem;
   font-family: "IBM Plex Serif", serif;
   font-weight: bold;
-  color: ${({ theme }) => theme.colors.title};
+  color: ${theme.colors.title};
   letter-spacing: 0;
-  line-height: 1.4;
+  line-height: 1.2;
   margin: 1rem 0;
 
   &:after {
@@ -24,8 +24,18 @@ export const MegaTitle = withSpacing()(styled.h1`
     height: 0.4rem;
     border-radius: 0.2rem;
 
-    ${gradientBackground};
+    ${gradientBackground({ theme })};
   }
+`
+
+export const LogoTitle = withSpacing()(styled.h1`
+  font-size: 3.75rem;
+  ${logoStyle}
+`)
+
+export const MegaTitle = withSpacing()(styled.h1`
+  font-size: 3.2rem;
+  ${logoStyle}
 `)
 
 export const Title = withSpacing()(styled.h2`
