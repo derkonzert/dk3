@@ -63,6 +63,13 @@
       }
     },
     {
+      "src": "/news",
+      "status": 301,
+      "headers": {
+        "Location": "/pages/about"
+      }
+    },
+    {
       "src": "/imprint",
       "status": 301,
       "headers": {
@@ -144,6 +151,17 @@
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "DENY",
         "X-XSS-Protection": "1; mode=block"
+      }
+    },
+    {
+      "src": "/account/(.*).(js|css)",
+      "dest": "/frontend/account/$1.$2",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block",
+        "Cache-Control": "public, max-age=31536000"
       }
     },
     {
@@ -248,6 +266,17 @@
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "DENY",
         "X-XSS-Protection": "1; mode=block"
+      }
+    },
+    {
+      "src": "/(.*).(js|css)",
+      "dest": "/frontend/main/$1.$2",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block",
+        "Cache-Control": "public, s-maxage=31536000, max-age=31536000"
       }
     },
     {

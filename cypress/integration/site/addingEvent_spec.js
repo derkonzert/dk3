@@ -1,7 +1,18 @@
 /// <reference types="cypress" />
+const faker = require("faker")
+
+const fakeEventData = () => ({
+  title: faker.name.firstName(),
+  location: faker.company.companyName(),
+  url: faker.internet.url(),
+})
 
 describe("Add event", function() {
+  let event
+
   before(() => {
+    event = fakeEventData()
+
     cy.visit("http://localhost:3000/")
 
     // Initially the event list has to be available.
@@ -17,15 +28,19 @@ describe("Add event", function() {
   })
 
   it("Navigates to new event, after successful submittion", () => {
-    cy.get("[name='title']").type("This Awesome Band")
-    cy.get("[name='location']").type("A nice venue")
+    cy.get("[name='title']").type(event.title)
+    cy.get("input#location").type(`${event.location}`)
 
-    cy.get("[name='url']").type("https://some.nice/url")
+    cy.wait(500)
+
+    cy.get("input#location").type("{enter}")
+
+    cy.get("[name='url']").type(event.url)
 
     cy.get("[data-add-event-form]").submit()
 
-    cy.get("[data-event-title]").contains("This Awesome Band")
-    cy.get("[href='https://some.nice/url']").should("exist")
+    cy.get("[data-event-title]").contains(event.title)
+    cy.get(`[href='${event.url}']`).should("exist")
   })
 
   it("Navigating back, brings the user back to the list and hides the detail", () => {
@@ -37,6 +52,6 @@ describe("Add event", function() {
   })
 
   it("adds the new event to the event list", () => {
-    cy.get("[data-event]").contains("This Awesome Band")
+    cy.get("[data-event]").contains(event.title)
   })
 })

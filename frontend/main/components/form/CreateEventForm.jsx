@@ -230,16 +230,16 @@ export const CreateEventForm = ({ onCreated }) => {
                           onChange={e => setState({ title: e.target.value })}
                           label="Title"
                           disabled={state.isSaving}
+                          autoComplete="off"
                         />
 
                         <AutoComplete
                           mb={3}
-                          id="location"
+                          name="location"
                           value={{
                             name: state.location,
                             label: state.location,
                           }}
-                          name="location"
                           error={state.locationError}
                           onChange={option => {
                             const location = option ? option.value : ""
@@ -329,6 +329,7 @@ export const CreateEventForm = ({ onCreated }) => {
                           onChange={e => setState({ url: e.target.value })}
                           label="Tickets URL"
                           disabled={state.isSaving}
+                          autoComplete="off"
                         />
                         <InputDescription mb={3}>
                           This can speed-up the verification of your event

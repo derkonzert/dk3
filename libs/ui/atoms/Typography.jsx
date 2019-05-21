@@ -11,7 +11,6 @@ const logoStyle = ({ theme }) => css`
   font-weight: bold;
   color: ${theme.colors.title};
   letter-spacing: 0;
-  line-height: 1.2;
   margin: 1rem 0;
 
   &:after {
@@ -20,9 +19,10 @@ const logoStyle = ({ theme }) => css`
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -0.2rem;
-    height: 0.4rem;
-    border-radius: 0.2rem;
+
+    bottom: -0.18em;
+    height: 0.12em;
+    border-radius: 0.12em;
 
     ${gradientBackground({ theme })};
   }
@@ -30,11 +30,13 @@ const logoStyle = ({ theme }) => css`
 
 export const LogoTitle = withSpacing()(styled.h1`
   font-size: 3.75rem;
+  line-height: 1;
   ${logoStyle}
 `)
 
 export const MegaTitle = withSpacing()(styled.h1`
   font-size: 3.2rem;
+  line-height: 1.2;
   ${logoStyle}
 `)
 

@@ -79,7 +79,7 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
           <HeaderMenu />
 
           <Header>
-            <LogoTitle>derkonzert</LogoTitle>
+            <LogoTitle mb={3}>derkonzert</LogoTitle>
             <Slogan>
               {DK_DESCRIPTION}{" "}
               <Link passHref href="/pages/about">

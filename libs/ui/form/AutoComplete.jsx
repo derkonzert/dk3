@@ -1,5 +1,6 @@
 import React from "react"
-
+import { withTheme } from "emotion-theming"
+import { rgba } from "@dk3/ui/theme/rgba"
 import AsyncCreatableSelect from "react-select/lib/AsyncCreatable"
 import { withSpacing } from "../utils/withSpacing"
 import {
@@ -13,65 +14,80 @@ const alwaysHidden = () => ({
   display: "none",
 })
 
-const customStyles = {
-  option: provided => ({
+const customStyles = theme => ({
+  menuList: provided => ({
     ...provided,
+    background: theme.colors.inputBackground,
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    background:
+      state.isFocused || state.isSelected
+        ? rgba(theme.colors.input, 20)
+        : theme.colors.inputBackground,
+    color: theme.colors.input,
     fontSize: "inherit",
     fontFamily: "IBM Plex Mono",
   }),
   control: () => ({
     // none of react-select's styles are passed to <Control />
-    background: "white",
+    background: theme.colors.inputBackground,
+    color: theme.colors.input,
     fontSize: "inherit",
     fontFamily: "IBM Plex Mono",
   }),
   input: provided => ({
     ...provided,
+    color: theme.colors.input,
     fontSize: "inherit",
     fontFamily: "IBM Plex Mono, monospace",
   }),
-  singleValue: provided => {
-    return {
-      ...provided,
-      fontSize: "inherit",
-      fontFamily: "IBM Plex Mono",
-    }
-  },
+  singleValue: provided => ({
+    ...provided,
+    color: theme.colors.input,
+    fontSize: "inherit",
+    fontFamily: "IBM Plex Mono",
+  }),
   loadingIndicator: alwaysHidden,
   dropdownIndicator: alwaysHidden,
   indicatorSeparator: alwaysHidden,
-}
+})
 
 export const AutoComplete = withSpacing({ mb: 3 })(
-  ({
-    label,
-    valid,
-    validate,
-    error,
-    description,
-    name,
-    className,
-    loadOptions,
-    ...props
-  }) => (
-    <div className={className}>
-      {(!!label || !!description) && (
-        <InputLabel htmlFor={name}>
-          {label}
-          {!!description && <InputDescription>{description}</InputDescription>}
-        </InputLabel>
-      )}
-      <InputBorder validate={validate} valid={valid}>
-        <AsyncCreatableSelect
-          cacheOptions
-          defaultOptions
-          styles={customStyles}
-          inputId={name}
-          loadOptions={loadOptions}
-          {...props}
-        />
-      </InputBorder>
-      {!!error && <InputFeedback error>{error}</InputFeedback>}
-    </div>
+  withTheme(
+    ({
+      theme,
+      label,
+      valid,
+      validate,
+      error,
+      description,
+      name,
+      className,
+      loadOptions,
+      ...props
+    }) => (
+      <div className={className}>
+        {(!!label || !!description) && (
+          <InputLabel htmlFor={name}>
+            {label}
+            {!!description && (
+              <InputDescription>{description}</InputDescription>
+            )}
+          </InputLabel>
+        )}
+        <InputBorder validate={validate} valid={valid}>
+          <AsyncCreatableSelect
+            cacheOptions
+            defaultOptions
+            styles={customStyles(theme)}
+            inputId={name}
+            loadOptions={loadOptions}
+            {...props}
+          />
+        </InputBorder>
+        {!!error && <InputFeedback error>{error}</InputFeedback>}
+      </div>
+    )
   )
 )

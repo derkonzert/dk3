@@ -81,6 +81,12 @@ exports.userByVerificationToken = async emailVerificationToken =>
     emailVerificationToken,
   }).exec()
 
+exports.usersWithVerificationToken = async ({ filter } = { filter: {} }) =>
+  await User.Model.find({
+    emailVerificationToken: { $ne: null },
+    ...filter,
+  }).exec()
+
 exports.userByPasswordResetToken = async passwordResetToken =>
   await User.Model.findOne({ passwordResetToken }).exec()
 

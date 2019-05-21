@@ -1,4 +1,4 @@
-const { DateTime } = require("luxon")
+const { DateTime, Duration } = require("luxon")
 
 const { sendDoubleOptInMail } = require("@dk3/mailer")
 const { sendPasswordResetMail } = require("@dk3/mailer")
@@ -28,6 +28,28 @@ exports.doubleOptIn = async () => {
     }
 
     return `Sent ${systemEvents.length} doi mails`
+  } catch (err) {
+    throw err
+  }
+}
+
+exports.autoResendDoubleOptIn = async () => {
+  try {
+    const usersWithVerificationToken = await dao.usersWithVerificationToken({
+      filter: {
+        created: {
+          $lt: DateTime.local()
+            .minus(Duration.fromObject({ days: 2 }))
+            .toJSDate(),
+        },
+      },
+    })
+
+    for (let user of usersWithVerificationToken) {
+      await sendDoubleOptInMail(user)
+    }
+
+    return `Resent ${usersWithVerificationToken.length} auto doi mails`
   } catch (err) {
     throw err
   }

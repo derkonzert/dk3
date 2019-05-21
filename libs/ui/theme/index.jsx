@@ -51,8 +51,8 @@ const defaultTheme = {
 
     inputError: "#d23939",
     inputSuccess: "#0b7938",
-    input: "black",
-    inputBackground: "white",
+    input: "#000000",
+    inputBackground: "#ffffff",
     inputValidBackground: "#0b7938",
     inputInvalidBackground: "#d23939",
     inputBorderColor: "hsl(0, 0%, 80%)",
@@ -109,6 +109,12 @@ const darkTheme = {
     mainGradientFrom: "rgb(232, 57, 57)",
     mainGradientTo: "#410c9e",
 
+    // mainGradientFrom: "rgb(96,23,214)",
+    // mainGradientTo: "rgb(107, 16, 85)",
+
+    // mainGradientFrom: "rgb(11, 156, 162)",
+    // mainGradientTo: "rgb(12, 8, 216)",
+
     dialogOverlayBackground: "rgba(0, 0, 0, 0.65)",
     dialogContentBackground: "#333",
 
@@ -129,8 +135,8 @@ const darkTheme = {
     stickyListTitleBackground: "rgba(27, 27, 27, 0.85)",
 
     inputError: "#d23939",
-    input: "white",
-    inputBackground: "black",
+    input: "#ffffff",
+    inputBackground: "#000000",
     inputValidBackground: "#0b7938",
     inputInvalidBackground: "#d23939",
     inputBorderColor: "#393939",

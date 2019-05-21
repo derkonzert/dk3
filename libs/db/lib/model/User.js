@@ -67,7 +67,7 @@ const Schema = new mongoose.Schema({
 
   sendEmails: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 
   autoBookmark: {
