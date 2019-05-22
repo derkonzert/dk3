@@ -1,4 +1,4 @@
-const { logger } = require("@dk3/logger")
+const { error } = require("@dk3/logger")
 
 const cronJobs = require("./cronJobs")
 const CronJob = require("./model/CronJob")
@@ -34,7 +34,7 @@ if (eventNotificationsLastExecuted.getUTCHours() > 16) {
 exports.cronJobConfigurations = [
   { name: "doubleOptIn", interval: "2m", initialRun: true },
   { name: "passwordReset", interval: "2m", initialRun: true },
-  { name: "autoResendDoubleOptIn", interval: "24h", initialRun: true },
+  { name: "autoResendDoubleOptIn", interval: "72h", initialRun: true },
   {
     name: "eventNotifications",
     interval: "12h",
@@ -68,7 +68,8 @@ exports.runAll = async () => {
           results.push(result)
         } catch (err) {
           errors.push(err)
-          logger(`cron "${job.name}" execution failed:`, err.message)
+
+          error(err)
         }
 
         if (Date.now() - startedAt >= 60 * 1000) {

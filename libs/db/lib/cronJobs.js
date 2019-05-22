@@ -1,5 +1,4 @@
 const { DateTime, Duration } = require("luxon")
-
 const { sendDoubleOptInMail } = require("@dk3/mailer")
 const { sendPasswordResetMail } = require("@dk3/mailer")
 const { sendEventNotificationEmail } = require("@dk3/mailer")
@@ -46,6 +45,8 @@ exports.autoResendDoubleOptIn = async () => {
     })
 
     for (let user of usersWithVerificationToken) {
+      await user.createDoubleOptInToken()
+
       await sendDoubleOptInMail(user)
     }
 

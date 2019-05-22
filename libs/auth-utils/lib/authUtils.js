@@ -7,23 +7,11 @@ const { dao } = require("@dk3/db")
 const { Types: SystemEventTypes } = require("@dk3/db/lib/model/SystemEvent")
 const skills = require("@dk3/db/lib/model/userSkills")
 
-exports.generateBasicToken = async () =>
-  new Promise((resolve, reject) => {
-    require("crypto").randomBytes(48, function(err, buffer) {
-      if (err) {
-        return reject(err)
-      }
-
-      const token = buffer.toString("hex")
-      resolve(token)
-    })
-  })
-
 exports.signUp = async data => {
   try {
     const user = await dao.createUser(data)
 
-    await exports.createDoubleOptInToken(user)
+    await user.createDoubleOptInToken()
     await dao.emitSystemEvent(SystemEventTypes.doiRequested, {
       emittedBy: user._id,
     })
@@ -54,19 +42,6 @@ exports.verifyEmail = async emailVerificationToken => {
     await user.save()
 
     return user
-  } catch (err) {
-    throw err
-  }
-}
-
-exports.createDoubleOptInToken = async user => {
-  try {
-    const token = await exports.generateBasicToken()
-
-    user.emailVerificationToken = token
-    user.emailVerificationTokenExpiresAt = Date.now() + ms("30min")
-
-    await user.save()
   } catch (err) {
     throw err
   }
@@ -212,10 +187,7 @@ exports.requestPasswordReset = async email => {
       throw new Error("No user found for given email")
     }
 
-    user.passwordResetToken = await exports.generateBasicToken()
-    user.passwordResetTokenExpiresAt = Date.now() + ms("15min")
-
-    await user.save()
+    user.createPasswordResetToken()
 
     await dao.emitSystemEvent(SystemEventTypes.passwordResetRequested, {
       emittedBy: user._id,

@@ -10,7 +10,8 @@
   },
   "build": {
     "env": {
-      "DOCZ_BASE": "/ui/"
+      "DOCZ_BASE": "/ui/",
+      "SENTRY_DSN_FRONTEND": "@dk3-sentry-dsn-frontend"
     }
   },
   "builds": [

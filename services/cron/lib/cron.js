@@ -1,3 +1,4 @@
+const { error } = require("@dk3/logger")
 const { connect, cron } = require("@dk3/db")
 
 const { sendJson } = require("@dk3/api-utils")
@@ -15,7 +16,7 @@ module.exports = async (_req, res) => {
       await cron.setup()
       cronJobsSetUp = true
     } catch (err) {
-      throw err
+      error(err)
     }
   }
 
@@ -30,6 +31,7 @@ module.exports = async (_req, res) => {
       failedJobs: errors.length,
     })
   } catch (err) {
+    error(err)
     sendJson(res, 500, { error: err.message })
   }
 }

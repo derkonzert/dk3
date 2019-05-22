@@ -6,6 +6,8 @@ import {
   SegmentedControl,
   SegmentedControlOption,
 } from "@dk3/ui/form/SegmentedControl"
+import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
+
 import { EventQueryList } from "./EventQueryList"
 
 export const UPCOMING_EVENTS_EVENT_FRAGMENT = gql`
@@ -38,7 +40,7 @@ export const EventList = withRouter(({ router }) => {
   const filter = router.query.showMine ? "mine" : "all"
 
   return (
-    <React.Fragment>
+    <SentryErrorBoundary>
       <SegmentedControl
         value={filter}
         name="filter"
@@ -55,6 +57,6 @@ export const EventList = withRouter(({ router }) => {
       </SegmentedControl>
 
       <EventQueryList query={UPCOMING_EVENTS} filter={filter} />
-    </React.Fragment>
+    </SentryErrorBoundary>
   )
 })

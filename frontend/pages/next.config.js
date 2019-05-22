@@ -8,6 +8,10 @@ module.exports = withCSS({
 
   assetPrefix,
 
+  env: {
+    SENTRY_DSN_FRONTEND: process.env.SENTRY_DSN_FRONTEND,
+  },
+
   exportPathMap: async () => ({
     "/": { page: "/" },
   }),

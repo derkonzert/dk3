@@ -1,4 +1,4 @@
-const { generateBasicToken } = require("@dk3/auth-utils")
+const { generateBasicToken } = require("@dk3/db/lib/model/User")
 const userSkills = require("@dk3/db/lib/model/userSkills")
 
 exports.Mutation = {

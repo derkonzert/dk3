@@ -1,3 +1,4 @@
+const ms = require("ms")
 const bcrypt = require("bcrypt")
 const shortid = require("./shortid")
 const mongoose = require("mongoose")
@@ -100,6 +101,32 @@ Schema.methods.hasSkill = function(skill) {
   )
 }
 
+Schema.methods.createPasswordResetToken = async function() {
+  try {
+    this.passwordResetToken = await exports.generateBasicToken()
+    this.passwordResetTokenExpiresAt = Date.now() + ms("15min")
+
+    await this.save()
+  } catch (err) {
+    throw err
+  }
+}
+
+Schema.methods.createDoubleOptInToken = async function() {
+  try {
+    const token = await exports.generateBasicToken()
+
+    this.emailVerificationToken = token
+    this.emailVerificationTokenExpiresAt = Date.now() + ms("4days")
+
+    await this.save()
+
+    return this
+  } catch (err) {
+    throw err
+  }
+}
+
 Schema.statics.createPasswordHash = function(password) {
   return bcrypt.hashSync(password, config.get("PASSWORD_HASH_SALT_ROUNDS"))
 }
@@ -107,3 +134,15 @@ Schema.statics.createPasswordHash = function(password) {
 exports.Schema = Schema
 
 exports.Model = mongoose.model("User", Schema)
+
+exports.generateBasicToken = async () =>
+  new Promise((resolve, reject) => {
+    require("crypto").randomBytes(48, function(err, buffer) {
+      if (err) {
+        return reject(err)
+      }
+
+      const token = buffer.toString("hex")
+      resolve(token)
+    })
+  })
