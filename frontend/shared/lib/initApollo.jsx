@@ -1,4 +1,5 @@
-import { ApolloClient, InMemoryCache } from "apollo-boost"
+import { ApolloClient } from "apollo-client"
+import { InMemoryCache } from "apollo-cache-inmemory"
 // import { createHttpLink } from "apollo-link-http"
 // TODO: Add server side support for batch link
 import { BatchHttpLink } from "apollo-link-batch-http"
