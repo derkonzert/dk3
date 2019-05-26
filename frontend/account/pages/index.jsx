@@ -3,12 +3,13 @@ import React from "react"
 import Link from "next/link"
 
 import { Hr, Link as UILink, ListTitle, Text } from "@dk3/ui/atoms/Typography"
+import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 
 import { UpdateSelfForm } from "../components/UpdateSelfForm"
 
 export default function Index({ isLoggedIn }) {
   return (
-    <React.Fragment>
+    <SentryErrorBoundary>
       <ListTitle mb={3}>Settings</ListTitle>
 
       {isLoggedIn ? (
@@ -25,6 +26,6 @@ export default function Index({ isLoggedIn }) {
           <UILink>Please login</UILink>
         </Link>
       )}
-    </React.Fragment>
+    </SentryErrorBoundary>
   )
 }

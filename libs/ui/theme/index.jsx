@@ -13,7 +13,7 @@ const defaultTheme = {
 
     title: "#000",
     titleInverted: "white",
-    titleAppendix: "#757575",
+    titleAppendix: "#6f6f6f",
     text: "#3f3f3f",
     textInverted: "#f9f9f9",
     description: "#636161",

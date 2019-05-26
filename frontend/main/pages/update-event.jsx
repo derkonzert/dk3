@@ -3,6 +3,7 @@ import Head from "next/head"
 import { UpdateEventForm } from "../components/update-event/UpdateEventForm"
 import { Box } from "@dk3/ui/atoms/Boxes"
 import styled from "@emotion/styled"
+import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 
 const Wrapper = styled.div`
   margin: 2rem auto;
@@ -16,19 +17,21 @@ const Content = styled.div`
 
 export default withRouter(function UpdateEvent({ router }) {
   return (
-    <Wrapper>
-      <Head>
-        <title>Update event {router.query.eventId}</title>
-        <meta
-          name="description"
-          content={`Update event ${router.query.eventId}`}
-        />
-      </Head>
-      <Box>
-        <Content>
-          <UpdateEventForm id={router.query.eventId} />
-        </Content>
-      </Box>
-    </Wrapper>
+    <SentryErrorBoundary>
+      <Wrapper>
+        <Head>
+          <title>Update event {router.query.eventId}</title>
+          <meta
+            name="description"
+            content={`Update event ${router.query.eventId}`}
+          />
+        </Head>
+        <Box>
+          <Content>
+            <UpdateEventForm id={router.query.eventId} />
+          </Content>
+        </Box>
+      </Wrapper>
+    </SentryErrorBoundary>
   )
 })

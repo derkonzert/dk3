@@ -3,7 +3,6 @@ import { Global } from "@emotion/core"
 import styled from "@emotion/styled"
 
 import { global } from "@dk3/ui/documentStyles"
-
 import { withSpacing } from "@dk3/ui/utils/withSpacing"
 
 export const PageContenWrapper = withSpacing({ mv: 5 })(styled.main`

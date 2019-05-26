@@ -1,5 +1,3 @@
-const path = require("path")
-
 const { InvalidConfigurationError } = require("@dk3/error")
 
 const defaults = require("./defaults")
@@ -24,5 +22,5 @@ exports.override = (name, newValue) => {
 }
 
 exports.url = pathToAdd => {
-  return path.join(config.APP_URL, pathToAdd)
+  return `${config.APP_URL}/${pathToAdd.replace(/^\//, "")}`
 }

@@ -4,10 +4,11 @@ import { withRouter } from "next/router"
 import { ListTitle, Description } from "@dk3/ui/atoms/Typography"
 
 import { SignUpForm } from "@dk3/shared-frontend/form/SignUpForm"
+import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 
 export default withRouter(function Index({ router, isLoggedIn }) {
   return (
-    <React.Fragment>
+    <SentryErrorBoundary>
       <ListTitle>Sign Up</ListTitle>
       <Description>Create an account</Description>
       {isLoggedIn ? (
@@ -19,6 +20,6 @@ export default withRouter(function Index({ router, isLoggedIn }) {
           }}
         />
       )}
-    </React.Fragment>
+    </SentryErrorBoundary>
   )
 })

@@ -1,10 +1,11 @@
 import React from "react"
 
 import { ListTitle, Strong, Text } from "@dk3/ui/atoms/Typography"
+import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 
 export default function SignUpSuccess() {
   return (
-    <React.Fragment>
+    <SentryErrorBoundary>
       <ListTitle>🎉 Success!</ListTitle>
 
       <Text mb={4}>
@@ -18,6 +19,6 @@ export default function SignUpSuccess() {
         <br />
         And please also check your spam.
       </Text>
-    </React.Fragment>
+    </SentryErrorBoundary>
   )
 }

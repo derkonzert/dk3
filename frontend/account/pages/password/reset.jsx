@@ -5,11 +5,12 @@ import { ListTitle } from "@dk3/ui/atoms/Typography"
 import { FancyButton } from "@dk3/ui/form/Button"
 import { State } from "react-powerplug"
 import { TextInput } from "@dk3/ui/form/TextInput"
+import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 import { ErrorMessage, Message } from "@dk3/ui/atoms/Message"
 
 const SignUpActivate = withRouter(function SignUpActivate({ router }) {
   return (
-    <React.Fragment>
+    <SentryErrorBoundary>
       <ListTitle>Set New Password</ListTitle>
 
       <State
@@ -123,7 +124,7 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
           </form>
         )}
       </State>
-    </React.Fragment>
+    </SentryErrorBoundary>
   )
 })
 

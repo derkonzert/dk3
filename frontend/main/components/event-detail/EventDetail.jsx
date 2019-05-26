@@ -92,19 +92,24 @@ export const EventDetail = ({ id, showMine }) => {
             .toObject()
         }
 
+        const description = event.description
+          ? event.description.substr(0, 120)
+          : `${event.title} at ${event.location} on the ${fromDt.toFormat(
+              "dd.MM.yyyy"
+            )}`
+
         return (
           <Wrapper>
             <Head>
               <title>{event.title} on derkonzert</title>
+              <meta name="description" content={description} />
+              <meta property="og:description" content={description} />
               <meta
-                name="description"
-                content={
-                  event.description
-                    ? event.description.substr(0, 120)
-                    : `${event.title} at ${
-                        event.location
-                      } on the ${fromDt.toFormat("dd.MM.yyyy")}`
-                }
+                property="og:image"
+                content={`https://derkonzert.de/social-card${eventHref(
+                  event,
+                  "event-card"
+                )}.png`}
               />
             </Head>
             <MegaTitle data-event-title mr={5} mb={3}>

@@ -5,11 +5,11 @@ import gql from "graphql-tag"
 import { State } from "react-powerplug"
 
 import { Spinner } from "@dk3/ui/atoms/Spinner"
-
 import { ErrorMessage } from "@dk3/ui/atoms/Message"
 import { TextArea } from "@dk3/ui/form/TextArea"
 import { Button, VeryFancyLink } from "@dk3/ui/form/Button"
 import { Hr, Text, ListTitle, SubTitle, Small } from "@dk3/ui/atoms/Typography"
+import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 
 export const USER_DATA_FRAGMENT = gql`
   fragment UserCalendarData on User {
@@ -38,7 +38,7 @@ export const UPDATE_CALENDAR_TOKEN = gql`
 
 export default function UpdateCalendarSettingForm() {
   return (
-    <React.Fragment>
+    <SentryErrorBoundary>
       <ListTitle mb={2}>Calendar Integration</ListTitle>
       <Text mv={3}>
         {
@@ -194,6 +194,6 @@ export default function UpdateCalendarSettingForm() {
           )
         }}
       </Query>
-    </React.Fragment>
+    </SentryErrorBoundary>
   )
 }

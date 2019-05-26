@@ -3,13 +3,14 @@ import React, { useState } from "react"
 import { ListTitle, Text } from "@dk3/ui/atoms/Typography"
 import { TextInput } from "@dk3/ui/form/TextInput"
 import { FancyButton } from "@dk3/ui/form/Button"
+import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 import { State } from "react-powerplug"
 
 export default function Index() {
   const [emailSent, setEmailSent] = useState(false)
 
   return (
-    <React.Fragment>
+    <SentryErrorBoundary>
       <ListTitle>Password Reset</ListTitle>
       {emailSent ? (
         <Text mv={4}>
@@ -69,6 +70,6 @@ export default function Index() {
           )}
         </State>
       )}
-    </React.Fragment>
+    </SentryErrorBoundary>
   )
 }

@@ -2,7 +2,7 @@ import { css } from "@emotion/core"
 
 export const global = theme => css`
   /* TODO: Reduce used font variants */
-  @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,600|IBM+Plex+Sans+Condensed:700|IBM+Plex+Sans:400,600|IBM+Plex+Serif:400,700");
+  @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,600|IBM+Plex+Sans+Condensed:700|IBM+Plex+Sans:400,600|IBM+Plex+Serif:400,700&display=swap");
 
   /*
   font-family: 'IBM Plex Mono', monospace;

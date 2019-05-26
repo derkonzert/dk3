@@ -6,6 +6,7 @@ import { ListTitle, Text, Strong } from "@dk3/ui/atoms/Typography"
 
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { VeryFancyLink } from "@dk3/ui/form/Button"
+import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 
 const SignUpActivate = withRouter(function SignUpActivate({ router }) {
   const [status, setStatus] = useState("fetching")
@@ -71,4 +72,10 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
   )
 })
 
-export default SignUpActivate
+export default function Activate(props) {
+  return (
+    <SentryErrorBoundary>
+      <SignUpActivate {...props} />
+    </SentryErrorBoundary>
+  )
+}

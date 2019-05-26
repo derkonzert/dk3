@@ -20,6 +20,11 @@
     { "src": "services/cron/lib/cron.js", "use": "@now/node" },
     { "src": "services/redirects/lib/redirects.js", "use": "@now/node" },
     { "src": "services/webcal/lib/webcal.js", "use": "@now/node" },
+    {
+      "src": "services/social-cards/card.js",
+      "use": "@now/node",
+      "config": { "maxLambdaSize": "42mb" }
+    },
     { "src": "libs/ui/package.json", "use": "@now/static-build" },
     { "src": "frontend/static/*", "use": "@now/static" },
     {
@@ -135,6 +140,11 @@
       }
     },
     {
+      "src": "/social-card/(.*).png$",
+      "methods": ["GET"],
+      "dest": "/services/social-cards/card.js?path=$1"
+    },
+    {
       "src": "/ui/(.*)",
       "dest": "/libs/ui/$1",
       "headers": {
@@ -189,6 +199,17 @@
       "src": "/event/(.)*-(?<eventId>.*)$",
       "methods": ["GET"],
       "dest": "frontend/main/index?showEvent=1&eventId=$eventId",
+      "headers": {
+        "Strict-Transport-Security": "max-age=63072000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "X-XSS-Protection": "1; mode=block"
+      }
+    },
+    {
+      "src": "/event-card/(.)*-(?<eventId>.*)$",
+      "methods": ["GET"],
+      "dest": "frontend/main/event-card?eventId=$eventId",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",

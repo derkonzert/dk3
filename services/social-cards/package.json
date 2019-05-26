@@ -1,0 +1,34 @@
+{
+  "name": "@dk3/social-cards-service",
+  "private": true,
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Julian Kempff <me@ju.am>",
+  "homepage": "https://github.com/jkempff/dk3#readme",
+  "license": "ISC",
+  "main": "cards.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jkempff/dk3.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/jkempff/dk3/issues"
+  },
+  "dependencies": {
+    "@dk3/config": "0.0.0",
+    "@dk3/logger": "0.0.0",
+    "chrome-aws-lambda": "^1.16.1",
+    "micro-query": "^0.3.0",
+    "puppeteer-core": "^1.16.0"
+  }
+}

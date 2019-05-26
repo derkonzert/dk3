@@ -1,14 +1,14 @@
 import React from "react"
 
 import Link from "next/link"
-
 import { Link as UILink } from "@dk3/ui/atoms/Typography"
+import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 
 import { AccountSetupForm } from "../components/AccountSetupForm"
 
 export default function Setup({ isLoggedIn }) {
   return (
-    <React.Fragment>
+    <SentryErrorBoundary>
       {isLoggedIn ? (
         <AccountSetupForm />
       ) : (
@@ -16,6 +16,6 @@ export default function Setup({ isLoggedIn }) {
           <UILink>Please login</UILink>
         </Link>
       )}
-    </React.Fragment>
+    </SentryErrorBoundary>
   )
 }

@@ -27,6 +27,7 @@ import { Footer } from "@dk3/ui/components/Footer"
 import { FooterLinks } from "@dk3/shared-frontend/lib/FooterLinks"
 
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
+import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
 import { EventLegend } from "../components/list/EventLegend"
 
@@ -69,106 +70,110 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
   }
 
   return (
-    <ListAndDetail showDetail={showDetail}>
-      <ListAndDetailMain>
-        <CenteredContent>
-          <Head>
-            <title>derkonzert – concert community in Munich</title>
-            <meta name="description" content={DK_DESCRIPTION} />
-          </Head>
-          <HeaderMenu />
-
-          <Header>
-            <LogoTitle mb={3}>derkonzert</LogoTitle>
-            <Slogan>
-              {DK_DESCRIPTION}{" "}
-              <Link passHref href="/pages/about">
-                <UILink>Read more…</UILink>
-              </Link>
-            </Slogan>
-          </Header>
-
-          <Main pa={4}>
-            <EventList />
-          </Main>
-        </CenteredContent>
-        <Footer>
+    <SentryErrorBoundary>
+      <ListAndDetail showDetail={showDetail}>
+        <ListAndDetailMain>
           <CenteredContent>
-            <Spacer ph={4}>
-              <Flex flexDirection="column" alignItems="center">
-                <EventLegend />
-              </Flex>
+            <Head>
+              <title>derkonzert – concert community in Munich</title>
+              <meta name="description" content={DK_DESCRIPTION} />
+            </Head>
+            <HeaderMenu />
 
-              <div
-                style={{ maxWidth: "45rem", margin: "0 auto", width: "100%" }}
-              >
-                <Title>About derkonzert</Title>
-                <Text mv={3}>
-                  This website is a non-commercial project, that allows
-                  enthusiastic concert visitors to curate a list of events for
-                  Munich (Germany).
-                </Text>
-                <Text mv={3}>
-                  Its purposes are the discovery of new music, not missing
-                  important concerts and enhancing Munichs concert culture.
-                </Text>
-                <Text mv={3}>
-                  All events are maintained manually by its visitors and users.
-                </Text>
-                <Text mv={3}>
-                  The event list is not limited to certain genres or musical
-                  styles. Everyone is invited to participate and to contribute.
-                </Text>
-                <Text mv={3}>
-                  Registered users can receive email notifications about updates
-                  to the list, bookmark events they would like to visit, and
-                  sync those into their calendars.
-                </Text>
-                <CurrentUser>
-                  {({ isLoggedIn }) =>
-                    !isLoggedIn ? (
-                      <Text mv={3}>
-                        <Link href="/account/signup" passHref>
-                          <UILink>Create an account</UILink>
-                        </Link>
-                      </Text>
-                    ) : null
-                  }
-                </CurrentUser>
-                <Text mv={3}>
-                  The entire project is open source and{" "}
-                  <UILink href="https://github.com/jkempff/dk3">
-                    available on github
-                  </UILink>
-                  .
-                </Text>
-              </div>
-              <FooterLinks
-                themeName={themeName}
-                onThemeChange={e => {
-                  onThemeChange(e.target.checked ? "dark" : "light")
-                }}
-              />
-            </Spacer>
+            <Header>
+              <LogoTitle mb={3}>derkonzert</LogoTitle>
+              <Slogan>
+                {DK_DESCRIPTION}{" "}
+                <Link passHref href="/pages/about">
+                  <UILink>Read more…</UILink>
+                </Link>
+              </Slogan>
+            </Header>
+
+            <Main pa={4}>
+              <EventList />
+            </Main>
           </CenteredContent>
-        </Footer>
-      </ListAndDetailMain>
-      <ListAndDetailSide requestClose={closeDetail}>
-        {!!eventId && (
-          <React.Fragment>
-            <DynamicEventDetail id={eventId} showMine={showMine} />
-          </React.Fragment>
-        )}
-        {!!addEvent && (
-          <DynamicCreateEventForm
-            onCreated={event => {
-              router.replace(`/?eventId=${event.id}`, eventHref(event), {
-                shallow: true,
-              })
-            }}
-          />
-        )}
-      </ListAndDetailSide>
-    </ListAndDetail>
+          <Footer>
+            <CenteredContent>
+              <Spacer ph={4}>
+                <Flex flexDirection="column" alignItems="center">
+                  <EventLegend />
+                </Flex>
+
+                <div
+                  style={{ maxWidth: "45rem", margin: "0 auto", width: "100%" }}
+                >
+                  <Title>About derkonzert</Title>
+                  <Text mv={3}>
+                    This website is a non-commercial project, that allows
+                    enthusiastic concert visitors to curate a list of events for
+                    Munich (Germany).
+                  </Text>
+                  <Text mv={3}>
+                    Its purposes are the discovery of new music, not missing
+                    important concerts and enhancing Munichs concert culture.
+                  </Text>
+                  <Text mv={3}>
+                    All events are maintained manually by its visitors and
+                    users.
+                  </Text>
+                  <Text mv={3}>
+                    The event list is not limited to certain genres or musical
+                    styles. Everyone is invited to participate and to
+                    contribute.
+                  </Text>
+                  <Text mv={3}>
+                    Registered users can receive email notifications about
+                    updates to the list, bookmark events they would like to
+                    visit, and sync those into their calendars.
+                  </Text>
+                  <CurrentUser>
+                    {({ isLoggedIn }) =>
+                      !isLoggedIn ? (
+                        <Text mv={3}>
+                          <Link href="/account/signup" passHref>
+                            <UILink>Create an account</UILink>
+                          </Link>
+                        </Text>
+                      ) : null
+                    }
+                  </CurrentUser>
+                  <Text mv={3}>
+                    The entire project is open source and{" "}
+                    <UILink href="https://github.com/jkempff/dk3">
+                      available on github
+                    </UILink>
+                    .
+                  </Text>
+                </div>
+                <FooterLinks
+                  themeName={themeName}
+                  onThemeChange={e => {
+                    onThemeChange(e.target.checked ? "dark" : "light")
+                  }}
+                />
+              </Spacer>
+            </CenteredContent>
+          </Footer>
+        </ListAndDetailMain>
+        <ListAndDetailSide requestClose={closeDetail}>
+          {!!eventId && (
+            <React.Fragment>
+              <DynamicEventDetail id={eventId} showMine={showMine} />
+            </React.Fragment>
+          )}
+          {!!addEvent && (
+            <DynamicCreateEventForm
+              onCreated={event => {
+                router.replace(`/?eventId=${event.id}`, eventHref(event), {
+                  shallow: true,
+                })
+              }}
+            />
+          )}
+        </ListAndDetailSide>
+      </ListAndDetail>
+    </SentryErrorBoundary>
   )
 })

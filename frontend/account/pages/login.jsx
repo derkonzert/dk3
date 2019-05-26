@@ -1,12 +1,12 @@
 import React from "react"
 
 import { Description, ListTitle } from "@dk3/ui/atoms/Typography"
-
+import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 import { LoginForm } from "@dk3/shared-frontend/form/LoginForm"
 
 export default function Index({ isLoggedIn }) {
   return (
-    <React.Fragment>
+    <SentryErrorBoundary>
       <ListTitle>Login</ListTitle>
 
       {isLoggedIn ? (
@@ -21,6 +21,6 @@ export default function Index({ isLoggedIn }) {
           />
         </React.Fragment>
       )}
-    </React.Fragment>
+    </SentryErrorBoundary>
   )
 }

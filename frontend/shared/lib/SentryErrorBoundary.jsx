@@ -1,11 +1,5 @@
 import React from "react"
-import * as Sentry from "@sentry/browser"
-
-if (process.browser && process.env.SENTRY_DSN_FRONTEND) {
-  Sentry.init({
-    dsn: process.env.SENTRY_DSN_FRONTEND,
-  })
-}
+import { Sentry } from "./Sentry"
 
 export class SentryErrorBoundary extends React.Component {
   constructor(props) {
