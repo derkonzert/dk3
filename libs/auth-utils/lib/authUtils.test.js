@@ -38,6 +38,7 @@ describe("auth-utils", () => {
       db.dao.createUser.mockResolvedValue({
         ...userData,
         save: jest.fn(),
+        createDoubleOptInToken: jest.fn(),
         passwordHash: "somehash",
       })
 

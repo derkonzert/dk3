@@ -262,7 +262,7 @@ describe("dao", () => {
     })
   })
 
-  describe("createEvent", async () => {
+  describe("createEvent", () => {
     const eventData = {
       title: "One two",
       artists: ["check"],
@@ -343,7 +343,7 @@ describe("dao", () => {
     })
   })
 
-  describe("bookmarkEvent", async () => {
+  describe("bookmarkEvent", () => {
     beforeEach(() => {
       Event.Model.findOneAndUpdate = jest
         .fn()
@@ -442,7 +442,7 @@ describe("dao", () => {
     })
   })
 
-  describe("allEvents", async () => {
+  describe("allEvents", () => {
     beforeEach(() => {
       Event.Model.find = jest.fn().mockReturnValue(Event.Model)
       Event.Model.sort = jest.fn().mockReturnValue(Event.Model)
@@ -471,7 +471,7 @@ describe("dao", () => {
     })
   })
 
-  describe("pastEvents", async () => {
+  describe("pastEvents", () => {
     beforeEach(() => {
       Event.Model.find = jest.fn().mockReturnValue(Event.Model)
       Event.Model.sort = jest.fn().mockReturnValue(Event.Model)
@@ -502,7 +502,7 @@ describe("dao", () => {
     })
   })
 
-  describe("upcomingEvents", async () => {
+  describe("upcomingEvents", () => {
     beforeEach(() => {
       Event.Model.find = jest.fn().mockReturnValue(Event.Model)
       Event.Model.sort = jest.fn().mockReturnValue(Event.Model)
