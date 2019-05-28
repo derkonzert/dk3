@@ -1,7 +1,7 @@
 import React from "react"
 import { withTheme } from "emotion-theming"
 import { rgba } from "@dk3/ui/theme/rgba"
-import AsyncCreatableSelect from "react-select/lib/AsyncCreatable"
+import AsyncCreatableSelect from "react-select/async-creatable"
 import { withSpacing } from "../utils/withSpacing"
 import {
   InputLabel,
