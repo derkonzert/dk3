@@ -29,6 +29,7 @@
     "url": "https://github.com/jkempff/dk3/issues"
   },
   "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
     "@dk3/rtxt": "0.0.0",
     "@dk3/shared-frontend": "^0.0.0",
     "@dk3/ui": "0.0.0",
