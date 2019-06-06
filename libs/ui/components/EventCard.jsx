@@ -151,7 +151,13 @@ export const EventCard = withTheme(
             <div css={textContentCss}>
               <SubTitle inverted={inverted}>{title}</SubTitle>
               <Description inverted={inverted}>
-                {!!renderBadge && renderBadge({ inverted })}
+                {!!renderBadge &&
+                  renderBadge({
+                    inverted:
+                      fancyLevel === 2 && approved
+                        ? true
+                        : theme.name === "dark",
+                  })}
                 {description}
               </Description>
             </div>

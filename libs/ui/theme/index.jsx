@@ -23,8 +23,10 @@ const defaultTheme = {
     linkHover: "#333",
     linkHoverInverted: "#eee",
 
-    redBadge: "rgb(228, 17, 17)",
-    greenBadge: "rgb(13, 132, 46)",
+    dangerBadge: "rgb(228, 17, 17)",
+    dangerBadgeInverted: "rgba(255, 255, 255)",
+    successBadge: "rgb(13, 132, 46)",
+    successBadgeInverted: "rgb(255, 255, 255)",
 
     boxBackground: "#fff",
 
@@ -101,8 +103,10 @@ const darkTheme = {
     linkHover: "#eee",
     linkHoverInverted: "#333",
 
-    redBadge: "rgb(228, 17, 17)",
-    greenBadge: "rgb(13, 132, 46)",
+    dangerBadge: "rgb(228, 17, 17)",
+    dangerBadgeInverted: "rgba(255, 255, 255)",
+    successBadge: "rgb(13, 132, 46)",
+    successBadgeInverted: "rgb(255, 255, 255)",
 
     boxBackground: "#292929",
 

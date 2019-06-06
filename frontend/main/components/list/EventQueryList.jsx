@@ -11,7 +11,7 @@ import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
 import { EventCard } from "@dk3/ui/components/EventCard"
 import { ListTitle, ListTitleAppendix } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
-import { RedBadge, GreenBadge } from "@dk3/ui/atoms/Badge"
+import { DangerBadge, SuccessBadge } from "@dk3/ui/atoms/Badge"
 import styled from "@emotion/styled"
 import { groupedEvents } from "./eventDataHelper"
 import { AddEventButton } from "@dk3/ui/components/AddEventButton"
@@ -131,33 +131,33 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                             renderBadge={({ inverted }) => {
                               if (!event.approved) {
                                 return (
-                                  <RedBadge inverted={inverted}>
+                                  <DangerBadge inverted={inverted}>
                                     Not yet verified!
-                                  </RedBadge>
+                                  </DangerBadge>
                                 )
                               }
 
                               if (event.canceled) {
                                 return (
-                                  <RedBadge inverted={inverted}>
+                                  <DangerBadge inverted={inverted}>
                                     Canceled!
-                                  </RedBadge>
+                                  </DangerBadge>
                                 )
                               }
 
                               if (event.postponed) {
                                 return (
-                                  <RedBadge inverted={inverted}>
+                                  <DangerBadge inverted={inverted}>
                                     Postponed!
-                                  </RedBadge>
+                                  </DangerBadge>
                                 )
                               }
 
                               if (event.recentlyAdded) {
                                 return (
-                                  <GreenBadge inverted={inverted}>
+                                  <SuccessBadge inverted={inverted}>
                                     New!
-                                  </GreenBadge>
+                                  </SuccessBadge>
                                 )
                               }
 

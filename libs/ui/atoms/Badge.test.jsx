@@ -1,7 +1,7 @@
 import React from "react"
 import { matchers } from "jest-emotion"
 
-import { Badge, RedBadge, GreenBadge } from "./Badge"
+import { Badge, DangerBadge, SuccessBadge } from "./Badge"
 import { mountWithTheme } from "../utils/testHelpers"
 
 expect.extend(matchers)
@@ -12,25 +12,25 @@ describe("Badge", () => {
   })
 })
 
-describe("GreenBadge", () => {
+describe("SuccessBadge", () => {
   it("mounts without throwing", () => {
-    expect(() => mountWithTheme(<GreenBadge />)).not.toThrow()
+    expect(() => mountWithTheme(<SuccessBadge />)).not.toThrow()
   })
 
   it("has inverted state", () => {
-    const badge = mountWithTheme(<GreenBadge inverted />)
+    const badge = mountWithTheme(<SuccessBadge inverted />)
 
     expect(badge).toHaveStyleRule("color", "white")
   })
 })
 
-describe("RedBadge", () => {
+describe("DangerBadge", () => {
   it("mounts without throwing", () => {
-    expect(() => mountWithTheme(<RedBadge />)).not.toThrow()
+    expect(() => mountWithTheme(<DangerBadge />)).not.toThrow()
   })
 
   it("has inverted state", () => {
-    const badge = mountWithTheme(<RedBadge inverted />)
+    const badge = mountWithTheme(<DangerBadge inverted />)
 
     expect(badge).toHaveStyleRule("color", "white")
   })

@@ -5,16 +5,16 @@ export const Badge = styled.span`
   font-weight: 600;
 `
 
-export const RedBadge = styled(Badge)`
+export const DangerBadge = styled(Badge)`
   color: ${props =>
     props.inverted
-      ? props.theme.colors.titleInverted
-      : props.theme.colors.redBadge};
+      ? props.theme.colors.dangerBadgeInverted
+      : props.theme.colors.dangerBadge};
 `
 
-export const GreenBadge = styled(Badge)`
+export const SuccessBadge = styled(Badge)`
   color: ${props =>
     props.inverted
-      ? props.theme.colors.titleInverted
-      : props.theme.colors.greenBadge};
+      ? props.theme.colors.successBadgeInverted
+      : props.theme.colors.successBadge};
 `
