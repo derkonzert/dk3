@@ -102,6 +102,25 @@ Valid
   </State>
 </Playground>
 
+import { ControlledFallbackInput } from "./ControlledFallbackInput"
+
+## Fallback TextField for unsupported input types
+
+Like `type="date"` in macOs Safari.
+
+<Playground>
+  <State initial={{ value: "" }}>
+    {({ state, setState }) => (
+      <ControlledFallbackInput
+        id="test-valid"
+        label="Date"
+        value={state.value}
+        onChange={e => setState({ value: e.target.value })}
+      />
+    )}
+  </State>
+</Playground>
+
 ## DateInput
 
 import { DateInput } from "./DateInput"

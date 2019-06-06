@@ -63,32 +63,39 @@ export const InputFeedback = styled.div`
 `
 
 export const TextInput = withSpacing({ mb: 3 })(
-  ({
-    label,
-    valid,
-    validate,
-    error,
-    success,
-    description,
-    name,
-    className,
-    withSpinner,
-    ...props
-  }) => (
-    <div className={className}>
-      {(!!label || !!description) && (
-        <InputLabel htmlFor={name}>
-          {label}
-          {!!description && <InputDescription>{description}</InputDescription>}
-        </InputLabel>
-      )}
-      <InputBorder validate={validate} valid={valid}>
-        <Input {...props} id={name} name={name} />
-        {withSpinner && <InputSpinner />}
-      </InputBorder>
-      {(error || success) && (
-        <InputFeedback isError={!!error}>{error || success}</InputFeedback>
-      )}
-    </div>
+  React.forwardRef(
+    (
+      {
+        label,
+        valid,
+        validate,
+        error,
+        success,
+        description,
+        name,
+        className,
+        withSpinner,
+        ...props
+      },
+      ref
+    ) => (
+      <div className={className}>
+        {(!!label || !!description) && (
+          <InputLabel htmlFor={name}>
+            {label}
+            {!!description && (
+              <InputDescription>{description}</InputDescription>
+            )}
+          </InputLabel>
+        )}
+        <InputBorder validate={validate} valid={valid}>
+          <Input ref={ref} {...props} id={name} name={name} />
+          {withSpinner && <InputSpinner />}
+        </InputBorder>
+        {(error || success) && (
+          <InputFeedback isError={!!error}>{error || success}</InputFeedback>
+        )}
+      </div>
+    )
   )
 )
