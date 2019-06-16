@@ -24,4 +24,5 @@ jobs:
       name: "Unit Tests"
       script: yarn test && codecov
     - name: "Integration Tests"
+      if: branch = master
       script: yarn integration:ci
