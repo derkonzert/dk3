@@ -1,11 +1,11 @@
-# `metascraper`
+# `redirects`
 
 > TODO: description
 
 ## Usage
 
 ```
-const metascraper = require('metascraper');
+const redirects = require('./lib/redirects');
 
 // TODO: DEMONSTRATE API
 ```
