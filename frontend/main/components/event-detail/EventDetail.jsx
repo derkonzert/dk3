@@ -111,6 +111,10 @@ export const EventDetail = ({ id, showMine }) => {
                   "event-card"
                 )}.png`}
               />
+              <link
+                rel="canonical"
+                href={`https://derkonzert.de${eventHref(event)}`}
+              />
             </Head>
             <MegaTitle data-event-title mr={5} mb={3}>
               {event.title}
