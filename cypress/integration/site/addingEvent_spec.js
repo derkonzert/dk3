@@ -13,7 +13,7 @@ describe("Add event", function() {
   before(() => {
     event = fakeEventData()
 
-    cy.visit("http://localhost:3000/")
+    cy.visit("/")
 
     // Initially the event list has to be available.
     // Otherwise, the list can't be updated with the

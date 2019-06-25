@@ -2,7 +2,7 @@
 
 describe("Header", function() {
   before(() => {
-    cy.visit("http://localhost:3000/")
+    cy.visit("/")
   })
 
   it("Shows project name", function() {

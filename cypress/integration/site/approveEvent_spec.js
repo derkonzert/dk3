@@ -2,7 +2,7 @@
 
 describe("Approve Event", function() {
   before(() => {
-    cy.visit("http://localhost:3000/")
+    cy.visit("/")
 
     cy.get("[data-event-approved='false']")
       .first()

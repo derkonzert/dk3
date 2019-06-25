@@ -2,7 +2,7 @@
 
 describe("Blocked User", function() {
   before(() => {
-    cy.visit("http://localhost:3000/")
+    cy.visit("/")
   })
 
   it("is not able to login", function() {
