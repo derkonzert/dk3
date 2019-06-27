@@ -3,7 +3,8 @@ const { override } = require("@dk3/config")
 
 const { execPromised } = require("./execPromised")
 
-const TEN_MEGA_BYTE = 1024 * 1024 * 10
+const ONE_MEGA_BYTE = 1024 * 1024
+const MAX_BUFFER = ONE_MEGA_BYTE * 20
 
 module.exports = async function startCi() {
   const seed = require("@dk3/seed/lib/seed")
@@ -23,11 +24,11 @@ module.exports = async function startCi() {
     await Promise.all([
       execPromised(`MONGODB_URI=${uriString} yarn dev`, {
         cwd: path.resolve(__dirname, "../../../"),
-        maxBuffer: TEN_MEGA_BYTE,
+        maxBuffer: MAX_BUFFER,
       }),
       execPromised(`MONGODB_URI=${uriString} yarn dev`, {
         cwd: path.resolve(__dirname, "../../../frontend/main"),
-        maxBuffer: TEN_MEGA_BYTE,
+        maxBuffer: MAX_BUFFER,
       }),
     ])
 
