@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const { logger } = require("@dk3/logger")
 jest.mock("@dk3/logger")
 
-const { connect } = require("../lib/connect")
+const { connect, reset } = require("../lib/connect")
 
 describe("connect", () => {
   let origConnect
@@ -11,6 +11,7 @@ describe("connect", () => {
   let fakeConnection
 
   beforeEach(() => {
+    reset()
     origConnect = mongoose.connect
     mongoose.connect = jest.fn()
 
@@ -28,6 +29,13 @@ describe("connect", () => {
     const db = await connect()
 
     expect(db).toEqual(expectedDb)
+  })
+
+  it("calls mongoose connect only once", async () => {
+    const [db1, db2] = await Promise.all([connect(), connect()])
+
+    expect(db1).toBe(db2)
+    expect(mongoose.connect).toHaveBeenCalledTimes(1)
   })
 
   it("adds 'error' event handler to connection", async () => {
