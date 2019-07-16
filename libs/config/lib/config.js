@@ -4,7 +4,7 @@ const defaults = require("./defaults")
 const config = { ...defaults, ...process.env }
 
 const validate = (name, throwOnError = true) => {
-  if (throwOnError && !config.hasOwnProperty(name)) {
+  if (throwOnError && !Object.prototype.hasOwnProperty.call(config, name)) {
     throw new InvalidConfigurationError({
       title: `Config "${name}" missing in env`,
     })

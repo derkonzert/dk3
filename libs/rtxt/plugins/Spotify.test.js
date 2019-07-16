@@ -19,7 +19,7 @@ describe("Spotify plugin", () => {
 
   it("returns undefined if no match occured", () => {
     const result = Spotify.test({
-      word: `Something else`,
+      word: "Something else",
     })
 
     expect(result).toBeUndefined()

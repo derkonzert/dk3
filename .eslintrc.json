@@ -16,6 +16,11 @@
     "ecmaVersion": 2018
   },
   "plugins": ["react", "jest", "prettier", "cypress"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "prettier/prettier": "error",
     "linebreak-style": ["error", "unix"],

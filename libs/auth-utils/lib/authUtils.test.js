@@ -42,13 +42,9 @@ describe("auth-utils", () => {
         passwordHash: "somehash",
       })
 
-      try {
-        const result = await authUtils.signUp(userData)
+      const result = await authUtils.signUp(userData)
 
-        expect(result).toBe(true)
-      } catch (err) {
-        throw err
-      }
+      expect(result).toBe(true)
     })
 
     it("throws when user creation fails", () => {
@@ -163,16 +159,12 @@ describe("auth-utils", () => {
     })
 
     it("generates a jwt access token", async () => {
-      try {
-        const result = await authUtils.generateTokens(dummyUserData)
+      const result = await authUtils.generateTokens(dummyUserData)
 
-        expect(result.accessToken).toEqual("someaccesstoken")
-        expect(result.expiresAt).toEqual(expect.any(Number))
-        expect(result.expiresAt).toBeGreaterThan(Date.now())
-        expect(result.expiresAt).toBeLessThanOrEqual(Date.now() + ms("10 mins"))
-      } catch (err) {
-        throw err
-      }
+      expect(result.accessToken).toEqual("someaccesstoken")
+      expect(result.expiresAt).toEqual(expect.any(Number))
+      expect(result.expiresAt).toBeGreaterThan(Date.now())
+      expect(result.expiresAt).toBeLessThanOrEqual(Date.now() + ms("10 mins"))
     })
 
     it("sets softExpIn on payload", async () => {

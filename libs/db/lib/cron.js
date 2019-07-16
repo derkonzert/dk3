@@ -16,11 +16,7 @@ exports.createJob = async ({ forceUpdate, ...options }) => {
   }
 
   if (!newlySaved && forceUpdate) {
-    try {
-      await CronJob.Model.findOneAndUpdate({ name: options.name }, options)
-    } catch (err) {
-      throw err
-    }
+    await CronJob.Model.findOneAndUpdate({ name: options.name }, options)
   }
 }
 
@@ -53,35 +49,32 @@ exports.setup = async () => {
 exports.runAll = async () => {
   const startedAt = Date.now()
   /* Find jobs that are not currently running */
-  try {
-    const cronJobs = await CronJob.Model.find({ running: false })
-      .sort({ lastExecuted: -1 })
-      .exec()
 
-    const results = []
-    const errors = []
+  const cronJobs = await CronJob.Model.find({ running: false })
+    .sort({ lastExecuted: -1 })
+    .exec()
 
-    for (let job of cronJobs) {
-      if (job.shouldRun()) {
-        try {
-          const result = await exports.runJob(job)
-          results.push(result)
-        } catch (err) {
-          errors.push(err)
+  const results = []
+  const errors = []
 
-          error(err)
-        }
+  for (let job of cronJobs) {
+    if (job.shouldRun()) {
+      try {
+        const result = await exports.runJob(job)
+        results.push(result)
+      } catch (err) {
+        errors.push(err)
 
-        if (Date.now() - startedAt >= 60 * 1000) {
-          break
-        }
+        error(err)
+      }
+
+      if (Date.now() - startedAt >= 60 * 1000) {
+        break
       }
     }
-
-    return [results, errors]
-  } catch (err) {
-    throw err
   }
+
+  return [results, errors]
 }
 
 exports.runJob = async cronJob => {
@@ -92,25 +85,26 @@ exports.runJob = async cronJob => {
   }
 
   try {
+    // eslint-disable-next-line require-atomic-updates
     cronJob.running = true
     await cronJob.save()
 
     const cronResult = await cronFn()
 
+    // eslint-disable-next-line require-atomic-updates
     cronJob.running = false
+    // eslint-disable-next-line require-atomic-updates
     cronJob.lastExecuted = new Date()
 
     await cronJob.save()
 
     return cronResult
   } catch (err) {
-    try {
-      // Try to unblock the job at least
-      cronJob.running = false
-      await cronJob.save()
-    } catch (err) {
-      throw err
-    }
+    // Try to unblock the job at least
+    // eslint-disable-next-line require-atomic-updates
+    cronJob.running = false
+    await cronJob.save()
+
     throw err
   }
 }

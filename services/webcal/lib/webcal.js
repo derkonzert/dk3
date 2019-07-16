@@ -6,7 +6,7 @@ const { sendJson } = require("@dk3/api-utils")
 const ical = require("ical-generator")
 const { DateTime } = require("luxon")
 
-let dbConnection
+let isConnected = false
 
 module.exports = async (req, res) => {
   const {
@@ -17,8 +17,10 @@ module.exports = async (req, res) => {
     return sendJson(res, 401, { message: "Unauthorized: No token" })
   }
 
-  if (!dbConnection) {
-    dbConnection = await connect()
+  if (!isConnected) {
+    await connect()
+    // eslint-disable-next-line
+    isConnected = true
   }
 
   try {

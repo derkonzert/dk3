@@ -8,43 +8,35 @@ const { Types: SystemEventTypes } = require("@dk3/db/lib/model/SystemEvent")
 const skills = require("@dk3/db/lib/model/userSkills")
 
 exports.signUp = async data => {
-  try {
-    const user = await dao.createUser(data)
+  const user = await dao.createUser(data)
 
-    await user.createDoubleOptInToken()
-    await dao.emitSystemEvent(SystemEventTypes.doiRequested, {
-      emittedBy: user._id,
-    })
+  await user.createDoubleOptInToken()
+  await dao.emitSystemEvent(SystemEventTypes.doiRequested, {
+    emittedBy: user._id,
+  })
 
-    return true
-  } catch (err) {
-    throw err
-  }
+  return true
 }
 
 exports.verifyEmail = async emailVerificationToken => {
-  try {
-    const user = await dao.userByVerificationToken(emailVerificationToken)
+  const user = await dao.userByVerificationToken(emailVerificationToken)
 
-    if (!user) {
-      throw new Error("No user associated with given token")
-    }
-
-    if (user.emailVerificationTokenExpiresAt < Date.now()) {
-      throw new Error("Token has expired")
-    }
-
-    user.set("emailVerificationToken", null)
-    user.set("emailVerificationTokenExpiresAt", null)
-    user.emailVerified = true
-    user.skills.push(skills.LOGIN)
-
-    await user.save()
-
-    return user
-  } catch (err) {
-    throw err
+  if (!user) {
+    throw new Error("No user associated with given token")
   }
+
+  if (user.emailVerificationTokenExpiresAt < Date.now()) {
+    throw new Error("Token has expired")
+  }
+
+  user.set("emailVerificationToken", null)
+  user.set("emailVerificationTokenExpiresAt", null)
+  user.emailVerified = true
+  user.skills.push(skills.LOGIN)
+
+  await user.save()
+
+  return user
 }
 
 const absoluteTimestampInSeconds = milliseconds =>
@@ -85,37 +77,33 @@ exports.generateTokens = async (user, options = {}) => {
 }
 
 exports.signIn = async (email, password) => {
-  try {
-    const user = await dao.userByEmail(email)
+  const user = await dao.userByEmail(email)
 
-    if (!user) {
-      throw new HTTPStatusError({ title: "User not found", statusCode: 401 })
-    }
-
-    const passwordsMatch = user.comparePassword(password)
-
-    if (!passwordsMatch) {
-      throw new HTTPStatusError({ title: "Wrong credentials", statusCode: 401 })
-    }
-
-    if (!user.hasSkill(skills.LOGIN)) {
-      throw new HTTPStatusError({
-        title: "User is not authorized",
-        statusCode: 401,
-      })
-    }
-
-    const { lastLogin } = user
-
-    user.lastLogin = new Date()
-    await user.save()
-
-    const { accessToken, expiresAt } = await exports.generateTokens(user)
-
-    return { lastLogin, accessToken, expiresAt }
-  } catch (err) {
-    throw err
+  if (!user) {
+    throw new HTTPStatusError({ title: "User not found", statusCode: 401 })
   }
+
+  const passwordsMatch = user.comparePassword(password)
+
+  if (!passwordsMatch) {
+    throw new HTTPStatusError({ title: "Wrong credentials", statusCode: 401 })
+  }
+
+  if (!user.hasSkill(skills.LOGIN)) {
+    throw new HTTPStatusError({
+      title: "User is not authorized",
+      statusCode: 401,
+    })
+  }
+
+  const { lastLogin } = user
+
+  user.lastLogin = new Date()
+  await user.save()
+
+  const { accessToken, expiresAt } = await exports.generateTokens(user)
+
+  return { lastLogin, accessToken, expiresAt }
 }
 
 exports.parseJwtToken = token =>
@@ -180,21 +168,17 @@ exports.requestPasswordReset = async email => {
     throw new Error("No email given")
   }
 
-  try {
-    const user = await dao.userByEmail(email)
+  const user = await dao.userByEmail(email)
 
-    if (!user) {
-      throw new Error("No user found for given email")
-    }
-
-    user.createPasswordResetToken()
-
-    await dao.emitSystemEvent(SystemEventTypes.passwordResetRequested, {
-      emittedBy: user._id,
-    })
-  } catch (err) {
-    throw err
+  if (!user) {
+    throw new Error("No user found for given email")
   }
+
+  user.createPasswordResetToken()
+
+  await dao.emitSystemEvent(SystemEventTypes.passwordResetRequested, {
+    emittedBy: user._id,
+  })
 }
 exports.passwordReset = async (passwordResetToken, password) => {
   if (!passwordResetToken) {
@@ -207,24 +191,20 @@ exports.passwordReset = async (passwordResetToken, password) => {
     )
   }
 
-  try {
-    const user = await dao.userByPasswordResetToken(passwordResetToken)
+  const user = await dao.userByPasswordResetToken(passwordResetToken)
 
-    if (!user) {
-      throw new Error("No user associated with given token")
-    }
-
-    if (user.passwordResetTokenExpiresAt < Date.now()) {
-      throw new Error("Token has expired")
-    }
-
-    await dao.updateUserPassword({ password, userId: user._id })
-
-    user.set("passwordResetToken", null)
-    user.set("passwordResetTokenExpiresAt", null)
-
-    await user.save()
-  } catch (err) {
-    throw err
+  if (!user) {
+    throw new Error("No user associated with given token")
   }
+
+  if (user.passwordResetTokenExpiresAt < Date.now()) {
+    throw new Error("Token has expired")
+  }
+
+  await dao.updateUserPassword({ password, userId: user._id })
+
+  user.set("passwordResetToken", null)
+  user.set("passwordResetTokenExpiresAt", null)
+
+  await user.save()
 }

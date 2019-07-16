@@ -11,29 +11,25 @@ module.exports = async function startCi() {
 
   const MongoMemoryServer = require("mongodb-memory-server").default
 
-  try {
-    const mongod = new MongoMemoryServer()
-    const uriString = await mongod.getConnectionString()
+  const mongod = new MongoMemoryServer()
+  const uriString = await mongod.getConnectionString()
 
-    override("MONGODB_URI", uriString)
+  override("MONGODB_URI", uriString)
 
-    /* Seeding fresh data */
-    await seed()
+  /* Seeding fresh data */
+  await seed()
 
-    /* Starting Applications (lambdas + frontends) */
-    await Promise.all([
-      execPromised(`MONGODB_URI=${uriString} yarn dev`, {
-        cwd: path.resolve(__dirname, "../../../"),
-        maxBuffer: MAX_BUFFER,
-      }),
-      execPromised(`MONGODB_URI=${uriString} yarn dev`, {
-        cwd: path.resolve(__dirname, "../../../frontend/main"),
-        maxBuffer: MAX_BUFFER,
-      }),
-    ])
+  /* Starting Applications (lambdas + frontends) */
+  await Promise.all([
+    execPromised(`MONGODB_URI=${uriString} yarn dev`, {
+      cwd: path.resolve(__dirname, "../../../"),
+      maxBuffer: MAX_BUFFER,
+    }),
+    execPromised(`MONGODB_URI=${uriString} yarn dev`, {
+      cwd: path.resolve(__dirname, "../../../frontend/main"),
+      maxBuffer: MAX_BUFFER,
+    }),
+  ])
 
-    return { uriString }
-  } catch (err) {
-    throw err
-  }
+  return { uriString }
 }

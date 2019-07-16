@@ -26,6 +26,7 @@ async function getPage() {
   }
 
   const browser = await puppeteer.launch(options)
+  // eslint-disable-next-line
   _page = await browser.newPage()
 
   await _page.setCookie({

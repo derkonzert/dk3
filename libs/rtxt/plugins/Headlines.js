@@ -28,7 +28,5 @@ export const Headlines = BasePlugin.create({
     }
   },
   renderer: token =>
-    `<${token.value.headlineType}>${token.value.line}</${
-      token.value.headlineType
-    }>`,
+    `<${token.value.headlineType}>${token.value.line}</${token.value.headlineType}>`,
 })

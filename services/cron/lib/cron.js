@@ -14,6 +14,7 @@ module.exports = async (_req, res) => {
   if (!cronJobsSetUp) {
     try {
       await cron.setup()
+      // eslint-disable-next-line require-atomic-updates
       cronJobsSetUp = true
     } catch (err) {
       error(err)
