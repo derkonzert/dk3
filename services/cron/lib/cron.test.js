@@ -44,11 +44,7 @@ describe("cron", () => {
   })
 
   it("establishes db connection and closes it", async () => {
-    try {
-      await cronService(req, res)
-    } catch (err) {
-      throw err
-    }
+    await cronService(req, res)
 
     expect(db.cron.runAll).toHaveBeenCalledTimes(1)
 

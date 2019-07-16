@@ -22,6 +22,7 @@ exports.cachedMethod = (cacheKey, method, { ttl }) => {
 
       expiresAt = exports.now() + ttl
 
+      // eslint-disable-next-line
       cachedResult = await method(...args)
 
       return cachedResult
@@ -33,24 +34,16 @@ exports.cachedMethod = (cacheKey, method, { ttl }) => {
 
 /* User methods */
 exports.createUser = async data => {
-  try {
-    const passwordHash = User.Model.createPasswordHash(data.password)
-    const user = await User.Model.create({ ...data, passwordHash })
+  const passwordHash = User.Model.createPasswordHash(data.password)
+  const user = await User.Model.create({ ...data, passwordHash })
 
-    return user
-  } catch (err) {
-    throw err
-  }
+  return user
 }
 
 exports.updateUserPassword = async ({ userId, password }) => {
-  try {
-    const passwordHash = User.Model.createPasswordHash(password)
+  const passwordHash = User.Model.createPasswordHash(password)
 
-    await User.Model.findByIdAndUpdate(userId, { passwordHash }).exec()
-  } catch (err) {
-    throw err
-  }
+  await User.Model.findByIdAndUpdate(userId, { passwordHash }).exec()
 }
 
 exports.userById = async _id => await User.Model.findById(_id).exec()
@@ -106,16 +99,12 @@ exports.updateUser = async ({ shortId, ...userData }) => {
     return filteredUserData
   }, {})
 
-  try {
-    await User.Model.findOneAndUpdate(
-      { shortId },
-      { ...whiteListedUserData }
-    ).exec()
+  await User.Model.findOneAndUpdate(
+    { shortId },
+    { ...whiteListedUserData }
+  ).exec()
 
-    return await exports.userByShortId(shortId)
-  } catch (err) {
-    throw err
-  }
+  return await exports.userByShortId(shortId)
 }
 
 /* Event methods */
@@ -143,57 +132,41 @@ exports.createEvent = async (
 }
 
 exports.updateEvent = async ({ shortId, ...eventData }) => {
-  try {
-    await Event.Model.findOneAndUpdate({ shortId }, { ...eventData }).exec()
+  await Event.Model.findOneAndUpdate({ shortId }, { ...eventData }).exec()
 
-    return await exports.eventByShortId(shortId)
-  } catch (err) {
-    throw err
-  }
+  return await exports.eventByShortId(shortId)
 }
 
 exports.deleteEvent = async ({ shortId }) => {
-  try {
-    const result = await Event.Model.findOneAndDelete({ shortId }).exec()
+  const result = await Event.Model.findOneAndDelete({ shortId }).exec()
 
-    return result
-  } catch (err) {
-    throw err
-  }
+  return result
 }
 
 exports.bookmarkEvent = async ({ eventShortId, bookmarked, userId }) => {
-  try {
-    const operation = bookmarked ? "$push" : "$pull"
+  const operation = bookmarked ? "$push" : "$pull"
 
-    await Event.Model.findOneAndUpdate(
-      { shortId: eventShortId },
-      {
-        [operation]: {
-          bookmarkedBy: userId,
-        },
-      }
-    ).exec()
+  await Event.Model.findOneAndUpdate(
+    { shortId: eventShortId },
+    {
+      [operation]: {
+        bookmarkedBy: userId,
+      },
+    }
+  ).exec()
 
-    return await Event.Model.findOne({ shortId: eventShortId }).exec()
-  } catch (err) {
-    throw err
-  }
+  return await Event.Model.findOne({ shortId: eventShortId }).exec()
 }
 
 exports.approveEvent = async ({ eventShortId, approved }) => {
-  try {
-    await Event.Model.findOneAndUpdate(
-      { shortId: eventShortId },
-      {
-        approved,
-      }
-    ).exec()
+  await Event.Model.findOneAndUpdate(
+    { shortId: eventShortId },
+    {
+      approved,
+    }
+  ).exec()
 
-    return await Event.Model.findOne({ shortId: eventShortId }).exec()
-  } catch (err) {
-    throw err
-  }
+  return await Event.Model.findOne({ shortId: eventShortId }).exec()
 }
 
 exports.eventById = async _id => await Event.Model.findById(_id).exec()

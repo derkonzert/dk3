@@ -61,11 +61,7 @@ describe("api", () => {
     it("fails when no query is set", async () => {
       requestBody = {}
 
-      try {
-        await api(req, res)
-      } catch (err) {
-        throw err
-      }
+      await api(req, res)
 
       expect(apiUtils.sendJson).toHaveBeenCalledWith(res, 400, {
         message: api.queryMissingMessage,

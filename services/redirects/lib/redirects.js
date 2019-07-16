@@ -6,7 +6,7 @@ const { connect, dao } = require("@dk3/db")
 
 // const cors = microCors({ allowMethods: ["GET"] })
 
-let dbConnection
+let isConnected = false
 
 module.exports = async (req, res) => {
   const { query } = urlParse(req.url, true)
@@ -17,8 +17,10 @@ module.exports = async (req, res) => {
       throw new HTTPStatusError({ title: "No url given", statusCode: 404 })
     }
 
-    if (!dbConnection) {
-      dbConnection = await connect()
+    if (!isConnected) {
+      await connect()
+      // eslint-disable-next-line
+      isConnected = true
     }
 
     const redirect = await dao.findRedirectByUrl(url)

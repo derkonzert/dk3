@@ -100,17 +100,13 @@ module.exports = async function auth(req, res) {
       case "signIn":
         body = await json(req)
 
-        try {
-          const payload = await signIn(body.email, body.password)
+        const payload = await signIn(body.email, body.password)
 
-          return sendJson(res, 200, {
-            accessToken: payload.accessToken,
-            expiresAt: payload.expiresAt,
-            lastLogin: payload.lastLogin,
-          })
-        } catch (err) {
-          throw err
-        }
+        return sendJson(res, 200, {
+          accessToken: payload.accessToken,
+          expiresAt: payload.expiresAt,
+          lastLogin: payload.lastLogin,
+        })
 
       case "requestPasswordReset":
         body = await json(req)

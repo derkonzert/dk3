@@ -9,11 +9,7 @@ const {
 const createMailSender = renderer => async (user, data) => {
   const contents = renderer(user, data)
 
-  try {
-    await exports.sendEmail(user.email, contents)
-  } catch (err) {
-    throw err
-  }
+  await exports.sendEmail(user.email, contents)
 }
 
 exports.sendDoubleOptInMail = createMailSender(renderDoubleOptInMail)
@@ -45,15 +41,11 @@ exports.sendEmail = async (to, { subject, text, html }) => {
 
   const from = config.get("SEND_MAILS_FROM")
 
-  try {
-    await sgMail.send({
-      to,
-      from,
-      text,
-      html,
-      subject,
-    })
-  } catch (err) {
-    throw err
-  }
+  await sgMail.send({
+    to,
+    from,
+    text,
+    html,
+    subject,
+  })
 }

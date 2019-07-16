@@ -43,12 +43,8 @@ const dropCollection = async (connection, collectionName) => {
 }
 
 const dropDataBase = async connection => {
-  try {
-    await dropCollection(connection, "users")
-    await dropCollection(connection, "events")
-  } catch (err) {
-    throw err
-  }
+  await dropCollection(connection, "users")
+  await dropCollection(connection, "events")
 }
 
 const seedUsers = async () => {
@@ -58,12 +54,8 @@ const seedUsers = async () => {
   while (userData.length) {
     const data = userData.shift()
 
-    try {
-      const user = await dao.createUser(data)
-      savedData.push(user)
-    } catch (err) {
-      throw err
-    }
+    const user = await dao.createUser(data)
+    savedData.push(user)
   }
 
   return savedData
@@ -83,16 +75,12 @@ const seedEvents = async users => {
 
     data.approved = concertData.length % 10 !== 0
 
-    try {
-      const event = await dao.createEvent(
-        { eventData: data, emitEvent: false },
-        {}
-      )
+    const event = await dao.createEvent(
+      { eventData: data, emitEvent: false },
+      {}
+    )
 
-      savedData.push(event)
-    } catch (err) {
-      throw err
-    }
+    savedData.push(event)
   }
 
   return savedData
@@ -115,37 +103,29 @@ const bookmarkEvents = async (events, users) => {
   }
 
   for (let event of events) {
-    try {
-      await event.save()
-    } catch (err) {
-      throw err
-    }
+    await event.save()
   }
 }
 
 module.exports = async function seed() {
   const connection = await connect()
 
-  try {
-    logger("Dropping Database")
-    await dropDataBase(connection)
+  logger("Dropping Database")
+  await dropDataBase(connection)
 
-    logger("Creating users")
-    const users = await seedUsers()
+  logger("Creating users")
+  const users = await seedUsers()
 
-    logger("Creating events")
-    const events = await seedEvents(users)
+  logger("Creating events")
+  const events = await seedEvents(users)
 
-    logger("Bookmarking events")
-    await bookmarkEvents(events, users)
+  logger("Bookmarking events")
+  await bookmarkEvents(events, users)
 
-    logger("Waiting 3 seconds for after math")
-    // Safetybelt, before closing the connection
-    // (notifications e.g. might still be in creation)
-    await wait(3000)
-  } catch (err) {
-    throw err
-  }
+  logger("Waiting 3 seconds for after math")
+  // Safetybelt, before closing the connection
+  // (notifications e.g. might still be in creation)
+  await wait(3000)
 
   logger("Closing connection")
   connection.close()

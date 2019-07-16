@@ -102,29 +102,21 @@ Schema.methods.hasSkill = function(skill) {
 }
 
 Schema.methods.createPasswordResetToken = async function() {
-  try {
-    this.passwordResetToken = await exports.generateBasicToken()
-    this.passwordResetTokenExpiresAt = Date.now() + ms("15min")
+  this.passwordResetToken = await exports.generateBasicToken()
+  this.passwordResetTokenExpiresAt = Date.now() + ms("15min")
 
-    await this.save()
-  } catch (err) {
-    throw err
-  }
+  await this.save()
 }
 
 Schema.methods.createDoubleOptInToken = async function() {
-  try {
-    const token = await exports.generateBasicToken()
+  const token = await exports.generateBasicToken()
 
-    this.emailVerificationToken = token
-    this.emailVerificationTokenExpiresAt = Date.now() + ms("4days")
+  this.emailVerificationToken = token
+  this.emailVerificationTokenExpiresAt = Date.now() + ms("4days")
 
-    await this.save()
+  await this.save()
 
-    return this
-  } catch (err) {
-    throw err
-  }
+  return this
 }
 
 Schema.statics.createPasswordHash = function(password) {

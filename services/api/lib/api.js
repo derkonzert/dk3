@@ -13,7 +13,7 @@ const schema = createExecutable({ typeDefs, resolvers })
 
 const queryMissingMessage = "query is missing"
 
-let dbConnection
+let isConnected = false
 
 const handleGqlQuery = (
   { query, variables, operation },
@@ -27,8 +27,10 @@ module.exports = async (req, res) => {
 
   let gqlRequests = isBatch ? body : [body]
 
-  if (!dbConnection) {
-    dbConnection = await connect()
+  if (!isConnected) {
+    await connect()
+    // eslint-disable-next-line
+    isConnected = true
   }
 
   if (gqlRequests.find(({ query }) => !query)) {
