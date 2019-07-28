@@ -22,6 +22,7 @@ import { ApproveEventButton } from "../form/ApproveEventButton"
 import RichText from "../../../../libs/rtxt/react"
 import { BookmarkedBy } from "./BookmarkedBy"
 import GoogleStructuredData from "./GoogleStructuredData"
+import { CheckForApprovalButton } from "../form/CheckForApprovalButton"
 
 export const EVENT_DETAIL_FRAGMENT = gql`
   fragment EventDetailEvent on Event {
@@ -184,14 +185,15 @@ export const EventDetail = ({ id, showMine }) => {
                 <CurrentUser>
                   {({ user }) => (
                     <React.Fragment>
-                      {hasSkill(user, "APPROVE_EVENT") && (
-                        <ApproveEventButton
-                          ml={2}
-                          eventId={event.id}
-                          approved={event.approved}
-                        >
-                          Approve
-                        </ApproveEventButton>
+                      {!event.approved && hasSkill(user, "APPROVE_EVENT") && (
+                        <React.Fragment>
+                          <CheckForApprovalButton ml={2} eventId={event.id}>
+                            Check for Approval
+                          </CheckForApprovalButton>
+                          <ApproveEventButton ml={2} eventId={event.id}>
+                            Approve
+                          </ApproveEventButton>
+                        </React.Fragment>
                       )}
 
                       {hasSkill(user, "UPDATE_EVENT") && (

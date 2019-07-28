@@ -5,7 +5,7 @@ import { hasSkill } from "@dk3/shared-frontend/lib/hasSkill"
 import { Button } from "@dk3/ui/form/Button"
 import { UPCOMING_EVENTS_EVENT_FRAGMENT } from "../list/EventList"
 
-export const VERIFY_EVENT = gql`
+export const APPROVE_EVENT = gql`
   mutation approveEvent($input: ApproveEventInput!) {
     approveEvent(input: $input) {
       ...UpcomingEventsEvent
@@ -14,22 +14,21 @@ export const VERIFY_EVENT = gql`
   ${UPCOMING_EVENTS_EVENT_FRAGMENT}
 `
 
-export const ApproveEventButton = ({ eventId, approved, children, ...props }) =>
-  approved ? null : (
-    <CurrentUser>
-      {({ user }) =>
-        hasSkill(user, "VERIFY_EVENT") ? (
-          <Mutation
-            mutation={VERIFY_EVENT}
-            variables={{ input: { id: eventId, approved: !approved } }}
-          >
-            {approveEvent => (
-              <Button {...props} onClick={approveEvent}>
-                {children}
-              </Button>
-            )}
-          </Mutation>
-        ) : null
-      }
-    </CurrentUser>
-  )
+export const ApproveEventButton = ({ eventId, children, ...props }) => (
+  <CurrentUser>
+    {({ user }) =>
+      hasSkill(user, "APPROVE_EVENT") ? (
+        <Mutation
+          mutation={APPROVE_EVENT}
+          variables={{ input: { id: eventId, approved: true } }}
+        >
+          {approveEvent => (
+            <Button {...props} onClick={approveEvent}>
+              {children}
+            </Button>
+          )}
+        </Mutation>
+      ) : null
+    }
+  </CurrentUser>
+)

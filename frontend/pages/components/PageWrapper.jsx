@@ -8,7 +8,7 @@ import { Spacer } from "@dk3/ui/atoms/Spacer"
 const PageContenWrapper = styled.main`
   margin: 0 auto;
   width: 100%;
-  max-width: 64rem;
+  max-width: 70rem;
   background: ${({ theme }) => theme.colors.boxBackground};
   padding: 1rem 3rem 3rem;
 `
