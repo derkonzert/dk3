@@ -240,6 +240,7 @@ export const EventDetail = ({ id, showMine }) => {
                 "dd. MMMM yyyy"
               )} at ${event.location} in Munich`}
               startDate={new Date(event.from)}
+              endDate={new Date(event.to)}
               url={`https://derkonzert.de${eventHref(event)}`}
               locationName={event.location}
               locationAddress="Munich"

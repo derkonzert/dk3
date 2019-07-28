@@ -5,6 +5,7 @@ export default function GoogleStructuredData(props) {
     name,
     description,
     startDate,
+    endDate,
     url,
     locationName,
     locationAddress,
@@ -16,6 +17,7 @@ export default function GoogleStructuredData(props) {
     name,
     description,
     startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
     url,
     location: {
       "@type": "Place",
