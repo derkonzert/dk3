@@ -29,15 +29,15 @@
     { "src": "frontend/static/*", "use": "@now/static" },
     {
       "src": "frontend/account/next.config.js",
-      "use": "@now/next@0.0.85-canary.9"
+      "use": "@now/next"
     },
     {
       "src": "frontend/pages/next.config.js",
-      "use": "@now/next@0.0.85-canary.9"
+      "use": "@now/next"
     },
     {
       "src": "frontend/main/next.config.js",
-      "use": "@now/next@0.0.85-canary.9"
+      "use": "@now/next"
     }
   ],
   "routes": [
