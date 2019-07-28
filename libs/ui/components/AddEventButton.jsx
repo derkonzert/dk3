@@ -59,10 +59,12 @@ const Content = styled.div`
   background: ${({ theme }) => theme.colors.boxBackground};
 `
 
-export const AddEventButton = ({ children, ...props }) => (
-  <Positioner>
-    <Wrapper {...props}>
-      <Content>{children}</Content>
-    </Wrapper>
-  </Positioner>
+export const AddEventButton = React.forwardRef(
+  ({ children, ...props }, ref) => (
+    <Positioner>
+      <Wrapper ref={ref} {...props}>
+        <Content>{children}</Content>
+      </Wrapper>
+    </Positioner>
+  )
 )

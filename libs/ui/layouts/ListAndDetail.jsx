@@ -266,6 +266,8 @@ const ListAndDetailCloseWrapper = styled.a`
   color: ${({ theme }) => theme.colors.text};
 `
 
-export const ListAndDetailClose = props => (
-  <ListAndDetailCloseWrapper {...props}>&times;</ListAndDetailCloseWrapper>
-)
+export const ListAndDetailClose = React.forwardRef((props, ref) => (
+  <ListAndDetailCloseWrapper ref={ref} {...props}>
+    &times;
+  </ListAndDetailCloseWrapper>
+))
