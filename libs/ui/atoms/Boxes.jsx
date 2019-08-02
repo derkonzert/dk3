@@ -19,25 +19,10 @@ const Outer = styled.div`
     `}
 `
 
-const Inner = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: stretch;
-
-  padding: 0;
-
-  ${props =>
-    props.fancyLevel === 1 &&
-    css`
-      background-color: ${props.theme.colors.boxBackground};
-    `}
-`
-
 export const BaseBox = withSpacing({ mv: 3 })(
   ({ children, fancyLevel = 0, ...props }) => (
     <Outer fancyLevel={fancyLevel} {...props}>
-      <Inner fancyLevel={fancyLevel}>{children}</Inner>
+      {children}
     </Outer>
   )
 )

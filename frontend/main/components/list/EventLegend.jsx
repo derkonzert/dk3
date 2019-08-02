@@ -16,6 +16,10 @@ export const Square = styled.span`
   margin-right: 1rem;
 `
 
+export const FancyFilling = styled.div(({ theme }) => ({
+  backgroundColor: theme.colors.boxBackground,
+}))
+
 export const EventLegend = () => (
   <Wrapper mb={6} data-legend>
     <Description>
@@ -26,7 +30,9 @@ export const EventLegend = () => (
     </Description>
     <Description>
       <Square>
-        <FancyBox mv={2}>&nbsp;</FancyBox>
+        <FancyBox mv={2}>
+          <FancyFilling>&nbsp;</FancyFilling>
+        </FancyBox>
       </Square>
       Many users saved the event
     </Description>

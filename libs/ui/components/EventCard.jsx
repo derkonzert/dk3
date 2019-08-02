@@ -9,7 +9,7 @@ import { BaseBox } from "../atoms/Boxes"
 import { SubTitle, Description } from "../atoms/Typography"
 import { CalendarDay } from "../atoms/CalendarDay"
 
-const cardContent = css`
+const EventCardContent = styled.div`
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -21,6 +21,12 @@ const cardContent = css`
   cursor: pointer;
   -webkit-user-drag: none;
   user-select: none;
+
+  ${({ theme, isFilled }) =>
+    isFilled &&
+    css`
+      background: ${theme.colors.boxBackground};
+    `}
 `
 
 const linkStyle = css`
@@ -123,6 +129,7 @@ export const EventCard = withTheme(
     ...props
   }) => {
     const superFancy = approved ? fancyLevel === 2 : false
+    const regularFancy = approved ? fancyLevel === 1 : false
     const textContentCss = [textContentStyle]
 
     if (large && superFancy) {
@@ -138,7 +145,7 @@ export const EventCard = withTheme(
         fancyLevel={approved ? fancyLevel : 0}
         {...props}
       >
-        <div css={cardContent}>
+        <EventCardContent isFilled={regularFancy}>
           <a css={linkStyle} {...linkProps}>
             {!large && (
               <CalendarDay
@@ -173,7 +180,7 @@ export const EventCard = withTheme(
           >
             <BookmarkIcon id={id} bookmarked={bookmarked} />
           </BookmarkButton>
-        </div>
+        </EventCardContent>
       </EventBox>
     )
   }
