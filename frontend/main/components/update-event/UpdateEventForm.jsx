@@ -69,7 +69,7 @@ const FormStatus = ({ status, message }) => {
       ref.current &&
       (status === FormStatus.ERROR || status === FormStatus.SUCCESS)
     ) {
-      ref.current.scrollIntoViewIfNeeded()
+      ref.current.scrollIntoView()
     }
   })
 
@@ -254,6 +254,15 @@ export const UpdateEventForm = withRouter(({ id }) => {
                                 saveChanges(state)
                               }}
                             >
+                              <Link
+                                passHref
+                                href={`/?eventId=${data.event.id}`}
+                                as={eventHref(data.event)}
+                              >
+                                <ButtonLink mb={4} block>
+                                  Back
+                                </ButtonLink>
+                              </Link>
                               <FormStatus
                                 status={state.formStatus}
                                 message={state.formMessage}

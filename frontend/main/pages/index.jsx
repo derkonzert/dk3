@@ -52,11 +52,19 @@ const DynamicCreateEventForm = dynamic(
   { loading: Spinner }
 )
 
+const DynamicUpdateEventForm = dynamic(
+  () =>
+    import("../components/update-event/UpdateEventForm").then(
+      mod => mod.UpdateEventForm
+    ),
+  { loading: Spinner }
+)
+
 const DK_DESCRIPTION = "A user curated list of fine concerts in Munich."
 
 export default withRouter(function Index({ router, themeName, onThemeChange }) {
   const {
-    query: { eventId, addEvent, showMine },
+    query: { editMode, eventId, addEvent, showMine },
   } = router
 
   const showDetail = !!eventId || !!addEvent
@@ -158,11 +166,12 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
           </Footer>
         </ListAndDetailMain>
         <ListAndDetailSide requestClose={closeDetail}>
-          {!!eventId && (
-            <React.Fragment>
+          {!!eventId &&
+            (editMode ? (
+              <DynamicUpdateEventForm id={eventId} />
+            ) : (
               <DynamicEventDetail id={eventId} showMine={showMine} />
-            </React.Fragment>
-          )}
+            ))}
           {!!addEvent && (
             <DynamicCreateEventForm
               onCreated={event => {

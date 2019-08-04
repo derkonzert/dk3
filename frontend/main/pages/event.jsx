@@ -25,10 +25,4 @@ const EventPage = function Event({ router }) {
   )
 }
 
-// EventPage.getInitialProps = ctx => {
-//   console.log(ctx)
-
-//   return {}
-// }
-
 export default withRouter(EventPage)

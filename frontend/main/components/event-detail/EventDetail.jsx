@@ -198,7 +198,7 @@ export const EventDetail = ({ id, showMine }) => {
 
                       {hasSkill(user, "UPDATE_EVENT") && (
                         <Link
-                          href={`/update-event?eventId=${event.id}`}
+                          href={`/?eventId=${event.id}&editMode=1`}
                           as={`/update-event/${event.id}`}
                           passHref
                         >
