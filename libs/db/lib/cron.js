@@ -37,8 +37,6 @@ if (eventNotificationsLastExecuted.getUTCHours() > 16) {
 }
 
 exports.cronJobConfigurations = [
-  { name: "doubleOptIn", interval: "2m", initialRun: true },
-  { name: "passwordReset", interval: "2m", initialRun: true },
   { name: "autoResendDoubleOptIn", interval: "72h", initialRun: true },
   {
     name: "eventNotifications",

@@ -23,11 +23,11 @@ describe("cron", () => {
       expect(model.save).toHaveBeenCalledTimes(1)
     })
 
-    it("fails silently when job creation fails", () => {
+    it("fails silently when job creation because of mongoose error", () => {
       expect.assertions(1)
 
       CronJob.Model.mockImplementationOnce(() => {
-        throw new Error("Job already exists")
+        throw new Error("MongoError: E11000 duplicate entry")
       })
 
       return expect(cron.createJob(options)).resolves.toBe(undefined)

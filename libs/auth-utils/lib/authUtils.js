@@ -4,16 +4,15 @@ const { TokenExpiredError } = jwt
 const config = require("@dk3/config")
 const { HTTPStatusError } = require("@dk3/error")
 const { dao } = require("@dk3/db")
-const { Types: SystemEventTypes } = require("@dk3/db/lib/model/SystemEvent")
+const { sendDoubleOptInMail, sendPasswordResetMail } = require("@dk3/mailer")
 const skills = require("@dk3/db/lib/model/userSkills")
 
 exports.signUp = async data => {
   const user = await dao.createUser(data)
 
   await user.createDoubleOptInToken()
-  await dao.emitSystemEvent(SystemEventTypes.doiRequested, {
-    emittedBy: user._id,
-  })
+
+  await sendDoubleOptInMail(user)
 
   return true
 }
@@ -174,11 +173,9 @@ exports.requestPasswordReset = async email => {
     throw new Error("No user found for given email")
   }
 
-  user.createPasswordResetToken()
+  await user.createPasswordResetToken()
 
-  await dao.emitSystemEvent(SystemEventTypes.passwordResetRequested, {
-    emittedBy: user._id,
-  })
+  await sendPasswordResetMail(user)
 }
 exports.passwordReset = async (passwordResetToken, password) => {
   if (!passwordResetToken) {

@@ -1,28 +1,9 @@
 const { DateTime, Duration } = require("luxon")
 const { sendDoubleOptInMail } = require("@dk3/mailer")
-const { sendPasswordResetMail } = require("@dk3/mailer")
 const { sendEventNotificationEmail } = require("@dk3/mailer")
 
 const SystemEvent = require("./model/SystemEvent")
 const dao = require("./dao")
-
-exports.doubleOptIn = async () => {
-  const systemEvents = await dao.systemEventsByType(
-    SystemEvent.Types.doiRequested
-  )
-
-  for (let systemEvent of systemEvents) {
-    const user = await dao.userById(systemEvent.emittedBy)
-
-    await sendDoubleOptInMail(user)
-  }
-
-  if (systemEvents.length) {
-    await dao.clearSystemEvents(systemEvents)
-  }
-
-  return `Sent ${systemEvents.length} doi mails`
-}
 
 exports.autoResendDoubleOptIn = async () => {
   const usersWithVerificationToken = await dao.usersWithVerificationToken({
@@ -42,24 +23,6 @@ exports.autoResendDoubleOptIn = async () => {
   }
 
   return `Resent ${usersWithVerificationToken.length} auto doi mails`
-}
-
-exports.passwordReset = async () => {
-  const systemEvents = await dao.systemEventsByType(
-    SystemEvent.Types.passwordResetRequested
-  )
-
-  for (let systemEvent of systemEvents) {
-    const user = await dao.userById(systemEvent.emittedBy)
-
-    await sendPasswordResetMail(user)
-  }
-
-  if (systemEvents.length) {
-    await dao.clearSystemEvents(systemEvents)
-  }
-
-  return `Sent ${systemEvents.length} password reset mails`
 }
 
 exports.eventNotifications = async () => {

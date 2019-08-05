@@ -1,4 +1,4 @@
-const { error, logger } = require("@dk3/logger")
+const { error } = require("@dk3/logger")
 const { connect, resetConnect, cron } = require("@dk3/db")
 
 const { sendJson } = require("@dk3/api-utils")
@@ -10,7 +10,6 @@ module.exports = async (_req, res) => {
   let connection
 
   try {
-    logger("connecting")
     /* Establish database connection */
     connection = await connect()
   } catch (err) {
@@ -22,7 +21,6 @@ module.exports = async (_req, res) => {
 
   /* Initially set up cron jobs */
   if (!cronJobsSetUp) {
-    logger("setup")
     try {
       await cron.setup()
       // eslint-disable-next-line require-atomic-updates
@@ -33,10 +31,8 @@ module.exports = async (_req, res) => {
   }
 
   try {
-    logger("runAll")
     const [results, errors] = await cron.runAll()
 
-    logger("close conenction")
     await connection.close()
     resetConnect()
 

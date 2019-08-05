@@ -6,6 +6,7 @@ const db = require("@dk3/db")
 jest.mock("jsonwebtoken")
 jest.mock("@dk3/config")
 jest.mock("@dk3/db")
+jest.mock("@dk3/mailer")
 
 config.get.mockImplementation(key => {
   if (key === "ACCESS_TOKEN_LIFE") {
