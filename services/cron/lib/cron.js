@@ -1,5 +1,5 @@
-const { error } = require("@dk3/logger")
-const { connect, cron } = require("@dk3/db")
+const { error, logger } = require("@dk3/logger")
+const { connect, resetConnect, cron } = require("@dk3/db")
 
 const { sendJson } = require("@dk3/api-utils")
 const queryMissingMessage = "query is missing"
@@ -7,11 +7,22 @@ const queryMissingMessage = "query is missing"
 let cronJobsSetUp = false
 
 module.exports = async (_req, res) => {
-  /* Establish database connection */
-  const connection = await connect()
+  let connection
+
+  try {
+    logger("connecting")
+    /* Establish database connection */
+    connection = await connect()
+  } catch (err) {
+    error(err)
+
+    sendJson(res, 500, { error: "No connection possible" })
+    return
+  }
 
   /* Initially set up cron jobs */
   if (!cronJobsSetUp) {
+    logger("setup")
     try {
       await cron.setup()
       // eslint-disable-next-line require-atomic-updates
@@ -22,9 +33,12 @@ module.exports = async (_req, res) => {
   }
 
   try {
+    logger("runAll")
     const [results, errors] = await cron.runAll()
 
+    logger("close conenction")
     await connection.close()
+    resetConnect()
 
     sendJson(res, 200, {
       status: "ok",
@@ -34,6 +48,9 @@ module.exports = async (_req, res) => {
   } catch (err) {
     error(err)
     sendJson(res, 500, { error: err.message })
+
+    await connection.close()
+    resetConnect()
   }
 }
 

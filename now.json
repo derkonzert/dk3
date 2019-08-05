@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "alias": "derkonzert.de",
   "regions": ["bru1"],
   "env": {
     "JWT_SECRET": "@dk3-jwt-secret",

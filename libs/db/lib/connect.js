@@ -7,7 +7,7 @@ let db
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-exports.reset = () => {
+exports.reset = async () => {
   isConnecting = false
   db = null
 }
