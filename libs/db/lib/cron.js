@@ -10,13 +10,22 @@ exports.createJob = async ({ forceUpdate, ...options }) => {
     const newJob = new CronJob.Model(options)
 
     await newJob.save()
+
     newlySaved = true
   } catch (err) {
-    /* silently fail */
+    if (err.message.search("E11000 duplicate") >= 0) {
+      /* silently fail */
+    } else {
+      error(err)
+    }
   }
 
   if (!newlySaved && forceUpdate) {
-    await CronJob.Model.findOneAndUpdate({ name: options.name }, options)
+    try {
+      await CronJob.Model.findOneAndUpdate({ name: options.name }, options)
+    } catch (err) {
+      error(err)
+    }
   }
 }
 
@@ -42,7 +51,11 @@ exports.cronJobConfigurations = [
 
 exports.setup = async () => {
   for (let config of exports.cronJobConfigurations) {
-    await exports.createJob(config)
+    try {
+      await exports.createJob(config)
+    } catch (err) {
+      error(err)
+    }
   }
 }
 
