@@ -1,6 +1,7 @@
 {
   "version": 2,
   "regions": ["bru1"],
+  "scope": "derkonzert",
   "env": {
     "JWT_SECRET": "@dk3-jwt-secret",
     "SENDGRID_API_KEY": "@dki-sendgrid-api",
