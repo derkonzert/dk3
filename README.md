@@ -4,9 +4,9 @@ This is the monorepo codebase of dk3, a community platform for concerts and othe
 
 **Work in progress &mdash; no release yet.**
 
-[![Build Status](https://travis-ci.org/jkempff/dk3.svg?branch=master)](https://travis-ci.org/jkempff/dk3)
+[![Build Status](https://travis-ci.org/derkonzert/dk3.svg?branch=master)](https://travis-ci.org/jkempff/dk3)
 [![codecov](https://codecov.io/gh/jkempff/dk3/branch/master/graph/badge.svg)](https://codecov.io/gh/jkempff/dk3)
-[![Greenkeeper badge](https://badges.greenkeeper.io/jkempff/dk3.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/derkonzert/dk3.svg)](https://greenkeeper.io/)
 
 ## What is dk3?
 
