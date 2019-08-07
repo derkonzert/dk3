@@ -39,7 +39,7 @@
     "next": "^9.0.2",
     "next-cookies": "^1.1.2",
     "react": "^16.8.4",
-    "react-apollo": "^2.5.2",
+    "react-apollo": "^3.0.0",
     "react-powerplug": "^1.0.0",
     "react-use": "^10.1.0",
     "resize-observer-polyfill": "^1.5.1"
