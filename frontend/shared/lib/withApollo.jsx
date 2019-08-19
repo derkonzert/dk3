@@ -14,6 +14,7 @@ export const login = async ({ token, expiresAt }) => {
 
   cookie.set("token", token, {
     expires,
+    domain: window.location.hostname,
     secure: process.env.NODE_ENV === "production",
   })
 }
@@ -24,13 +25,23 @@ export const logout = () => {
   window.localStorage.setItem("logout", Date.now())
 }
 
+export const getHostname = ctx => {
+  if (process.env.NODE_ENV === "production") {
+    return process.browser ? window.location.host : ctx.req.headers.host
+  } else {
+    return "localhost"
+  }
+}
+
 export const getApiUri = ctx => {
+  const hostname = getHostname(ctx)
+
   if (process.env.NODE_ENV === "production") {
     return process.browser
-      ? `${location.protocol}//${window.location.host}/api`
-      : `https://${ctx.req.headers.host}/api`
+      ? `${location.protocol}//${hostname}/api`
+      : `https://${hostname}/api`
   } else {
-    return "http://localhost:8004/api"
+    return `http://${hostname}:8004/api`
   }
 }
 
