@@ -12,7 +12,7 @@ export const LoginDialog = ({
 }) => (
   <Dialog isOpen={isOpen}>
     <SubTitle>{title}</SubTitle>
-    {!!description && <Description mb={4}>{description}</Description>}
-    <LoginForm mv={3} onLogin={onLogin} onCancel={onCancel} />
+    {!!description && <Description mb="l">{description}</Description>}
+    <LoginForm mv="m" onLogin={onLogin} onCancel={onCancel} />
   </Dialog>
 )

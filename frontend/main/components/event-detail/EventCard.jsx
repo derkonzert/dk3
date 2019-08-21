@@ -41,7 +41,7 @@ const CardText = styled(Text)`
 
 export const EventCard = ({ title, from, location }) => (
   <React.Fragment>
-    <CardTitle mb={4}>{title}</CardTitle>
+    <CardTitle mb="l">{title}</CardTitle>
     <CardText>
       {DateTime.fromISO(from).toLocaleString({
         weekday: "long",

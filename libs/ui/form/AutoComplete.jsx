@@ -53,7 +53,7 @@ const customStyles = theme => ({
   indicatorSeparator: alwaysHidden,
 })
 
-export const AutoComplete = withSpacing({ mb: 3 })(
+export const AutoComplete = withSpacing({ mb: "m" })(
   withTheme(
     ({
       theme,

@@ -89,7 +89,7 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
             <HeaderMenu />
 
             <Header>
-              <LogoTitle mb={3}>derkonzert</LogoTitle>
+              <LogoTitle mb="m">derkonzert</LogoTitle>
               <Slogan>
                 {DK_DESCRIPTION}{" "}
                 <Link passHref href="/pages/about">
@@ -98,13 +98,13 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
               </Slogan>
             </Header>
 
-            <Main pa={4}>
+            <Main pa="l">
               <EventList />
             </Main>
           </CenteredContent>
           <Footer>
             <CenteredContent>
-              <Spacer ph={4}>
+              <Spacer ph="l">
                 <Flex flexDirection="column" alignItems="center">
                   <EventLegend />
                 </Flex>
@@ -113,25 +113,25 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
                   style={{ maxWidth: "45rem", margin: "0 auto", width: "100%" }}
                 >
                   <Title>About derkonzert</Title>
-                  <Text mv={3}>
+                  <Text mv="m">
                     This website is a non-commercial project, that allows
                     enthusiastic concert visitors to curate a list of events for
                     Munich (Germany).
                   </Text>
-                  <Text mv={3}>
+                  <Text mv="m">
                     Its purposes are the discovery of new music, not missing
                     important concerts and enhancing Munichs concert culture.
                   </Text>
-                  <Text mv={3}>
+                  <Text mv="m">
                     All events are maintained manually by its visitors and
                     users.
                   </Text>
-                  <Text mv={3}>
+                  <Text mv="m">
                     The event list is not limited to certain genres or musical
                     styles. Everyone is invited to participate and to
                     contribute.
                   </Text>
-                  <Text mv={3}>
+                  <Text mv="m">
                     Registered users can receive email notifications about
                     updates to the list, bookmark events they would like to
                     visit, and sync those into their calendars.
@@ -139,7 +139,7 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
                   <CurrentUser>
                     {({ isLoggedIn }) =>
                       !isLoggedIn ? (
-                        <Text mv={3}>
+                        <Text mv="m">
                           <Link href="/account/signup" passHref>
                             <UILink>Create an account</UILink>
                           </Link>
@@ -147,7 +147,7 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
                       ) : null
                     }
                   </CurrentUser>
-                  <Text mv={3}>
+                  <Text mv="m">
                     The entire project is open source and{" "}
                     <UILink href="https://github.com/jkempff/dk3">
                       available on github

@@ -111,7 +111,7 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
               <Button
                 disabled={state.loading}
                 type="button"
-                mr={3}
+                mr="m"
                 onClick={onCancel}
               >
                 Cancel
@@ -119,13 +119,13 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
             )}
             <VeryFancyButton
               disabled={state.loading}
-              ml={onCancel ? 3 : 0}
+              ml={onCancel ? "m" : "none"}
               type="submit"
             >
               Login
             </VeryFancyButton>
           </div>
-          <Spacer mt={3} style={{ textAlign: "center" }}>
+          <Spacer mt="m" style={{ textAlign: "center" }}>
             <Link href="/account/signup">
               <UILink>
                 <Small>{"I don't have an account yet"}</Small>

@@ -16,7 +16,7 @@ export const Area = styled.textarea`
   resize: none;
 `
 
-export const TextArea = withSpacing({ mb: 3 })(
+export const TextArea = withSpacing({ mb: "m" })(
   ({
     label,
     valid,

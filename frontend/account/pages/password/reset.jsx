@@ -95,7 +95,7 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
             ) : (
               <React.Fragment>
                 <TextInput
-                  mv={3}
+                  mv="m"
                   type="password"
                   name="password"
                   error={state.passwordError}
@@ -107,7 +107,7 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
                   }}
                 />
                 <TextInput
-                  mv={3}
+                  mv="m"
                   type="password"
                   name="password-repeat"
                   error={state.passwordRepeatError}

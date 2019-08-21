@@ -39,13 +39,13 @@ export const UPDATE_CALENDAR_TOKEN = gql`
 export default function UpdateCalendarSettingForm() {
   return (
     <SentryErrorBoundary>
-      <ListTitle mb={2}>Calendar Integration</ListTitle>
-      <Text mv={3}>
+      <ListTitle mb="s">Calendar Integration</ListTitle>
+      <Text mv="m">
         {
           "With this integration, you can have all events that you've bookmarked here, synced into your calendar."
         }
       </Text>
-      <Hr mv={4} />
+      <Hr mv="l" />
       <Query query={USER_DATA}>
         {({ loading, error, data }) => {
           if (error) {
@@ -108,31 +108,27 @@ export default function UpdateCalendarSettingForm() {
                         {data.me.calendarToken ? (
                           <React.Fragment>
                             <SubTitle>Setup</SubTitle>
-                            <Text mv={3}>
+                            <Text mv="m">
                               Try clicking the following button, to integrate
                               the derkonzert calendar subscription with your
                               calendar setup
                             </Text>
                             <VeryFancyLink
-                              href={`webcal://derkonzert.de/webcal/${
-                                data.me.calendarToken
-                              }.ics`}
+                              href={`webcal://derkonzert.de/webcal/${data.me.calendarToken}.ics`}
                             >
                               Integrate Into Calendar App
                             </VeryFancyLink>
 
-                            <Text mv={3}>
+                            <Text mv="m">
                               Or copy the following url and use your calendars
                               add subscription feature:
                             </Text>
 
                             <TextArea
-                              mb={0}
+                              mb="none"
                               readOnly
                               rows={5}
-                              value={`webcal://derkonzert.de/webcal/${
-                                data.me.calendarToken
-                              }.ics`}
+                              value={`webcal://derkonzert.de/webcal/${data.me.calendarToken}.ics`}
                               onFocus={e => {
                                 try {
                                   e.target.setSelectionRange(
@@ -145,7 +141,7 @@ export default function UpdateCalendarSettingForm() {
                               }}
                             />
 
-                            <Text mb={3}>
+                            <Text mb="m">
                               <Small>
                                 {
                                   "This is your personal URL, don't give it to anyone."
@@ -153,8 +149,8 @@ export default function UpdateCalendarSettingForm() {
                               </Small>
                             </Text>
 
-                            <SubTitle mt={5}>Disable Integration</SubTitle>
-                            <Text mv={3}>
+                            <SubTitle mt="xl">Disable Integration</SubTitle>
+                            <Text mv="m">
                               Note that you will have to setup your calendar
                               completely new, if it was disabled for once
                             </Text>

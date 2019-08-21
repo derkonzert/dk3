@@ -19,7 +19,7 @@ const Outer = styled.div`
     `}
 `
 
-export const BaseBox = withSpacing({ mv: 3 })(
+export const BaseBox = withSpacing({ mv: "m" })(
   ({ children, fancyLevel = 0, ...props }) => (
     <Outer fancyLevel={fancyLevel} {...props}>
       {children}
@@ -27,14 +27,14 @@ export const BaseBox = withSpacing({ mv: 3 })(
   )
 )
 
-export const Box = withSpacing({ mv: 3 })(({ ...props }) => (
+export const Box = withSpacing({ mv: "m" })(({ ...props }) => (
   <BaseBox {...props} />
 ))
 
-export const FancyBox = withSpacing({ mv: 3 })(({ ...props }) => (
+export const FancyBox = withSpacing({ mv: "m" })(({ ...props }) => (
   <BaseBox fancyLevel={1} {...props} />
 ))
 
-export const SuperFancyBox = withSpacing({ mv: 3 })(({ ...props }) => (
+export const SuperFancyBox = withSpacing({ mv: "m" })(({ ...props }) => (
   <BaseBox fancyLevel={2} {...props} />
 ))

@@ -62,7 +62,7 @@ export const InputFeedback = styled.div`
     isError ? theme.colors.inputError : theme.colors.inputSuccess};
 `
 
-export const TextInput = withSpacing({ mb: 3 })(
+export const TextInput = withSpacing({ mb: "m" })(
   React.forwardRef(
     (
       {

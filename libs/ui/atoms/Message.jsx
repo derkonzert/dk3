@@ -8,22 +8,22 @@ const Base = styled.div`
   border-radius: 2px;
 `
 
-export const Message = withSpacing({ pv: 2, ph: 3 })(styled(Base)`
+export const Message = withSpacing({ pv: "s", ph: "m" })(styled(Base)`
   color: ${({ theme }) => theme.colors.messageColor};
   background-color: ${({ theme }) => theme.colors.messageBackground};
 `)
 
-export const SuccessMessage = withSpacing({ pv: 2, ph: 3 })(styled(Base)`
+export const SuccessMessage = withSpacing({ pv: "s", ph: "m" })(styled(Base)`
   color: ${({ theme }) => theme.colors.messageColorSuccess};
   background-color: ${({ theme }) => theme.colors.messageBackgroundSuccess};
 `)
 
-export const ErrorMessage = withSpacing({ pv: 2, ph: 3 })(styled(Base)`
+export const ErrorMessage = withSpacing({ pv: "s", ph: "m" })(styled(Base)`
   color: ${({ theme }) => theme.colors.messageColorError};
   background-color: ${({ theme }) => theme.colors.messageBackgroundError};
 `)
 
-export const WarningMessage = withSpacing({ pv: 2, ph: 3 })(styled(Base)`
+export const WarningMessage = withSpacing({ pv: "s", ph: "m" })(styled(Base)`
   color: ${({ theme }) => theme.colors.messageColorWarning};
   background-color: ${({ theme }) => theme.colors.messageBackgroundWarning};
 `)

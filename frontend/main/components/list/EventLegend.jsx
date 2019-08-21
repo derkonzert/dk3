@@ -21,16 +21,16 @@ export const FancyFilling = styled.div(({ theme }) => ({
 }))
 
 export const EventLegend = () => (
-  <Wrapper mb={6} data-legend>
+  <Wrapper mb="xxl" data-legend>
     <Description>
       <Square>
-        <Box mv={2}>&nbsp;</Box>
+        <Box mv="s">&nbsp;</Box>
       </Square>
       Some users saved the event
     </Description>
     <Description>
       <Square>
-        <FancyBox mv={2}>
+        <FancyBox mv="s">
           <FancyFilling>&nbsp;</FancyFilling>
         </FancyBox>
       </Square>
@@ -38,7 +38,7 @@ export const EventLegend = () => (
     </Description>
     <Description>
       <Square>
-        <SuperFancyBox mv={2}>&nbsp;</SuperFancyBox>
+        <SuperFancyBox mv="s">&nbsp;</SuperFancyBox>
       </Square>
       Almost every user saved the event
     </Description>

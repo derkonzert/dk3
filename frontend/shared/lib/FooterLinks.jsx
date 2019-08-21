@@ -4,8 +4,8 @@ import { FooterLink, FooterCheckbox } from "@dk3/ui/components/Footer"
 
 export const FooterLinks = ({ themeName, onThemeChange }) => (
   <Flex
-    mt={5}
-    mh={8}
+    mt="xl"
+    mh="auto"
     basis="100%"
     flexDirection="row"
     alignItems="center"
@@ -27,7 +27,7 @@ export const FooterLinks = ({ themeName, onThemeChange }) => (
     {!!(themeName && onThemeChange) && (
       <Flex basis="auto" grow="0.2" justifyContent="center">
         <FooterCheckbox
-          mv={0}
+          mv="none"
           label="Dark Mode"
           checked={themeName === "dark"}
           onChange={onThemeChange}

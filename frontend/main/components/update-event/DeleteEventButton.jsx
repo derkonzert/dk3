@@ -48,14 +48,14 @@ export const DeleteEventButton = ({ eventId, onClick, children, ...props }) => {
                 </DeleteButton>
                 <Dialog isOpen={showConfirmation}>
                   <Title>Delete event?</Title>
-                  <Text mb={3}>
+                  <Text mb="m">
                     Are you sure about this? It cannot be undone.
                   </Text>
                   <Flex>
-                    <Button mr={2} onClick={() => setShowConfirmation(false)}>
+                    <Button mr="s" onClick={() => setShowConfirmation(false)}>
                       Cancel
                     </Button>
-                    <VeryFancyButton ml={2} onClick={deleteEvent}>
+                    <VeryFancyButton ml="s" onClick={deleteEvent}>
                       Yes, Delete!
                     </VeryFancyButton>
                   </Flex>

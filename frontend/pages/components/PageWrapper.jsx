@@ -14,7 +14,7 @@ const PageContenWrapper = styled.main`
 `
 
 export const PageWrapper = ({ children }) => (
-  <Spacer mv={5}>
+  <Spacer mv="xl">
     <Global styles={global} />
     <PageContenWrapper>{children}</PageContenWrapper>
   </Spacer>
