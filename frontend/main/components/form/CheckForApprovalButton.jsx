@@ -28,7 +28,7 @@ export const CheckForApprovalButton = ({ eventId, children, ...props }) => (
               return <ErrorMessage>Error loading event data</ErrorMessage>
             }
             if (loading) {
-              return <Spinner pv={6}>Loading</Spinner>
+              return <Spinner pv="xxl">Loading</Spinner>
             }
 
             const { event } = data

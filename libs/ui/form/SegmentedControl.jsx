@@ -72,7 +72,7 @@ export const Label = styled.label`
   margin: 0 0.3rem;
 `
 
-export const SegmentedControl = withSpacing({ mv: 3 })(
+export const SegmentedControl = withSpacing({ mv: "m" })(
   ({ children, value, name, className, onChange, label, ...props }) => (
     <div className={className}>
       {label && <Label>{label}</Label>}

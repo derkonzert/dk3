@@ -3,7 +3,11 @@ import styled from "@emotion/styled"
 import { withSpacing } from "../utils/withSpacing"
 import { Checkbox } from "../form/Checkbox"
 
-export const Footer = withSpacing({ pt: 5, pb: 6, ph: 3 })(styled.footer`
+export const Footer = withSpacing({
+  pt: "xl",
+  pb: "xxl",
+  ph: "m",
+})(styled.footer`
   background: linear-gradient(
     ${({ theme }) => theme.colors.siteBackground},
     ${({ theme }) => theme.colors.detailBackground}

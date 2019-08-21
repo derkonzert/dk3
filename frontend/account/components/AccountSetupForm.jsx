@@ -108,17 +108,17 @@ export const AccountSetupForm = withRouter(({ router }) => {
                     >
                       {step === 0 && (
                         <React.Fragment key="welcome">
-                          <Title mt={4}>Congratulations!</Title>
+                          <Title mt="l">Congratulations!</Title>
 
-                          <Text mv={3}>
+                          <Text mv="m">
                             Your new account is now ready to use! There are a
                             few settings, that you might want to have a quick
                             look at.
                           </Text>
                           <VeryFancyButton
-                            pv={3}
-                            ph={4}
-                            mv={2}
+                            pv="m"
+                            ph="l"
+                            mv="s"
                             onClick={() => nextStep()}
                           >
                             {"Setup my account!"}
@@ -128,16 +128,16 @@ export const AccountSetupForm = withRouter(({ router }) => {
 
                       {step === 1 && (
                         <React.Fragment key="bookmarking">
-                          <Title mt={4}>Auto-Bookmarking</Title>
+                          <Title mt="l">Auto-Bookmarking</Title>
 
-                          <Text mt={3} mb={4}>
+                          <Text mt="m" mb="l">
                             When you add an event to the derkonzert list, would
                             like us to automatically bookmark it for you?
                           </Text>
 
                           <Button
                             disabled={state.submitting}
-                            mh={2}
+                            mh="s"
                             onClick={() => saveChanges("autoBookmark", false)}
                           >
                             No thanks
@@ -145,7 +145,7 @@ export const AccountSetupForm = withRouter(({ router }) => {
 
                           <VeryFancyButton
                             disabled={state.submitting}
-                            mv={2}
+                            mv="s"
                             onClick={() => saveChanges("autoBookmark", true)}
                           >
                             Yes please!
@@ -154,9 +154,9 @@ export const AccountSetupForm = withRouter(({ router }) => {
                       )}
                       {step === 2 && (
                         <React.Fragment key="notify">
-                          <Title mt={4}>Notifications</Title>
+                          <Title mt="l">Notifications</Title>
 
-                          <Text mt={3} mb={4}>
+                          <Text mt="m" mb="l">
                             Do you want us to send you an email, when new events
                             have been added, or one of your bookmarked events
                             changed?
@@ -164,7 +164,7 @@ export const AccountSetupForm = withRouter(({ router }) => {
 
                           <Button
                             disabled={state.submitting}
-                            mh={2}
+                            mh="s"
                             onClick={() => saveChanges("sendEmails", false)}
                           >
                             No thanks
@@ -172,7 +172,7 @@ export const AccountSetupForm = withRouter(({ router }) => {
 
                           <VeryFancyButton
                             disabled={state.submitting}
-                            mv={2}
+                            mv="s"
                             onClick={() => saveChanges("sendEmails", true)}
                           >
                             Yes please!
@@ -182,9 +182,9 @@ export const AccountSetupForm = withRouter(({ router }) => {
 
                       {step === 3 && (
                         <React.Fragment key="username">
-                          <Title mt={4}>Public Username</Title>
+                          <Title mt="l">Public Username</Title>
 
-                          <Text mt={3} mb={4}>
+                          <Text mt="m" mb="l">
                             Would you like to have your username displayed
                             publically next to events that you have added, or
                             bookmarked?
@@ -192,7 +192,7 @@ export const AccountSetupForm = withRouter(({ router }) => {
 
                           <Button
                             disabled={state.submitting}
-                            mh={2}
+                            mh="s"
                             onClick={() => saveChanges("publicUsername", false)}
                           >
                             No thanks
@@ -200,7 +200,7 @@ export const AccountSetupForm = withRouter(({ router }) => {
 
                           <VeryFancyButton
                             disabled={state.submitting}
-                            mv={2}
+                            mv="s"
                             onClick={() => saveChanges("publicUsername", true)}
                           >
                             Yes please!
@@ -210,9 +210,9 @@ export const AccountSetupForm = withRouter(({ router }) => {
 
                       {step === 4 && (
                         <React.Fragment key="finished">
-                          <Title mt={4}>All setup!</Title>
+                          <Title mt="l">All setup!</Title>
 
-                          <Text mt={3} mb={4}>
+                          <Text mt="m" mb="l">
                             And that was that. You did great! If you change your
                             mind, you can always update your settings on the
                             <Link href="/" as="/account/" passHref>
@@ -221,7 +221,7 @@ export const AccountSetupForm = withRouter(({ router }) => {
                             .
                           </Text>
 
-                          <VeryFancyLink pv={3} ph={4} href="/">
+                          <VeryFancyLink pv="m" ph="l" href="/">
                             Go to derkonzert
                           </VeryFancyLink>
                         </React.Fragment>

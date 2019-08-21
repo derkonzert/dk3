@@ -8,13 +8,13 @@ export default function SignUpSuccess() {
     <SentryErrorBoundary>
       <ListTitle>🎉 Success!</ListTitle>
 
-      <Text mb={4}>
+      <Text mb="l">
         We created your account and sent you and{" "}
         <Strong>activation email</Strong>. Now it is your turn, to go check your
         E-Mails and open that activation link.
       </Text>
 
-      <Text mb={3}>
+      <Text mb="m">
         It may take up to 5 minutes to send you this email.
         <br />
         And please also check your spam.

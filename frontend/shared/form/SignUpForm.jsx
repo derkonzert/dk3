@@ -132,11 +132,11 @@ export const SignUpForm = withApollo(({ onSignUp, onCancel }) => {
       />
       <div style={{ display: "flex" }}>
         {!!onCancel && (
-          <Button type="button" mr={3} onClick={onCancel}>
+          <Button type="button" mr="m" onClick={onCancel}>
             Cancel
           </Button>
         )}
-        <FancyButton ml={onCancel ? 3 : 0} type="submit">
+        <FancyButton ml={onCancel ? "m" : "none"} type="submit">
           Sign Up
         </FancyButton>
       </div>

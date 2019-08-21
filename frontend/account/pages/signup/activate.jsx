@@ -58,7 +58,7 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
       )}
       {status === "success" && (
         <React.Fragment>
-          <Text mb={4}>
+          <Text mb="l">
             Congratulations,
             <br />
             your account is now ready to use!

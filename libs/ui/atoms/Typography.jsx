@@ -78,7 +78,7 @@ export const ListTitleAppendix = styled.span`
   color: ${({ theme }) => theme.colors.titleAppendix};
 `
 
-export const Hr = withSpacing({ mv: 3 })(styled.hr`
+export const Hr = withSpacing({ mv: "m" })(styled.hr`
   border: 0 none;
   height: 1px;
   background-color: ${({ theme }) => theme.colors.hr};

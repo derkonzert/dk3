@@ -22,7 +22,7 @@ export const Label = styled.span`
   flex: 1 1 auto;
 `
 
-export const Checkbox = withSpacing({ mv: 3 })(
+export const Checkbox = withSpacing({ mv: "m" })(
   ({ label, error, description, name, className, checked, ...props }) => (
     <div className={className}>
       <Fill>

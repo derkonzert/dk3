@@ -69,7 +69,7 @@ export const EventDetail = ({ id, showMine }) => {
     <Query query={EVENT_DETAIL} variables={{ id }}>
       {({ loading, error, data }) => {
         if (error) return <ErrorMessage>Error loading event data</ErrorMessage>
-        if (loading) return <Spinner pv={6}>Loading</Spinner>
+        if (loading) return <Spinner pv="xxl">Loading</Spinner>
         const { event } = data
 
         if (!event) {
@@ -117,12 +117,12 @@ export const EventDetail = ({ id, showMine }) => {
                 href={`https://derkonzert.de${eventHref(event)}`}
               />
             </Head>
-            <MegaTitle data-event-title mr={5} mb={3}>
+            <MegaTitle data-event-title mr="xl" mb="m">
               {event.title}
             </MegaTitle>
 
             {(event.postponed || event.canceled) && (
-              <ErrorMessage mv={2}>
+              <ErrorMessage mv="s">
                 {event.canceled
                   ? "This has been canceled."
                   : "The event has been postponed."}
@@ -137,7 +137,7 @@ export const EventDetail = ({ id, showMine }) => {
               <ListAndDetailClose title="Close detail page" />
             </Link>
             {!event.approved && (
-              <Spacer mb={2} style={{ color: "red" }}>
+              <Spacer mb="s" style={{ color: "red" }}>
                 Event has not yet been checked for validity
               </Spacer>
             )}
@@ -187,10 +187,10 @@ export const EventDetail = ({ id, showMine }) => {
                     <React.Fragment>
                       {!event.approved && hasSkill(user, "APPROVE_EVENT") && (
                         <React.Fragment>
-                          <CheckForApprovalButton ml={2} eventId={event.id}>
+                          <CheckForApprovalButton ml="s" eventId={event.id}>
                             Check for Approval
                           </CheckForApprovalButton>
-                          <ApproveEventButton ml={2} eventId={event.id}>
+                          <ApproveEventButton ml="s" eventId={event.id}>
                             Approve
                           </ApproveEventButton>
                         </React.Fragment>
@@ -202,7 +202,7 @@ export const EventDetail = ({ id, showMine }) => {
                           as={`/update-event/${event.id}`}
                           passHref
                         >
-                          <ButtonLink ml={2}>Edit</ButtonLink>
+                          <ButtonLink ml="s">Edit</ButtonLink>
                         </Link>
                       )}
                     </React.Fragment>
@@ -212,7 +212,7 @@ export const EventDetail = ({ id, showMine }) => {
             </Flex>
             <Hr />
             {event.description ? (
-              <Spacer mv={2}>
+              <Spacer mv="s">
                 <RichText value={event.description} />
               </Spacer>
             ) : (
@@ -221,10 +221,10 @@ export const EventDetail = ({ id, showMine }) => {
             {!!event.url && (
               <React.Fragment>
                 <Hr />
-                <Spacer mt={4}>
+                <Spacer mt="l">
                   <VeryFancyLink
-                    ph={4}
-                    pv={3}
+                    ph="l"
+                    pv="m"
                     href={event.url}
                     target="_blank"
                     rel="noopener noreferrer"

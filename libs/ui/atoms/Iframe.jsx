@@ -32,7 +32,7 @@ export const Iframe = ({ src, id }) => {
           />
         ) : (
           <ShowEmbedWarning>
-            <Button ph={3} pv={3} mb={2} onClick={() => setShowEmbeded(true)}>
+            <Button ph="m" pv="m" mb="s" onClick={() => setShowEmbeded(true)}>
               Click, to load content from {getHostName(src)}
             </Button>
 

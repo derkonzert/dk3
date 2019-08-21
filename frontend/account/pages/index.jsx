@@ -10,15 +10,15 @@ import { UpdateSelfForm } from "../components/UpdateSelfForm"
 export default function Index({ isLoggedIn }) {
   return (
     <SentryErrorBoundary>
-      <ListTitle mb={3}>Settings</ListTitle>
+      <ListTitle mb="m">Settings</ListTitle>
 
       {isLoggedIn ? (
         <React.Fragment>
-          <Text mv={3}>
+          <Text mv="m">
             This is the place for all available account settings, so you can
             adjust derkonzert to the way you like it.
           </Text>
-          <Hr mv={4} />
+          <Hr mv="l" />
           <UpdateSelfForm />
         </React.Fragment>
       ) : (

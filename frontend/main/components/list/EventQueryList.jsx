@@ -60,7 +60,7 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
     >
       {({ loading, error, data }) => {
         if (error) return <span>Error loading posts.</span>
-        if (loading) return <Spinner mt={5} mb={7} />
+        if (loading) return <Spinner mt="xl" mb="xxxl" />
 
         const { upcomingEvents } = data
 
@@ -198,7 +198,7 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
               )
             })}
             <Link href="/?addEvent=1" as="/add-new-event" passHref>
-              <AddEventButton data-add-event pa={4} title="Add a new event">
+              <AddEventButton data-add-event pa="l" title="Add a new event">
                 +
               </AddEventButton>
             </Link>

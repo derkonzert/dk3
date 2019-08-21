@@ -13,7 +13,7 @@ export default function Index() {
     <SentryErrorBoundary>
       <ListTitle>Password Reset</ListTitle>
       {emailSent ? (
-        <Text mv={4}>
+        <Text mv="l">
           If an account exists with this email, we sent you an email with a link
           to reset your password.
           <br />
@@ -56,7 +56,7 @@ export default function Index() {
             >
               <Text>Request an email with a password reset link.</Text>
               <TextInput
-                mv={3}
+                mv="m"
                 type="email"
                 label="Email Address"
                 value={state.email}

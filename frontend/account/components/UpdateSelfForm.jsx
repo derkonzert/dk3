@@ -139,14 +139,14 @@ const Form = ({ data, onCreated }) => {
             }}
           >
             {showSuccess && formState.username === data.me.username && (
-              <SuccessMessage mb={3}>
+              <SuccessMessage mb="m">
                 All changes have been saved
               </SuccessMessage>
             )}
 
-            <SubTitle mt={4}>Notifications:</SubTitle>
+            <SubTitle mt="l">Notifications:</SubTitle>
 
-            <Text mv={3}>
+            <Text mv="m">
               We would like to notify you, when new events arrive, one of your
               bookmarked events changes, or gets canceled.
             </Text>
@@ -163,8 +163,8 @@ const Form = ({ data, onCreated }) => {
               label="Send me emails to inform me about events and updates"
             />
 
-            <SubTitle mt={4}>Privacy:</SubTitle>
-            <Text mv={3}>
+            <SubTitle mt="l">Privacy:</SubTitle>
+            <Text mv="m">
               If you like, your username can be shown on the detail page of an
               event that {"you've"} added or bookmarked.
             </Text>
@@ -181,9 +181,9 @@ const Form = ({ data, onCreated }) => {
               label="Show my username publically on events I added or bookmarked"
             />
 
-            <SubTitle mt={4}>Convenience:</SubTitle>
+            <SubTitle mt="l">Convenience:</SubTitle>
 
-            <Text mv={3}>
+            <Text mv="m">
               Bookmark events that you add yourself by default.
             </Text>
             <Checkbox
@@ -197,8 +197,8 @@ const Form = ({ data, onCreated }) => {
               }}
               label="Automatically bookmark events that you add yourself"
             />
-            <SubTitle mt={4}>Your Account:</SubTitle>
-            <Text mv={3}>
+            <SubTitle mt="l">Your Account:</SubTitle>
+            <Text mv="m">
               Your email address currently can not be changed. If you need to
               change it, please contact us via email.
             </Text>
@@ -226,7 +226,7 @@ const Form = ({ data, onCreated }) => {
             <FancyButton
               type="submit"
               block
-              mb={4}
+              mb="l"
               disabled={formState.username === data.me.username}
             >
               Save new username

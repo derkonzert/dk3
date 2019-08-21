@@ -208,10 +208,10 @@ export const CreateEventForm = ({ onCreated }) => {
                             })
                           }}
                         >
-                          <MegaTitle mr={5} mb={3}>
+                          <MegaTitle mr="xl" mb="m">
                             Create New Event
                           </MegaTitle>
-                          <Text mb={4}>
+                          <Text mb="l">
                             {
                               "Add a concert to the list, so that others don't miss it."
                             }
@@ -222,7 +222,7 @@ export const CreateEventForm = ({ onCreated }) => {
                           </Link>
 
                           {!!state.formError && (
-                            <ErrorMessage mv={3}>
+                            <ErrorMessage mv="m">
                               {state.formError}
                             </ErrorMessage>
                           )}
@@ -238,7 +238,7 @@ export const CreateEventForm = ({ onCreated }) => {
                           />
 
                           <AutoComplete
-                            mb={3}
+                            mb="m"
                             name="location"
                             value={{
                               name: state.location,
@@ -281,13 +281,13 @@ export const CreateEventForm = ({ onCreated }) => {
                             }}
                             dateLabel="Event Date"
                             timeLabel="Door time"
-                            mb={2}
+                            mb="s"
                             disabled={state.isSaving}
                           />
 
                           <Checkbox
-                            mt={0}
-                            mb={2}
+                            mt="none"
+                            mb="s"
                             label="It's a festival or it lasts more than one day"
                             type="checkbox"
                             onChange={() =>
@@ -304,14 +304,14 @@ export const CreateEventForm = ({ onCreated }) => {
                               onChange={(event, to) => setState({ to })}
                               dateLabel="Event End Date"
                               timeLabel="Time"
-                              mb={3}
+                              mb="m"
                               disabled={state.isSaving}
                             />
                           )}
 
                           <TextArea
-                            mt={4}
-                            mb={1}
+                            mt="l"
+                            mb="xs"
                             value={state.description}
                             name="description"
                             description="optional"
@@ -322,13 +322,13 @@ export const CreateEventForm = ({ onCreated }) => {
                             rows={4}
                             disabled={state.isSaving}
                           />
-                          <InputDescription mb={3}>
+                          <InputDescription mb="m">
                             Youtube, Vimeo and Spotify links will be embedded
                             automatically
                           </InputDescription>
 
                           <TextInput
-                            mb={1}
+                            mb="xs"
                             value={state.url}
                             name="url"
                             description="optional"
@@ -337,27 +337,27 @@ export const CreateEventForm = ({ onCreated }) => {
                             disabled={state.isSaving}
                             autoComplete="off"
                           />
-                          <InputDescription mb={3}>
+                          <InputDescription mb="m">
                             This can speed-up the verification of your event
                           </InputDescription>
 
-                          <Text mv={4}>
+                          <Text mv="l">
                             {`After the new event is saved, it will be visible to
                       all visitors immediately, and another user will double-check everything later,
                       to make sure all information is correct.`}
                           </Text>
 
                           <Flex
-                            mb={6}
+                            mb="xxl"
                             alignItems="center"
                             justifyContent="flex-start"
                             wrap="wrap"
                           >
                             <Flex grow={0}>
                               <VeryFancyButton
-                                ph={4}
-                                pv={3}
-                                mr={4}
+                                ph="l"
+                                pv="m"
+                                mr="l"
                                 type="submit"
                                 style={{ whiteSpace: "nowrap" }}
                                 disabled={state.isSaving}
@@ -367,7 +367,7 @@ export const CreateEventForm = ({ onCreated }) => {
                             </Flex>
                             {!!data.me && (
                               <Checkbox
-                                mv={2}
+                                mv="s"
                                 label={"Auto-Bookmark this event"}
                                 type="checkbox"
                                 onChange={() =>

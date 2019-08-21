@@ -56,7 +56,7 @@ export const ARCHIVED_EVENTS = gql`
 
 export const ArchiveList = () => {
   return (
-    <Spacer ma={5}>
+    <Spacer ma="xl">
       <MegaTitle>Archiv</MegaTitle>
       <Query
         query={ARCHIVED_EVENTS}
@@ -89,7 +89,7 @@ export const ArchiveList = () => {
                     <ListTitle>
                       {dt.toLocaleString({ month: "long", year: "numeric" })}
                     </ListTitle>
-                    <Flex mv={3} wrap="wrap">
+                    <Flex mv="m" wrap="wrap">
                       {group.events.map(event => (
                         <BoxLink
                           key={event.id}
@@ -97,7 +97,7 @@ export const ArchiveList = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <Box pa={2} mt={0} mb={2} mr={2}>
+                          <Box pa="s" mt="none" mb="s" mr="s">
                             <Text>{event.title}</Text>
                           </Box>
                         </BoxLink>
@@ -136,7 +136,7 @@ export const ArchiveList = () => {
                     }
                   }}
                 >
-                  <Spacer pv={5}>
+                  <Spacer pv="xl">
                     <Flex flexDirection="column" alignItems="center">
                       <Spinner />
                       <Flex>

@@ -14,11 +14,11 @@ const Position = styled.div`
 
 export const CookieConsent = ({ children, onClick }) => (
   <Position>
-    <Box pa={3}>
+    <Box pa="m">
       <Flex grow={1}>
         <Flex grow={1}>{children}</Flex>
         <Flex grow={0}>
-          <FancyButton onClick={onClick} ph={5}>
+          <FancyButton onClick={onClick} ph="xl">
             Ok
           </FancyButton>
         </Flex>

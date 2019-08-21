@@ -76,27 +76,27 @@ const FormStatus = ({ status, message }) => {
   return (
     <React.Fragment>
       {status === FormStatus.UNTOUCHED && (
-        <Message ref={ref} mb={3}>
+        <Message ref={ref} mb="m">
           All up to date.
         </Message>
       )}
       {status === FormStatus.TOUCHED && (
-        <WarningMessage ref={ref} mb={3}>
+        <WarningMessage ref={ref} mb="m">
           Unsaved changes.
         </WarningMessage>
       )}
       {status === FormStatus.SUCCESS && (
-        <SuccessMessage ref={ref} mb={3}>
+        <SuccessMessage ref={ref} mb="m">
           All changes have been saved
         </SuccessMessage>
       )}
       {status === FormStatus.ERROR && (
-        <ErrorMessage ref={ref} mb={3}>
+        <ErrorMessage ref={ref} mb="m">
           {message}
         </ErrorMessage>
       )}
       {status === FormStatus.SAVING && (
-        <Message ref={ref} mb={3}>
+        <Message ref={ref} mb="m">
           …saving changes.
         </Message>
       )}
@@ -245,7 +245,7 @@ export const UpdateEventForm = withRouter(({ id }) => {
                         }
 
                         return (
-                          <Spacer pa={4}>
+                          <Spacer pa="l">
                             <form
                               data-add-event-form
                               onSubmit={e => {
@@ -259,7 +259,7 @@ export const UpdateEventForm = withRouter(({ id }) => {
                                 href={`/?eventId=${data.event.id}`}
                                 as={eventHref(data.event)}
                               >
-                                <ButtonLink mb={4} block>
+                                <ButtonLink mb="l" block>
                                   Back
                                 </ButtonLink>
                               </Link>
@@ -412,7 +412,7 @@ export const UpdateEventForm = withRouter(({ id }) => {
                                 rows={5}
                               />
 
-                              <Flex mv={4} justifyContent="center">
+                              <Flex mv="l" justifyContent="center">
                                 <Flex grow={0}>
                                   <DeleteEventButton
                                     eventId={data.event.id}
@@ -425,7 +425,7 @@ export const UpdateEventForm = withRouter(({ id }) => {
                                 </Flex>
                               </Flex>
 
-                              <FancyButton type="submit" block pa={3} mb={3}>
+                              <FancyButton type="submit" block pa="m" mb="m">
                                 Save changes
                               </FancyButton>
 
@@ -434,7 +434,7 @@ export const UpdateEventForm = withRouter(({ id }) => {
                                 href={`/?eventId=${data.event.id}`}
                                 as={eventHref(data.event)}
                               >
-                                <ButtonLink mb={4} block>
+                                <ButtonLink mb="l" block>
                                   Back
                                 </ButtonLink>
                               </Link>

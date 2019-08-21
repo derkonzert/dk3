@@ -20,8 +20,8 @@ export const QueryWithAuthentication = ({
       if (required && !data.me) {
         return (
           <div style={{ maxWidth: "36rem", margin: "5rem auto" }}>
-            <Title mt={3}>Login required</Title>
-            <Text mb={3}>{notLoggedInMessage}</Text>
+            <Title mt="m">Login required</Title>
+            <Text mb="m">{notLoggedInMessage}</Text>
             <LoginForm />
           </div>
         )

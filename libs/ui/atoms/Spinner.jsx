@@ -88,7 +88,7 @@ const Inner = styled.div`
   animation: ${zoom} 4.4s cubic-bezier(0, 0, 0.2, 1) infinite;
 `
 
-export const Spinner = withSpacing({ pa: 4 })(props => (
+export const Spinner = withSpacing({ pa: "l" })(props => (
   <Spacer {...props}>
     <Outer>
       <Inner />
