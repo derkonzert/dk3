@@ -3,7 +3,8 @@ import React from "react"
 import { mount } from "enzyme"
 import { matchers } from "jest-emotion"
 
-import { withSpacing, spacings, mapPropsToStyles } from "./withSpacing"
+import { withSpacing, mapPropsToStyles } from "./withSpacing"
+import { spacings } from "../theme/tokens"
 
 expect.extend(matchers)
 
@@ -47,19 +48,19 @@ describe("withSpacing", () => {
         const shortcutCombination = `${shortcut}${combinationName}`
 
         it(`handles "${shortcutCombination}" correctly`, () => {
-          spacings.forEach((spacing, index) =>
+          Object.keys(spacings).forEach(spacingName =>
             expect(
               mapPropsToStyles({
-                [`${shortcutCombination}`]: index,
+                [`${shortcutCombination}`]: spacingName,
               })
             ).toEqual(
               expect.objectContaining(
                 directionCombinations[combinationName].reduce(
                   (style, direction) => ({
                     ...style,
-                    [`${propertyShortcuts[shortcut]}${
-                      directions[direction]
-                    }`]: spacings[index],
+                    [`${propertyShortcuts[shortcut]}${directions[direction]}`]: spacings[
+                      spacingName
+                    ],
                   }),
                   {}
                 )
