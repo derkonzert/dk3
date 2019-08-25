@@ -37,7 +37,7 @@ exports.eventNotifications = async () => {
   )
 
   if (!systemEvents.length) {
-    return sentMessage()
+    return { message: sentMessage() }
   }
 
   const addedEvents = await dao.eventsByIds(
@@ -50,7 +50,7 @@ exports.eventNotifications = async () => {
   })
 
   if (!addedEventsWithoutArchived.length) {
-    return sentMessage()
+    return { message: sentMessage() }
   }
 
   const users = await dao.usersWithSendEmail()
