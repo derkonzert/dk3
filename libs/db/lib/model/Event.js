@@ -2,6 +2,8 @@ const mongoose = require("mongoose")
 const shortid = require("./shortid")
 const { DateTime } = require("luxon")
 
+mongoose.set("useCreateIndex", true)
+
 const schemaDefinition = {
   shortId: {
     type: String,

@@ -60,6 +60,7 @@ SchemaMock.Types = {
 
 module.exports = {
   connect: jest.fn(),
+  set: jest.fn(),
   model(name, schema) {
     const Model = modelMockFactory(name, schema)
 

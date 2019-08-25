@@ -7,6 +7,8 @@ const config = require("@dk3/config")
 
 const skills = require("./userSkills")
 
+mongoose.set("useCreateIndex", true)
+
 const Schema = new mongoose.Schema({
   shortId: {
     type: String,

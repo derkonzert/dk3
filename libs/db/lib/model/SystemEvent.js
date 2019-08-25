@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
 
+mongoose.set("useCreateIndex", true)
+
 exports.Types = {
   eventAdded: "event:added",
 }
