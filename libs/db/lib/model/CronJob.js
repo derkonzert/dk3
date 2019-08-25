@@ -1,6 +1,8 @@
 const ms = require("ms")
 const mongoose = require("mongoose")
 
+mongoose.set("useCreateIndex", true)
+
 const schemaDefinition = {
   name: { type: String, unique: true },
   interval: String,

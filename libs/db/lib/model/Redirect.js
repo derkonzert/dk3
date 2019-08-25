@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
 
+mongoose.set("useCreateIndex", true)
+
 const schemaDefinition = {
   url: { type: String, required: true },
   to: { type: String, required: true },
