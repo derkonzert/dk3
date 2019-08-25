@@ -60,7 +60,7 @@ describe("cron", () => {
 
     beforeEach(() => {
       save.mockReset()
-      cronJobs.testJob = jest.fn()
+      cronJobs.testJob = jest.fn().mockResolvedValue({ message: "Test" })
     })
 
     it("rejects when no cron function can be found", () => {
@@ -110,7 +110,9 @@ describe("cron", () => {
       expect(runningSetter).toHaveBeenNthCalledWith(2, false)
     })
 
-    it("sets lastExecuted property on job", async () => {
+    it("sets lastExecuted if cron Fn sets shouldSetLastExecuted", async () => {
+      cronJobs.testJob.mockResolvedValueOnce({ shouldSetLastExecuted: true })
+
       const testExecutionStarted = Date.now()
       const job = {
         name: "testJob",
@@ -123,6 +125,21 @@ describe("cron", () => {
       expect(new Date(job.lastExecuted).getTime()).toBeGreaterThanOrEqual(
         testExecutionStarted
       )
+    })
+
+    it("does not set lastExecuted if shouldSetLastExecuted was false", async () => {
+      cronJobs.testJob.mockResolvedValueOnce({ shouldSetLastExecuted: false })
+
+      const lastExecuted = Date.now() - 9000
+      const job = {
+        name: "testJob",
+        lastExecuted,
+        save,
+      }
+
+      await cron.runJob(job)
+
+      expect(new Date(job.lastExecuted).getTime()).toEqual(lastExecuted)
     })
   })
 
@@ -141,7 +158,7 @@ describe("cron", () => {
 
     beforeEach(() => {
       mockJob = { name: "testJob", shouldRun: jest.fn(), save: jest.fn() }
-      cronJobs.testJob = jest.fn()
+      cronJobs.testJob = jest.fn().mockResolvedValue({ message: "Test" })
 
       CronJob.Model.find = jest.fn().mockReturnValue(CronJob.Model)
       CronJob.Model.sort = jest.fn().mockReturnValue(CronJob.Model)

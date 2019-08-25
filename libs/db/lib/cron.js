@@ -29,21 +29,12 @@ exports.createJob = async ({ forceUpdate, ...options }) => {
   }
 }
 
-const eventNotificationsLastExecuted = new Date()
-if (eventNotificationsLastExecuted.getUTCHours() > 16) {
-  eventNotificationsLastExecuted.setUTCHours(16, 0, 0, 0)
-} else {
-  eventNotificationsLastExecuted.setUTCHours(4, 0, 0, 0)
-}
-
 exports.cronJobConfigurations = [
   { name: "autoResendDoubleOptIn", interval: "72h", initialRun: true },
   {
     name: "eventNotifications",
-    interval: "12h",
-    lastExecuted: eventNotificationsLastExecuted,
+    interval: "24h",
     initialRun: false,
-    forceUpdate: true,
   },
 ]
 
@@ -104,12 +95,14 @@ exports.runJob = async cronJob => {
 
     // eslint-disable-next-line require-atomic-updates
     cronJob.running = false
-    // eslint-disable-next-line require-atomic-updates
-    cronJob.lastExecuted = new Date()
+    if (cronResult.shouldSetLastExecuted) {
+      // eslint-disable-next-line require-atomic-updates
+      cronJob.lastExecuted = new Date()
+    }
 
     await cronJob.save()
 
-    return cronResult
+    return cronResult.message
   } catch (err) {
     // Try to unblock the job at least
     // eslint-disable-next-line require-atomic-updates
