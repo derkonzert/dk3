@@ -22,7 +22,10 @@ exports.autoResendDoubleOptIn = async () => {
     await sendDoubleOptInMail(user)
   }
 
-  return `Resent ${usersWithVerificationToken.length} auto doi mails`
+  return {
+    message: `Resent ${usersWithVerificationToken.length} auto doi mails`,
+    shouldSetLastExecuted: true,
+  }
 }
 
 exports.eventNotifications = async () => {
@@ -61,5 +64,8 @@ exports.eventNotifications = async () => {
 
   await dao.clearSystemEvents(systemEvents)
 
-  return sentMessage()
+  return {
+    message: sentMessage(),
+    shouldSetLastExecuted: sentNotifications > 0,
+  }
 }
