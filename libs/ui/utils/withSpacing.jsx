@@ -3,6 +3,7 @@ import styled from "@emotion/styled"
 
 import { spacings } from "../theme/tokens"
 
+/* TODO: Get rid of legacy spacings */
 /* Spacing levels in rem */
 export const legacySpacingsMap = {
   0: "none",
