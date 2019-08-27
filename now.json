@@ -18,7 +18,6 @@
     { "src": "services/auth/lib/auth.js", "use": "@now/node" },
     { "src": "services/api/lib/api.js", "use": "@now/node" },
     { "src": "services/cron/lib/cron.js", "use": "@now/node" },
-    { "src": "services/redirects/lib/redirects.js", "use": "@now/node" },
     { "src": "services/webcal/lib/webcal.js", "use": "@now/node" },
     {
       "src": "services/social-cards/card.js",
@@ -41,12 +40,6 @@
     }
   ],
   "routes": [
-    {
-      "src": "/concert/(?<concertSlug>.*)",
-      "methods": ["GET"],
-      "dest": "/services/redirects/lib/redirects.js?url=/concert/$concertSlug"
-    },
-
     {
       "src": "/login",
       "status": 301,
