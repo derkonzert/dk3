@@ -76,6 +76,8 @@ exports.schemaDefinition = schemaDefinition
 
 const Schema = new mongoose.Schema(schemaDefinition)
 
+Schema.index({ title: "text" })
+
 exports.Schema = Schema
 
 exports.Model = mongoose.model("Event", Schema)

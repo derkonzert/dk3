@@ -8,3 +8,5 @@ exports.APPROVE_EVENT = "APPROVE_EVENT"
 exports.UPDATE_EVENT = "UPDATE_EVENT"
 /* Can delete events */
 exports.DELETE_EVENT = "DELETE_EVENT"
+/* Can import events */
+exports.IMPORT_EVENT = "IMPORT_EVENT"

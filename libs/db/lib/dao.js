@@ -267,6 +267,20 @@ exports.upcomingEvents = async ({ filter = {}, sort = {} } = {}) => {
     .exec()
 }
 
+exports.findSimilarEvents = async ({ title }) => {
+  return await Event.Model.find({
+    $text: { $search: title },
+    to: {
+      $gte: DateTime.local()
+        .startOf("day")
+        .toJSDate(),
+    },
+  })
+    .sort({ from: 1 })
+    .limit(5)
+    .exec()
+}
+
 /* System Events */
 exports.emitSystemEvent = async (type, { emittedBy, relatedEvent }) => {
   const systemEvent = await SystemEvent.Model.create({
