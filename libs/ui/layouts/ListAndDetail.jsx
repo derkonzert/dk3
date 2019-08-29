@@ -190,7 +190,7 @@ const SideInner = styled.div`
 
 export const CenteredContent = styled.div`
   margin: 0 auto;
-  max-width: 68.8rem;
+  max-width: 86rem;
 `
 
 class CacheContentFor extends React.Component {
