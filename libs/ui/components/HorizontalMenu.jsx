@@ -6,7 +6,6 @@ export const HorizontalMenu = styled.nav`
   margin: 0 auto;
   padding: 0 1rem;
   width: 100%;
-  max-width: 68.8rem;
 `
 
 export const HorizontalMenuItem = styled.a`
