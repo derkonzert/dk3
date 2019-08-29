@@ -124,6 +124,7 @@ export const EventCard = withTheme(
     renderBadge,
     approved = true,
     bookmarked = false,
+    bookmarkable = true,
     linkProps = {},
     onBookmarkClick,
     ...props
@@ -169,17 +170,19 @@ export const EventCard = withTheme(
               </Description>
             </div>
           </a>
-          <BookmarkButton
-            active={bookmarked}
-            aria-label={
-              bookmarked
-                ? `Remove "${title}" from your bookmarks`
-                : `Add "${title}" to your bookmarks`
-            }
-            onClick={onBookmarkClick}
-          >
-            <BookmarkIcon id={id} bookmarked={bookmarked} />
-          </BookmarkButton>
+          {bookmarkable && (
+            <BookmarkButton
+              active={bookmarked}
+              aria-label={
+                bookmarked
+                  ? `Remove "${title}" from your bookmarks`
+                  : `Add "${title}" to your bookmarks`
+              }
+              onClick={onBookmarkClick}
+            >
+              <BookmarkIcon id={id} bookmarked={bookmarked} />
+            </BookmarkButton>
+          )}
         </EventCardContent>
       </EventBox>
     )

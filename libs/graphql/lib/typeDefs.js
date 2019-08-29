@@ -60,6 +60,8 @@ const typeDefs = gql`
     authInfo: AuthenticationInfo
     # Upcoming events
     upcomingEvents(filter: String): [Event]
+    # Find similar events by title
+    similarEvents(title: String!): [Event]
     # Past events
     pastEvents(page: Int!): ArchivedEvents
     # Event by ID

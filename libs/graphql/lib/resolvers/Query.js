@@ -1,3 +1,5 @@
+const userSkills = require("@dk3/db/lib/model/userSkills")
+
 exports.Query = {
   me: async (_, args, context) => {
     if (context.user) {
@@ -23,6 +25,22 @@ exports.Query = {
       })
     }
     return await dao.upcomingEvents()
+  },
+
+  similarEvents: async (_, args, { user, dao }) => {
+    const { title } = args
+
+    if (!user || !user._id) {
+      throw new Error("Unauthenticated request")
+    }
+
+    const userModel = await dao.userById(user._id)
+
+    if (!userModel.hasSkill(userSkills.IMPORT_EVENT)) {
+      throw new Error("Unauthorized request")
+    }
+
+    return await dao.findSimilarEvents({ title })
   },
 
   pastEvents: async (_, args, { dao }) => {
