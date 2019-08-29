@@ -6,6 +6,8 @@ const { sendJson } = require("@dk3/api-utils")
 const ical = require("ical-generator")
 const { DateTime } = require("luxon")
 
+const { logger, error } = require("@dk3/logger")
+
 let isConnected = false
 
 module.exports = async (req, res) => {
@@ -29,6 +31,7 @@ module.exports = async (req, res) => {
     }).exec()
 
     if (!user) {
+      logger("Unauthorized ics calendar requested")
       return sendJson(res, 401, { message: "Unauthorized: Token invalid" })
     }
 
@@ -56,7 +59,7 @@ module.exports = async (req, res) => {
       cal.createEvent({
         start: event.from,
         end: event.to,
-        timestamp: DateTime.local().toLocaleString(),
+        timestamp: DateTime.local().toISO(),
         uid: event.shortId,
         summary: summary,
         description: event.description,
@@ -65,6 +68,7 @@ module.exports = async (req, res) => {
 
     cal.serve(res)
   } catch (err) {
+    error(err)
     sendJson(res, 500, { error: err.message })
   }
 }
