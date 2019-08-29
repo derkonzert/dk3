@@ -27,6 +27,7 @@
     "url": "https://github.com/jkempff/dk3/issues"
   },
   "dependencies": {
+    "@dk3/logger": "^0.0.0",
     "ical-generator": "^1.7.0",
     "luxon": "^1.12.1"
   }
