@@ -4,6 +4,8 @@ import styled from "@emotion/styled"
 import useClickOutside from "click-outside-hook"
 import FocusLock from "react-focus-lock"
 
+export const layoutActiveClass = "cacheFixedPosition"
+
 export const ListAndDetail = ({ showDetail, children }) => (
   <React.Fragment>
     {React.Children.map(children, child =>
@@ -96,7 +98,7 @@ export class ListAndDetailMain extends React.Component {
 
   componentDidMount() {
     if (this.props.showDetail) {
-      documentElement().classList.add("cacheFixedPosition")
+      documentElement().classList.add(layoutActiveClass)
     }
   }
 
@@ -107,13 +109,13 @@ export class ListAndDetailMain extends React.Component {
 
     if (snapshot !== null) {
       if (this.props.showDetail) {
-        documentElement().classList.add("cacheFixedPosition")
+        documentElement().classList.add(layoutActiveClass)
 
         scrollTo(this.innerRef.current, 0, snapshot)
         scrollTo(window, 0, 0)
       } else {
         this.scheduleUpdate = setTimeout(() => {
-          documentElement().classList.remove("cacheFixedPosition")
+          documentElement().classList.remove(layoutActiveClass)
 
           scrollTo(this.innerRef.current, 0, 0)
           scrollTo(window, 0, snapshot)
@@ -127,7 +129,7 @@ export class ListAndDetailMain extends React.Component {
       clearTimeout(this.scheduleUpdate)
     }
 
-    documentElement().classList.remove("cacheFixedPosition")
+    documentElement().classList.remove(layoutActiveClass)
   }
 
   render() {
