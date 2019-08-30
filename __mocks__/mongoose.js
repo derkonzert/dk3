@@ -52,6 +52,8 @@ class SchemaMock {
 
     this.definitions = definitions
   }
+
+  index() {}
 }
 
 SchemaMock.Types = {
