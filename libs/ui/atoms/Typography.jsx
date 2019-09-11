@@ -40,8 +40,7 @@ export const MegaTitle = withSpacing()(styled.h1`
   ${logoStyle}
 `)
 
-export const Title = withSpacing()(styled.h2`
-  ${noMargin}
+export const Title = withSpacing({ mv: "none" })(styled.h2`
   font-size: 2.4rem;
   font-family: "IBM Plex Serif", serif;
   font-weight: bold;
@@ -51,8 +50,7 @@ export const Title = withSpacing()(styled.h2`
     inverted ? theme.colors.titleInverted : theme.colors.title};
 `)
 
-export const SubTitle = withSpacing()(styled.h3`
-  ${noMargin};
+export const SubTitle = withSpacing({ mv: "none" })(styled.h3`
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: 600;
   font-size: 1.6rem;
@@ -107,8 +105,7 @@ export const Description = styled.div`
   line-height: 1.3;
 `
 
-export const Text = withSpacing()(styled.p`
-  ${noMargin};
+export const Text = withSpacing({ mv: "none" })(styled.p`
   font-family: "IBM Plex Sans", sans-serif;
 
   font-size: 1.2rem;

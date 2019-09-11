@@ -8,6 +8,7 @@ import { Bookmark as BookmarkIcon } from "../icons/Bookmark"
 import { BaseBox } from "../atoms/Boxes"
 import { SubTitle, Description } from "../atoms/Typography"
 import { CalendarDay } from "../atoms/CalendarDay"
+import { spacings } from "../theme/tokens"
 
 const EventCardContent = styled.div`
   display: flex;
@@ -39,23 +40,25 @@ const linkStyle = css`
   text-decoration: none;
 `
 
-const textContentStyle = css`
-  flex-grow: 1;
-  padding: 0.7rem 0 0.7rem;
-`
+const TextContent = styled.div(
+  ({ size }) => css`
+    flex-grow: 1;
+    padding: ${spacings.m};
 
-const textContentStyleLarge = css`
-  flex-grow: 1;
-  padding: 1.7rem 1.6rem 1.5rem;
-`
-
-const textContentStyleLargeFancy = css`
-  flex-grow: 1;
-  padding: 4.5rem 1.6rem 4.5rem;
-`
+    ${size === "l" &&
+      css`
+        flex-grow: 1;
+        padding: ${spacings.l} ${spacings.m};
+      `}
+    ${size === "xl" &&
+      css`
+        flex-grow: 1;
+        padding: ${spacings.xl} ${spacings.m};
+      `}
+  `
+)
 
 const calendar = css`
-  margin-right: 0.9rem;
   border-right: 1px solid rgba(0, 0, 0, 0.075);
 `
 
@@ -131,13 +134,8 @@ export const EventCard = withTheme(
   }) => {
     const superFancy = approved ? fancyLevel === 2 : false
     const regularFancy = approved ? fancyLevel === 1 : false
-    const textContentCss = [textContentStyle]
+    const textContentSize = large ? (superFancy ? "xl" : "l") : "m"
 
-    if (large && superFancy) {
-      textContentCss.push(textContentStyleLargeFancy)
-    } else if (large) {
-      textContentCss.push(textContentStyleLarge)
-    }
     const inverted = superFancy ? theme.name !== "dark" : false
 
     return (
@@ -148,16 +146,16 @@ export const EventCard = withTheme(
       >
         <EventCardContent isFilled={regularFancy}>
           <a css={linkStyle} {...linkProps}>
-            {!large && (
-              <CalendarDay
-                css={calendar}
-                day={day}
-                dayName={dayName}
-                inverted={inverted}
-              />
-            )}
-            <div css={textContentCss}>
-              <SubTitle inverted={inverted}>{title}</SubTitle>
+            <CalendarDay
+              css={calendar}
+              day={day}
+              dayName={dayName}
+              inverted={inverted}
+            />
+            <TextContent size={textContentSize}>
+              <SubTitle mb="xs" inverted={inverted}>
+                {title}
+              </SubTitle>
               <Description inverted={inverted}>
                 {!!renderBadge &&
                   renderBadge({
@@ -168,7 +166,7 @@ export const EventCard = withTheme(
                   })}
                 {description}
               </Description>
-            </div>
+            </TextContent>
           </a>
           {bookmarkable && (
             <BookmarkButton

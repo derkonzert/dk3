@@ -1,13 +1,16 @@
 import React from "react"
 import styled from "@emotion/styled"
+import { spacings } from "../theme/tokens"
 
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 4.2rem;
+  width: ${spacings.xl};
+  padding: 0 ${spacings.s};
 
+  box-sizing: content-box;
   flex: 0 0 auto;
   text-align: center;
 `
