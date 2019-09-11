@@ -1,5 +1,5 @@
 import React from "react"
-import App, { Container } from "next/app"
+import App from "next/app"
 import nextCookie from "next-cookies"
 import cookie from "js-cookie"
 import { ApolloProvider } from "react-apollo"
@@ -69,15 +69,14 @@ class MyApp extends App {
       <ThemeProvider theme={theme}>
         <RichTextProvider value={rtxtPlugins}>
           <PageWrapper>
-            <Container>
-              <ApolloProvider client={apolloClient}>
-                <Component
-                  {...pageProps}
-                  themeName={theme}
-                  onThemeChange={onThemeChange}
-                />
-              </ApolloProvider>
-            </Container>
+            <ApolloProvider client={apolloClient}>
+              <Component
+                {...pageProps}
+                themeName={theme}
+                onThemeChange={onThemeChange}
+              />
+            </ApolloProvider>
+
             {showCookieConsent && (
               <CookieConsent
                 onClick={() => {

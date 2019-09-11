@@ -21,8 +21,8 @@ export const CurrentUser = withApollo(
             return <div>{error.message}</div>
           }
 
-          const isLoggedIn = !!data.me
-          const user = data.me
+          const isLoggedIn = !!data && !!data.me
+          const user = data && data.me
 
           if (!isLoggedIn && requireUser) {
             return null
