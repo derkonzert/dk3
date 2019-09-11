@@ -1,4 +1,4 @@
-import App, { Container } from "next/app"
+import App from "next/app"
 import React from "react"
 import Link from "next/link"
 import { ApolloProvider } from "react-apollo"
@@ -28,91 +28,81 @@ class MyApp extends App {
     } = this.props
 
     return (
-      <Container>
-        <ThemeProvider theme={theme}>
-          <ApolloProvider client={apolloClient}>
-            <CurrentUser>
-              {currentUserProps => {
-                const { loading, isLoggedIn } = currentUserProps
-                if (loading) {
-                  return <Spinner />
-                }
+      <ThemeProvider theme={theme}>
+        <ApolloProvider client={apolloClient}>
+          <CurrentUser>
+            {currentUserProps => {
+              const { loading, isLoggedIn } = currentUserProps
+              if (loading) {
+                return <Spinner />
+              }
 
-                return (
-                  <React.Fragment>
-                    <HorizontalMenu>
-                      <Flex grow={1} justifyContent="space-between">
-                        <HorizontalMenuItem href="/">
-                          ↩︎ Back to derkonzert
-                        </HorizontalMenuItem>
+              return (
+                <React.Fragment>
+                  <HorizontalMenu>
+                    <Flex grow={1} justifyContent="space-between">
+                      <HorizontalMenuItem href="/">
+                        ↩︎ Back to derkonzert
+                      </HorizontalMenuItem>
 
-                        <Flex justifyItems="flex-end">
-                          {isLoggedIn ? (
-                            <React.Fragment>
-                              <Link href="/" as="/account/" passHref>
-                                <HorizontalMenuItem>
-                                  Settings
-                                </HorizontalMenuItem>
-                              </Link>
-                              <Link
-                                href="/calendar"
-                                as="/account/calendar"
-                                passHref
-                              >
-                                <HorizontalMenuItem>
-                                  Calendar
-                                </HorizontalMenuItem>
-                              </Link>
-                              <HorizontalMenuItem
-                                href="#"
-                                onClick={async e => {
-                                  e.preventDefault()
+                      <Flex justifyItems="flex-end">
+                        {isLoggedIn ? (
+                          <React.Fragment>
+                            <Link href="/" as="/account/" passHref>
+                              <HorizontalMenuItem>Settings</HorizontalMenuItem>
+                            </Link>
+                            <Link
+                              href="/calendar"
+                              as="/account/calendar"
+                              passHref
+                            >
+                              <HorizontalMenuItem>Calendar</HorizontalMenuItem>
+                            </Link>
+                            <HorizontalMenuItem
+                              href="#"
+                              onClick={async e => {
+                                e.preventDefault()
 
-                                  await logout()
+                                await logout()
 
-                                  await apolloClient.resetStore()
+                                await apolloClient.resetStore()
 
-                                  window.location.href = "/"
-                                }}
-                              >
-                                Logout
-                              </HorizontalMenuItem>
-                            </React.Fragment>
-                          ) : (
-                            <React.Fragment>
-                              <Link href="/login" as="/account/login" passHref>
-                                <HorizontalMenuItem>Login</HorizontalMenuItem>
-                              </Link>
-                              <Link
-                                href="/signup"
-                                as="/account/signup"
-                                passHref
-                              >
-                                <HorizontalMenuItem>Sign Up</HorizontalMenuItem>
-                              </Link>
-                            </React.Fragment>
-                          )}
-                        </Flex>
+                                window.location.href = "/"
+                              }}
+                            >
+                              Logout
+                            </HorizontalMenuItem>
+                          </React.Fragment>
+                        ) : (
+                          <React.Fragment>
+                            <Link href="/login" as="/account/login" passHref>
+                              <HorizontalMenuItem>Login</HorizontalMenuItem>
+                            </Link>
+                            <Link href="/signup" as="/account/signup" passHref>
+                              <HorizontalMenuItem>Sign Up</HorizontalMenuItem>
+                            </Link>
+                          </React.Fragment>
+                        )}
                       </Flex>
-                    </HorizontalMenu>
-                    <PageWrapper>
-                      <Component {...pageProps} {...currentUserProps} />
-                    </PageWrapper>
-                    <Footer>
-                      <FooterLinks
-                        themeName={theme}
-                        onThemeChange={e => {
-                          onThemeChange(e.target.checked ? "dark" : "light")
-                        }}
-                      />
-                    </Footer>
-                  </React.Fragment>
-                )
-              }}
-            </CurrentUser>
-          </ApolloProvider>
-        </ThemeProvider>
-      </Container>
+                    </Flex>
+                  </HorizontalMenu>
+                  <PageWrapper>
+                    <Component {...pageProps} {...currentUserProps} />
+                  </PageWrapper>
+                  <Footer>
+                    <FooterLinks
+                      themeName={theme}
+                      onThemeChange={e => {
+                        onThemeChange(e.target.checked ? "dark" : "light")
+                      }}
+                    />
+                  </Footer>
+                </React.Fragment>
+              )
+            }}
+          </CurrentUser>
+        </ApolloProvider>
+      </ThemeProvider>
     )
   }
 }
