@@ -16,7 +16,7 @@ const DynamicInView = dynamic(
 )
 
 import { Query } from "react-apollo"
-import { ErrorMessage } from "@dk3/ui/atoms/Message"
+import { ErrorMessage, WarningMessage } from "@dk3/ui/atoms/Message"
 import { MegaTitle, Text, Strong, ListTitle } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { Flex } from "@dk3/ui/atoms/Flex"
@@ -66,6 +66,10 @@ export const ArchiveList = () => {
         {({ data, loading, error, fetchMore }) => {
           if (error) {
             return <ErrorMessage>{error.message}</ErrorMessage>
+          }
+
+          if (!data) {
+            return <WarningMessage>No past events</WarningMessage>
           }
 
           if (!data.pastEvents && loading) {
