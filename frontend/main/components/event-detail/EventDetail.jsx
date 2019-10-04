@@ -23,6 +23,7 @@ import RichText from "../../../../libs/rtxt/react"
 import { BookmarkedBy } from "./BookmarkedBy"
 import GoogleStructuredData from "./GoogleStructuredData"
 import { CheckForApprovalButton } from "../form/CheckForApprovalButton"
+import { safeHref } from "@dk3/shared-frontend/lib/safeHref"
 
 export const EVENT_DETAIL_FRAGMENT = gql`
   fragment EventDetailEvent on Event {
@@ -225,7 +226,7 @@ export const EventDetail = ({ id, showMine }) => {
                   <VeryFancyLink
                     ph="l"
                     pv="m"
-                    href={event.url}
+                    href={safeHref(event.url)}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
