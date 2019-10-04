@@ -65,6 +65,11 @@ const Wrapper = styled.div`
   padding-bottom: 4rem;
 `
 
+const domain =
+  process.env.NODE_ENV === "production"
+    ? "https://derkonzert.de"
+    : "http://localhost:8004"
+
 export const EventDetail = ({ id, showMine }) => {
   return (
     <Query query={EVENT_DETAIL} variables={{ id }}>
@@ -108,15 +113,12 @@ export const EventDetail = ({ id, showMine }) => {
               <meta property="og:description" content={description} />
               <meta
                 property="og:image"
-                content={`https://derkonzert.de/social-card${eventHref(
+                content={`${domain}/social-card${eventHref(
                   event,
                   "event-card"
                 )}.png`}
               />
-              <link
-                rel="canonical"
-                href={`https://derkonzert.de${eventHref(event)}`}
-              />
+              <link rel="canonical" href={`${domain}${eventHref(event)}`} />
             </Head>
             <MegaTitle data-event-title mr="xl" mb="m">
               {event.title}
@@ -242,7 +244,7 @@ export const EventDetail = ({ id, showMine }) => {
               )} at ${event.location} in Munich`}
               startDate={new Date(event.from)}
               endDate={new Date(event.to)}
-              url={`https://derkonzert.de${eventHref(event)}`}
+              url={`${domain}${eventHref(event)}`}
               locationName={event.location}
               locationAddress="Munich"
             />
