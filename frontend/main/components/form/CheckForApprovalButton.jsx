@@ -6,6 +6,7 @@ import { ButtonLink } from "@dk3/ui/form/Button"
 import { generateSearchLink } from "./generateSearchLink"
 import { ErrorMessage } from "@dk3/ui/atoms/Message"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
+import { safeHref } from "@dk3/shared-frontend/lib/safeHref"
 
 export const EVENT_DETAIL = gql`
   query eventDetail($id: ID!) {
@@ -35,7 +36,9 @@ export const CheckForApprovalButton = ({ eventId, children, ...props }) => (
 
             return (
               <ButtonLink
-                href={event.url ? event.url : generateSearchLink(event)}
+                href={
+                  event.url ? safeHref(event.url) : generateSearchLink(event)
+                }
                 target="_blank"
                 rel="noopener nofollow"
                 {...props}
