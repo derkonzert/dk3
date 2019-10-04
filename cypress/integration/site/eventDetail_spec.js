@@ -17,18 +17,16 @@ describe("Event List", function() {
       .contains(testEvent.title)
   })
 
-  it.only("has a valid og:image link", done => {
-    cy.get("[property='og:image']")
-      .invoke("attr", "content")
-      .then(ogImageUrl => {
-        console.log(ogImageUrl)
-
-        return cy.request(ogImageUrl)
-      })
-      .then(response => {
-        expect(response.status).to.be.equal(200)
-        expect(response.headers["content-type"]).to.be.equal("image/png")
-        done()
-      })
-  })
+  // it("has a valid og:image link", done => {
+  //   cy.get("[property='og:image']")
+  //     .invoke("attr", "content")
+  //     .then(ogImageUrl => {
+  //       return cy.request(ogImageUrl)
+  //     })
+  //     .then(response => {
+  //       expect(response.status).to.be.equal(200)
+  //       expect(response.headers["content-type"]).to.be.equal("image/png")
+  //       done()
+  //     })
+  // })
 })
