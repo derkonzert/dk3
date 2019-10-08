@@ -505,6 +505,8 @@ describe("dao", () => {
   describe("upcomingEvents", () => {
     beforeEach(() => {
       Event.Model.find = jest.fn().mockReturnValue(Event.Model)
+      Event.Model.skip = jest.fn().mockReturnValue(Event.Model)
+      Event.Model.limit = jest.fn().mockReturnValue(Event.Model)
       Event.Model.sort = jest.fn().mockReturnValue(Event.Model)
       Event.Model.exec = jest.fn().mockReturnValue(Event.Model)
     })
@@ -530,6 +532,18 @@ describe("dao", () => {
         to: { $gte: expect.any(Date) },
       })
       expect(Event.Model.sort).toHaveBeenCalledWith({ from: 1, location: 1 })
+      expect(Event.Model.exec).toHaveBeenCalled()
+    })
+
+    it("applies limit and skip arguments", async () => {
+      await dao.upcomingEvents({
+        skip: 10,
+        limit: 30,
+      })
+
+      expect(Event.Model.limit).toHaveBeenCalledWith(30)
+      expect(Event.Model.skip).toHaveBeenCalledWith(10)
+      expect(Event.Model.find).toHaveBeenCalled()
       expect(Event.Model.exec).toHaveBeenCalled()
     })
   })

@@ -254,17 +254,30 @@ exports.allPastEventsCount = async () => {
     .exec()
 }
 
-exports.upcomingEvents = async ({ filter = {}, sort = {} } = {}) => {
-  return await Event.Model.find({
+exports.upcomingEvents = async ({
+  filter = {},
+  sort = {},
+  skip,
+  limit,
+} = {}) => {
+  let query = await Event.Model.find({
     to: {
       $gte: DateTime.local()
         .startOf("day")
         .toJSDate(),
     },
     ...filter,
-  })
-    .sort({ from: 1, ...sort })
-    .exec()
+  }).sort({ from: 1, ...sort })
+
+  if (skip) {
+    query = query.skip(skip)
+  }
+
+  if (limit) {
+    query = query.limit(limit)
+  }
+
+  return query.exec()
 }
 
 exports.findSimilarEvents = async ({ title }) => {
