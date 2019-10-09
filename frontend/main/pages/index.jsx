@@ -110,7 +110,11 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
                 </Flex>
 
                 <div
-                  style={{ maxWidth: "45rem", margin: "0 auto", width: "100%" }}
+                  style={{
+                    maxWidth: "45rem",
+                    margin: "0 auto",
+                    width: "100%",
+                  }}
                 >
                   <Title>About derkonzert</Title>
                   <Text mv="m">
