@@ -65,58 +65,50 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
         const { upcomingEvents } = data
 
         return (
-          <React.Fragment>
-            {groupedEvents(upcomingEvents).map(group => {
-              let groupName
-              const dt = DateTime.fromJSDate(group.date)
+          <MutationWithAuthentication
+            notLoggedInMessage="Bookmarking an event is only possible when logged in"
+            mutation={BOOKMARK_EVENT}
+          >
+            {bookmarkEvent => (
+              <React.Fragment>
+                {groupedEvents(upcomingEvents).map(group => {
+                  let groupName
+                  const dt = DateTime.fromJSDate(group.date)
 
-              if (group.isToday) {
-                groupName = <EventSectionTitle>Today</EventSectionTitle>
-              } else if (group.isTomorrow) {
-                groupName = <EventSectionTitle>Tomorrow</EventSectionTitle>
-              } else {
-                groupName = (
-                  <EventSectionTitle>
-                    {dt.toLocaleString({ month: "long" })}{" "}
-                    <ListTitleAppendix>
-                      {group.date.getFullYear()}
-                    </ListTitleAppendix>
-                  </EventSectionTitle>
-                )
-              }
+                  if (group.isToday) {
+                    groupName = <EventSectionTitle>Today</EventSectionTitle>
+                  } else if (group.isTomorrow) {
+                    groupName = <EventSectionTitle>Tomorrow</EventSectionTitle>
+                  } else {
+                    groupName = (
+                      <EventSectionTitle>
+                        {dt.toLocaleString({ month: "long" })}{" "}
+                        <ListTitleAppendix>
+                          {group.date.getFullYear()}
+                        </ListTitleAppendix>
+                      </EventSectionTitle>
+                    )
+                  }
 
-              return (
-                <EventSection key={dt.toString()}>
-                  <EventSectionHeader>{groupName}</EventSectionHeader>
-                  {group.events.map(event => {
-                    const date = new Date(event.from)
-                    const to = new Date(event.to)
-                    const isRange = to - date > twelveOurs
+                  return (
+                    <EventSection key={dt.toString()}>
+                      <EventSectionHeader>{groupName}</EventSectionHeader>
+                      {group.events.map(event => {
+                        const date = new Date(event.from)
+                        const to = new Date(event.to)
+                        const isRange = to - date > twelveOurs
 
-                    const dayName = isRange
-                      ? `${to.getDate() - date.getDate() + 1} days`
-                      : date.toString().substr(0, 3)
+                        const dayName = isRange
+                          ? `${to.getDate() - date.getDate() + 1} days`
+                          : date.toString().substr(0, 3)
 
-                    const doorTime = `${ensureDoubles(
-                      date.getHours()
-                    )}:${ensureDoubles(date.getMinutes())}`
+                        const doorTime = `${ensureDoubles(
+                          date.getHours()
+                        )}:${ensureDoubles(date.getMinutes())}`
 
-                    return (
-                      <MutationWithAuthentication
-                        notLoggedInMessage="Bookmarking an event is only possible when logged in"
-                        mutation={BOOKMARK_EVENT}
-                        key={event.id}
-                        optimisticResponse={{
-                          __typename: "Mutation",
-                          bookmarkEvent: {
-                            __typename: "Event",
-                            ...event,
-                            bookmarkedByMe: !event.bookmarkedByMe,
-                          },
-                        }}
-                      >
-                        {bookmarkEvent => (
+                        return (
                           <EventCard
+                            key={event.id}
                             data-event
                             data-event-approved={event.approved}
                             large={group.isToday || group.isTomorrow}
@@ -187,22 +179,30 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
                                     bookmarked: !event.bookmarkedByMe,
                                   },
                                 },
+                                optimisticResponse: {
+                                  __typename: "Mutation",
+                                  bookmarkEvent: {
+                                    __typename: "Event",
+                                    ...event,
+                                    bookmarkedByMe: !event.bookmarkedByMe,
+                                  },
+                                },
                               })
                             }}
                           />
-                        )}
-                      </MutationWithAuthentication>
-                    )
-                  })}
-                </EventSection>
-              )
-            })}
-            <Link href="/?addEvent=1" as="/add-new-event" passHref>
-              <AddEventButton data-add-event pa="l" title="Add a new event">
-                +
-              </AddEventButton>
-            </Link>
-          </React.Fragment>
+                        )
+                      })}
+                    </EventSection>
+                  )
+                })}
+                <Link href="/?addEvent=1" as="/add-new-event" passHref>
+                  <AddEventButton data-add-event pa="l" title="Add a new event">
+                    +
+                  </AddEventButton>
+                </Link>
+              </React.Fragment>
+            )}
+          </MutationWithAuthentication>
         )
       }}
     </QueryWithAuthentication>
