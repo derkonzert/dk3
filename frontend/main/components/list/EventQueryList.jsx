@@ -10,7 +10,8 @@ import { MutationWithAuthentication } from "@dk3/shared-frontend/lib/MutationWit
 import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
 
 import { EventCard } from "@dk3/ui/components/EventCard"
-import { ListTitle, ListTitleAppendix, Text } from "@dk3/ui/atoms/Typography"
+import { Button } from "@dk3/ui/form/Button"
+import { ListTitle, ListTitleAppendix } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { DangerBadge, SuccessBadge } from "@dk3/ui/atoms/Badge"
 import styled from "@emotion/styled"
@@ -38,6 +39,30 @@ const EventSectionTitle = styled(ListTitle)`
   margin: 0;
 `
 
+export const fetchMoreUpcomingEvents = (fetchMore, skip) => {
+  fetchMore({
+    variables: {
+      skip,
+    },
+    updateQuery: (prev, { fetchMoreResult }) => {
+      if (!fetchMoreResult) return prev
+
+      return Object.assign({}, prev, {
+        upcomingEvents: {
+          __typename: "PaginatedEvents",
+          events: [
+            ...prev.upcomingEvents.events,
+            ...fetchMoreResult.upcomingEvents.events,
+          ],
+          hasMore: fetchMoreResult.upcomingEvents.hasMore,
+          nextPage: fetchMoreResult.upcomingEvents.nextPage,
+          totalCount: fetchMoreResult.upcomingEvents.totalCount,
+        },
+      })
+    },
+  })
+}
+
 export const BOOKMARK_EVENT = gql`
   mutation bookmarkEvent($input: BookmarkEventInput!) {
     bookmarkEvent(input: $input) {
@@ -56,6 +81,7 @@ export const EventQueryList = withRouter(({ query, filter, skip, router }) => {
     <QueryWithAuthentication
       required={filter === "mine"}
       query={query}
+      notifyOnNetworkStatusChange
       variables={{ filter, skip }}
       ssr={false}
       notLoggedInMessage="You need an account to view your bookmarked events."
@@ -63,7 +89,8 @@ export const EventQueryList = withRouter(({ query, filter, skip, router }) => {
     >
       {({ loading, error, data, fetchMore }) => {
         if (error) return <span>Error loading posts.</span>
-        if (loading) return <Spinner mt="xl" mb="xxxl" />
+        if (!data || (!data.upcomingEvents.events.length && loading))
+          return <Spinner mt="xl" mb="xxxl" />
 
         const { upcomingEvents } = data
 
@@ -198,54 +225,45 @@ export const EventQueryList = withRouter(({ query, filter, skip, router }) => {
                     </EventSection>
                   )
                 })}
-                <Link href="/?addEvent=1" as="/add-new-event" passHref>
-                  <AddEventButton data-add-event pa="l" title="Add a new event">
-                    +
-                  </AddEventButton>
-                </Link>
-
                 {upcomingEvents.hasMore && (
                   <DynamicInView
                     as="div"
                     onChange={inView => {
                       // if inView is true and it still hasMore
                       if (inView && upcomingEvents.hasMore) {
-                        fetchMore({
-                          variables: {
-                            skip: upcomingEvents.nextPage,
-                          },
-                          updateQuery: (prev, { fetchMoreResult }) => {
-                            if (!fetchMoreResult) return prev
-
-                            return Object.assign({}, prev, {
-                              upcomingEvents: {
-                                __typename: "PaginatedEvents",
-                                events: [
-                                  ...prev.upcomingEvents.events,
-                                  ...fetchMoreResult.upcomingEvents.events,
-                                ],
-                                hasMore: fetchMoreResult.upcomingEvents.hasMore,
-                                nextPage:
-                                  fetchMoreResult.upcomingEvents.nextPage,
-                                totalCount:
-                                  fetchMoreResult.upcomingEvents.totalCount,
-                              },
-                            })
-                          },
-                        })
+                        fetchMoreUpcomingEvents(
+                          fetchMore,
+                          upcomingEvents.nextPage
+                        )
                       }
                     }}
                   >
                     <Spacer pv="xl">
                       <Flex flexDirection="column" alignItems="center">
-                        <Spinner />
-                        <Flex>
-                          <Text>Fetching more events…</Text>
-                        </Flex>
+                        {loading ? (
+                          <Spinner />
+                        ) : (
+                          <Button
+                            onClick={() => {
+                              fetchMoreUpcomingEvents(
+                                fetchMore,
+                                upcomingEvents.nextPage
+                              )
+                            }}
+                          >
+                            Load more events
+                          </Button>
+                        )}
                       </Flex>
                     </Spacer>
                   </DynamicInView>
                 )}
+
+                <Link href="/?addEvent=1" as="/add-new-event" passHref>
+                  <AddEventButton data-add-event pa="l" title="Add a new event">
+                    +
+                  </AddEventButton>
+                </Link>
               </React.Fragment>
             )}
           </MutationWithAuthentication>
