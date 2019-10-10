@@ -48,12 +48,12 @@ export const BOOKMARK_EVENT = gql`
 const ensureDoubles = int => `${int <= 9 ? "0" : ""}${int}`
 const twelveOurs = 1000 * 60 * 60 * 12
 
-export const EventQueryList = withRouter(({ query, filter, router }) => {
+export const EventQueryList = withRouter(({ query, filter, skip, router }) => {
   return (
     <QueryWithAuthentication
       required={filter === "mine"}
       query={query}
-      variables={{ filter }}
+      variables={{ filter, skip }}
       ssr={false}
       notLoggedInMessage="You need an account to view your bookmarked events."
       fetchPolicy={filter === "mine" ? "cache-and-network" : "cache-first"}
@@ -71,7 +71,7 @@ export const EventQueryList = withRouter(({ query, filter, router }) => {
           >
             {bookmarkEvent => (
               <React.Fragment>
-                {groupedEvents(upcomingEvents).map(group => {
+                {groupedEvents(upcomingEvents.events).map(group => {
                   let groupName
                   const dt = DateTime.fromJSDate(group.date)
 

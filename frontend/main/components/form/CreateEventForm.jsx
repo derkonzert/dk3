@@ -115,11 +115,14 @@ export const CreateEventForm = ({ onCreated }) => {
                       query: UPCOMING_EVENTS,
                       variables: { filter: "all" },
                       data: {
-                        upcomingEvents: [createEvent, ...upcomingEvents].sort(
-                          (a, b) => {
-                            return a.from > b.from ? 1 : -1
-                          }
-                        ),
+                        upcomingEvents: {
+                          ...upcomingEvents,
+                          events: [createEvent, ...upcomingEvents.events].sort(
+                            (a, b) => {
+                              return a.from > b.from ? 1 : -1
+                            }
+                          ),
+                        },
                       },
                     })
 

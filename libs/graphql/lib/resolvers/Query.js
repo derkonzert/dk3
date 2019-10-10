@@ -16,15 +16,41 @@ exports.Query = {
   },
 
   /* Lists */
-  upcomingEvents: async (_, args, { user, dao }) => {
-    if (user && args && args.filter === "mine") {
-      return dao.upcomingEvents({
+  upcomingEvents: async (_, args = {}, { user, dao }) => {
+    const { filter, skip, limit } = args
+
+    const withSkipLimit = !(skip === undefined || limit === undefined)
+
+    let events
+    if (user && filter === "mine") {
+      events = await dao.upcomingEvents({
         filter: {
           bookmarkedBy: user._id,
         },
+        skip,
+        limit,
       })
+    } else {
+      events = await dao.upcomingEvents({ skip, limit })
     }
-    return await dao.upcomingEvents()
+
+    const totalCount = withSkipLimit
+      ? await dao.cachedMethod(
+          "upcomingEvents.totalCount",
+          dao.allUpcomingEventsCount,
+          { ttl: 1000 * 60 * 60 }
+        )()
+      : events.length
+
+    const hasMore = withSkipLimit ? totalCount > skip + limit : false
+    const nextPage = withSkipLimit ? skip + limit : totalCount
+
+    return {
+      events,
+      nextPage,
+      hasMore,
+      totalCount,
+    }
   },
 
   similarEvents: async (_, args, { user, dao }) => {

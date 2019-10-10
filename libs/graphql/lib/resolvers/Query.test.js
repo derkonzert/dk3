@@ -58,13 +58,13 @@ describe("Query", () => {
 
       return expect(
         Query.upcomingEvents(undefined, undefined, context)
-      ).resolves.toBe(expectedResult)
+      ).resolves.toEqual(expect.objectContaining({ events: expectedResult }))
     })
 
     it("applies filter when it's set to 'mine'", async () => {
       const context = {
         dao: {
-          upcomingEvents: jest.fn(),
+          upcomingEvents: jest.fn().mockReturnValue([]),
         },
         user: {
           _id: "my-user-id",
@@ -83,13 +83,16 @@ describe("Query", () => {
     it("doesnt apply filter when no user available", async () => {
       const context = {
         dao: {
-          upcomingEvents: jest.fn(),
+          upcomingEvents: jest.fn().mockReturnValue([]),
         },
       }
 
       await Query.upcomingEvents(undefined, { filter: "mine" }, context)
 
-      expect(context.dao.upcomingEvents).toHaveBeenCalledWith()
+      expect(context.dao.upcomingEvents).toHaveBeenCalledWith({
+        limit: undefined,
+        skip: undefined,
+      })
     })
   })
 
