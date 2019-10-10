@@ -20,7 +20,7 @@ describe("Event List", function() {
       .eq(0)
       .contains("Neubauten")
 
-    cy.get("[data-event]").should("have.length.greaterThan", 59)
+    cy.get("[data-event]").should("have.length.greaterThan", 19)
   })
 
   it("Renders a legend for different event fancyness levels", () => {
