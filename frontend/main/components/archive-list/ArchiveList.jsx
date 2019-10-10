@@ -1,20 +1,10 @@
 import React from "react"
 import { DateTime } from "luxon"
-import dynamic from "next/dynamic"
+
 import gql from "graphql-tag"
 import styled from "@emotion/styled"
 
-const DynamicInView = dynamic(
-  () =>
-    import("react-intersection-observer").then(async mod => {
-      if (typeof window.IntersectionObserver === "undefined") {
-        await import("intersection-observer")
-      }
-      return mod.InView
-    }),
-  { ssr: false }
-)
-
+import { DynamicInView } from "@dk3/shared-frontend/lib/DynamicInView"
 import { Query } from "react-apollo"
 import { ErrorMessage, WarningMessage } from "@dk3/ui/atoms/Message"
 import { MegaTitle, Text, Strong, ListTitle } from "@dk3/ui/atoms/Typography"
@@ -125,7 +115,7 @@ export const ArchiveList = () => {
                           if (!fetchMoreResult) return prev
                           return Object.assign({}, prev, {
                             pastEvents: {
-                              __typename: "ArchivedEvents",
+                              __typename: "PaginatedEvents",
                               events: [
                                 ...prev.pastEvents.events,
                                 ...fetchMoreResult.pastEvents.events,
