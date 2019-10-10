@@ -4,17 +4,20 @@ import Link from "next/link"
 import { DateTime } from "luxon"
 import gql from "graphql-tag"
 
+import { DynamicInView } from "@dk3/shared-frontend/lib/DynamicInView"
 import { QueryWithAuthentication } from "@dk3/shared-frontend/lib/QueryWithAuthentication"
 import { MutationWithAuthentication } from "@dk3/shared-frontend/lib/MutationWithAuthentication"
 import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
 
 import { EventCard } from "@dk3/ui/components/EventCard"
-import { ListTitle, ListTitleAppendix } from "@dk3/ui/atoms/Typography"
+import { ListTitle, ListTitleAppendix, Text } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { DangerBadge, SuccessBadge } from "@dk3/ui/atoms/Badge"
 import styled from "@emotion/styled"
 import { groupedEvents } from "./eventDataHelper"
 import { AddEventButton } from "@dk3/ui/components/AddEventButton"
+import { Spacer } from "@dk3/ui/atoms/Spacer"
+import { Flex } from "@dk3/ui/atoms/Flex"
 
 const EventSection = styled.div`
   position: relative;
@@ -58,7 +61,7 @@ export const EventQueryList = withRouter(({ query, filter, skip, router }) => {
       notLoggedInMessage="You need an account to view your bookmarked events."
       fetchPolicy={filter === "mine" ? "cache-and-network" : "cache-first"}
     >
-      {({ loading, error, data }) => {
+      {({ loading, error, data, fetchMore }) => {
         if (error) return <span>Error loading posts.</span>
         if (loading) return <Spinner mt="xl" mb="xxxl" />
 
@@ -200,6 +203,49 @@ export const EventQueryList = withRouter(({ query, filter, skip, router }) => {
                     +
                   </AddEventButton>
                 </Link>
+
+                {upcomingEvents.hasMore && (
+                  <DynamicInView
+                    as="div"
+                    onChange={inView => {
+                      // if inView is true and it still hasMore
+                      if (inView && upcomingEvents.hasMore) {
+                        fetchMore({
+                          variables: {
+                            skip: upcomingEvents.nextPage,
+                          },
+                          updateQuery: (prev, { fetchMoreResult }) => {
+                            if (!fetchMoreResult) return prev
+
+                            return Object.assign({}, prev, {
+                              upcomingEvents: {
+                                __typename: "PaginatedEvents",
+                                events: [
+                                  ...prev.upcomingEvents.events,
+                                  ...fetchMoreResult.upcomingEvents.events,
+                                ],
+                                hasMore: fetchMoreResult.upcomingEvents.hasMore,
+                                nextPage:
+                                  fetchMoreResult.upcomingEvents.nextPage,
+                                totalCount:
+                                  fetchMoreResult.upcomingEvents.totalCount,
+                              },
+                            })
+                          },
+                        })
+                      }
+                    }}
+                  >
+                    <Spacer pv="xl">
+                      <Flex flexDirection="column" alignItems="center">
+                        <Spinner />
+                        <Flex>
+                          <Text>Fetching more events…</Text>
+                        </Flex>
+                      </Flex>
+                    </Spacer>
+                  </DynamicInView>
+                )}
               </React.Fragment>
             )}
           </MutationWithAuthentication>
