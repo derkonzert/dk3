@@ -260,7 +260,7 @@ exports.upcomingEvents = async ({
   skip,
   limit,
 } = {}) => {
-  let query = await Event.Model.find({
+  let query = Event.Model.find({
     to: {
       $gte: DateTime.local()
         .startOf("day")
@@ -278,6 +278,18 @@ exports.upcomingEvents = async ({
   }
 
   return query.exec()
+}
+
+exports.allUpcomingEventsCount = async () => {
+  return await Event.Model.find({
+    to: {
+      $gte: DateTime.local()
+        .startOf("day")
+        .toJSDate(),
+    },
+  })
+    .countDocuments()
+    .exec()
 }
 
 exports.findSimilarEvents = async ({ title }) => {

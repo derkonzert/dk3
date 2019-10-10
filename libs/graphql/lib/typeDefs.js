@@ -46,7 +46,7 @@ const typeDefs = gql`
     recentlyAdded: Int
   }
 
-  type ArchivedEvents {
+  type PaginatedEvents {
     events: [Event]
     nextPage: Int
     hasMore: Boolean
@@ -59,11 +59,11 @@ const typeDefs = gql`
     # Expiration info on used access token
     authInfo: AuthenticationInfo
     # Upcoming events
-    upcomingEvents(filter: String): [Event]
+    upcomingEvents(filter: String, skip: Int, limit: Int): PaginatedEvents
     # Find similar events by title
     similarEvents(title: String!): [Event]
     # Past events
-    pastEvents(page: Int!): ArchivedEvents
+    pastEvents(page: Int!): PaginatedEvents
     # Event by ID
     event(id: ID!): Event
     # Locations by search term
