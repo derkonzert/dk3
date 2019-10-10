@@ -29,7 +29,7 @@ export const UPCOMING_EVENTS_EVENT_FRAGMENT = gql`
 
 export const UPCOMING_EVENTS = gql`
   query allEvents($filter: String!, $skip: Int!) {
-    upcomingEvents(filter: $filter, skip: $skip, limit: 25)
+    upcomingEvents(filter: $filter, skip: $skip, limit: 20)
       @connection(key: "upcomingEvents", filter: [$filter]) {
       hasMore
       nextPage
