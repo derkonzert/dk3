@@ -37,7 +37,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.5",
     "@emotion/styled": "^10.0.5",
-    "@reach/dialog": "^0.3.0",
+    "@reach/dialog": "^0.4.0",
     "@reach/visually-hidden": "^0.3.0",
     "click-outside-hook": "^1.1.0",
     "emotion-theming": "^10.0.7",
