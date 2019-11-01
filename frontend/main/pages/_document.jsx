@@ -44,6 +44,7 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <script async defer src="//ov.derkonzert.de/tracker.js"></script>
         </body>
       </html>
     )
