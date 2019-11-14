@@ -155,8 +155,9 @@ export const themes = {
   dark: darkTheme,
 }
 
+// eslint-disable-next-line no-unused-vars
 export const ThemeProvider = ({ theme, ...props }) => {
-  const usedTheme = themes[theme] || themes["light"]
+  // const usedTheme = themes[theme] || themes["light"]
 
-  return <EmotionThemeProvider theme={usedTheme} {...props} />
+  return <EmotionThemeProvider theme={themes.light} {...props} />
 }

@@ -13,19 +13,22 @@ import {
 } from "@dk3/ui/components/HorizontalMenu"
 
 import { ThemeProvider } from "@dk3/ui/theme"
-import { withThemeFromCookie } from "@dk3/shared-frontend/lib/withThemeFromCookie"
+
 import { FooterLinks } from "@dk3/shared-frontend/lib/FooterLinks"
 import { Footer } from "@dk3/ui/components/Footer"
 
 class MyApp extends App {
+  // static async getInitialProps({ ctx, ...props }) {
+  //   /* hidekeks coming from dk2 */
+  //   const appProps = await App.getInitialProps({ ctx, ...props })
+
+  //   return {
+  //     ...appProps,
+  //   }
+  // }
+
   render() {
-    const {
-      onThemeChange,
-      Component,
-      theme,
-      pageProps,
-      apolloClient,
-    } = this.props
+    const { Component, theme = "light", pageProps, apolloClient } = this.props
 
     return (
       <ThemeProvider theme={theme}>
@@ -90,12 +93,7 @@ class MyApp extends App {
                     <Component {...pageProps} {...currentUserProps} />
                   </PageWrapper>
                   <Footer>
-                    <FooterLinks
-                      themeName={theme}
-                      onThemeChange={e => {
-                        onThemeChange(e.target.checked ? "dark" : "light")
-                      }}
-                    />
+                    <FooterLinks />
                   </Footer>
                 </React.Fragment>
               )
@@ -107,4 +105,4 @@ class MyApp extends App {
   }
 }
 
-export default withThemeFromCookie(withApollo(MyApp))
+export default withApollo(MyApp)

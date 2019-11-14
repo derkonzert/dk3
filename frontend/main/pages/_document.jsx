@@ -3,24 +3,24 @@
 
 // ./pages/_document.js
 import Document, { Head, Main, NextScript } from "next/document"
-import { layoutActiveClass } from "@dk3/ui/layouts/ListAndDetail"
+// import { layoutActiveClass } from "@dk3/ui/layouts/ListAndDetail"
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx)
+  // static async getInitialProps(ctx) {
+  //   const initialProps = await Document.getInitialProps(ctx)
 
-    return {
-      ...initialProps,
-      htmlClassName:
-        ctx.pathname === "/" && !!ctx.query.eventId
-          ? layoutActiveClass
-          : undefined,
-    }
-  }
+  //   return {
+  //     ...initialProps,
+  //     htmlClassName:
+  //       ctx.pathname === "/" && !!ctx.query.eventId
+  //         ? layoutActiveClass
+  //         : undefined,
+  //   }
+  // }
 
   render() {
     return (
-      <html lang="en" className={this.props.htmlClassName}>
+      <html lang="en">
         <Head>
           <meta
             name="viewport"

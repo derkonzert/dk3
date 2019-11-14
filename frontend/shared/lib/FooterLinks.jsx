@@ -28,9 +28,8 @@ export const FooterLinks = ({ themeName, onThemeChange }) => (
       <Flex basis="auto" grow="0.2" justifyContent="center">
         <FooterCheckbox
           mv="none"
-          label="Dark Mode"
-          checked={themeName === "dark"}
-          onChange={onThemeChange}
+          label="Dark Mode (currently not available)"
+          checked={false}
         />
       </Flex>
     )}

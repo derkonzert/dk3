@@ -17,6 +17,7 @@ export const CurrentUser = withApollo(
     return (
       <Query query={currentUserQuery} {...props}>
         {({ data, error, loading }) => {
+          console.log(data, error, loading)
           if (error) {
             return <div>{error.message}</div>
           }
