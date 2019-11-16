@@ -27,10 +27,7 @@ export default function Index() {
               onSubmit={async e => {
                 e.preventDefault()
 
-                const uri =
-                  process.env.NODE_ENV === "production"
-                    ? "/auth/requestPasswordReset"
-                    : "http://localhost:8004/auth/requestPasswordReset"
+                const uri = "/auth/requestPasswordReset"
 
                 try {
                   const response = await fetch(uri, {

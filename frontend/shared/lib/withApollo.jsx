@@ -41,7 +41,7 @@ export const getApiUri = ctx => {
       ? `${location.protocol}//${hostname}/api`
       : `https://${hostname}/api`
   } else {
-    return `http://${hostname}:8004/api`
+    return `http://${hostname}:3000/api`
   }
 }
 

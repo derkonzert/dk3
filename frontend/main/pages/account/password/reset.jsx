@@ -59,10 +59,7 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
                 return
               }
 
-              const uri =
-                process.env.NODE_ENV === "production"
-                  ? "/auth/passwordReset"
-                  : "http://localhost:8004/auth/passwordReset"
+              const uri = "/auth/passwordReset"
 
               try {
                 const response = await fetch(uri, {

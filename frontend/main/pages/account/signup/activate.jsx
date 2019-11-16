@@ -14,10 +14,7 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
 
   useEffect(() => {
     async function checkDoiToken() {
-      const uri =
-        process.env.NODE_ENV === "production"
-          ? "/auth/verify-email"
-          : "http://localhost:8004/auth/verify-email"
+      const uri = "/auth/verify-email"
 
       try {
         const response = await fetch(uri, {

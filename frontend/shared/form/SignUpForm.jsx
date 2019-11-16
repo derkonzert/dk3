@@ -5,8 +5,7 @@ import { withApollo } from "react-apollo"
 
 import { useUniquenessCheck } from "../lib/useUniquenessCheck"
 
-const uriBase =
-  process.env.NODE_ENV === "production" ? "/" : "http://localhost:8004/"
+const uriBase = "/"
 
 export const SignUpForm = withApollo(({ onSignUp, onCancel }) => {
   const [formState, setFormState] = useState({

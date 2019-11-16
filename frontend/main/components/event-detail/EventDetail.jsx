@@ -68,7 +68,7 @@ const Wrapper = styled.div`
 const domain =
   process.env.NODE_ENV === "production"
     ? "https://derkonzert.de"
-    : "http://localhost:8004"
+    : "http://localhost:3000"
 
 export const EventDetail = ({ id, showMine }) => {
   return (

@@ -58,8 +58,7 @@ function updateCache(cache, query, newMe) {
   }
 }
 
-const uriBase =
-  process.env.NODE_ENV === "production" ? "/" : "http://localhost:8004/"
+const uriBase = "/"
 
 const Form = ({ data, onCreated }) => {
   const [showSuccess, setShowSuccess] = useState(false)
