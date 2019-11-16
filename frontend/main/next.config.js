@@ -11,11 +11,5 @@ module.exports = withCSS({
 
   pageExtensions: ["js", "jsx", "mdx"],
 
-  exportPathMap: async () => ({
-    "/": { page: "/" },
-    "/mine": { page: "/", query: { showMine: 1 } },
-    "/add-new-event": { page: "/", query: { addEvent: 1 } },
-  }),
-
   webpack: sharedWebpack,
 })
