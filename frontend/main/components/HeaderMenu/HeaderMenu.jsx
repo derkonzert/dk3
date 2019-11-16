@@ -40,7 +40,7 @@ export const HeaderMenu = () => {
         <Link href="/?addEvent=1" as="/add-new-event" passHref>
           <HorizontalMenuItem>Add Event</HorizontalMenuItem>
         </Link>
-        <Link href="/account/" passHref>
+        <Link href="/account" passHref>
           <HorizontalMenuItem>Account</HorizontalMenuItem>
         </Link>
       </HorizontalMenu>

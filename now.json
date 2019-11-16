@@ -138,7 +138,7 @@
     {
       "src": "/event/(.)*-(?<eventId>.*)$",
       "methods": ["GET"],
-      "dest": "frontend/main?showEvent=1&eventId=$eventId",
+      "dest": "frontend/main/event",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",

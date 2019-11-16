@@ -11,13 +11,26 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.boxBackground};
 `
 
+const extractIdFromPath = path => {
+  const match = path.match(/\/event\/(.)*-(?<eventId>.*)$/)
+  if (match) {
+    return match[2]
+  } else {
+    return undefined
+  }
+}
+
 const EventPage = function Event({ router }) {
+  const eventId = !router.query.eventId
+    ? extractIdFromPath(router.asPath)
+    : router.query.eventId
+
   return (
     <SentryErrorBoundary>
       <ListAndDetail>
         <ListAndDetailMain>
           <Wrapper>
-            <EventDetail id={router.query.eventId} />
+            <EventDetail id={eventId} />
           </Wrapper>
         </ListAndDetailMain>
       </ListAndDetail>

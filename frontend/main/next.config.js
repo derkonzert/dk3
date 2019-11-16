@@ -13,7 +13,8 @@ module.exports = withCSS({
 
   exportPathMap: async () => ({
     "/": { page: "/" },
-    "/c": { page: "/c" },
+    "/mine": { page: "/", query: { showMine: 1 } },
+    "/add-new-event": { page: "/", query: { addEvent: 1 } },
   }),
 
   webpack: sharedWebpack,
