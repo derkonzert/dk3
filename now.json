@@ -171,7 +171,7 @@
     {
       "src": "/add-new-event$",
       "methods": ["GET"],
-      "dest": "frontend/main?addEvent=true",
+      "dest": "frontend/main/index?addEvent=true",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
@@ -232,9 +232,11 @@
         "Cache-Control": "public, s-maxage=31536000, max-age=31536000"
       }
     },
+
     {
-      "src": "^/(.*)$",
-      "dest": "frontend/main/$1",
+      "src": "(.*)$",
+      "dest": "frontend/main$1",
+      "continue": true,
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
