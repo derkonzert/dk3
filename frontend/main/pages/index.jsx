@@ -92,7 +92,7 @@ export default withRouter(function Index({ router }) {
               <LogoTitle mb="m">derkonzert</LogoTitle>
               <Slogan>
                 {DK_DESCRIPTION}{" "}
-                <Link passHref href="/pages/about">
+                <Link passHref href="/about">
                   <UILink>Read more…</UILink>
                 </Link>
               </Slogan>

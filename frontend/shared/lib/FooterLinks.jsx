@@ -13,16 +13,16 @@ export const FooterLinks = ({ themeName, onThemeChange }) => (
     style={{ textAlign: "center", maxWidth: "68.8rem" }}
   >
     <Flex basis="auto" grow="0.2" justifyContent="center">
-      <FooterLink href="/pages/about">About</FooterLink>
+      <FooterLink href="/about">About</FooterLink>
     </Flex>
     <Flex basis="auto" grow="0.2" justifyContent="center">
       <FooterLink href="/archive">Archive</FooterLink>
     </Flex>
     <Flex basis="auto" grow="0.2" justifyContent="center">
-      <FooterLink href="/pages/imprint">Imprint</FooterLink>
+      <FooterLink href="/imprint">Imprint</FooterLink>
     </Flex>
     <Flex basis="auto" grow="0.2" justifyContent="center">
-      <FooterLink href="/pages/privacy">Privacy</FooterLink>
+      <FooterLink href="/privacy">Privacy</FooterLink>
     </Flex>
     {!!(themeName && onThemeChange) && (
       <Flex basis="auto" grow="0.2" justifyContent="center">

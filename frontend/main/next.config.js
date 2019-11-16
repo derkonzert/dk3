@@ -9,6 +9,8 @@ module.exports = withCSS({
     SENTRY_DSN_FRONTEND: process.env.SENTRY_DSN_FRONTEND,
   },
 
+  pageExtensions: ["js", "jsx", "mdx"],
+
   exportPathMap: async () => ({
     "/": { page: "/" },
     "/c": { page: "/c" },
