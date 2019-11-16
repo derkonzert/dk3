@@ -236,7 +236,7 @@
     {
       "src": "(.*)$",
       "dest": "frontend/main$1",
-      "continue": true,
+
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
