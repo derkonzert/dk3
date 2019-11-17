@@ -4,7 +4,8 @@ import App from "next/app"
 import cookie from "js-cookie"
 import { ApolloProvider } from "react-apollo"
 
-import { PageWrapper } from "../components/PageWrapper"
+import { Global } from "@emotion/core"
+import { global } from "@dk3/ui/documentStyles"
 import { withApollo } from "@dk3/shared-frontend/lib/withApollo"
 
 import { ThemeProvider } from "@dk3/ui/theme"
@@ -70,32 +71,32 @@ class MyApp extends App {
     return (
       <ThemeProvider theme={theme}>
         <RichTextProvider value={rtxtPlugins}>
-          <PageWrapper>
-            <ApolloProvider client={apolloClient}>
-              <Component {...pageProps} />
-            </ApolloProvider>
+          <Global styles={global} />
 
-            {showCookieConsent && (
-              <CookieConsent
-                onClick={() => {
-                  this.setState({
-                    showCookieConsent: false,
-                  })
-                  cookie.set("cookieConsent", true, {
-                    expires: 365,
-                    secure: process.env.NODE_ENV === "production",
-                  })
-                }}
-              >
-                <Text>
-                  We use cookies to provide the best possible features and
-                  service on our website. By using our website, you agree to
-                  this. Read more in our{" "}
-                  <UiLink href="/pages/privacy">Privacy Policy</UiLink>.
-                </Text>
-              </CookieConsent>
-            )}
-          </PageWrapper>
+          <ApolloProvider client={apolloClient}>
+            <Component {...pageProps} />
+          </ApolloProvider>
+
+          {showCookieConsent && (
+            <CookieConsent
+              onClick={() => {
+                this.setState({
+                  showCookieConsent: false,
+                })
+                cookie.set("cookieConsent", true, {
+                  expires: 365,
+                  secure: process.env.NODE_ENV === "production",
+                })
+              }}
+            >
+              <Text>
+                We use cookies to provide the best possible features and service
+                on our website. By using our website, you agree to this. Read
+                more in our{" "}
+                <UiLink href="/pages/privacy">Privacy Policy</UiLink>.
+              </Text>
+            </CookieConsent>
+          )}
         </RichTextProvider>
       </ThemeProvider>
     )

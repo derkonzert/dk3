@@ -1,10 +1,31 @@
 import React from "react"
-import { Global } from "@emotion/core"
-import { global } from "@dk3/ui/documentStyles"
+import { CenteredContent } from "@dk3/ui/layouts/ListAndDetail"
+import { HeaderMenu } from "./HeaderMenu/HeaderMenu"
+import { Flex } from "@dk3/ui/atoms/Flex"
+import { SideNavigation } from "./SideNavigation"
+import { Spacer } from "@dk3/ui/atoms/Spacer"
+import styled from "@emotion/styled"
+
+const Left = styled.div`
+  width: 20rem;
+`
+
+const Right = styled(Spacer)`
+  width: 100%;
+  background: ${({ theme }) => theme.colors.detailBackground};
+`
 
 export const PageWrapper = ({ children }) => (
-  <React.Fragment>
-    <Global styles={global} />
-    {children}
-  </React.Fragment>
+  <CenteredContent>
+    <HeaderMenu />
+
+    <Flex justifyContent="space-between">
+      <Left>
+        <SideNavigation />
+      </Left>
+      <Right ml="l" pa="l">
+        <Spacer>{children}</Spacer>
+      </Right>
+    </Flex>
+  </CenteredContent>
 )

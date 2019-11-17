@@ -1,41 +1,33 @@
 import { withRouter } from "next/router"
 import styled from "@emotion/styled"
 import { ListAndDetail, ListAndDetailMain } from "@dk3/ui/layouts/ListAndDetail"
+import { CreateEventForm } from "../components/form/CreateEventForm"
 
-import { EventDetail } from "../components/event-detail/EventDetail"
 import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
+import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
 
 const Wrapper = styled(Spacer)`
   min-height: 100vh;
   background: ${({ theme }) => theme.colors.boxBackground};
 `
 
-const extractIdFromPath = path => {
-  const match = path.match(/\/event\/(.)*-(?<eventId>.*)$/)
-  if (match) {
-    return match[2]
-  } else {
-    return undefined
-  }
-}
-
-const EventPage = function Event({ router }) {
-  const eventId = !router.query.eventId
-    ? extractIdFromPath(router.asPath)
-    : router.query.eventId
-
+export default withRouter(function CreateNewEvent({ router }) {
   return (
     <SentryErrorBoundary>
       <ListAndDetail>
         <ListAndDetailMain>
           <Wrapper pa="l">
-            <EventDetail id={eventId} />
+            <CreateEventForm
+              onCreated={event => {
+                router.replace(`/?eventId=${event.id}`, eventHref(event), {
+                  shallow: true,
+                })
+              }}
+            />
           </Wrapper>
         </ListAndDetailMain>
       </ListAndDetail>
     </SentryErrorBoundary>
   )
-}
-
-export default withRouter(EventPage)
+})

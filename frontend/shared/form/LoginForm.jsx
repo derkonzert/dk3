@@ -12,6 +12,7 @@ import { Spinner } from "@dk3/ui/atoms/Spinner"
 
 const Form = styled.form`
   position: relative;
+  max-width: 35rem;
 `
 
 const LoadingOverlay = styled.div`

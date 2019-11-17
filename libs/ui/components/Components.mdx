@@ -19,7 +19,7 @@ A card comes with 3 fancyness levels:
 <Playground>
   <State initial={{ b1: false, b2: true, b3: false }}>
     {({ state, setState }) => (
-      <React.Fragment>
+      <div>
         <EventCard
           title="Uncle Acid and the Deadbeats"
           description="Unter Deck — 19:30 Uhr"
@@ -52,7 +52,7 @@ A card comes with 3 fancyness levels:
             setState({ b3: !state.b3 })
           }}
         />
-      </React.Fragment>
+      </div>
     )}
   </State>
 </Playground>
@@ -62,7 +62,7 @@ A card comes with 3 fancyness levels:
 <Playground>
   <State initial={{ b1: true, b2: false, b3: true }}>
     {({ state, setState }) => (
-      <React.Fragment>
+      <div>
         <EventCard
           large
           title="Nine Inch Nails"
@@ -98,7 +98,7 @@ A card comes with 3 fancyness levels:
             setState({ b3: !state.b3 })
           }}
         />
-      </React.Fragment>
+      </div>
     )}
   </State>
 </Playground>
@@ -108,7 +108,7 @@ With different data:
 <Playground>
   <State initial={{ b1: true, b2: false, b3: true, b4: true, b5: false, b6: false }}>
     {({ state, setState }) => (
-      <React.Fragment>
+      <div>
         <EventCard
           day={12}
           dayName="Mo"
@@ -141,7 +141,6 @@ With different data:
             setState({ b3: !state.b3 })
           }}
         />
-
         <EventCard
           large
           title="Uncle Acid and the Deadbeats"
@@ -171,8 +170,20 @@ With different data:
             setState({ b6: !state.b6 })
           }}
         />
-      </React.Fragment>
+      </div>
     )}
     </State>
 
+</Playground>
+
+## VerticalMenu
+
+import { VerticalMenu, VerticalMenuItem } from "./VerticalMenu"
+
+<Playground>
+  <VerticalMenu>
+    <VerticalMenuItem>About</VerticalMenuItem>
+    <VerticalMenuItem isActive>Settings</VerticalMenuItem>
+    <VerticalMenuItem>Logout</VerticalMenuItem>
+  </VerticalMenu>
 </Playground>

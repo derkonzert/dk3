@@ -6,21 +6,24 @@ import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundar
 
 import { AccountSetupForm } from "../../components/AccountSetupForm"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
+import { PageWrapper } from "../../components/PageWrapper"
 
 export default function Setup() {
   return (
     <SentryErrorBoundary>
-      <CurrentUser>
-        {({ isLoggedIn }) =>
-          isLoggedIn ? (
-            <AccountSetupForm />
-          ) : (
-            <Link href="/login" as="/account/login" passHref>
-              <UILink>Please login</UILink>
-            </Link>
-          )
-        }
-      </CurrentUser>
+      <PageWrapper>
+        <CurrentUser>
+          {({ isLoggedIn }) =>
+            isLoggedIn ? (
+              <AccountSetupForm />
+            ) : (
+              <Link href="/login" as="/account/login" passHref>
+                <UILink>Please login</UILink>
+              </Link>
+            )
+          }
+        </CurrentUser>
+      </PageWrapper>
     </SentryErrorBoundary>
   )
 }

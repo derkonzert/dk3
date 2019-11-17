@@ -4,6 +4,7 @@ import { Description, ListTitle } from "@dk3/ui/atoms/Typography"
 import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 import { LoginForm } from "@dk3/shared-frontend/form/LoginForm"
 import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
+import { PageWrapper } from "../../components/PageWrapper"
 
 export const getRedirectUrl = () => {
   try {
@@ -29,23 +30,25 @@ export const getRedirectUrl = () => {
 export default function Index() {
   return (
     <SentryErrorBoundary>
-      <ListTitle>Login</ListTitle>
-      <CurrentUser>
-        {({ isLoggedIn }) =>
-          isLoggedIn ? (
-            <div>You are already logged in</div>
-          ) : (
-            <React.Fragment>
-              <Description>Enter your credentials to sign in</Description>
-              <LoginForm
-                onLogin={() => {
-                  window.location.href = getRedirectUrl()
-                }}
-              />
-            </React.Fragment>
-          )
-        }
-      </CurrentUser>
+      <PageWrapper>
+        <ListTitle>Login</ListTitle>
+        <CurrentUser>
+          {({ isLoggedIn }) =>
+            isLoggedIn ? (
+              <div>You are already logged in</div>
+            ) : (
+              <React.Fragment>
+                <Description>Enter your credentials to sign in</Description>
+                <LoginForm
+                  onLogin={() => {
+                    window.location.href = getRedirectUrl()
+                  }}
+                />
+              </React.Fragment>
+            )
+          }
+        </CurrentUser>
+      </PageWrapper>
     </SentryErrorBoundary>
   )
 }

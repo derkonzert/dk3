@@ -24,7 +24,6 @@
       "use": "@now/node",
       "config": { "maxLambdaSize": "42mb" }
     },
-    { "src": "libs/ui/package.json", "use": "@now/static-build" },
     { "src": "frontend/static/*", "use": "@now/static" },
     {
       "src": "frontend/main/next.config.js",
@@ -161,28 +160,6 @@
       "src": "/update-event/(?<eventId>.*)$",
       "methods": ["GET"],
       "dest": "frontend/main/update-event?eventId=$eventId",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block"
-      }
-    },
-    {
-      "src": "/add-new-event$",
-      "methods": ["GET"],
-      "dest": "frontend/main/index?addEvent=true",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block"
-      }
-    },
-    {
-      "src": "/mine$",
-      "methods": ["GET"],
-      "dest": "frontend/main?showMine=true",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",

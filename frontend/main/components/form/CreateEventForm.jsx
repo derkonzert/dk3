@@ -104,27 +104,32 @@ export const CreateEventForm = ({ onCreated }) => {
                     })
                   }}
                   update={(cache, { data: { createEvent } }) => {
-                    const { upcomingEvents } = cache.readQuery({
-                      query: UPCOMING_EVENTS,
-                      variables: {
-                        filter: "all",
-                      },
-                    })
-
-                    cache.writeQuery({
-                      query: UPCOMING_EVENTS,
-                      variables: { filter: "all" },
-                      data: {
-                        upcomingEvents: {
-                          ...upcomingEvents,
-                          events: [createEvent, ...upcomingEvents.events].sort(
-                            (a, b) => {
-                              return a.from > b.from ? 1 : -1
-                            }
-                          ),
+                    try {
+                      const { upcomingEvents } = cache.readQuery({
+                        query: UPCOMING_EVENTS,
+                        variables: {
+                          filter: "all",
                         },
-                      },
-                    })
+                      })
+
+                      cache.writeQuery({
+                        query: UPCOMING_EVENTS,
+                        variables: { filter: "all" },
+                        data: {
+                          upcomingEvents: {
+                            ...upcomingEvents,
+                            events: [
+                              createEvent,
+                              ...upcomingEvents.events,
+                            ].sort((a, b) => {
+                              return a.from > b.from ? 1 : -1
+                            }),
+                          },
+                        },
+                      })
+                    } catch (_err) {
+                      // form might have been used standalone
+                    }
 
                     resetState()
 
@@ -212,7 +217,7 @@ export const CreateEventForm = ({ onCreated }) => {
                           }}
                         >
                           <MegaTitle mr="xl" mb="m">
-                            Create New Event
+                            Add New Event
                           </MegaTitle>
                           <Text mb="l">
                             {

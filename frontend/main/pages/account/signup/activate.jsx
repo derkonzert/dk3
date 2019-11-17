@@ -7,6 +7,7 @@ import { ListTitle, Text, Strong } from "@dk3/ui/atoms/Typography"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { VeryFancyLink } from "@dk3/ui/form/Button"
 import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
+import { PageWrapper } from "../../../components/PageWrapper"
 
 const SignUpActivate = withRouter(function SignUpActivate({ router }) {
   const [status, setStatus] = useState("fetching")
@@ -44,7 +45,7 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
   }, [])
 
   return (
-    <React.Fragment>
+    <PageWrapper>
       <ListTitle>Activating Account</ListTitle>
       {status === "error" && <Strong>{message}</Strong>}
       {status === "fetching" && (
@@ -65,7 +66,7 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
           </Link>
         </React.Fragment>
       )}
-    </React.Fragment>
+    </PageWrapper>
   )
 })
 
