@@ -26,7 +26,7 @@
     },
     { "src": "frontend/static/*", "use": "@now/static" },
     {
-      "src": "frontend/main/next.config.js",
+      "src": "frontend/main/package.json",
       "use": "@now/next"
     }
   ],
@@ -211,8 +211,8 @@
     },
 
     {
-      "src": "(.*)$",
-      "dest": "frontend/main$1",
+      "src": "^/(.*)$",
+      "dest": "frontend/main/$1",
 
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
