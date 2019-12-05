@@ -126,7 +126,7 @@
     },
     {
       "src": "/account/setup/(?<step>.*)",
-      "dest": "/frontend/main/account/setup?step=$step",
+      "dest": "/frontend/main/account/setup.html?step=$step",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
@@ -137,7 +137,7 @@
     {
       "src": "/event/(.)*-(?<eventId>.*)$",
       "methods": ["GET"],
-      "dest": "frontend/main/event",
+      "dest": "frontend/main/event.html?eventId=$eventId",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
@@ -148,7 +148,7 @@
     {
       "src": "/event-card/(.)*-(?<eventId>.*)$",
       "methods": ["GET"],
-      "dest": "frontend/main/event-card?eventId=$eventId",
+      "dest": "frontend/main/event-card.html?eventId=$eventId",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
@@ -159,7 +159,7 @@
     {
       "src": "/update-event/(?<eventId>.*)$",
       "methods": ["GET"],
-      "dest": "frontend/main/update-event?eventId=$eventId",
+      "dest": "frontend/main/update-event.html?eventId=$eventId",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
@@ -177,49 +177,6 @@
         "X-XSS-Protection": "1; mode=block"
       }
     },
-    {
-      "src": "/pwabuilder-sw.js",
-      "dest": "frontend/static/pwabuilder-sw.js",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block"
-      }
-    },
-    {
-      "src": "/pwabuilder-sw-register.js",
-      "dest": "frontend/static/pwabuilder-sw-register.js",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block"
-      }
-    },
-
-    {
-      "src": "/(.*).(js|css)",
-      "dest": "/frontend/main/$1.$2",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block",
-        "Cache-Control": "public, s-maxage=31536000, max-age=31536000"
-      }
-    },
-
-    {
-      "src": "^/(.*)$",
-      "dest": "frontend/main/$1",
-
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block"
-      }
-    }
+    { "src": "(?!/?blog)(.*)", "dest": "frontend/main$1", "continue": true }
   ]
 }
