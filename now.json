@@ -24,18 +24,9 @@
       "use": "@now/node",
       "config": { "maxLambdaSize": "42mb" }
     },
-    { "src": "libs/ui/package.json", "use": "@now/static-build" },
     { "src": "frontend/static/*", "use": "@now/static" },
     {
-      "src": "frontend/account/next.config.js",
-      "use": "@now/next"
-    },
-    {
-      "src": "frontend/pages/next.config.js",
-      "use": "@now/next"
-    },
-    {
-      "src": "frontend/main/next.config.js",
+      "src": "frontend/main/package.json",
       "use": "@now/next"
     }
   ],
@@ -48,38 +39,24 @@
       }
     },
     {
-      "src": "/stay-up-to-date",
+      "src": "/pages/about",
       "status": 301,
       "headers": {
-        "Location": "/pages/about"
+        "Location": "/about"
       }
     },
     {
-      "src": "/about",
+      "src": "/pages/imprint",
       "status": 301,
       "headers": {
-        "Location": "/pages/about"
+        "Location": "/imprint"
       }
     },
     {
-      "src": "/news",
+      "src": "/pages/privacy",
       "status": 301,
       "headers": {
-        "Location": "/pages/about"
-      }
-    },
-    {
-      "src": "/imprint",
-      "status": 301,
-      "headers": {
-        "Location": "/pages/imprint"
-      }
-    },
-    {
-      "src": "/privacy",
-      "status": 301,
-      "headers": {
-        "Location": "/pages/privacy"
+        "Location": "/privacy"
       }
     },
     {
@@ -149,38 +126,7 @@
     },
     {
       "src": "/account/setup/(?<step>.*)",
-      "dest": "/frontend/account/setup?step=$step",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block"
-      }
-    },
-    {
-      "src": "/account/(.*).(js|css)",
-      "dest": "/frontend/account/$1.$2",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block",
-        "Cache-Control": "public, max-age=31536000"
-      }
-    },
-    {
-      "src": "/account/(.*)",
-      "dest": "/frontend/account/$1",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block"
-      }
-    },
-    {
-      "src": "/pages/(.*)",
-      "dest": "/frontend/pages/$1",
+      "dest": "/frontend/main/account/setup.html?step=$step",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
@@ -191,7 +137,7 @@
     {
       "src": "/event/(.)*-(?<eventId>.*)$",
       "methods": ["GET"],
-      "dest": "frontend/main/index?showEvent=1&eventId=$eventId",
+      "dest": "frontend/main/event.html?eventId=$eventId",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
@@ -202,7 +148,7 @@
     {
       "src": "/event-card/(.)*-(?<eventId>.*)$",
       "methods": ["GET"],
-      "dest": "frontend/main/event-card?eventId=$eventId",
+      "dest": "frontend/main/event-card.html?eventId=$eventId",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
@@ -213,29 +159,7 @@
     {
       "src": "/update-event/(?<eventId>.*)$",
       "methods": ["GET"],
-      "dest": "frontend/main/update-event?eventId=$eventId",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block"
-      }
-    },
-    {
-      "src": "/add-new-event$",
-      "methods": ["GET"],
-      "dest": "frontend/main/index?addEvent=true",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block"
-      }
-    },
-    {
-      "src": "/mine$",
-      "methods": ["GET"],
-      "dest": "frontend/main/index?showMine=true",
+      "dest": "frontend/main/update-event.html?eventId=$eventId",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
@@ -253,56 +177,6 @@
         "X-XSS-Protection": "1; mode=block"
       }
     },
-    {
-      "src": "/pwabuilder-sw.js",
-      "dest": "frontend/static/pwabuilder-sw.js",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block"
-      }
-    },
-    {
-      "src": "/pwabuilder-sw-register.js",
-      "dest": "frontend/static/pwabuilder-sw-register.js",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block"
-      }
-    },
-    {
-      "src": "/",
-      "dest": "frontend/main/index",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block"
-      }
-    },
-    {
-      "src": "/(.*).(js|css)",
-      "dest": "/frontend/main/$1.$2",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block",
-        "Cache-Control": "public, s-maxage=31536000, max-age=31536000"
-      }
-    },
-    {
-      "src": "^/(.*)$",
-      "dest": "frontend/main/$1",
-      "headers": {
-        "Strict-Transport-Security": "max-age=63072000",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "1; mode=block"
-      }
-    }
+    { "src": "(?!/?blog)(.*)", "dest": "frontend/main$1", "continue": true }
   ]
 }

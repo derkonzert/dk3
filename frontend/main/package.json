@@ -25,7 +25,6 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "now-build": "next build",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {

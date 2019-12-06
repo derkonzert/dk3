@@ -15,20 +15,31 @@ const Content = styled.div`
   width: 100%;
 `
 
+const extractIdFromPath = path => {
+  const match = path.match(/\/update-event\/(.*)$/)
+  console.log(match)
+  if (match) {
+    return match[1]
+  } else {
+    return undefined
+  }
+}
+
 export default withRouter(function UpdateEvent({ router }) {
+  const eventId = router.query.eventId || extractIdFromPath(router.asPath)
+
+  console.log(eventId)
+
   return (
     <SentryErrorBoundary>
       <Wrapper>
         <Head>
-          <title>Update event {router.query.eventId}</title>
-          <meta
-            name="description"
-            content={`Update event ${router.query.eventId}`}
-          />
+          <title>Update event {eventId}</title>
+          <meta name="description" content={`Update event ${eventId}`} />
         </Head>
         <Box>
           <Content>
-            <UpdateEventForm id={router.query.eventId} />
+            <UpdateEventForm id={eventId} />
           </Content>
         </Box>
       </Wrapper>

@@ -12,6 +12,7 @@ import { Spinner } from "@dk3/ui/atoms/Spinner"
 
 const Form = styled.form`
   position: relative;
+  max-width: 35rem;
 `
 
 const LoadingOverlay = styled.div`
@@ -33,10 +34,7 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
             setState({ loading: true })
             e.preventDefault()
 
-            const uri =
-              process.env.NODE_ENV === "production"
-                ? "/auth/signIn"
-                : "http://localhost:8004/auth/signIn"
+            const uri = "/auth/signIn"
 
             fetch(uri, {
               method: "post",

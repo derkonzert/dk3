@@ -37,6 +37,9 @@ const defaultTheme = {
     dialogOverlayBackground: "rgba(220, 220, 220, 0.65)",
 
     horizontalMenuColor: "#636161",
+    verticalMenuColor: "#636161",
+    verticalMenuBgColor: "#fff",
+    verticalMenuActiveColor: "#000",
     hr: "#e2e2e2",
 
     buttonColor: "black",
@@ -123,6 +126,8 @@ const darkTheme = {
     dialogContentBackground: "#333",
 
     horizontalMenuColor: "#e9e9e9",
+    verticalMenuColor: "#c9c9c9",
+    verticalMenuActiveColor: "#fff",
 
     hr: "rgb(56, 56, 56)",
 
@@ -155,8 +160,9 @@ export const themes = {
   dark: darkTheme,
 }
 
+// eslint-disable-next-line no-unused-vars
 export const ThemeProvider = ({ theme, ...props }) => {
-  const usedTheme = themes[theme] || themes["light"]
+  // const usedTheme = themes[theme] || themes["light"]
 
-  return <EmotionThemeProvider theme={usedTheme} {...props} />
+  return <EmotionThemeProvider theme={themes.light} {...props} />
 }

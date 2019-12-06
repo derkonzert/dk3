@@ -1,5 +1,6 @@
 import { State } from "react-powerplug"
 import Head from "next/head"
+import { CenteredContent } from "@dk3/ui/layouts/ListAndDetail"
 
 import { SuccessMessage } from "@dk3/ui/atoms/Message"
 import { Flex } from "@dk3/ui/atoms/Flex"
@@ -12,6 +13,8 @@ import {
   Link,
 } from "@dk3/ui/atoms/Typography"
 import { EventCard } from "@dk3/ui/components/EventCard"
+
+<CenteredContent>
 
 <Head>
   <title>About derkonzert.de</title>
@@ -163,7 +166,7 @@ import { EventCard } from "@dk3/ui/components/EventCard"
 </Text>
 
 <Text mv="m">
-  <Link href="/account/">Manage notification settings</Link>
+  <Link href="/account">Manage notification settings</Link>
 </Text>
 
 <SubTitle mt="l" mb="s">
@@ -177,7 +180,7 @@ import { EventCard } from "@dk3/ui/components/EventCard"
 </Text>
 
 <Text mv="m">
-  <Link href="/account/">Manage public username setting</Link>
+  <Link href="/account">Manage public username setting</Link>
 </Text>
 
 <SubTitle mt="l" mb="s">
@@ -221,3 +224,5 @@ import { EventCard } from "@dk3/ui/components/EventCard"
 <Text mv="l">
   <VeryFancyLink href="/">Back to derkonzert</VeryFancyLink>
 </Text>
+
+</CenteredContent>

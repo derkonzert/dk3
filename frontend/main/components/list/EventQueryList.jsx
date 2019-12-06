@@ -85,7 +85,7 @@ export const EventQueryList = withRouter(({ query, filter, skip, router }) => {
       variables={{ filter, skip }}
       ssr={false}
       notLoggedInMessage="You need an account to view your bookmarked events."
-      fetchPolicy={filter === "mine" ? "cache-and-network" : "cache-first"}
+      fetchPolicy={"cache-and-network"}
     >
       {({ loading, error, data, fetchMore }) => {
         if (error) return <span>Error loading posts.</span>

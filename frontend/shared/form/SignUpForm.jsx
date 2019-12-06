@@ -1,12 +1,16 @@
 import React, { useState } from "react"
 import { TextInput } from "@dk3/ui/form/TextInput"
-import { FancyButton, Button } from "@dk3/ui/form/Button"
+import { VeryFancyButton, Button } from "@dk3/ui/form/Button"
 import { withApollo } from "react-apollo"
 
 import { useUniquenessCheck } from "../lib/useUniquenessCheck"
+import styled from "@emotion/styled"
 
-const uriBase =
-  process.env.NODE_ENV === "production" ? "/" : "http://localhost:8004/"
+const uriBase = "/"
+
+const Form = styled.form`
+  max-width: 35rem;
+`
 
 export const SignUpForm = withApollo(({ onSignUp, onCancel }) => {
   const [formState, setFormState] = useState({
@@ -31,7 +35,7 @@ export const SignUpForm = withApollo(({ onSignUp, onCancel }) => {
   )
 
   return (
-    <form
+    <Form
       onSubmit={async e => {
         e.preventDefault()
 
@@ -136,10 +140,10 @@ export const SignUpForm = withApollo(({ onSignUp, onCancel }) => {
             Cancel
           </Button>
         )}
-        <FancyButton ml={onCancel ? "m" : "none"} type="submit">
-          Sign Up
-        </FancyButton>
+        <VeryFancyButton ml={onCancel ? "m" : "none"} type="submit">
+          Create Account
+        </VeryFancyButton>
       </div>
-    </form>
+    </Form>
   )
 })

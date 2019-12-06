@@ -62,7 +62,7 @@ const DynamicUpdateEventForm = dynamic(
 
 const DK_DESCRIPTION = "A user curated list of fine concerts in Munich."
 
-export default withRouter(function Index({ router, themeName, onThemeChange }) {
+export default withRouter(function Index({ router }) {
   const {
     query: { editMode, eventId, addEvent, showMine },
   } = router
@@ -92,7 +92,7 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
               <LogoTitle mb="m">derkonzert</LogoTitle>
               <Slogan>
                 {DK_DESCRIPTION}{" "}
-                <Link passHref href="/pages/about">
+                <Link passHref href="/about">
                   <UILink>Read more…</UILink>
                 </Link>
               </Slogan>
@@ -159,12 +159,7 @@ export default withRouter(function Index({ router, themeName, onThemeChange }) {
                     .
                   </Text>
                 </div>
-                <FooterLinks
-                  themeName={themeName}
-                  onThemeChange={e => {
-                    onThemeChange(e.target.checked ? "dark" : "light")
-                  }}
-                />
+                <FooterLinks />
               </Spacer>
             </CenteredContent>
           </Footer>

@@ -5,14 +5,13 @@ const sharedWebpack = require("@dk3/shared-frontend/next.webpack.config")
 module.exports = withCSS({
   target: "serverless",
 
+  exportTrailingSlash: false,
+
   env: {
     SENTRY_DSN_FRONTEND: process.env.SENTRY_DSN_FRONTEND,
   },
 
-  exportPathMap: async () => ({
-    "/": { page: "/" },
-    "/c": { page: "/c" },
-  }),
+  pageExtensions: ["js", "jsx", "mdx"],
 
   webpack: sharedWebpack,
 })

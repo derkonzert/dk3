@@ -1,12 +1,12 @@
 import React from "react"
 import App from "next/app"
-import nextCookie from "next-cookies"
+// import nextCookie from "next-cookies"
 import cookie from "js-cookie"
 import { ApolloProvider } from "react-apollo"
 
-import { PageWrapper } from "../components/PageWrapper"
+import { Global } from "@emotion/core"
+import { global } from "@dk3/ui/documentStyles"
 import { withApollo } from "@dk3/shared-frontend/lib/withApollo"
-import { withThemeFromCookie } from "@dk3/shared-frontend/lib/withThemeFromCookie"
 
 import { ThemeProvider } from "@dk3/ui/theme"
 import {
@@ -38,70 +38,69 @@ const rtxtPlugins = [
 ]
 
 class MyApp extends App {
-  static getInitialProps({ ctx }) {
-    /* hidekeks coming from dk2 */
-    const { cookieConsent, hidekeks } = nextCookie(ctx)
+  // static async getInitialProps({ ctx, ...props }) {
+  //   /* hidekeks coming from dk2 */
+  //   const appProps = await App.getInitialProps({ ctx, ...props })
 
-    return {
-      showCookieConsent: !(hidekeks === "1" || cookieConsent === "true"),
-    }
-  }
+  //   const { cookieConsent, hidekeks } = nextCookie(ctx)
+
+  //   return {
+  //     ...appProps,
+  //     showCookieConsent: !(hidekeks === "1" || cookieConsent === "true"),
+  //   }
+  // }
 
   constructor(props) {
     super(props)
 
     this.state = {
-      showCookieConsent: props.showCookieConsent,
+      showCookieConsent: false,
+    }
+  }
+
+  componentDidMount() {
+    if (cookie.get("cookieConsent") !== "true") {
+      this.setState({ showCookieConsent: true })
     }
   }
 
   render() {
-    const {
-      Component,
-      theme,
-      onThemeChange,
-      pageProps,
-      apolloClient,
-    } = this.props
+    const { Component, theme = "light", pageProps, apolloClient } = this.props
     const { showCookieConsent } = this.state
 
     return (
       <ThemeProvider theme={theme}>
         <RichTextProvider value={rtxtPlugins}>
-          <PageWrapper>
-            <ApolloProvider client={apolloClient}>
-              <Component
-                {...pageProps}
-                themeName={theme}
-                onThemeChange={onThemeChange}
-              />
-            </ApolloProvider>
+          <Global styles={global} />
 
-            {showCookieConsent && (
-              <CookieConsent
-                onClick={() => {
-                  this.setState({
-                    showCookieConsent: false,
-                  })
-                  cookie.set("cookieConsent", true, {
-                    expires: 365,
-                    secure: process.env.NODE_ENV === "production",
-                  })
-                }}
-              >
-                <Text>
-                  We use cookies to provide the best possible features and
-                  service on our website. By using our website, you agree to
-                  this. Read more in our{" "}
-                  <UiLink href="/pages/privacy">Privacy Policy</UiLink>.
-                </Text>
-              </CookieConsent>
-            )}
-          </PageWrapper>
+          <ApolloProvider client={apolloClient}>
+            <Component {...pageProps} />
+          </ApolloProvider>
+
+          {showCookieConsent && (
+            <CookieConsent
+              onClick={() => {
+                this.setState({
+                  showCookieConsent: false,
+                })
+                cookie.set("cookieConsent", true, {
+                  expires: 365,
+                  secure: process.env.NODE_ENV === "production",
+                })
+              }}
+            >
+              <Text>
+                We use cookies to provide the best possible features and service
+                on our website. By using our website, you agree to this. Read
+                more in our{" "}
+                <UiLink href="/pages/privacy">Privacy Policy</UiLink>.
+              </Text>
+            </CookieConsent>
+          )}
         </RichTextProvider>
       </ThemeProvider>
     )
   }
 }
 
-export default withThemeFromCookie(withApollo(MyApp))
+export default withApollo(MyApp)
