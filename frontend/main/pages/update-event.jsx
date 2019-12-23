@@ -17,7 +17,7 @@ const Content = styled.div`
 
 const extractIdFromPath = path => {
   const match = path.match(/\/update-event\/(.*)$/)
-  console.log(match)
+
   if (match) {
     return match[1]
   } else {
@@ -27,8 +27,6 @@ const extractIdFromPath = path => {
 
 export default withRouter(function UpdateEvent({ router }) {
   const eventId = router.query.eventId || extractIdFromPath(router.asPath)
-
-  console.log(eventId)
 
   return (
     <SentryErrorBoundary>
