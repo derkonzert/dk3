@@ -12,7 +12,7 @@ describe("Event", () => {
     })
 
     it("returns 0 or 1, dependent on the events bookmarkedBy length and total user count", async () => {
-      dao.allUsersCount.mockResolvedValue(10)
+      dao.allUsersCount.mockResolvedValue(20)
 
       const expectedResults = [0, 1, 2, 2, 2, 2, 2, 2, 2]
 
