@@ -70,6 +70,11 @@ export default withRouter(function Index({ router }) {
   const showDetail = !!eventId || !!addEvent
   const closeDetail = e => {
     e.preventDefault()
+
+    if (editMode) {
+      return
+    }
+
     if (showMine) {
       router.push("/?showMine=1", "/mine")
     } else {
