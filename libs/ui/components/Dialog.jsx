@@ -21,7 +21,7 @@ export const DialogOverlay = styled(ReachDialogOverlay)`
     margin: 0;
     overflow: auto;
 
-    z-index: 1;
+    z-index: 22;
 
     background: ${({ theme }) => theme.colors.dialogContentBackground};
 
