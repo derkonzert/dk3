@@ -3,7 +3,7 @@ import { withRouter } from "next/router"
 import { EventCardQuery } from "../components/event-detail/EventCard"
 
 const extractIdFromPath = path => {
-  const match = path.match(/\/event\/(.)*-(?<eventId>.*)$/)
+  const match = path.match(/\/event-card\/(.)*-(?<eventId>.*)$/)
   if (match) {
     return match[2]
   } else {
