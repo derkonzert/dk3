@@ -38,10 +38,14 @@ async function getPage() {
   return _page
 }
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 module.exports.getScreenshot = async function getScreenshot(url, type, isDev) {
   const page = await getPage(isDev)
   await page.setViewport({ width: 800, height: 500 })
   await page.goto(url)
+  // TODO: find better way to check if content was loaded
+  await sleep(3000)
   const file = await page.screenshot({ type })
   return file
 }
