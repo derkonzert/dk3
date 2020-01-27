@@ -27,8 +27,8 @@
   "dependencies": {
     "@dk3/config": "0.0.0",
     "@dk3/logger": "0.0.0",
-    "chrome-aws-lambda": "^1.16.1",
+    "chrome-aws-lambda": "^2.0.2",
     "micro-query": "^0.3.0",
-    "puppeteer-core": "^1.16.0"
+    "puppeteer-core": "^2.0.2"
   }
 }
