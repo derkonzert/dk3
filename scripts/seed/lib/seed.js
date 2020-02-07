@@ -94,7 +94,7 @@ const bookmarkEvents = async (events, users) => {
       if (event.bookmarkedBy.indexOf(user._id) === -1) {
         if (
           events.indexOf(event) === firstUpcomingEventsIndex ||
-          events.indexOf(event) % (2 + users.indexOf(user)) === 0
+          events.indexOf(event) % (8 + users.indexOf(user)) === 0
         ) {
           event.bookmarkedBy.push(user._id)
         }
