@@ -24,6 +24,7 @@ exports.connect = async () => {
 
   const mc = await mongoose.connect(config.get("MONGODB_URI"), {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
     useFindAndModify: false,
   })
 
