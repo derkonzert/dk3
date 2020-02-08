@@ -3,7 +3,7 @@ const path = require("path")
 
 module.exports = (cfg, options) => {
   cfg.module.rules.forEach(rule => {
-    if (rule.use.loader === "next-babel-loader") {
+    if (rule.use && rule.use.loader === "next-babel-loader") {
       rule.include.push(path.resolve("../../"))
     }
   })
