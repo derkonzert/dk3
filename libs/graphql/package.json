@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@dk3/auth-utils": "0.0.0",
-    "apollo-server": "^2.7.0",
+    "apollo-server": "^2.10.1",
     "graphql": "^14.0.2",
     "graphql-tools": "^4.0.3",
     "luxon": "^1.19.2"
