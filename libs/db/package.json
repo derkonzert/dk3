@@ -27,7 +27,7 @@
   "dependencies": {
     "@dk3/config": "^0.0.0",
     "@dk3/logger": "^0.0.0",
-    "bcrypt": "^3.0.3",
+    "bcrypt": "^4.0.0",
     "luxon": "^1.19.2",
     "mongoose": "5.8.1",
     "ms": "^2.1.1",
