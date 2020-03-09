@@ -19,3 +19,10 @@ exports.error = error => {
     Sentry.captureException(error)
   }
 }
+exports.message = message => {
+  if (Sentry) {
+    Sentry.captureMessage(message)
+  } else {
+    console.info(message)
+  }
+}

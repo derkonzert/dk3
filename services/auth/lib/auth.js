@@ -8,6 +8,7 @@ const {
   passwordReset,
   requestPasswordReset,
 } = require("@dk3/auth-utils")
+const { message } = require("@dk3/logger")
 const { sendJson } = require("@dk3/api-utils")
 const { HTTPStatusError } = require("@dk3/error")
 const { connect, dao } = require("@dk3/db")
@@ -70,6 +71,8 @@ module.exports = async function auth(req, res) {
         const { token } = body
 
         if (!token) {
+          message("E-Mail verification failed: no token given")
+
           throw new HTTPStatusError({
             title: "No token to verify",
             statusCode: 400,
@@ -78,7 +81,11 @@ module.exports = async function auth(req, res) {
 
         try {
           await verifyEmail(token)
+
+          message("E-Mail successfully verified")
         } catch (err) {
+          message("E-Mail verification failed")
+
           throw new HTTPStatusError({
             title: err.message,
             statusCode: 400,
@@ -91,7 +98,9 @@ module.exports = async function auth(req, res) {
 
         try {
           await signUp(body)
+          message("Sign up successful")
         } catch (err) {
+          message("New account signup failed")
           throw new HTTPStatusError({ title: err.message, statusCode: 400 })
         }
 
@@ -113,9 +122,11 @@ module.exports = async function auth(req, res) {
 
         try {
           await requestPasswordReset(body.email)
+          message("Password reset requested")
 
           return sendJson(res, 200, { message: "Password reset requested" })
         } catch (err) {
+          message("Password reset request failed")
           throw new HTTPStatusError({ title: err.message, statusCode: 400 })
         }
       case "passwordReset":
@@ -124,8 +135,12 @@ module.exports = async function auth(req, res) {
         try {
           await passwordReset(body.token, body.password)
 
+          message("Password reset successful")
+
           return sendJson(res, 200, { message: "Password reset" })
         } catch (err) {
+          message("Password reset failed")
+
           throw new HTTPStatusError({ title: err.message, statusCode: 400 })
         }
 
