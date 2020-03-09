@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react"
 
 import Link from "next/link"
-import { withRouter } from "next/router"
+
 import { ListTitle, Text, Strong } from "@dk3/ui/atoms/Typography"
 
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { VeryFancyLink } from "@dk3/ui/form/Button"
 import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 import { PageWrapper } from "../../../components/PageWrapper"
+import { Sentry } from "@dk3/shared-frontend/lib/Sentry"
 
-const SignUpActivate = withRouter(function SignUpActivate({ router }) {
+const getVerificationTokenFromUrl = href => {
+  const url = new URL(href)
+  return url.searchParams.get("token")
+}
+
+const SignUpActivate = function SignUpActivate() {
   const [status, setStatus] = useState("fetching")
   const [message, setMessage] = useState("")
 
@@ -17,12 +23,26 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
     async function checkDoiToken() {
       const uri = "/auth/verify-email"
 
+      let token
+
+      try {
+        token = getVerificationTokenFromUrl(location.href)
+
+        if (!token) {
+          throw new Error(
+            "Parsing URL for activation failed: no token returned"
+          )
+        }
+      } catch (err) {
+        Sentry.captureException(err)
+      }
+
       try {
         const response = await fetch(uri, {
           method: "post",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({
-            token: router.query.token,
+            token,
           }),
         })
 
@@ -36,6 +56,8 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
 
         setStatus("success")
       } catch (err) {
+        Sentry.captureException(err)
+
         setStatus("error")
         setMessage(err.message)
       }
@@ -68,7 +90,7 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
       )}
     </PageWrapper>
   )
-})
+}
 
 export default function Activate(props) {
   return (

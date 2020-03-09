@@ -8,6 +8,7 @@ import { TextInput } from "@dk3/ui/form/TextInput"
 import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 import { ErrorMessage, Message } from "@dk3/ui/atoms/Message"
 import { PageWrapper } from "../../../components/PageWrapper"
+import { Sentry } from "@dk3/shared-frontend/lib/Sentry"
 
 const SignUpActivate = withRouter(function SignUpActivate({ router }) {
   return (
@@ -81,6 +82,7 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
 
                   setState({ formSuccess: true })
                 } catch (err) {
+                  Sentry.captureException(err)
                   // TODO: log error with sentry
                   setState({ formError: err.message })
                 }
