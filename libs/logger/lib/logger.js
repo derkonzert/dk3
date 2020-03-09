@@ -11,18 +11,23 @@ if (sentryDsn) {
 }
 
 exports.logger = (...args) => console.log(...args) /* eslint-disable-line */
-exports.error = error => {
+exports.error = async error => {
   // eslint-disable-next-line
   console.error(error)
 
   if (Sentry) {
     Sentry.captureException(error)
+    return await Sentry.flush(2000)
   }
+
+  return Promise.resolve()
 }
-exports.message = message => {
+exports.message = async message => {
   if (Sentry) {
     Sentry.captureMessage(message)
+    return await Sentry.flush(2000)
   } else {
     console.info(message)
+    return Promise.resolve()
   }
 }

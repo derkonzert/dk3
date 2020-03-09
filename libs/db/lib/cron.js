@@ -16,7 +16,7 @@ exports.createJob = async ({ forceUpdate, ...options }) => {
     if (err.message.search("E11000 duplicate") >= 0) {
       /* silently fail */
     } else {
-      error(err)
+      await error(err)
     }
   }
 
@@ -24,7 +24,7 @@ exports.createJob = async ({ forceUpdate, ...options }) => {
     try {
       await CronJob.Model.findOneAndUpdate({ name: options.name }, options)
     } catch (err) {
-      error(err)
+      await error(err)
     }
   }
 }
@@ -43,7 +43,7 @@ exports.setup = async () => {
     try {
       await exports.createJob(config)
     } catch (err) {
-      error(err)
+      await error(err)
     }
   }
 }
@@ -67,7 +67,7 @@ exports.runAll = async () => {
       } catch (err) {
         errors.push(err)
 
-        error(err)
+        await error(err)
       }
 
       if (Date.now() - startedAt >= 60 * 1000) {

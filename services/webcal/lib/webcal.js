@@ -68,7 +68,7 @@ module.exports = async (req, res) => {
 
     cal.serve(res)
   } catch (err) {
-    error(err)
+    await error(err)
     sendJson(res, 500, { error: err.message })
   }
 }

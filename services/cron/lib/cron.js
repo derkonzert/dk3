@@ -13,7 +13,7 @@ module.exports = async (_req, res) => {
     /* Establish database connection */
     connection = await connect()
   } catch (err) {
-    error(err)
+    await error(err)
 
     sendJson(res, 500, { error: "No connection possible" })
     return
@@ -26,7 +26,7 @@ module.exports = async (_req, res) => {
       // eslint-disable-next-line require-atomic-updates
       cronJobsSetUp = true
     } catch (err) {
-      error(err)
+      await error(err)
     }
   }
 
@@ -42,7 +42,7 @@ module.exports = async (_req, res) => {
       failedJobs: errors.length,
     })
   } catch (err) {
-    error(err)
+    await error(err)
     sendJson(res, 500, { error: err.message })
 
     await connection.close()
