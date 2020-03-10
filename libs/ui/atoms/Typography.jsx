@@ -58,6 +58,8 @@ export const SubTitle = withSpacing({ mv: "none" })(styled.h3`
     inverted ? theme.colors.titleInverted : theme.colors.title};
   letter-spacing: 0;
   line-height: 2.2rem;
+  text-decoration: ${({ lineThrough }) =>
+    lineThrough ? "line-through" : undefined};
 `)
 
 export const ListTitle = withSpacing()(styled.h4`

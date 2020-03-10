@@ -128,6 +128,8 @@ export const EventCard = withTheme(
     approved = true,
     bookmarked = false,
     bookmarkable = true,
+    postponed = false,
+    canceled = false,
     linkProps = {},
     onBookmarkClick,
     ...props
@@ -153,7 +155,11 @@ export const EventCard = withTheme(
               inverted={inverted}
             />
             <TextContent size={textContentSize}>
-              <SubTitle mb="xs" inverted={inverted}>
+              <SubTitle
+                mb="xs"
+                inverted={inverted}
+                lineThrough={postponed || canceled}
+              >
                 {title}
               </SubTitle>
               <Description inverted={inverted}>

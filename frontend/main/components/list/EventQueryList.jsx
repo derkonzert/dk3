@@ -148,6 +148,8 @@ export const EventQueryList = withRouter(({ query, filter, skip, router }) => {
                             description={`${event.location} — ${doorTime}`}
                             dayName={dayName}
                             approved={event.approved}
+                            postponed={event.postponed}
+                            canceled={event.canceled}
                             bookmarked={event.bookmarkedByMe}
                             fancyLevel={event.fancyness}
                             renderBadge={({ inverted }) => {
