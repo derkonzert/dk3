@@ -20,7 +20,10 @@ export const login = async ({ token, expiresAt }) => {
 }
 
 export const logout = () => {
-  cookie.remove("token")
+  cookie.remove("token", {
+    domain: window.location.hostname,
+    secure: process.env.NODE_ENV === "production",
+  })
   // to support logging out from all windows
   window.localStorage.setItem("logout", Date.now())
 }
