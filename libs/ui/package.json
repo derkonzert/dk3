@@ -41,7 +41,7 @@
     "@reach/visually-hidden": "^0.8.2",
     "click-outside-hook": "^1.1.0",
     "emotion-theming": "^10.0.7",
-    "luxon": "^1.19.2",
+    "luxon": "^1.22.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-focus-lock": "^2.0.4",
