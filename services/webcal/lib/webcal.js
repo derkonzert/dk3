@@ -51,10 +51,20 @@ module.exports = async (req, res) => {
       .sort({ from: 1 })
       .exec()
 
+    const createSummary = event => {
+      if (event.canceled) {
+        return `Canceled: ${event.title}`
+      }
+
+      if (event.postponed) {
+        return `Postponed: ${event.title}`
+      }
+
+      return `${event.title} @${event.location}`
+    }
+
     for (let event of events) {
-      const summary = event.canceled
-        ? `Canceled: ${event.title}`
-        : `${event.title} @${event.location}`
+      const summary = createSummary(event)
 
       cal.createEvent({
         start: event.from,
