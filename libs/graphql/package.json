@@ -29,6 +29,6 @@
     "apollo-server": "^2.7.0",
     "graphql": "^14.0.2",
     "graphql-tools": "^4.0.3",
-    "luxon": "^1.19.2"
+    "luxon": "^1.22.2"
   }
 }
