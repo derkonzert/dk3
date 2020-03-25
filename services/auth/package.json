@@ -14,9 +14,6 @@
   "files": [
     "lib"
   ],
-  "engines": {
-    "node": "10.x"
-  },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },

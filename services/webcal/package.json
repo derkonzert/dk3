@@ -13,9 +13,6 @@
   "files": [
     "lib"
   ],
-  "engines": {
-    "node": "10.x"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jkempff/dk3.git"
