@@ -26,6 +26,6 @@
   },
   "dependencies": {
     "@dk3/config": "^0.0.0",
-    "@sentry/node": "^5.0.5"
+    "@sentry/node": "^5.15.1"
   }
 }
