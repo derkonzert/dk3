@@ -3,7 +3,6 @@ import { useMutation } from "react-apollo"
 import gql from "graphql-tag"
 import { withRouter } from "next/router"
 
-import { withUserRole } from "../lib/withUserRole"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { TextInput } from "@dk3/ui/form/TextInput"
 import { DateTimeInput } from "@dk3/ui/form/DateTimeInput"
@@ -11,6 +10,8 @@ import { VeryFancyButton } from "@dk3/ui/form/Button"
 import { Title } from "@dk3/ui/atoms/Typography"
 import { SimilarEventsList } from "./SimilarEventsList"
 import { ErrorMessage, SuccessMessage } from "@dk3/ui/atoms/Message"
+
+import { withUserRole } from "../../lib/withUserRole"
 
 const IMPORT_EVENT = gql`
   mutation importEvent($input: CreateEventInput!) {
