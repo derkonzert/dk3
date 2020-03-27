@@ -2,7 +2,6 @@ const { DateTime } = require("luxon")
 const User = require("./model/User")
 const Event = require("./model/Event")
 const SystemEvent = require("./model/SystemEvent")
-const Redirect = require("./model/Redirect")
 
 /* Create cached dao method */
 
@@ -330,6 +329,3 @@ exports.clearSystemEvents = async systemEvents => {
 exports.systemEventsByType = type => {
   return SystemEvent.Model.find({ type }).exec()
 }
-
-exports.createRedirect = ({ url, to }) => Redirect.Model.create({ url, to })
-exports.findRedirectByUrl = url => Redirect.Model.findOne({ url }).exec()

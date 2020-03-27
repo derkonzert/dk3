@@ -31,48 +31,6 @@
   ],
   "routes": [
     {
-      "src": "/login",
-      "status": 301,
-      "headers": {
-        "Location": "/account/login"
-      }
-    },
-    {
-      "src": "/pages/about",
-      "status": 301,
-      "headers": {
-        "Location": "/about"
-      }
-    },
-    {
-      "src": "/pages/imprint",
-      "status": 301,
-      "headers": {
-        "Location": "/imprint"
-      }
-    },
-    {
-      "src": "/pages/privacy",
-      "status": 301,
-      "headers": {
-        "Location": "/privacy"
-      }
-    },
-    {
-      "src": "/concert-archive",
-      "status": 301,
-      "headers": {
-        "Location": "/archive"
-      }
-    },
-    {
-      "src": "/add-concert",
-      "status": 301,
-      "headers": {
-        "Location": "/add-new-event"
-      }
-    },
-    {
       "src": "/auth/verify-email/(.*)",
       "methods": ["GET"],
       "dest": "/services/auth/lib/auth.js?operation=verify-email&token=$1"
