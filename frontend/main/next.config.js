@@ -30,6 +30,8 @@ module.exports = withCSS({
       ],
     })
 
+    cfg.resolve.alias["@dk3/ui"] = path.resolve(__dirname, "./ui")
+
     cfg.plugins.push(
       new webpack.IgnorePlugin(/unicode\/category\/So/, /node_modules/)
     )
