@@ -21,7 +21,7 @@ const SignUpActivate = function SignUpActivate() {
 
   useEffect(() => {
     async function checkDoiToken() {
-      const uri = "/auth/verify-email"
+      const uri = "/api/auth/verify-email"
 
       let token
 

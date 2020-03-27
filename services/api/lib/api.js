@@ -1,4 +1,3 @@
-const { json } = require("micro")
 const {
   graphql,
   typeDefs,
@@ -22,7 +21,8 @@ const handleGqlQuery = (
 ) => graphql(schema, query, rootValue, contextValue, variables, operation)
 
 module.exports = async (req, res) => {
-  const body = await json(req)
+  const body = req.body
+
   const isBatch = Array.isArray(body)
 
   let gqlRequests = isBatch ? body : [body]

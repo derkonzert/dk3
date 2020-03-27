@@ -63,7 +63,7 @@ const SignUpActivate = withRouter(function SignUpActivate({ router }) {
                   return
                 }
 
-                const uri = "/auth/passwordReset"
+                const uri = "/api/auth/passwordReset"
 
                 try {
                   const response = await fetch(uri, {

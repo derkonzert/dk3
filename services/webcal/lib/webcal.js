@@ -1,4 +1,3 @@
-const url = require("url")
 const { connect } = require("@dk3/db")
 const User = require("@dk3/db/lib/model/User")
 const Event = require("@dk3/db/lib/model/Event")
@@ -13,10 +12,10 @@ let isConnected = false
 module.exports = async (req, res) => {
   const {
     query: { token },
-  } = url.parse(req.url, true)
+  } = req
 
   if (!token) {
-    return sendJson(res, 401, { message: "Unauthorized: No token" })
+    return sendJson(res, 401, { message: "Unauthorized: No token", token })
   }
 
   if (!isConnected) {
@@ -32,7 +31,10 @@ module.exports = async (req, res) => {
 
     if (!user) {
       logger("Unauthorized ics calendar requested")
-      return sendJson(res, 401, { message: "Unauthorized: Token invalid" })
+      return sendJson(res, 401, {
+        message: "Unauthorized: Token invalid",
+        token,
+      })
     }
 
     var cal = ical({

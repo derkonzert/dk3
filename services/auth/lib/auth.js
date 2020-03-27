@@ -1,6 +1,3 @@
-const { json } = require("micro")
-const url = require("url")
-
 const {
   signUp,
   signIn,
@@ -15,18 +12,17 @@ const { connect, dao } = require("@dk3/db")
 
 let dbConnection
 
-module.exports = async function auth(req, res) {
+module.exports = async function auth(operation, req, res) {
   try {
     if (!dbConnection) {
       dbConnection = connect()
     }
 
     let body
-    const { query } = url.parse(req.url, true)
 
-    switch (query.operation) {
+    switch (operation) {
       case "unique-username":
-        body = await json(req)
+        body = req.body
 
         if (!body.check) {
           throw new HTTPStatusError({
@@ -46,7 +42,7 @@ module.exports = async function auth(req, res) {
         }
 
       case "unique-email":
-        body = await json(req)
+        body = req.body
 
         if (!body.check) {
           throw new HTTPStatusError({
@@ -66,9 +62,11 @@ module.exports = async function auth(req, res) {
         }
 
       case "verify-email":
-        body = await json(req)
+        body = req.body
 
-        const { token } = body
+        const {
+          body: { token },
+        } = req
 
         if (!token) {
           await message("E-Mail verification failed: no token given")
@@ -94,7 +92,7 @@ module.exports = async function auth(req, res) {
 
         return sendJson(res, 200, { message: "E-Mail verified" })
       case "signUp":
-        body = await json(req)
+        body = req.body
 
         try {
           await signUp(body)
@@ -107,7 +105,7 @@ module.exports = async function auth(req, res) {
         return sendJson(res, 201, { success: true, message: "User created" })
 
       case "signIn":
-        body = await json(req)
+        body = req.body
 
         const payload = await signIn(body.email, body.password)
 
@@ -118,7 +116,7 @@ module.exports = async function auth(req, res) {
         })
 
       case "requestPasswordReset":
-        body = await json(req)
+        body = req.body
 
         try {
           await requestPasswordReset(body.email)
@@ -130,7 +128,7 @@ module.exports = async function auth(req, res) {
           throw new HTTPStatusError({ title: err.message, statusCode: 400 })
         }
       case "passwordReset":
-        body = await json(req)
+        body = req.body
 
         try {
           await passwordReset(body.token, body.password)

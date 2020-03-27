@@ -36,7 +36,7 @@ export const LoginForm = withApollo(({ onLogin, onCancel, client }) => {
             setState({ loading: true })
             e.preventDefault()
 
-            const uri = "/auth/signIn"
+            const uri = "/api/auth/signIn"
 
             fetch(uri, {
               method: "post",

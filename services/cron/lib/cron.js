@@ -2,7 +2,6 @@ const { error } = require("@dk3/logger")
 const { connect, resetConnect, cron } = require("@dk3/db")
 
 const { sendJson } = require("@dk3/api-utils")
-const queryMissingMessage = "query is missing"
 
 let cronJobsSetUp = false
 
@@ -49,5 +48,3 @@ module.exports = async (_req, res) => {
     resetConnect()
   }
 }
-
-module.exports.queryMissingMessage = queryMissingMessage

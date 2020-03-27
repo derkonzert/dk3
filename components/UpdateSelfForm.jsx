@@ -74,7 +74,7 @@ const Form = ({ data, onCreated }) => {
   })
   const [usernameIsUnique, usernameIsChecking] = useUniquenessCheck(
     formState.username,
-    `${uriBase}auth/unique-username`
+    `${uriBase}api/auth/unique-username`
   )
 
   return (
