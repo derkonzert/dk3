@@ -107,8 +107,6 @@ export default function UpdateCalendarSettingForm() {
                           data-add-event-form
                           onSubmit={e => {
                             e.preventDefault()
-
-                            saveChanges(state)
                           }}
                         >
                           {data.me.calendarToken ? (

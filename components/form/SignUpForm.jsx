@@ -28,11 +28,11 @@ export const SignUpForm = withApollo(({ onSignUp, onCancel }) => {
   })
   const [usernameIsUnique, usernameIsChecking] = useUniquenessCheck(
     formState.username,
-    `${uriBase}auth/unique-username`
+    `${uriBase}api/auth/unique-username`
   )
   const [emailIsUnique, emailIsChecking] = useUniquenessCheck(
     formState.email,
-    `${uriBase}auth/unique-email`
+    `${uriBase}api/auth/unique-email`
   )
 
   return (
@@ -69,7 +69,7 @@ export const SignUpForm = withApollo(({ onSignUp, onCancel }) => {
 
         setFormErrors({})
 
-        const uri = `${uriBase}auth/signUp`
+        const uri = `${uriBase}api/auth/signUp`
 
         try {
           const response = await fetch(uri, {

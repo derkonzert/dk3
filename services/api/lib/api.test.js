@@ -1,6 +1,3 @@
-const micro = require("micro")
-jest.mock("micro")
-
 const dk3Graphql = require("@dk3/graphql")
 jest.mock("@dk3/graphql")
 
@@ -36,7 +33,9 @@ describe("api", () => {
     beforeEach(() => {
       requestBody = undefined
       contextValue = undefined
-      req = {}
+      req = {
+        body: requestBody,
+      }
       res = {
         writeHead: jest.fn(),
         end: jest.fn(),
@@ -44,7 +43,6 @@ describe("api", () => {
       dk3Graphql.graphql.mockReset()
       apiUtils.sendJson.mockReset()
 
-      micro.json.mockImplementation(() => requestBody)
       libContext.createGraphQlContext.mockImplementation(() => contextValue)
     })
 

@@ -30,7 +30,7 @@ export default function Index() {
                 onSubmit={async e => {
                   e.preventDefault()
 
-                  const uri = "/auth/requestPasswordReset"
+                  const uri = "/api/auth/requestPasswordReset"
 
                   try {
                     const response = await fetch(uri, {

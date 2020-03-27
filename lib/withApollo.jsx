@@ -41,10 +41,10 @@ export const getApiUri = ctx => {
 
   if (process.env.NODE_ENV === "production") {
     return process.browser
-      ? `${location.protocol}//${hostname}/api`
-      : `https://${hostname}/api`
+      ? `${location.protocol}//${hostname}/api/graphql`
+      : `https://${hostname}/api/graphql`
   } else {
-    return `http://${hostname}:3000/api`
+    return `http://${hostname}:3000/api/graphql`
   }
 }
 
@@ -74,7 +74,10 @@ export const withApollo = App => {
       //   },
       // })
       this.apolloClient = initApollo(null, {
-        uri: process.env.NODE_ENV === "production" ? "/api" : "/api",
+        uri:
+          process.env.NODE_ENV === "production"
+            ? "/api/graphql"
+            : "/api/graphql",
         getToken: () => {
           return getAccessToken({})
         },
@@ -147,7 +150,7 @@ export const withApollo = App => {
   //     } catch (error) {
   //       // Prevent Apollo Client GraphQL errors from crashing SSR.
   //       // Handle them in components via the data.error prop:
-  //       // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
+  //       // https://www.apollographql.com/docs/react/api/graphql/react-apollo.html#graphql-query-data-error
   //       // eslint-disable-next-line no-console
   //       console.error("Error while running `getDataFromTree`", error)
   //     }
