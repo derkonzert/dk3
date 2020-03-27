@@ -14,9 +14,7 @@ export const Spotify = BasePlugin.create({
         value: {
           type: match[1],
           id: match[2],
-          embedUrl: `https://embed.spotify.com/?uri=spotify:${match[1]}:${
-            match[2]
-          }`,
+          embedUrl: `https://embed.spotify.com/?uri=spotify:${match[1]}:${match[2]}`,
         },
       }
     }

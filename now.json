@@ -23,9 +23,8 @@
       "use": "@now/node",
       "config": { "maxLambdaSize": "42mb" }
     },
-    { "src": "frontend/static/*", "use": "@now/static" },
     {
-      "src": "frontend/main/package.json",
+      "src": "next.config.js",
       "use": "@now/next"
     }
   ],
@@ -83,7 +82,7 @@
     },
     {
       "src": "/account/setup/(?<step>.*)",
-      "dest": "/frontend/main/account/setup?step=$step",
+      "dest": "/account/setup?step=$step",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
@@ -94,7 +93,7 @@
     {
       "src": "/event/(.)*-(?<eventId>.*)$",
       "methods": ["GET"],
-      "dest": "frontend/main/event?eventId=$eventId",
+      "dest": "event?eventId=$eventId",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
@@ -105,7 +104,7 @@
     {
       "src": "/event-card/(.)*-(?<eventId>.*)$",
       "methods": ["GET"],
-      "dest": "frontend/main/event-card?eventId=$eventId",
+      "dest": "event-card?eventId=$eventId",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
@@ -116,7 +115,7 @@
     {
       "src": "/update-event/(?<eventId>.*)$",
       "methods": ["GET"],
-      "dest": "frontend/main/update-event?eventId=$eventId",
+      "dest": "update-event?eventId=$eventId",
       "headers": {
         "Strict-Transport-Security": "max-age=63072000",
         "X-Content-Type-Options": "nosniff",
@@ -138,7 +137,6 @@
       "src": "/_next/static/.*",
       "headers": { "Cache-Control": "max-age=31556926" },
       "continue": true
-    },
-    { "src": "(?!/?blog)(.*)", "dest": "frontend/main$1" }
+    }
   ]
 }
