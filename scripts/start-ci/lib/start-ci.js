@@ -26,7 +26,7 @@ module.exports = async function startCi() {
       maxBuffer: MAX_BUFFER,
     }),
     execPromised(`MONGODB_URI=${uriString} yarn dev`, {
-      cwd: path.resolve(__dirname, "../../../frontend/main"),
+      cwd: path.resolve(__dirname, "../../../"),
       maxBuffer: MAX_BUFFER,
     }),
   ])

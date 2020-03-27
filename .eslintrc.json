@@ -7,7 +7,7 @@
     "node": true,
     "jest/globals": true
   },
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
@@ -25,6 +25,8 @@
     "prettier/prettier": "error",
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
     "no-case-declarations": "off",
     "no-unused-vars": [
       "error",

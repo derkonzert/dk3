@@ -11,11 +11,6 @@ greenkeeper.json
 jest.config.json
 jestSetup.js
 _next
+.next
 node_modules
 cypress
-
-frontend/main/_next
-
-frontend/main/.next
-frontend/account/.next
-
