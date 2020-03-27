@@ -3,7 +3,7 @@ import Head from "next/head"
 import { UpdateEventForm } from "../components/update-event/UpdateEventForm"
 import { Box } from "@dk3/ui/atoms/Boxes"
 import styled from "@emotion/styled"
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
+import { SentryErrorBoundary } from "../lib/SentryErrorBoundary"
 
 const Wrapper = styled.div`
   margin: 2rem auto;

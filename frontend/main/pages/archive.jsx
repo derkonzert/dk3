@@ -1,4 +1,4 @@
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
+import { SentryErrorBoundary } from "../lib/SentryErrorBoundary"
 import { ArchiveList } from "../components/archive-list/ArchiveList"
 
 export default function Archive() {

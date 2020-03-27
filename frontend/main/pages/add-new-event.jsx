@@ -3,9 +3,9 @@ import styled from "@emotion/styled"
 import { ListAndDetail, ListAndDetailMain } from "@dk3/ui/layouts/ListAndDetail"
 import { CreateEventForm } from "../components/form/CreateEventForm"
 
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
+import { SentryErrorBoundary } from "../lib/SentryErrorBoundary"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
-import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
+import { eventHref } from "../lib/eventHref"
 
 const Wrapper = styled(Spacer)`
   min-height: 100vh;

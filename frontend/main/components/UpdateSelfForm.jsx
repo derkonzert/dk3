@@ -7,12 +7,12 @@ import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { FancyButton } from "@dk3/ui/form/Button"
 import { TextInput } from "@dk3/ui/form/TextInput"
 import { Checkbox } from "@dk3/ui/form/Checkbox"
-
 import { Small, Link as UILink, SubTitle, Text } from "@dk3/ui/atoms/Typography"
 import { ErrorMessage } from "@dk3/ui/atoms/Message"
-import { currentUserQuery } from "@dk3/shared-frontend/lib/CurrentUser"
 import { SuccessMessage } from "@dk3/ui/atoms/Message"
-import { useUniquenessCheck } from "@dk3/shared-frontend/lib/useUniquenessCheck"
+
+import { currentUserQuery } from "../lib/CurrentUser"
+import { useUniquenessCheck } from "../lib/useUniquenessCheck"
 
 export const USER_DATA_FRAGMENT = gql`
   fragment UserData on User {

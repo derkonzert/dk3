@@ -17,9 +17,3 @@ This is the monorepo codebase of dk3, a community platform for concerts and othe
 ### Status
 
 This is a side project of [@jkempff](https://github.com/jkempff) and is constantly evolving.
-
-### Included libraries
-
-#### UI Components
-
-All UI components are part of the `@dk3/ui` package, and are documented using [docz](https://www.docz.site/). The current version is always deployed to [https://derkonzert.de/ui/](https://derkonzert.de/ui/).

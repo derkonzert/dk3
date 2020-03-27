@@ -13,9 +13,9 @@ import { ErrorMessage } from "@dk3/ui/atoms/Message"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { Flex } from "@dk3/ui/atoms/Flex"
 import { ButtonLink, VeryFancyLink } from "@dk3/ui/form/Button"
-import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
-import { hasSkill } from "@dk3/shared-frontend/lib/hasSkill"
-import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
+import { CurrentUser } from "../../lib/CurrentUser"
+import { hasSkill } from "../../lib/hasSkill"
+import { eventHref } from "../../lib/eventHref"
 import styled from "@emotion/styled"
 
 import { ApproveEventButton } from "../form/ApproveEventButton"
@@ -23,7 +23,7 @@ import RichText from "../../../../libs/rtxt/react"
 import { BookmarkedBy } from "./BookmarkedBy"
 import GoogleStructuredData from "./GoogleStructuredData"
 import { CheckForApprovalButton } from "../form/CheckForApprovalButton"
-import { safeHref } from "@dk3/shared-frontend/lib/safeHref"
+import { safeHref } from "../../lib/safeHref"
 
 export const EVENT_DETAIL_FRAGMENT = gql`
   fragment EventDetailEvent on Event {

@@ -4,7 +4,6 @@ import { DateTime } from "luxon"
 import gql from "graphql-tag"
 import styled from "@emotion/styled"
 
-import { DynamicInView } from "@dk3/shared-frontend/lib/DynamicInView"
 import { Query } from "react-apollo"
 import { ErrorMessage, WarningMessage } from "@dk3/ui/atoms/Message"
 import { MegaTitle, Text, Strong, ListTitle } from "@dk3/ui/atoms/Typography"
@@ -12,8 +11,10 @@ import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { Flex } from "@dk3/ui/atoms/Flex"
 import { Box } from "@dk3/ui/atoms/Boxes"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
+
 import { groupedEventsArchive } from "../list/eventDataHelper"
-import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
+import { DynamicInView } from "../../lib/DynamicInView"
+import { eventHref } from "../../lib/eventHref"
 
 const BoxLink = styled.a`
   text-decoration: none;

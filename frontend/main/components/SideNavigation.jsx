@@ -1,8 +1,8 @@
 import React from "react"
 
 import { VerticalMenu, VerticalMenuItem } from "@dk3/ui/components/VerticalMenu"
-import { logout } from "@dk3/shared-frontend/lib/withApollo"
-import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
+import { logout } from "../lib/withApollo"
+import { CurrentUser } from "../lib/CurrentUser"
 import { ActiveLink } from "./ActiveLink"
 
 export const SideNavigation = () => (

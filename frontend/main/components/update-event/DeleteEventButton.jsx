@@ -1,14 +1,15 @@
 import React, { useState } from "react"
 import { Mutation } from "react-apollo"
 import gql from "graphql-tag"
-import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
-import { hasSkill } from "@dk3/shared-frontend/lib/hasSkill"
+import styled from "@emotion/styled"
 import { Button, VeryFancyButton } from "@dk3/ui/form/Button"
-import { UPCOMING_EVENTS_EVENT_FRAGMENT } from "../list/EventList"
 import { Dialog } from "@dk3/ui/components/Dialog"
 import { Flex } from "@dk3/ui/atoms/Flex"
 import { Title, Text } from "@dk3/ui/atoms/Typography"
-import styled from "@emotion/styled"
+
+import { UPCOMING_EVENTS_EVENT_FRAGMENT } from "../list/EventList"
+import { CurrentUser } from "../../lib/CurrentUser"
+import { hasSkill } from "../../lib/hasSkill"
 
 export const DELETE_EVENT = gql`
   mutation deleteEvent($input: DeleteEventInput!) {

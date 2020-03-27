@@ -1,7 +1,7 @@
 import React from "react"
 import { Query } from "react-apollo"
 
-import { LoginForm } from "../form/LoginForm"
+import { LoginForm } from "../components/form/LoginForm"
 import { Title, Text } from "@dk3/ui/atoms/Typography"
 
 import { USER_AUTH_INFO } from "./MutationWithAuthentication"

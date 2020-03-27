@@ -6,7 +6,7 @@ import { ApolloProvider } from "react-apollo"
 
 import { Global } from "@emotion/core"
 import { global } from "@dk3/ui/documentStyles"
-import { withApollo } from "@dk3/shared-frontend/lib/withApollo"
+import { withApollo } from "../lib/withApollo"
 
 import { ThemeProvider } from "@dk3/ui/theme"
 import {

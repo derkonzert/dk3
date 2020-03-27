@@ -1,10 +1,11 @@
 import React, { useState } from "react"
+import { withApollo } from "react-apollo"
+import styled from "@emotion/styled"
+
 import { TextInput } from "@dk3/ui/form/TextInput"
 import { VeryFancyButton, Button } from "@dk3/ui/form/Button"
-import { withApollo } from "react-apollo"
 
-import { useUniquenessCheck } from "../lib/useUniquenessCheck"
-import styled from "@emotion/styled"
+import { useUniquenessCheck } from "../../lib/useUniquenessCheck"
 
 const uriBase = "/"
 

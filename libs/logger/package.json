@@ -11,6 +11,9 @@
     "lib": "lib",
     "test": "__tests__"
   },
+  "engines": {
+    "node": "10.x"
+  },
   "files": [
     "lib"
   ],

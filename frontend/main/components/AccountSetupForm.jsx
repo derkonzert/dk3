@@ -218,8 +218,8 @@ export const AccountSetupForm = withRouter(({ router }) => {
 
                           <Text mt="m" mb="l">
                             And that was that. You did great! If you change your
-                            mind, you can always update your settings on the
-                            <Link href="/" as="/account" passHref>
+                            mind, you can always update your settings on the{" "}
+                            <Link href="/account" passHref>
                               <UiLink>Settings page</UiLink>
                             </Link>
                             .
