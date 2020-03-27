@@ -3,7 +3,7 @@ import styled from "@emotion/styled"
 import { ListAndDetail, ListAndDetailMain } from "@dk3/ui/layouts/ListAndDetail"
 
 import { EventDetail } from "../components/event-detail/EventDetail"
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
+import { SentryErrorBoundary } from "../lib/SentryErrorBoundary"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 
 const Wrapper = styled(Spacer)`

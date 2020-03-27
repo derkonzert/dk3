@@ -4,11 +4,6 @@ import Link from "next/link"
 import { DateTime } from "luxon"
 import gql from "graphql-tag"
 
-import { DynamicInView } from "@dk3/shared-frontend/lib/DynamicInView"
-import { QueryWithAuthentication } from "@dk3/shared-frontend/lib/QueryWithAuthentication"
-import { MutationWithAuthentication } from "@dk3/shared-frontend/lib/MutationWithAuthentication"
-import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
-
 import { EventCard } from "@dk3/ui/components/EventCard"
 import { Button } from "@dk3/ui/form/Button"
 import { ListTitle, ListTitleAppendix } from "@dk3/ui/atoms/Typography"
@@ -19,6 +14,11 @@ import { groupedEvents } from "./eventDataHelper"
 import { AddEventButton } from "@dk3/ui/components/AddEventButton"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { Flex } from "@dk3/ui/atoms/Flex"
+
+import { DynamicInView } from "../../lib/DynamicInView"
+import { QueryWithAuthentication } from "../../lib/QueryWithAuthentication"
+import { MutationWithAuthentication } from "../../lib/MutationWithAuthentication"
+import { eventHref } from "../../lib/eventHref"
 
 const EventSection = styled.div`
   position: relative;

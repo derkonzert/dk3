@@ -6,9 +6,9 @@ import { ListTitle, Text, Strong } from "@dk3/ui/atoms/Typography"
 
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { VeryFancyLink } from "@dk3/ui/form/Button"
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
+import { SentryErrorBoundary } from "../../../lib/SentryErrorBoundary"
 import { PageWrapper } from "../../../components/PageWrapper"
-import { Sentry } from "@dk3/shared-frontend/lib/Sentry"
+import { Sentry } from "../../../lib/Sentry"
 
 const getVerificationTokenFromUrl = href => {
   const url = new URL(href)

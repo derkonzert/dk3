@@ -6,7 +6,8 @@ import {
   SegmentedControl,
   SegmentedControlOption,
 } from "@dk3/ui/form/SegmentedControl"
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
+
+import { SentryErrorBoundary } from "../../lib/SentryErrorBoundary"
 
 import { EventQueryList } from "./EventQueryList"
 

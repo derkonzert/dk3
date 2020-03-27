@@ -1,12 +1,12 @@
 import { Query } from "react-apollo"
 import gql from "graphql-tag"
-import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
-import { hasSkill } from "@dk3/shared-frontend/lib/hasSkill"
 import { ButtonLink } from "@dk3/ui/form/Button"
 import { generateSearchLink } from "./generateSearchLink"
 import { ErrorMessage } from "@dk3/ui/atoms/Message"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
-import { safeHref } from "@dk3/shared-frontend/lib/safeHref"
+import { CurrentUser } from "../../lib/CurrentUser"
+import { hasSkill } from "../../lib/hasSkill"
+import { safeHref } from "../../lib/safeHref"
 
 export const EVENT_DETAIL = gql`
   query eventDetail($id: ID!) {

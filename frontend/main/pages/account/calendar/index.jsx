@@ -9,7 +9,8 @@ import { ErrorMessage } from "@dk3/ui/atoms/Message"
 import { TextArea } from "@dk3/ui/form/TextArea"
 import { Button, VeryFancyLink } from "@dk3/ui/form/Button"
 import { Hr, Text, ListTitle, SubTitle, Small } from "@dk3/ui/atoms/Typography"
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
+
+import { SentryErrorBoundary } from "../../../lib/SentryErrorBoundary"
 import { PageWrapper } from "../../../components/PageWrapper"
 
 export const USER_DATA_FRAGMENT = gql`

@@ -1,13 +1,13 @@
 import React, { useState } from "react"
 import Link from "next/link"
 
-import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
+import { CurrentUser } from "../../lib/CurrentUser"
 
 import {
   HorizontalMenu,
   HorizontalMenuItem,
 } from "@dk3/ui/components/HorizontalMenu"
-import { LoginDialog } from "@dk3/shared-frontend/form/LoginDialog"
+import { LoginDialog } from "../form/LoginDialog"
 
 const HorizontalMenuItemInfo = HorizontalMenuItem.withComponent("span")
 

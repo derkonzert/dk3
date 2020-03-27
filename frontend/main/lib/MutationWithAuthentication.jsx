@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Mutation, Query } from "react-apollo"
 import gql from "graphql-tag"
 
-import { LoginDialog } from "../form/LoginDialog"
+import { LoginDialog } from "../components/form/LoginDialog"
 
 export const USER_AUTH_INFO = gql`
   query userId {

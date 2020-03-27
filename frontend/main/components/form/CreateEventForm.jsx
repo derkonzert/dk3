@@ -17,7 +17,8 @@ import { TextArea } from "@dk3/ui/form/TextArea"
 import { Flex } from "@dk3/ui/atoms/Flex"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
 import { ErrorMessage } from "@dk3/ui/atoms/Message"
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
+
+import { SentryErrorBoundary } from "../../lib/SentryErrorBoundary"
 
 import {
   UPCOMING_EVENTS,

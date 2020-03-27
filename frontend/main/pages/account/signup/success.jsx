@@ -1,7 +1,7 @@
 import React from "react"
 
 import { ListTitle, Strong, Text } from "@dk3/ui/atoms/Typography"
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
+import { SentryErrorBoundary } from "../../../lib/SentryErrorBoundary"
 import { PageWrapper } from "../../../components/PageWrapper"
 
 export default function SignUpSuccess() {

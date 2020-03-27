@@ -1,10 +1,11 @@
 import React, { useState } from "react"
+import { State } from "react-powerplug"
 
 import { ListTitle, Text } from "@dk3/ui/atoms/Typography"
 import { TextInput } from "@dk3/ui/form/TextInput"
 import { FancyButton } from "@dk3/ui/form/Button"
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
-import { State } from "react-powerplug"
+
+import { SentryErrorBoundary } from "../../../lib/SentryErrorBoundary"
 import { PageWrapper } from "../../../components/PageWrapper"
 
 export default function Index() {

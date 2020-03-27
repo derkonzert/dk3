@@ -3,9 +3,9 @@ import React from "react"
 import { withRouter } from "next/router"
 import { ListTitle, Description } from "@dk3/ui/atoms/Typography"
 
-import { SignUpForm } from "@dk3/shared-frontend/form/SignUpForm"
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
-import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
+import { SignUpForm } from "../../../components/form/SignUpForm"
+import { SentryErrorBoundary } from "../../../lib/SentryErrorBoundary"
+import { CurrentUser } from "../../../lib/CurrentUser"
 import { PageWrapper } from "../../../components/PageWrapper"
 
 export default withRouter(function Index({ router }) {

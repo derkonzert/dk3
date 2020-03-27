@@ -9,15 +9,12 @@ export const DateTimeWrapper = styled.div`
   display: grid;
   align-items: flex-start;
   grid-gap: 0 1rem;
-  grid-template-columns: auto 8rem;
+  grid-template-columns: 3fr 1fr;
 `
 
 export const DateTimeTimeField = styled(TimeInput)`
   label {
     white-space: nowrap;
-  }
-  input {
-    text-align: center;
   }
 `
 

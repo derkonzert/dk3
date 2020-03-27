@@ -2,7 +2,7 @@ import React from "react"
 import { useSpring, useTransition, animated } from "react-spring"
 import styled from "@emotion/styled"
 
-import { useMeasure } from "@dk3/shared-frontend/lib/useMeasure"
+import { useMeasure } from "../lib/useMeasure"
 
 const Wrapper = styled(animated.div)`
   position: relative;

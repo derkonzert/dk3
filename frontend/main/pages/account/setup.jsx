@@ -2,11 +2,12 @@ import React from "react"
 
 import Link from "next/link"
 import { Link as UILink } from "@dk3/ui/atoms/Typography"
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
 
 import { AccountSetupForm } from "../../components/AccountSetupForm"
-import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
 import { PageWrapper } from "../../components/PageWrapper"
+
+import { SentryErrorBoundary } from "../../lib/SentryErrorBoundary"
+import { CurrentUser } from "../../lib/CurrentUser"
 
 export default function Setup() {
   return (

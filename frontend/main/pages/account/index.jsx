@@ -3,13 +3,13 @@ import React from "react"
 import Link from "next/link"
 
 import { Hr, Link as UILink, ListTitle, Text } from "@dk3/ui/atoms/Typography"
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
+import { Spacer } from "@dk3/ui/atoms/Spacer"
 
 import { UpdateSelfForm } from "../../components/UpdateSelfForm"
-import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
-
-import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { PageWrapper } from "../../components/PageWrapper"
+
+import { SentryErrorBoundary } from "../../lib/SentryErrorBoundary"
+import { CurrentUser } from "../../lib/CurrentUser"
 
 export default function Index() {
   return (

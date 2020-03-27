@@ -1,14 +1,16 @@
 import React from "react"
 import Link from "next/link"
 import styled from "@emotion/styled"
+import { State } from "react-powerplug"
+import { withApollo } from "react-apollo"
+
 import { TextInput } from "@dk3/ui/form/TextInput"
 import { Link as UILink, Small } from "@dk3/ui/atoms/Typography"
-import { State } from "react-powerplug"
 import { VeryFancyButton, Button } from "@dk3/ui/form/Button"
-import { withApollo } from "react-apollo"
-import { login } from "../lib/withApollo"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
+
+import { login } from "../../lib/withApollo"
 
 const Form = styled.form`
   position: relative;

@@ -24,11 +24,11 @@ import { Header } from "@dk3/ui/layouts/Header"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { Footer } from "@dk3/ui/components/Footer"
 
-import { FooterLinks } from "@dk3/shared-frontend/lib/FooterLinks"
+import { FooterLinks } from "../lib/FooterLinks"
 
-import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
-import { eventHref } from "@dk3/shared-frontend/lib/eventHref"
+import { CurrentUser } from "../lib/CurrentUser"
+import { SentryErrorBoundary } from "../lib/SentryErrorBoundary"
+import { eventHref } from "../lib/eventHref"
 import { EventLegend } from "../components/list/EventLegend"
 
 import { HeaderMenu } from "../components/HeaderMenu/HeaderMenu"

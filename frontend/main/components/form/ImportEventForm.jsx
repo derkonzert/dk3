@@ -3,7 +3,7 @@ import { useMutation } from "react-apollo"
 import gql from "graphql-tag"
 import { withRouter } from "next/router"
 
-import { withUserRole } from "@dk3/shared-frontend/lib/withUserRole"
+import { withUserRole } from "../lib/withUserRole"
 import { Spacer } from "@dk3/ui/atoms/Spacer"
 import { TextInput } from "@dk3/ui/form/TextInput"
 import { DateTimeInput } from "@dk3/ui/form/DateTimeInput"

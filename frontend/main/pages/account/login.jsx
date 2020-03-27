@@ -1,9 +1,11 @@
 import React from "react"
 
 import { Description, ListTitle } from "@dk3/ui/atoms/Typography"
-import { SentryErrorBoundary } from "@dk3/shared-frontend/lib/SentryErrorBoundary"
-import { LoginForm } from "@dk3/shared-frontend/form/LoginForm"
-import { CurrentUser } from "@dk3/shared-frontend/lib/CurrentUser"
+
+import { SentryErrorBoundary } from "../../lib/SentryErrorBoundary"
+import { CurrentUser } from "../../lib/CurrentUser"
+
+import { LoginForm } from "../../components/form/LoginForm"
 import { PageWrapper } from "../../components/PageWrapper"
 
 export const getRedirectUrl = () => {
