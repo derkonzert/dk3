@@ -18,7 +18,7 @@ Cypress.Commands.add(
     cy
       .request({
         method: "post",
-        url: "http://localhost:8004/api/auth/signIn",
+        url: "http://localhost:3000/api/auth/signIn",
         body: {
           email: `${username}s@email.com`,
           password: `${username}spassword`,

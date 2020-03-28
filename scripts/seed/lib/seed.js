@@ -73,7 +73,7 @@ const seedEvents = async users => {
       data.author = author._id
     }
 
-    data.approved = concertData.length % 10 !== 0
+    data.approved = concertData.length % 6 !== 0
 
     const event = await dao.createEvent(
       { eventData: data, emitEvent: false },

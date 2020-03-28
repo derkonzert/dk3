@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 describe("Approve Event", function() {
-  before(() => {
+  beforeEach(() => {
     cy.visit("/")
 
     cy.get("[data-event-approved='false']")
