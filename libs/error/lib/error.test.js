@@ -1,6 +1,6 @@
 "use strict"
 
-const { HTTPStatusError, InvalidConfigurationError } = require("..")
+const { HTTPStatusError, InvalidConfigurationError } = require("./error")
 
 describe("error", () => {
   describe("InvalidConfigurationError", () => {

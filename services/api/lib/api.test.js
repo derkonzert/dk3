@@ -15,7 +15,7 @@ const fakeSchema = Symbol.for("fake.schema")
 
 dk3Graphql.createExecutable = jest.fn().mockReturnValue(fakeSchema)
 
-const api = require("..")
+const api = require("./api")
 
 describe("api", () => {
   it("creates a schema without being called", () => {
@@ -31,7 +31,6 @@ describe("api", () => {
     let req, res, requestBody, contextValue
 
     beforeEach(() => {
-      requestBody = undefined
       contextValue = undefined
       req = {
         body: requestBody,
@@ -47,7 +46,7 @@ describe("api", () => {
     })
 
     it("establishes db connection (once)", async () => {
-      requestBody = {}
+      req.body = {}
       db.connect.mockReturnValue(true)
 
       await api(req, res)
@@ -57,7 +56,7 @@ describe("api", () => {
     })
 
     it("fails when no query is set", async () => {
-      requestBody = {}
+      req.body = {}
 
       await api(req, res)
 
@@ -67,7 +66,7 @@ describe("api", () => {
     })
 
     it("fast exists when no query is set", async () => {
-      requestBody = {}
+      req.body = {}
 
       await api(req, res)
       expect(dk3Graphql.graphql).not.toBeCalled()
@@ -75,7 +74,7 @@ describe("api", () => {
 
     it("calls graphql-js", async () => {
       contextValue = Symbol.for("fake.context")
-      requestBody = {
+      req.body = {
         query: "{ some { gqlQuery }}",
         variables: [{ foo: "bar" }],
         operation: "someName",
@@ -87,18 +86,18 @@ describe("api", () => {
 
       expect(dk3Graphql.graphql).toBeCalledWith(
         fakeSchema,
-        requestBody.query,
+        req.body.query,
         expectedRootValue,
         contextValue,
-        requestBody.variables,
-        requestBody.operation
+        req.body.variables,
+        req.body.operation
       )
     })
 
     it("catches graphql-js errors", async () => {
       const expectedErrorMessage = "Ooops something went wrong"
 
-      requestBody = {
+      req.body = {
         query: "{ some { gqlQuery }}",
       }
 
@@ -115,7 +114,7 @@ describe("api", () => {
 
     it("supports multiple queries per request", async () => {
       contextValue = Symbol.for("fake.context")
-      requestBody = [
+      req.body = [
         {
           query: "{ some { gqlQuery }}",
           variables: [{ foo: "bar" }],
@@ -132,9 +131,9 @@ describe("api", () => {
 
       const expectedRootValue = expect.objectContaining({})
 
-      expect(dk3Graphql.graphql).toHaveBeenCalledTimes(requestBody.length)
+      expect(dk3Graphql.graphql).toHaveBeenCalledTimes(req.body.length)
 
-      requestBody.forEach(requestBodyPart => {
+      req.body.forEach(requestBodyPart => {
         expect(dk3Graphql.graphql).toBeCalledWith(
           fakeSchema,
           requestBodyPart.query,

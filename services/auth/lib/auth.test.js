@@ -11,7 +11,7 @@ jest.mock("@dk3/db")
 jest.mock("@dk3/auth-utils")
 authUtils.authenticatedRequest = handler => handler
 
-const auth = require("..")
+const auth = require("./auth")
 
 describe("auth", () => {
   let response
@@ -26,15 +26,15 @@ describe("auth", () => {
   it("establishes db connection (once)", async () => {
     db.connect.mockReturnValue(true)
 
-    await auth({ url: "/any" }, response)
+    await auth("any", { url: "/any" }, response)
 
-    await auth({ url: "/any" }, response)
+    await auth("any", { url: "/any" }, response)
 
     expect(db.connect).toHaveBeenCalledTimes(1)
   })
 
   it("handles non matched routes", async () => {
-    await auth({ url: "/?operation=non-existing" }, response)
+    await auth("non-existing", {}, response)
 
     expect(apiUtils.sendJson).toBeCalledWith(response, 404, {
       message: expect.anything(),
@@ -44,7 +44,7 @@ describe("auth", () => {
   it.skip("handles server errors", async () => {
     // TODO: mock server error
 
-    await auth({ url: "/?operation=signIn" }, response)
+    await auth("signIn", {}, response)
 
     expect(apiUtils.sendJson).toBeCalledWith(
       response,
@@ -59,7 +59,7 @@ describe("auth", () => {
     it("calls verify-email helper with token from resp body", async () => {
       const token = "some_token_123"
 
-      await auth({ url: "/?operation=verify-email", body: { token } }, response)
+      await auth("verify-email", { body: { token } }, response)
 
       expect(authUtils.verifyEmail).toHaveBeenCalledWith(token)
       expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 200, {
@@ -68,7 +68,7 @@ describe("auth", () => {
     })
 
     it("throws when no token is given", async () => {
-      await auth({ url: "/?operation=verify-email", body: {} }, response)
+      await auth("verify-email", { body: {} }, response)
 
       expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 400, {
         message: "No token to verify, status=400",
@@ -82,7 +82,7 @@ describe("auth", () => {
         throw new Error("something doesnt add up")
       })
 
-      await auth({ url: "/?operation=verify-email", body: { token } }, response)
+      await auth("verify-email", { body: { token } }, response)
 
       expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 400, {
         message: "something doesnt add up, status=400",
@@ -94,10 +94,7 @@ describe("auth", () => {
     it("calls password reset helper with email from resp body", async () => {
       const email = "some@email.come"
 
-      await auth(
-        { url: "/?operation=requestPasswordReset", body: { email } },
-        response
-      )
+      await auth("requestPasswordReset", { body: { email } }, response)
 
       expect(authUtils.requestPasswordReset).toHaveBeenCalledWith(email)
       expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 200, {
@@ -110,7 +107,7 @@ describe("auth", () => {
         throw new Error("something doesnt add up")
       })
 
-      await auth({ url: "/?operation=requestPasswordReset" }, response)
+      await auth("requestPasswordReset", { body: {} }, response)
 
       expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 400, {
         message: "something doesnt add up, status=400",
@@ -123,10 +120,7 @@ describe("auth", () => {
       const token = "123fasdf"
       const password = "some!password1"
 
-      await auth(
-        { url: "/?operation=passwordReset", body: { token, password } },
-        response
-      )
+      await auth("passwordReset", { body: { token, password } }, response)
 
       expect(authUtils.passwordReset).toHaveBeenCalledWith(token, password)
       expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 200, {
@@ -142,10 +136,7 @@ describe("auth", () => {
         throw new Error("something doesnt add up")
       })
 
-      await auth(
-        { url: "/?operation=passwordReset", body: { token, password } },
-        response
-      )
+      await auth("passwordReset", { body: { token, password } }, response)
 
       expect(apiUtils.sendJson).toHaveBeenCalledWith(response, 400, {
         message: "something doesnt add up, status=400",
@@ -162,7 +153,7 @@ describe("auth", () => {
         username: "ju",
       }
 
-      await auth({ url: "/?operation=signUp", body }, response)
+      await auth("signUp", { body }, response)
 
       expect(apiUtils.sendJson).toBeCalledWith(
         response,
@@ -182,7 +173,7 @@ describe("auth", () => {
         throw new Error("uh oh")
       })
 
-      await auth({ url: "/?operation=signUp", body }, response)
+      await auth("signUp", { body }, response)
 
       expect(apiUtils.sendJson).toBeCalledWith(response, 400, {
         message: expect.anything(),
@@ -201,7 +192,7 @@ describe("auth", () => {
         throw new HTTPStatusError({ title: "No user found", statusCode: 401 })
       })
 
-      await auth({ url: "/?operation=signIn", body }, response)
+      await auth("signIn", { body }, response)
 
       expect(authUtils.signIn).toHaveBeenCalledWith(body.email, body.password)
 
@@ -229,7 +220,7 @@ describe("auth", () => {
         lastLogin: expectedLastLogin,
       })
 
-      await auth({ url: "/?operation=signIn", body }, response)
+      await auth("signIn", { body }, response)
 
       expect(authUtils.signIn).toHaveBeenCalledWith(body.email, body.password)
 

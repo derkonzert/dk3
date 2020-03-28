@@ -11,7 +11,7 @@ describe("config", () => {
   process.env.MY_FIRST_TEST_VAR = "MY_FIRST_TEST_VALUE"
   process.env.FAKE_DEFAULT_OVERWRITE = "OVERRULLED, BOI!"
 
-  const config = require("..")
+  const config = require("./config")
 
   process.env.MY_SECOND_TEST_VAR = "MY_SECOND_TEST_VALUE"
 

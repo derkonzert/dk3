@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const { logger } = require("..")
+const { logger } = require("./logger")
 
 describe("logger", () => {
   let origLog, log
