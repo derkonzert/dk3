@@ -5,7 +5,7 @@ const apiUtils = require("@dk3/api-utils")
 jest.mock("@dk3/api-utils")
 apiUtils.sendJson = jest.fn()
 
-const cronService = require("..")
+const cronService = require("./cron")
 
 describe("cron", () => {
   let req, res, connection, results, errors

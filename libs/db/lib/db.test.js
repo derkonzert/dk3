@@ -1,6 +1,6 @@
 const dao = require("../lib/dao")
 const { connect } = require("../lib/connect")
-const db = require("..")
+const db = require("./db")
 
 describe("db", () => {
   it("exports dao", () => {

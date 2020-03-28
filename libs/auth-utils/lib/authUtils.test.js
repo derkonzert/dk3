@@ -25,7 +25,7 @@ const dummyUserData = {
   email: "jus@email.com",
 }
 
-const authUtils = require("..")
+const authUtils = require("./authUtils")
 
 describe("auth-utils", () => {
   describe("signUp", () => {

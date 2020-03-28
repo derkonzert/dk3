@@ -16,7 +16,7 @@ module.exports = withCSS({
   webpack: (cfg, options) => {
     cfg.module.rules.forEach(rule => {
       if (rule.use && rule.use.loader === "next-babel-loader") {
-        rule.include.push(path.resolve("../../"))
+        rule.include.push(path.resolve("./"))
       }
     })
 
