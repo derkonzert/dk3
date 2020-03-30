@@ -65,16 +65,18 @@ module.exports = async (req, res) => {
       return `${event.title} @${event.location}`
     }
 
-    for (let event of events) {
-      const summary = createSummary(event)
+    const createDescription = event => `https://derkonzert.de/event/from-calendar-${event.shortId}
+    
+    ${event.description}`
 
+    for (let event of events) {
       cal.createEvent({
         start: event.from,
         end: event.to,
         timestamp: DateTime.local().toISO(),
         uid: event.shortId,
-        summary: summary,
-        description: event.description,
+        summary: createSummary(event),
+        description: createDescription(event),
       })
     }
 
