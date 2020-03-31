@@ -31,6 +31,6 @@
     "@dk3/config": "^0.0.0",
     "@dk3/db": "0.0.0",
     "@dk3/logger": "0.0.0",
-    "mongodb-memory-server": "^6.2.4"
+    "mongodb-memory-server": "^6.5.0"
   }
 }
