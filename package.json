@@ -67,7 +67,7 @@
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
     "faker": "^4.1.0",
-    "graphql": "^14.1.1",
+    "graphql": "^15.0.0",
     "graphql-tag": "^2.10.1",
     "husky": "^4.2.3",
     "ical-generator": "^1.7.0",
