@@ -30,7 +30,7 @@
   "dependencies": {
     "@dk3/auth-utils": "0.0.0",
     "apollo-server": "^2.7.0",
-    "graphql": "^14.0.2",
+    "graphql": "^15.0.0",
     "graphql-tools": "^4.0.3",
     "luxon": "^1.19.2"
   }
