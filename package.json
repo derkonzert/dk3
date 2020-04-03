@@ -38,7 +38,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime-corejs2": "^7.9.2",
-    "@emotion/core": "^10.0.6",
+    "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.5",
     "@mdx-js/loader": "^1.1.0",
     "@reach/dialog": "^0.9.1",
