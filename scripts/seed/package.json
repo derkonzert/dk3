@@ -31,7 +31,7 @@
     "@dk3/config": "^0.0.0",
     "@dk3/db": "^0.0.0",
     "@dk3/logger": "^0.0.0",
-    "@emotion/styled": "^10.0.5",
+    "@emotion/styled": "^10.0.27",
     "luxon": "^1.19.2"
   }
 }
