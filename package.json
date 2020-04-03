@@ -57,7 +57,7 @@
     "commitizen": "^4.0.0",
     "cypress": "^4.3.0",
     "cz-conventional-changelog": "^3.0.2",
-    "emotion-theming": "^10.0.7",
+    "emotion-theming": "^10.0.27",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "eslint": "^6.0.1",
