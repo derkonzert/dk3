@@ -21,6 +21,6 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "error": "^7.0.2"
+    "error": "^10.1.1"
   }
 }
