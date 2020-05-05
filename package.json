@@ -97,7 +97,7 @@
     "resize-observer-polyfill": "^1.5.1",
     "slug": "^2.1.1",
     "start-server-and-test": "^1.7.11",
-    "wait-on": "^4.0.0"
+    "wait-on": "^5.0.0"
   },
   "config": {
     "commitizen": {
