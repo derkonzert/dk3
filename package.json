@@ -92,7 +92,7 @@
     "react-powerplug": "^1.0.0",
     "react-select": "^3.0.0",
     "react-spring": "^8.0.19",
-    "react-use": "^13.26.1",
+    "react-use": "^14.3.0",
     "regenerator-runtime": "^0.13.1",
     "resize-observer-polyfill": "^1.5.1",
     "slug": "^2.1.1",
