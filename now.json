@@ -31,6 +31,11 @@
       "dest": "/api/cron"
     },
     {
+      "src": "/api",
+      "methods": ["POST"],
+      "dest": "/api/graphql"
+    },
+    {
       "src": "/webcal/(.*).ics$",
       "dest": "/api/webcal?token=$1"
     },
