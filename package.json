@@ -21,7 +21,9 @@
     "integration:setup": "node scripts/start-ci",
     "integration:test-local": "cypress run",
     "integration:test-ci": "cypress run --record",
-    "integration:test-ci-local": "cypress run"
+    "integration:test-ci-local": "cypress run",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "workspaces": [
     "libs/*",
@@ -97,7 +99,8 @@
     "resize-observer-polyfill": "^1.5.1",
     "slug": "^2.1.1",
     "start-server-and-test": "^1.7.11",
-    "wait-on": "^4.0.0"
+    "wait-on": "^4.0.0",
+    "snyk": "^1.369.3"
   },
   "config": {
     "commitizen": {
@@ -119,5 +122,6 @@
       "prettier --write",
       "git add"
     ]
-  }
+  },
+  "snyk": true
 }
