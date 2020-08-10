@@ -31,7 +31,7 @@
     "@dk3/auth-utils": "0.0.0",
     "apollo-server": "^2.7.0",
     "graphql": "^15.0.0",
-    "graphql-tools": "^4.0.3",
+    "graphql-tools": "^6.0.16",
     "luxon": "^1.19.2"
   }
 }
