@@ -60,7 +60,7 @@
     "cz-conventional-changelog": "^3.0.2",
     "emotion-theming": "^10.0.7",
     "enzyme": "^3.8.0",
-    "enzyme-adapter-react-16": "^1.7.1",
+    "enzyme-adapter-react-16": "^1.15.3",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-cypress": "^2.2.1",
@@ -71,7 +71,7 @@
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.1",
     "husky": "^4.2.3",
-    "ical-generator": "^1.7.0",
+    "ical-generator": "^1.12.1",
     "intersection-observer": "^0.7.0",
     "isomorphic-unfetch": "^3.0.0",
     "jest": "25.2.4",
@@ -97,9 +97,9 @@
     "regenerator-runtime": "^0.13.1",
     "resize-observer-polyfill": "^1.5.1",
     "slug": "^2.1.1",
-    "start-server-and-test": "^1.7.11",
-    "wait-on": "^4.0.0",
-    "snyk": "^1.369.3"
+    "snyk": "^1.369.3",
+    "start-server-and-test": "^1.11.3",
+    "wait-on": "^4.0.0"
   },
   "config": {
     "commitizen": {
