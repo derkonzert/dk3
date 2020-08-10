@@ -1,7 +1,7 @@
 language: node_js
 # Using node 8.10 since now currently only supports 8.10
 node_js:
-  - "10.16"
+  - "10.19"
 addons:
   apt:
     packages:
