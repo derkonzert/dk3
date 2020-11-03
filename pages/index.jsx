@@ -34,20 +34,21 @@ import { EventLegend } from "../components/list/EventLegend"
 import { HeaderMenu } from "../components/HeaderMenu/HeaderMenu"
 import { Flex } from "@dk3/ui/atoms/Flex"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
+import { SupportYourVenues } from "../components/SupportYourVenues"
 
 const Main = Spacer.withComponent("main")
 
 const DynamicEventDetail = dynamic(
   () =>
     import("../components/event-detail/EventDetail").then(
-      mod => mod.EventDetail
+      (mod) => mod.EventDetail
     ),
   { loading: Spinner }
 )
 const DynamicCreateEventForm = dynamic(
   () =>
     import("../components/form/CreateEventForm").then(
-      mod => mod.CreateEventForm
+      (mod) => mod.CreateEventForm
     ),
   { loading: Spinner }
 )
@@ -55,7 +56,7 @@ const DynamicCreateEventForm = dynamic(
 const DynamicUpdateEventForm = dynamic(
   () =>
     import("../components/update-event/UpdateEventForm").then(
-      mod => mod.UpdateEventForm
+      (mod) => mod.UpdateEventForm
     ),
   { loading: Spinner }
 )
@@ -69,7 +70,7 @@ export default withRouter(function Index({ router }) {
   const [filter, setFilter] = useState("all")
 
   const showDetail = !!eventId || !!addEvent
-  const closeDetail = e => {
+  const closeDetail = (e) => {
     e.preventDefault()
 
     if (editMode) {
@@ -101,9 +102,10 @@ export default withRouter(function Index({ router }) {
             </Header>
 
             <Main pa="l">
+              <SupportYourVenues />
               <EventList
                 filter={filter}
-                onFilterChange={filter => setFilter(filter)}
+                onFilterChange={(filter) => setFilter(filter)}
               />
             </Main>
           </CenteredContent>
@@ -178,7 +180,7 @@ export default withRouter(function Index({ router }) {
             ))}
           {!!addEvent && (
             <DynamicCreateEventForm
-              onCreated={event => {
+              onCreated={(event) => {
                 router.replace(`/?eventId=${event.id}`, eventHref(event), {
                   shallow: true,
                 })
