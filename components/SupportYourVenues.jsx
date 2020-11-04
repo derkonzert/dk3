@@ -34,18 +34,20 @@ export function SupportYourVenues() {
       <Text mv="m" as="ul" pl="l">
         <li>
           <strong>buy the records</strong>
-          {" you're already streaming all the time,"}
+          {" you're already streaming all the time"}
         </li>
         <li>
-          <strong>buy solidary tickets</strong>,
+          <strong>buy solidary tickets</strong>
         </li>
         <li>
           <strong>{"don't insist"}</strong>
-          {" on getting your money back for canceled shows."}
+          {" on getting your money back for canceled shows"}
         </li>
         <li>
           <strong>buy tickets</strong>
-          {" for future events, even though they might get cancelled."}
+          {" for future events, even though they might get cancelled"}
+        </li>
+        <li>
           <strong>ask others</strong> to do the same
         </li>
       </Text>
