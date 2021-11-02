@@ -34,7 +34,6 @@ import { EventLegend } from "../components/list/EventLegend"
 import { HeaderMenu } from "../components/HeaderMenu/HeaderMenu"
 import { Flex } from "@dk3/ui/atoms/Flex"
 import { Spinner } from "@dk3/ui/atoms/Spinner"
-import { SupportYourVenues } from "../components/SupportYourVenues"
 
 const Main = Spacer.withComponent("main")
 
@@ -102,7 +101,6 @@ export default withRouter(function Index({ router }) {
             </Header>
 
             <Main pa="l">
-              <SupportYourVenues />
               <EventList
                 filter={filter}
                 onFilterChange={(filter) => setFilter(filter)}
