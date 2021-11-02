@@ -8,7 +8,7 @@
   "license": "ISC",
   "main": "lib/authUtils.js",
   "engines": {
-    "node": "10.x"
+    "node": "14.x"
   },
   "directories": {
     "lib": "lib",

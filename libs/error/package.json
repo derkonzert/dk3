@@ -8,7 +8,7 @@
   "license": "ISC",
   "main": "lib/error.js",
   "engines": {
-    "node": "10.x"
+    "node": "14.x"
   },
   "directories": {
     "lib": "lib",
